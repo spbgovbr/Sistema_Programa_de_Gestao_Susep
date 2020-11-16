@@ -1,0 +1,162 @@
+.br-load.is-loading {
+  color: #555555;
+  font-size: 18px;
+  margin-bottom: 1rem;
+}
+
+.br-load.is-loading::before {
+  animation: spinAround 0.5s infinite linear;
+  border: 3px solid currentColor;
+  border-color: transparent transparent #1351b4 #1351b4 !important;
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: block;
+  height: 2.8em;
+  margin-left: calc(50% - (3em / 2));
+  width: 2.8em;
+}
+
+.br-modal {
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0 15px;
+  position: relative; 
+  width: 28.8rem;
+  right: 50%;
+}
+
+.br-modal .br-form {
+  width: 100%;
+}
+
+.br-modal h2 {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #555555;
+  display: -webkit-box;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 22.5px;
+  margin: 0;
+  max-height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+.br-modal h2.is-inline {
+  -webkit-line-clamp: 1;
+  max-height: 22.5px;
+}
+
+.br-modal.is-scroll .br-modal-body {
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+}
+
+.br-modal.is-scroll .br-modal-body .br-card {
+  border: 0;
+  font-size: 14px;
+  height: 216px;
+  overflow: auto;
+  resize: none;
+  width: 100%;
+}
+
+.br-modal.is-scroll .br-modal-body .br-card:focus, .br-modal.is-scroll .br-modal-body .br-card:active {
+  outline: none;
+}
+
+.br-modal.is-scroll .br-modal-body .br-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.br-modal.is-scroll .br-modal-body .br-card::-webkit-scrollbar-track {
+  background: #ededed;
+}
+
+.br-modal.is-scroll .br-modal-body .br-card::-webkit-scrollbar-thumb {
+  background: #888888;
+}
+
+.br-modal.is-scroll .br-modal-body .br-card:hover::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+.br-modal .br-modal-header,
+.br-modal .br-modal-body,
+.br-modal .br-modal-footer {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.br-modal .br-modal-body {
+  display: flex;
+}
+
+.br-modal .br-modal-body .br-card {
+  width: 100%;
+}
+
+.br-modal .br-modal-body .br-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.br-modal .br-modal-body .br-card::-webkit-scrollbar-track {
+  background: #ededed;
+}
+
+.br-modal .br-modal-body .br-card::-webkit-scrollbar-thumb {
+  background: #888888;
+}
+
+.br-modal .br-modal-body .br-card:hover::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+.br-modal .br-modal-header {
+  padding-bottom: 12px;
+}
+
+.br-modal .br-modal-footer {
+  display: flex;
+}
+
+.br-modal .close {
+  background: transparent;
+  border: 0;
+  color: #1351b4;
+  position: absolute;
+  right: 8px;
+  top: 0;
+}
+
+.br-modal .close span {
+  font-size: 36px;
+  font-weight: 500;
+}
+
+@media (min-width: 576px) {
+  .br-modal.is-xsmall {
+    max-width: 220px;
+    min-width: 220px;
+  }
+
+  .br-modal.is-small {
+    max-width: 300px;
+    min-width: 300px;
+  }
+
+  .br-modal.is-medium {
+    max-width: 500px;
+    min-width: 500px;
+  }
+
+  .br-modal.is-large {
+    max-width: 640px;
+    min-width: 640px;
+  }
+}

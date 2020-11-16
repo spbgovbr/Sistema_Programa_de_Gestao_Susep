@@ -1,0 +1,629 @@
+/*!
+ * check - 0.1.11 */
+.br-check {
+  display: inline-block;
+  position: relative;
+}
+
+.br-check input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.br-check input[type="checkbox"] + label {
+  padding: 0 0 4px 32px;
+  min-height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.br-check input[type="checkbox"] + label::before {
+  border-radius: 4px;
+  height: 24px;
+  width: 24px;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid #888888;
+  content: "";
+  position: absolute;
+  top: 2px;
+  vertical-align: text-top;
+}
+
+.br-check input[type="checkbox"]:disabled + label::before {
+  background: #ededed;
+}
+
+.br-check input[type="checkbox"]:focus + label {
+  outline: 1px dotted currentColor;
+}
+
+.br-check input[type="checkbox"]:checked + label::before {
+  background: #2670e8;
+  border-color: #2670e8;
+}
+
+.br-check input[type="checkbox"]:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check input[type="checkbox"]:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(38, 112, 232, 0.45);
+}
+
+.br-check input[type="checkbox"]:invalid + label::before {
+  border-color: #e60000;
+  box-shadow: 0 0 0 1px #e60000;
+}
+
+.br-check input[type="checkbox"]:invalid:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(230, 0, 0, 0.45);
+}
+
+.br-check input[type="checkbox"]:disabled:checked + label::before {
+  background: #2670e8;
+  border-color: #2670e8;
+}
+
+.br-check input[type="checkbox"]:disabled:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check input[type="checkbox"]:disabled + label {
+  cursor: default;
+}
+
+.br-check.is-inverted input[type="checkbox"]:checked + label::before {
+  background: #ffffff;
+  border-color: #2670e8;
+}
+
+.br-check.is-inverted input[type="checkbox"]:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #2670e8;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-small input[type="checkbox"] + label::before {
+  border-radius: 4px;
+  height: 20px;
+  width: 20px;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid #888888;
+  content: "";
+  position: absolute;
+  top: 2px;
+  vertical-align: text-top;
+}
+
+.br-check.is-small input[type="checkbox"]:disabled + label::before {
+  background: #ededed;
+}
+
+.br-check.is-small input[type="checkbox"]:checked + label::before {
+  background: #2670e8;
+  border-color: #2670e8;
+}
+
+.br-check.is-small input[type="checkbox"]:checked + label::after {
+  top: 6px;
+  left: 7px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-small.is-inverted input[type="checkbox"]:checked + label::before {
+  background: #ffffff;
+  border-color: #2670e8;
+}
+
+.br-check.is-small.is-inverted input[type="checkbox"]:checked + label::after {
+  top: 6px;
+  left: 7px;
+  border: solid #2670e8;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-hover input[type="checkbox"] + label::before {
+  box-shadow: 0 0 0 4px rgba(38, 112, 232, 0.45);
+}
+
+.br-check.is-invalid input[type="checkbox"]:checked + label::before {
+  background: #e60000;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid input[type="checkbox"]:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-invalid input[type="checkbox"] + label::before {
+  border-color: #e60000;
+  box-shadow: 0 0 0 1px #e60000;
+}
+
+.br-check.is-invalid input[type="checkbox"]:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(230, 0, 0, 0.45);
+}
+
+.br-check.is-invalid input[type="checkbox"] + label {
+  color: #e60000;
+}
+
+.br-check.is-invalid.is-inverted input[type="checkbox"]:checked + label::before {
+  background: #ffffff;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid.is-inverted input[type="checkbox"]:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #e60000;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-invalid.is-small input[type="checkbox"]:checked + label::before {
+  background: #e60000;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid.is-small input[type="checkbox"]:checked + label::after {
+  top: 6px;
+  left: 7px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-invalid.is-small.is-inverted input[type="checkbox"]:checked + label::before {
+  background: #ffffff;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid.is-small.is-inverted input[type="checkbox"]:checked + label::after {
+  top: 6px;
+  left: 7px;
+  border: solid #e60000;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-valid input[type="checkbox"]:checked + label::before {
+  background: #168821;
+  border-color: #168821;
+}
+
+.br-check.is-valid input[type="checkbox"]:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-valid input[type="checkbox"] + label::before {
+  border-color: #168821;
+  box-shadow: 0 0 0 1px #168821;
+}
+
+.br-check.is-valid input[type="checkbox"]:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(22, 136, 33, 0.45);
+}
+
+.br-check.is-valid.is-inverted input[type="checkbox"]:checked + label::before {
+  background: #ffffff;
+  border-color: #168821;
+}
+
+.br-check.is-valid.is-inverted input[type="checkbox"]:checked + label::after {
+  top: 8px;
+  left: 9px;
+  border: solid #168821;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-valid.is-small input[type="checkbox"]:checked + label::before {
+  background: #168821;
+  border-color: #168821;
+}
+
+.br-check.is-valid.is-small input[type="checkbox"]:checked + label::after {
+  top: 6px;
+  left: 7px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check.is-valid.is-small.is-inverted input[type="checkbox"]:checked + label::before {
+  background: #ffffff;
+  border-color: #168821;
+}
+
+.br-check.is-valid.is-small.is-inverted input[type="checkbox"]:checked + label::after {
+  top: 6px;
+  left: 7px;
+  border: solid #168821;
+  border-width: 0 2px 2px 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.br-check input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.br-check input[type="radio"] + label {
+  padding: 0 0 4px 32px;
+  min-height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.br-check input[type="radio"] + label::before {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid #888888;
+  content: "";
+  position: absolute;
+  top: 2px;
+  vertical-align: text-top;
+}
+
+.br-check input[type="radio"]:disabled + label::before {
+  background: #ededed;
+}
+
+.br-check input[type="radio"]:focus + label {
+  outline: 1px dotted currentColor;
+}
+
+.br-check input[type="radio"]:checked + label::before {
+  background: #2670e8;
+  border-color: #2670e8;
+}
+
+.br-check input[type="radio"]:checked + label::after {
+  box-shadow: inset 0 0 0 1px #2670e8, inset 0 0 0 6px #ffffff;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check input[type="radio"]:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(38, 112, 232, 0.45);
+}
+
+.br-check input[type="radio"]:invalid + label::before {
+  border-color: #e60000;
+  box-shadow: 0 0 0 1px #e60000;
+}
+
+.br-check input[type="radio"]:invalid:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(230, 0, 0, 0.45);
+}
+
+.br-check input[type="radio"]:disabled:checked + label::before {
+  background: #2670e8;
+  border-color: #2670e8;
+}
+
+.br-check input[type="radio"]:disabled:checked + label::after {
+  box-shadow: inset 0 0 0 1px #2670e8, inset 0 0 0 6px #ffffff;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check input[type="radio"]:disabled + label {
+  cursor: default;
+}
+
+.br-check.is-inverted input[type="radio"]:checked + label::before {
+  background: #ffffff;
+  border-color: #2670e8;
+}
+
+.br-check.is-inverted input[type="radio"]:checked + label::after {
+  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 6px #2670e8;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-small input[type="radio"] + label::before {
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid #888888;
+  content: "";
+  position: absolute;
+  top: 2px;
+  vertical-align: text-top;
+}
+
+.br-check.is-small input[type="radio"]:disabled + label::before {
+  background: #ededed;
+}
+
+.br-check.is-small input[type="radio"]:checked + label::before {
+  background: #2670e8;
+  border-color: #2670e8;
+}
+
+.br-check.is-small input[type="radio"]:checked + label::after {
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 1px #2670e8, inset 0 0 0 5px #ffffff;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-small.is-inverted input[type="radio"]:checked + label::before {
+  background: #ffffff;
+  border-color: #2670e8;
+}
+
+.br-check.is-small.is-inverted input[type="radio"]:checked + label::after {
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 5px #2670e8;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-hover input[type="radio"] + label::before {
+  box-shadow: 0 0 0 4px rgba(38, 112, 232, 0.45);
+}
+
+.br-check.is-invalid input[type="radio"]:checked + label::before {
+  background: #e60000;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid input[type="radio"]:checked + label::after {
+  box-shadow: inset 0 0 0 1px #e60000, inset 0 0 0 6px #ffffff;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-invalid input[type="radio"] + label::before {
+  border-color: #e60000;
+  box-shadow: 0 0 0 1px #e60000;
+}
+
+.br-check.is-invalid input[type="radio"]:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(230, 0, 0, 0.45);
+}
+
+.br-check.is-invalid input[type="radio"] + label {
+  color: #e60000;
+}
+
+.br-check.is-invalid.is-inverted input[type="radio"]:checked + label::before {
+  background: #ffffff;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid.is-inverted input[type="radio"]:checked + label::after {
+  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 6px #e60000;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-invalid.is-small input[type="radio"]:checked + label::before {
+  background: #e60000;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid.is-small input[type="radio"]:checked + label::after {
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 1px #e60000, inset 0 0 0 5px #ffffff;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-invalid.is-small.is-inverted input[type="radio"]:checked + label::before {
+  background: #ffffff;
+  border-color: #e60000;
+}
+
+.br-check.is-invalid.is-small.is-inverted input[type="radio"]:checked + label::after {
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 5px #e60000;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-valid input[type="radio"]:checked + label::before {
+  background: #168821;
+  border-color: #168821;
+}
+
+.br-check.is-valid input[type="radio"]:checked + label::after {
+  box-shadow: inset 0 0 0 1px #168821, inset 0 0 0 6px #ffffff;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-valid input[type="radio"] + label::before {
+  border-color: #168821;
+  box-shadow: 0 0 0 1px #168821;
+}
+
+.br-check.is-valid input[type="radio"]:hover:not(:disabled) + label::before {
+  box-shadow: 0 0 0 4px rgba(22, 136, 33, 0.45);
+}
+
+.br-check.is-valid.is-inverted input[type="radio"]:checked + label::before {
+  background: #ffffff;
+  border-color: #168821;
+}
+
+.br-check.is-valid.is-inverted input[type="radio"]:checked + label::after {
+  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 6px #168821;
+  height: 24px;
+  width: 24px;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-valid.is-small input[type="radio"]:checked + label::before {
+  background: #168821;
+  border-color: #168821;
+}
+
+.br-check.is-valid.is-small input[type="radio"]:checked + label::after {
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 1px #168821, inset 0 0 0 5px #ffffff;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+.br-check.is-valid.is-small.is-inverted input[type="radio"]:checked + label::before {
+  background: #ffffff;
+  border-color: #168821;
+}
+
+.br-check.is-valid.is-small.is-inverted input[type="radio"]:checked + label::after {
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 5px #168821;
+  left: 0px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 2px;
+}
+
+/*# sourceMappingURL=checkbox.css.map */

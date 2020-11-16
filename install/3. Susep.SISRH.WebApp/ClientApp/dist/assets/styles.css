@@ -1,0 +1,298 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/list/main.css';
+
+@import 'css/modal.css';
+@import 'css/select.css';
+@import 'css/table.css';
+@import 'css/upload.css';
+
+i {
+  margin-right:2px !important;
+}
+
+.menu-hamburger i {
+  width: 22px;
+}
+
+.dropdown.is-active::after {
+  border: none;
+}
+
+.mt-01 {
+  margin-top: 1px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.header-accessibility li {
+  list-style: none;
+  display:inline;
+  margin-right:10px;
+}
+
+.header-accessibility {
+  margin-top: 10px;
+}
+
+body.contraste, body.contraste a, body.contraste span, body.contraste i, body.contraste li, body.contraste div {
+  color: #fff !important;
+  background-color: #000 !important;
+}
+
+.tooltip-inner {
+  max-width: 350px;
+  /* If max-width does not work, try using width instead */
+  width: 350px;
+}
+
+/******************paginação************************/
+
+.pagination{
+  float: right;
+  margin-top: 5px;
+}
+
+.br-pagination.is-large {  
+  margin: -31px 0 24px 0px;
+}
+
+.pagination-counter{
+  color: #888888;
+  font-weight: 500;
+}
+
+.br-pagination li {
+  cursor: pointer;
+}
+
+
+/***************************************************/
+
+.isDisabled {  
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.pointer{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:hover.pointer { 
+  text-decoration: none;
+}
+
+.center-indicadores{
+  padding-top: 3px!important;
+}
+
+/**************dashboard***********************************/
+.row .card {
+  margin-left: auto;
+  margin-right: auto;  
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+@media (max-width: 991px) { 
+  .row.dashboard {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .info-table{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 992px){
+  .row .card {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 19%;
+  }
+
+  .row.dashboard {
+    margin-left: 215px;
+    margin-right: 215px;
+  }
+
+  .info-table{   
+    margin-left: 150px!important;    
+    background-color: #f0f8ff;
+    font-size: smaller;
+    margin-right:-139px!important;
+  }
+}
+
+.dashboard-footer{
+  font-size: small;
+  text-align: center;
+}
+
+
+
+/******************************************************/
+
+.no-break-line{
+  white-space: nowrap;
+}
+
+.menor-que-periodo{
+  color: #888888;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal-base-1{
+  background-color: yellow;
+  color: black;
+  float: left;
+  height: 40px;
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px 0px 0px 5px;
+  width: 30%;
+}
+
+.modal-base-2{
+  background-color: green;
+  height: 40px;
+  border-radius: 0px 5px 5px 0px;
+  width: 70%;
+  float: right;
+}
+
+.modal-span-1{
+  margin-left: 3px;
+  float: left;
+}
+
+.modal-span-2{
+  margin-bottom: 32px;
+    padding-bottom: 0px;
+}
+
+/********grid*************************/
+
+tr.fundos-selected:nth-child(even) {
+  background-color:antiquewhite;
+}
+
+tr.fundos-selected:nth-child(odd) {
+  background-color: bisque!important;
+}
+
+/********grid*************************/
+
+
+
+
+/* Para o date picker do modal funcionar */
+::ng-deep .cdk-overlay-container {
+  z-index: 1200 !important;
+}
+
+/* Ajustes para o alinhamento do input com o botao do datepicker */
+div.date_picker {
+  display: flex;
+}
+
+  div.date_picker div.date_input_container {
+    flex: 1;
+    text-align: center;
+  }
+
+  div.date_picker div.date_button_container {
+    text-align: center;
+  }
+
+/* Ajuste no tamanho dos inputs */
+input, select {
+  min-height: 42px;
+}
+
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+
+.avatar img{
+    width: 50px;
+    height: 50px;
+}
+
+
+.contact-widget-launcher {
+  opacity: 1;
+  right: 20px;
+  height: 47px;
+  transform: translateZ(0);
+  z-index: 9998;
+}
+
+
+.br-modal {
+  width: 720px;
+}
+
+.br-modal .br-form{
+    width: 600px;
+}
+
+
+.ngb-tp-input-container {
+  width: 2.8em !important;
+}
+
+.ngb-tp-input-container input {
+  padding: 8px ;
+}
+
+
+.modalLoading .modal-content {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+
+.input-spinner {
+  margin-top:30px;
+}
+
+.menu-hamburger {
+    font-size:20px;
+}
+
+.logo .h4 {
+    font-weight: normal !important;
+}
+
+.page-subheader{
+    height: 40px;
+}
+
+
+.br-breadcrumb .is-active a {
+    font-weight: normal;
+}
+
+.user {
+    display:block;
+}
+
+
+.cdk-overlay-container {
+  z-index: 999999 !important;
+}

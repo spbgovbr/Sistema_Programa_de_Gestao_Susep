@@ -1,0 +1,992 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Susep.SISRH.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:Susep.SISRH.WebApi.Controllers.AssuntoController">
+            <summary>
+            Operações com os assuntos
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IAssuntoQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>    
+            <param name="assuntoQuery"></param>    
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetAll(Susep.SISRH.Application.Requests.AssuntoFiltroRequest)">
+            <summary>
+            Obtém os assuntos cadastrados
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetById(System.Guid)">
+            <summary>
+            Obtém o assunto por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetByTexto(System.String)">
+            <summary>
+            Obtém os assuntos cadastrados por texto
+            </summary>
+            <param name="texto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.PostAssunto(Susep.SISRH.Application.Commands.Assunto.CadastrarAssuntoCommand)">
+            <summary>
+            Cadastra um assunto
+            </summary>
+            <param name="command">Dados do item de catálogo a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.PutAssunto(Susep.SISRH.Application.Commands.Assunto.AlterarAssuntoCommand)">
+            <summary>
+            Altera um assunto
+            </summary>
+            <param name="command">Dados do item de catálogo a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.CatalogoController">
+            <summary>
+            Operações com os catálogos
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.ICatalogoQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>
+            <param name="catalogoQuery"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.GetAll(Susep.SISRH.Application.Requests.CatalogoFiltroRequest)">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.GetByUnidadeId(System.Int32)">
+            <summary>
+            Obtém o catálogo de uma unidade
+            </summary>
+            <param name="unidadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.GetItensByUnidadeId(System.Int32)">
+            <summary>
+            Obtém o catálogo de uma unidade
+            </summary>
+            <param name="unidadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.PostCatalogo(Susep.SISRH.Application.Commands.Catalogo.CadastrarCatalogoCommand)">
+            <summary>
+            Cadastra um catálogo
+            </summary>
+            <param name="command">Dados do  de catálogo a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.PutCatalogo(System.Guid,Susep.SISRH.Application.Commands.Catalogo.AlterarCatalogoCommand)">
+            <summary>
+            Altera os dados de um catálogo
+            </summary>
+            <param name="catalogoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.DeleteCatalogo(System.Guid,Susep.SISRH.Application.Commands.Catalogo.ExcluirCatalogoCommand)">
+            <summary>
+            Exclui um catálogo
+            </summary>
+            <param name="catalogoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.PostCatalogoItem(System.Guid,Susep.SISRH.Application.Commands.Catalogo.CadastrarCatalogoItemCatalogoCommand)">
+            <summary>
+            Associar um item ao catalogo
+            </summary>
+            <param name="catalogoId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.CatalogoController.DeleteItemCatalogo(Susep.SISRH.Application.Commands.Catalogo.ExcluirCatalogoItemCatalogoCommand)">
+            <summary>
+            Exclui um item de catálogo
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.DominioController">
+            <summary>
+            Operações com os dados de domínio do programa de gestão
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.#ctor(Susep.SISRH.Application.Queries.Abstractions.IDominioQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="dominioQuery"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetModalidadeExecucao">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetFormaCalculoTempoItemCatalogo">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetSituacaoPlanoTrabalho">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetSituacaoPactoTrabalho">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetSituacaoAtividadePactoTrabalho">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetCriterioPerfilAtividadePlano">
+            <summary>
+            Obtém os catálogo cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetSituacaoCandidaturaPlanoTrabalho">
+            <summary>
+            Obtém os dominios por situação plano trablaho
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.ItemCatalogoController">
+            <summary>
+            Operações com os itens de catálogo
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ItemCatalogoController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IItemCatalogoQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>
+            <param name="itemCatalogoQuery"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ItemCatalogoController.GetAll(Susep.SISRH.Application.Requests.ItemCatalogoFiltroRequest)">
+            <summary>
+            Obtém os itens de catálogo cadastrados
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ItemCatalogoController.GetById(System.Guid)">
+            <summary>
+            Obtém os dados de um item de catálogo
+            </summary>
+            <param name="itemCatalogoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ItemCatalogoController.PostItemCatalogo(Susep.SISRH.Application.Commands.ItemCatalogo.CadastrarItemCatalogoCommand)">
+            <summary>
+            Cadastra um item de catálogo do corretor logado
+            </summary>
+            <param name="command">Dados do item de catálogo a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ItemCatalogoController.PutItemCatalogo(System.Guid,Susep.SISRH.Application.Commands.ItemCatalogo.AlterarItemCatalogoCommand)">
+            <summary>
+            Altera os dados de um item de catálogo do corretor logado
+            </summary>
+            <param name="itemCatalogoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ItemCatalogoController.DeleteItemCatalogo(System.Guid,Susep.SISRH.Application.Commands.ItemCatalogo.ExcluirItemCatalogoCommand)">
+            <summary>
+            Exclui um item de catálogo do corretor logado
+            </summary>
+            <param name="itemCatalogoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.ObjetoController">
+            <summary>
+            Operações com os assuntos
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ObjetoController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IObjetoQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>    
+            <param name="objetoQuery"></param>    
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ObjetoController.GetAll(Susep.SISRH.Application.Requests.ObjetoFiltroRequest)">
+            <summary>
+            Obtém os objetos cadastrados
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ObjetoController.GetById(System.Guid)">
+            <summary>
+            Obtém o objeto por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ObjetoController.GetByTexto(System.String)">
+            <summary>
+            Obtém os objetos cadastrados por texto
+            </summary>
+            <param name="texto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ObjetoController.PostObjeto(Susep.SISRH.Application.Commands.Assunto.CadastrarObjetoCommand)">
+            <summary>
+            Cadastra um objeto
+            </summary>
+            <param name="command">Dados do objeto a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.ObjetoController.PutObjeto(Susep.SISRH.Application.Commands.Assunto.AlterarObjetoCommand)">
+            <summary>
+            Altera um objeto
+            </summary>
+            <param name="command">Dados do objeto a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.OrgaoCentralController">
+            <summary>
+            Operações com os assuntos
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.OrgaoCentralController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IAPIExtracaoOrgaoCentralQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>    
+            <param name="apiExtracaoOrgaoCentralQuery"></param>    
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.OrgaoCentralController.GetAll">
+            <summary>
+            Obtém os assuntos cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController">
+            <summary>
+            Operações com os pactos de trabalho
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IPactoTrabalhoQuery,Susep.SISRH.Application.Queries.Abstractions.IEstruturaOrganizacionalQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>
+            <param name="pactoTrabalhoQuery"></param>
+            <param name="estruturaOrganizacionalQuery"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetAll(Susep.SISRH.Application.Requests.PactoTrabalhoFiltroRequest)">
+            <summary>
+            Obtém os pactos de trabalho cadastrados
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetById(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém o pacto de trabalho atual do usuário
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetById(Susep.SISRH.Application.Requests.PactoTrabalhoRequest)">
+            <summary>
+            Obtém os dados de um pacto de trabalho
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostPactoTrabalho(Susep.SISRH.Application.Commands.PactoTrabalho.CadastrarPactoTrabalhoCommand)">
+            <summary>
+            Cadastra um pacto de trabalho do corretor logado
+            </summary>
+            <param name="command">Dados do pacto de trabalho a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutPactoTrabalho(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarPactoTrabalhoCommand)">
+            <summary>
+            Altera os dados de um pacto de trabalho do corretor logado
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutPactoTrabalhoDatas(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarPeriodoPactoTrabalhoCommand)">
+            <summary>
+            Altera os dados de um pacto de trabalho do corretor logado
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.DeletePactoTrabalho(System.Guid)">
+            <summary>
+            Altera os dados de um pacto de trabalho do corretor logado
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetHistoricoById(System.Guid)">
+            <summary>
+            Obtém o histórico de um pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.EnviarParaAprovacao(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.Aprovar(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.Rejeitar(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.VoltarParaRascunho(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.IniciarExecucao(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.ConcluirExecucao(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.Avaliar(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetAtividadesById(System.Guid)">
+            <summary>
+            Obtém as atividades de um pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostAtividadePacto(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.CadastrarPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Adiciona uma atividade no pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutAtividadePacto(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="pactoTrabalhoAtividadeId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.DeleteAtividadePacto(Susep.SISRH.Application.Commands.PactoTrabalho.ExcluirPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Exclui uma atividade do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutAtividadePactoTodo(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do pacto de trabalho
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutAtividadePactoDoing(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do pacto de trabalho
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutAtividadePactoDone(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do pacto de trabalho
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutAtividadePactoAndamento(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarAndamentoPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="pactoTrabalhoAtividadeId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutAvaliarAtividade(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AvaliarAtividadePactoTrabalhoCommand)">
+            <summary>
+            Avaliar uma atividade do pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="pactoTrabalhoAtividadeId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetSolicitacoesById(System.Guid)">
+            <summary>
+            Obtém as solicitações de um pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostProporAlterarPrazoPacto(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.ProporPactoTrabalhoPrazoCommand)">
+            <summary>
+            Adiciona uma atividade no pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostProporAtividadePacto(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.ProporPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Adiciona uma atividade no pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostJustificarEstouroPrazoAtividade(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.JustificarEstouroPrazoAtividadeCommand)">
+            <summary>
+            Justificativa de estouro de prazo
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutResponderPropostaAtividadePacto(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.ResponderSolitacaoPactoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="pactoTrabalhoSolicitacaoId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetAssuntosParaAssociar(System.Guid)">
+            <summary>
+            Obtém os assuntos para associar às atividades de um PactoTrabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.PessoaController">
+            <summary>
+            Operações com os planos de trabalho
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IPessoaQuery,Susep.SISRH.Application.Queries.Abstractions.IEstruturaOrganizacionalQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>
+            <param name="pessoaQuery"></param>    
+            <param name="estruturaOrganizacionalQuery"></param>     
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetDashboard(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém o dashboad de acordo com a pessoa
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetAll(Susep.SISRH.Application.Requests.PessoaFiltroRequest)">
+            <summary>
+            Obtém as pessoas cadastradas
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetPerfilAll(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém o perfil do usuário logado pessoas cadastradas
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetByPessoaId(System.Int32)">
+            <summary>
+            Obtém uma pessoa por ID
+            </summary>
+            <param name="pessoaId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetFeriados(System.Int64,Susep.SISRH.Application.ViewModels.FeriadoBuscaViewModel)">
+            <summary>
+            Obtém os feriados por pessoa e período
+            </summary>
+            <param name="pessoaId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetComPlanoTrabalhoDadosCombo(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém as pessoas que possuem pelo menos um pacto de trabalho cadastrado para preenchimento de combos
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController">
+            <summary>
+            Operações com os planos de trabalho
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.#ctor(MediatR.IMediator,Susep.SISRH.Application.Queries.Abstractions.IPlanoTrabalhoQuery,Susep.SISRH.Application.Queries.Abstractions.IPactoTrabalhoQuery,Susep.SISRH.Application.Queries.Abstractions.IEstruturaOrganizacionalQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="mediator"></param>
+            <param name="planoTrabalhoQuery"></param>
+            <param name="pactoTrabalhoQuery"></param>
+            <param name="estruturaOrganizacionalQuery"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetAll(Susep.SISRH.Application.Requests.PlanoTrabalhoFiltroRequest)">
+            <summary>
+            Obtém os planos de trabalho cadastrados
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetById(Susep.SISRH.Application.Requests.PlanoTrabalhoRequest)">
+            <summary>
+            Obtém os dados de um plano de trabalho
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetAtual(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém o plano atual na unidade do usuário logado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetHabilitacao(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém o plano em habilitação na unidade do usuário logado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetTermoAceite(System.Guid)">
+            <summary>
+            Obtém o plano em habilitação na unidade do usuário logado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostPlanoTrabalho(Susep.SISRH.Application.Commands.PlanoTrabalho.CadastrarPlanoTrabalhoCommand)">
+            <summary>
+            Cadastra um plano de trabalho do corretor logado
+            </summary>
+            <param name="command">Dados do plano de trabalho a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutPlanoTrabalho(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarPlanoTrabalhoCommand)">
+            <summary>
+            Altera os dados de um plano de trabalho do corretor logado
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetPactosById(System.Guid,Susep.SISRH.Application.Requests.PlanoTrabalhoRequest)">
+            <summary>
+            Obtém os pactos de trabalho de um plano de trabalho
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetHistoricoById(System.Guid)">
+            <summary>
+            Obtém o histórico de um plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.AlterarSituacao(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarSituacaoPlanoTrabalhoCommand)">
+            <summary>
+            Altera a situação do plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetAtividadesById(System.Guid)">
+            <summary>
+            Obtém as atividades de um plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostAtividadePlano(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.CadastrarPlanoTrabalhoAtividadeCommand)">
+            <summary>
+            Adiciona uma atividade no plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutAtividadePlano(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarPlanoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera uma atividade do plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="planoTrabalhoAtividadeId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.DeleteAtividadePlano(Susep.SISRH.Application.Commands.PlanoTrabalho.ExcluirPlanoTrabalhoAtividadeCommand)">
+            <summary>
+            Exclui uma atividade do plano
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetCandidatosPlano(System.Guid)">
+            <summary>
+            Obtém os candidatos a vagas em um plano
+            </summary>
+            <param name="planoTrabalhoId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetCandidatoAtividadePlano(System.Guid)">
+            <summary>
+            Obtém os candidatos a vagas em uma atividade de um plano
+            </summary>
+            <param name="planoTrabalhoAtividadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostCandidatoAtividadePlano(Susep.SISRH.Application.Commands.PlanoTrabalho.CandidatarPlanoTrabalhoAtividadeCommand)">
+            <summary>
+            Registra a candidatura de um servidor a uma vaga em uma atividade de um plano
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutCandidatoAtividadePlano(System.Guid,System.Guid,System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AtualizarCandidaturaPlanoTrabalhoAtividadeCommand)">
+            <summary>
+            Altera a situação da candidatura de um servidor a uma vaga em uma atividade de um plano
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="planoTrabalhoAtividadeId"></param>
+            <param name="planoTrabalhoAtividadeCandidatoId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetPessoasModalidades(System.Guid)">
+            <summary>
+            Obtém a modalidade de execução de uma pessoa em um determinado plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetMetasById(System.Guid)">
+            <summary>
+            Obtém as metas de um plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostMetaPlano(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.CadastrarPlanoTrabalhoMetaCommand)">
+            <summary>
+            Adiciona uma meta no plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutMetaPlano(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarPlanoTrabalhoMetaCommand)">
+            <summary>
+            Altera uma meta do plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="planoTrabalhoMetaId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.DeleteMetaPlano(Susep.SISRH.Application.Commands.PlanoTrabalho.ExcluirPlanoTrabalhoMetaCommand)">
+            <summary>
+            Exclui uma reunião do plano
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetReunioesById(System.Guid)">
+            <summary>
+            Obtém as reuniões de um plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostReuniaoPlano(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.CadastrarPlanoTrabalhoReuniaoCommand)">
+            <summary>
+            Adiciona uma reuniao no plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutReuniaoPlano(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarPlanoTrabalhoReuniaoCommand)">
+            <summary>
+            Altera uma reuniao do plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="planoTrabalhoReuniaoId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.DeleteReuniaoPlano(Susep.SISRH.Application.Commands.PlanoTrabalho.ExcluirPlanoTrabalhoReuniaoCommand)">
+            <summary>
+            Exclui uma reunião do plano
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetCustosById(System.Guid)">
+            <summary>
+            Obtém os custos de um plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostCustoPlano(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.CadastrarPlanoTrabalhoCustoCommand)">
+            <summary>
+            Adiciona um custo no plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutCustoPlano(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarPlanoTrabalhoCustoCommand)">
+            <summary>
+            Altera um custo do plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="planoTrabalhoCustoId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.DeleteCustoPlano(Susep.SISRH.Application.Commands.PlanoTrabalho.ExcluirPlanoTrabalhoCustoCommand)">
+            <summary>
+            Exclui um custo do plano
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetObjetosById(System.Guid)">
+            <summary>
+            Obtém os objetos de um plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetObjetosById(System.Guid,System.Guid)">
+            <summary>
+            Obtém os objetos de um plano de trabalho e se estão associados à atividade do pacto de trabalho referente ao id passado como parâmetro
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="pactoTrabalhoAtividadeid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetObjetoById(System.Guid)">
+            <summary>
+            Obtém um objeto de um plano de trabalho pelo id
+            </summary>
+            <param name="planoTrabalhoObjetoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.DeleteObjetoPlano(Susep.SISRH.Application.Commands.PlanoTrabalho.ExcluirPlanoTrabalhoObjetoCommand)">
+            <summary>
+            Exclui um objeto do plano
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PostObjetosPlano(System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.CadastrarPlanoTrabalhoObjetoCommand)">
+            <summary>
+            Adiciona um objeto no plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.PutObjetoPlano(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PlanoTrabalho.AlterarPlanoTrabalhoObjetoCommand)">
+            <summary>
+            Altera um objeto do plano de trabalho
+            </summary>
+            <param name="planoTrabalhoid"></param>
+            <param name="planoTrabalhoObjetoId"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Controllers.UnidadeController">
+            <summary>
+            Operações com as unidades organizacionais
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.#ctor(Susep.SISRH.Application.Queries.Abstractions.IUnidadeQuery,Susep.SISRH.Application.Queries.Abstractions.IDominioQuery,Susep.SISRH.Application.Queries.Abstractions.IEstruturaOrganizacionalQuery)">
+            <summary>
+            Contrutor da classe
+            </summary>
+            <param name="unidadeQuery"></param>
+            <param name="dominioQuery"></param>
+            <param name="estruturaOrganizacionalQuery"></param>     
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetAtivasDadosCombo(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém as unidades ativas para preenchimento de combos
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetComPlanoTrabalhoDadosCombo(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém as unidades que possuem pelo menos um plano de trabalho cadastrado para preenchimento de combos
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetSemCatalogoCadastro">
+            <summary>
+            Obtém as unidades que não possuem catalago cadastrado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetComCatalogoCadastro(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém as unidades que não possuem catalago cadastrado
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetById(System.Int64)">
+            <summary>
+            Obtém os dados de uma unidade
+            </summary>
+            <param name="unidadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetModalidadeExecucaoById(System.Int64)">
+            <summary>
+            Obtém as modalidades de execução de uma unidade
+            </summary>
+            <param name="unidadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetPessoasById(System.Int64)">
+            <summary>
+            Obtém as pessoas de uma unidade
+            </summary>
+            <param name="unidadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Program">
+            <summary>
+            Classe de execução do programa
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Program.Main(System.String[])">
+            <summary>
+            Constrói o programa inicial
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Cria o Host Web
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Susep.SISRH.WebApi.Startup">
+            <summary>
+            Classe que faz a configuração inicial da aplicação
+            </summary>
+        </member>
+        <member name="P:Susep.SISRH.WebApi.Startup.Configuration">
+            <summary>
+            Parametros de configuraçao do sistema
+            </summary>
+        </member>
+        <member name="P:Susep.SISRH.WebApi.Startup.Builder">
+            <summary>
+            Construtor das configuraçoes do sistema
+            </summary>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Construtor da classe
+            </summary>
+            <param name="env"></param>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configura os serviços do sistema
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Configura o sistema
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="log"></param>
+        </member>
+    </members>
+</doc>
