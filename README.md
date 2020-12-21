@@ -3,5 +3,5 @@
 Para mais detalhes:
 
 * https://www.gov.br/servidor/pt-br/assuntos/programa-de-gestao
-* [Documentação](documentacao/index.md)
+* [Documentação](install/documentacao/index.md)
 

@@ -14,7 +14,7 @@ Em teoria, essa configuração permite que diferentes tecnologias de bancos de d
 
 ### Executar script de criação da base
 
-O primeiro passo para instalar o sistema é criar a estrutura do banco de dados da aplicação. O script [`Criação da estrutura do banco de dados.sql`](../sql/Criação da estrutura do banco de dados.sql) executa todos os passos necessários para criar os objetos de banco. 
+O primeiro passo para instalar o sistema é criar a estrutura do banco de dados da aplicação. O script `Criação da estrutura do banco de dados.sql` executa todos os passos necessários para criar os objetos de banco. 
 
 Além disso, o pacote `Susep.SISRH.Database` tem toda a estrutura do banco em formato do SQL Server Data Tools (SSDT).
 
@@ -22,7 +22,7 @@ Ressalta-se que o sistema é um dos módulos do sistema que gerencia o pessoal d
 
 ### Executar script para popular a tabela catálogo domínio
 
-Após criadas as estruturas de banco de dados, é necessário fazer a inserção dos dados de domínio da aplicação. O script [`Inserir dados de domínio.sql`](../sql/Inserir dados de domínio.sql) cadastra em banco de dados todas as informações de domínio, incluindo unidades federativas, necessárias para o sistema funcionar.
+Após criadas as estruturas de banco de dados, é necessário fazer a inserção dos dados de domínio da aplicação. O script `Inserir dados de domínio.sql` cadastra em banco de dados todas as informações de domínio, incluindo unidades federativas, necessárias para o sistema funcionar.
 
 
 ## Importação de usuários
@@ -33,7 +33,7 @@ Os perfis do sistema serão derivados da estrutura real do órgão. Então, serv
 
 A ferramenta que fará a carga e manterá os dados atualizados a partir do SIAPE ainda está em fase de construção pela Susep. Os órgãos podem, entretanto, realizar uma carga de dados a partir do seu sistema de recursos humanos para a base do SGPR. As tabelas que devem ser populadas são: `Unidade`, `Pessoa` e `Feriado`.
 
-O script [`Inserir dados de teste.sql`](../sql/Inserir dados de teste.sql) traz um exemplo dessa carga com dados fictícios (CPFs gerados aleatoriamente e unidades da estrutura da Susep) e serve para permitir o acesso e a validação do sistema. Assim que o sistema entrar em produção, os dados da tabela `Pessoa` cadastrados por esse script devem ser apagados da base de dados.
+O script `Inserir dados de teste.sql` traz um exemplo dessa carga com dados fictícios (CPFs gerados aleatoriamente e unidades da estrutura da Susep) e serve para permitir o acesso e a validação do sistema. Assim que o sistema entrar em produção, os dados da tabela `Pessoa` cadastrados por esse script devem ser apagados da base de dados.
 
 ### Configurar gestores do sistema
 
