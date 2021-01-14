@@ -158,11 +158,11 @@ Deve ser alterados os seguintes campos:
     * Esses parâmetros devem ser alterados para que a url formada por eles seja equivalente ao caminho da API no seu órgão (usado para validar a instalação da API). 
     * Deve ser alterada somente a parte em negrito da URL de exemplo acima. Os demais valores que variam entre as rotas devem ser mantidos conforme enviado no arquivo contido no pacote. 
 
-#### `Settings/ocelot.json`
+##### Verificação da instalação
 
 Uma vez instalado e configurado, recomenda-se verificar se a instalação foi feita corretamente acessando a seguinte URL (atentar que o endereço em negrito abaixo é o adotado como caminho para o gateway): 
 
-**https://sitedoorgao/sisgp/gateway**/dominio/ModalidadeExecucao
+[**https://sitedoorgao/sisgp/gateway**/dominio/ModalidadeExecucao](https://sitedoorgao/sisgp/gateway/dominio/ModalidadeExecucao)
 
 Esse acesso deve retornar um JSON com as modalidades de execução cadastradas na tabela catálogo domínio (mesmo retorno da validação da instalação pela API).
 
