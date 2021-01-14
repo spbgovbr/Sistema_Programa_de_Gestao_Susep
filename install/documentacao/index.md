@@ -37,7 +37,7 @@ O script `Inserir dados de teste.sql` traz um exemplo dessa carga com dados fict
 
 ### Configurar gestores do sistema
 
-Em determinadas situações como, por exemplo, no caso fictício em que o titular da unidade está de férias e o substituto de licença, pode ser necessário ter pessoas no órgão com acesso total ao sistema para evitar que o trabalho do setor fique parado. Para suprir tal necessidade, existe o perfil Gestor com controle total da ferramenta.
+Em determinadas situações como, por exemplo, no caso fictício em que o titular da unidade estar de férias e o substituto de licença, pode ser necessário ter pessoas no órgão com acesso total ao sistema para evitar que o trabalho do setor fique parado. Para suprir tal necessidade, existe o perfil Gestor com controle total da ferramenta.
 
 O cadastro de gestores do sistema é feito na tabela CatalogoDominio. Basta inserir um registro nessa tabela com a coluna `classificação` preenchida com o valor `GestorSistema` e a coluna `descrição` preenchida com o id da pessoa que terá perfil de gestor.
 
@@ -196,3 +196,23 @@ A solução proposta pela Susep possui controles apenas por unidade federativa e
 É essencial que o LDAP do órgão registre ou o CPF ou o e-mail cadastrados para a pessoa no banco de dados. É por meio desses campos (qualquer um isoladamente ou os dois) que será feito o link entre o LDAP e a tabela Pessoa para identificar o usuário autenticado e seu respectivo perfil.
 
 Momentaneamente está sendo disponibilizado os pacotes para publicação do sistema. Assim que os fontes forem publicados, poderão ser alteradas configurações como, por exemplo, o secret do cliente para acesso ao gateway.
+
+## Sugestões de performance do Sistema Susep
+
+> Texto extraído de https://www.gov.br/servidor/pt-br/assuntos/programa-de-gestao/arquivos/SugestoesPerformanceSistemaSusep.pdf
+
+**Evitar o acesso de usuários com perfil gestor:** esses usuários enxergam toda a árvore do órgão. Enquanto os usuários com perfil de chefe só conseguem ver dados dos seus subordinados e os usuários com perfil de servidor só conseguem ver os seus dados e a sua unidade, os usuários com perfil de gestor tem acesso à lista de todas as unidades e de todas as pessoas cadastradas, o que pode diminuir a performance do sistema bem como provocar travamentos no navegador
+
+**Utilizar estratégias de cache:** na configuração do gateway (arquivo `settings\ocelot.json`), é possível definir quais rotas serão armazenadas em cache. Quando isso acontecer, o sistema só irá ao banco de dados no primeiro acesso ou, após isso, quando o cache for invalidado;
+* O tempo que cada requisição ficará mantida em cache pode variar de rota para rota, garantindo maior flexibilidade nessa configuração;
+* Importante lembrar que o cache não deve ser utilizado em rotas que precisam de atualização imediata como, por exemplo, cadastros de planos, andamento de atividades e coisas do tipo;
+
+**Adicionar índices no banco de dados:** é possível fazer uma análise das consultas realizadas e adicionar índices no banco de dados com o objetivo de melhorar a performance das consultas;
+
+**Escalar a API:** o sistema da Susep utiliza conceitos de microserviços. Desta forma, é possível escalar o ambiente com a garantia de que não haverá perda de dados, visto que não há gestão de sessão no backend;
+* A Susep nunca fez essa configuração, mas a arquitetura foi projetada tendo isso em mente;
+* A solução passa por colocar ou a API ou o Gateway e a API em containers e utilizar algum gerenciador de container para fazer o balanceamento da carga;
+
+**Alterações que envolvem código:** a Susep já tem mapeadas algumas melhorias a serem implementadas no sistema. Mas, ainda não houve disponibilidade para concluir as construções. Com a disponibilização do código (que ocorrerá em breve), deixamos livre para a comunidade identificar e desenvolver as necessidades, caso algum órgão tenha disponibilidade de já fazer e não possa esperar as próximas releases da Susep. São algumas sugestões direcionadas para a melhoria da performance:
+* Alterar combos para componentes com filtragem: com isso evita-se que as listas de usuários, unidades e atividades sejam carregadas completamente em todos os casos. A listagem passará a ser carregada somente quando o usuário preencher alguma informação e já será filtrado pela informação preenchida pelo usuário;
+* Identificar possíveis melhorias em queries e nos mecanismos de persistência: o Sistema da Susep utiliza CQRS justamente para melhorar a performance do sistema. Entretanto, mesmo as queries escritas pelos desenvolvedores são passíveis de aperfeiçoamento. Da mesma forma, os mecanismos de persistência também podem ser estudados para avaliar possibilidades de melhoria da performance por meio de ajustes no código.
