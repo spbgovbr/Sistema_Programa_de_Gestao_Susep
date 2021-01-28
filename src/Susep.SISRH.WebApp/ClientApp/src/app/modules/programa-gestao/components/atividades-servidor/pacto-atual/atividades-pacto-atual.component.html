@@ -1,0 +1,192 @@
+<section>
+  <div class="container" *ngIf="!dadosPacto.value">
+    <div class="text-center mt-10 mb-10">
+      Nenhum plano de trabalho disponível no momento
+    </div>
+  </div>
+  <div class="container" *ngIf="dadosPacto.value">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">
+        Plano de trabalho |
+        <small>{{dadosPacto.value?.unidade}}</small> |
+        <small [class]="classeTextoSituacao">{{dadosPacto.value?.situacao}}</small>
+      </h1>
+      <p>Veja os detalhes do plano de trabalho, e acompanhe o andamento das atividades previstas </p>
+    </header>
+    <pacto-cabecalho [dadosPacto]="dadosPacto" [atividades]="atividades"></pacto-cabecalho>
+    <form>
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-12">
+            <nav>
+              <ul class="br-tabs">
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'lista'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('lista')">
+                    <span class="name">Lista</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'kanban'}" *ngIf="dadosPacto.value?.situacaoId === 405">
+                  <a href="javascript:void(0)" (click)="alterarAba('kanban')">
+                    <span class="name">Quadro kanban</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'solicitacoes'}" *ngIf="dadosPacto.value?.situacaoId >= 405">
+                  <a href="javascript:void(0)" (click)="alterarAba('solicitacoes')">
+                    <span class="name">Solicitações</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'avaliacao'}" *ngIf="dadosPacto.value?.situacaoId >= 406">
+                  <a href="javascript:void(0)" (click)="alterarAba('avaliacao')">
+                    <span class="name">Avaliação de resultados</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div *ngIf="abaVisivel === 'lista'">
+              <div class="row">
+                <div class="col-sm-12 mb-5">
+                  <pacto-lista-atividade-andamento *ngIf="dadosPacto.value" [dadosPacto]="dadosPacto" [readOnly]="false"></pacto-lista-atividade-andamento>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="abaVisivel === 'kanban'">
+              <div class="row">
+                <div class="col-sm-12 mb-5 mt-5">
+                  <atividade-pacto-kanban *ngIf="dadosPacto.value" [dadosPacto]="dadosPacto"></atividade-pacto-kanban>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="abaVisivel === 'solicitacoes'">
+              <div class="row">
+                <div class="col-sm-12 mb-5">
+                  <pacto-lista-solicitacao *ngIf="dadosPacto.value" [dadosPacto]="dadosPacto"></pacto-lista-solicitacao>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="abaVisivel === 'avaliacao'">
+              <div class="row">
+                <div class="col-sm-12 mt-5 mb-5">
+                  <pacto-avaliacao-resultados *ngIf="dadosPacto.value" [dadosPacto]="dadosPacto"></pacto-avaliacao-resultados>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="br-divider mt-4"></div>
+    <div class="actions justify-content-start text-right float-right">
+      <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
+        <button class="br-button is-primary mr-2 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402" (click)="rejeitar()">Rejeitar</button>
+      </secure-input>
+      <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
+        <button class="br-button is-primary bg-success border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402" (click)="aceitar()">Aceitar</button>
+      </secure-input>
+      <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
+        <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 403 && periodoExecucao" (click)="iniciarExecucao()">Iniciar execução</button>
+      </secure-input>
+      <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
+        <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelConcluirExecucao()">Concluir execução</button>
+      </secure-input>
+    </div>
+  </div>
+</section>
+
+<ng-template #modalFluxo let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Justifique a rejeição do plano</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarRejeicao()" [disabled]="!form.valid">Rejeitar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalAceite let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Aceite os termos de ciência e responsabilidade</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="row">
+            <div class="col-sm-12 pt-5" style="height: 200px;">
+              <span class="text-primary">Termo de ciência e responsabilidade:</span><br />
+              <div class="overflow-auto h-75 border p-2">
+                {{termoAceite}}                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+
+          <mat-slide-toggle #chaveTermos
+                            class="example-margin mr-10 mt-1"
+                            (change)="toggleSituacao($event)">
+
+            <span class="pt-2">Aceito</span>
+          </mat-slide-toggle>
+
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarAceite()" [disabled]="!aceitouTermos">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConcluirExecucao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confirme o encerramento da execução do plano de trabalho</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">
+              Tem certeza que deseja encerrar a execução do plano de trabalho?
+            </div>
+            <div class="mt-4 mb-4">
+              <small>Ao confirmar essa operação, o plano de trabalho será concluído e não poderá mais alterar os dados das atividades.</small>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="concluirExecucao()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

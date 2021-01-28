@@ -1,0 +1,88 @@
+<secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+  <!-- TODO - Verificar o que fazer -->
+  <!--form [formGroup]="form" *ngIf="dadosPacto.value.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho"-->
+  <form [formGroup]="form">
+      <div class="row mt-5">
+      <div class="col-sm-12 br-input">
+        <input-autocomplete-async 
+          [datasource]="datasource" 
+          [chavesJaEscolhidas]="chavesJaEscolhidas"
+          [modo]="'adicao'"
+          (acaoBotao)="associar()"
+          formControlName="empresaId"></input-autocomplete-async>
+      </div>
+    </div>
+  </form>
+</secure-input>
+<div class="row">
+  <div class="col-sm-12 mt-5">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th style="width:90px" *ngIf="!isReadOnly"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let empresa of dadosPacto.value.empresas">
+                <td>{{empresa.nome}}</td>
+                <td *ngIf="!isReadOnly">
+                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+                    <!--a href="javascript:void(0)" (click)="editar(empresa.pactoTrabalhoEmpresaId)" class="mr-2"><i class="fa fa-edit"></i></a-->
+                    <a href="javascript:void(0)" (click)="excluir(empresa.pactoTrabalhoEmpresaId)"><i class="fa fa-trash"></i></a>
+                  </secure-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--ng-template #modalCadastro let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Registrar empresa</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <form [formGroup]="form">
+            <div class="br-form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Valor">
+                      <input-currency formControlName="valor"></input-currency>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="cadastrarCusto()" [disabled]="!form.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template-->

@@ -1,0 +1,97 @@
+.br-upload {
+  background: url("../images/upload-fundo.png") 0px 24px #ffffff no-repeat;
+  border: 1px solid #ffffff;
+  box-shadow: 0 3px 6px #cccccc;
+  margin-bottom: 20px;
+  min-height: 248px;
+  padding-bottom: 16px;
+  padding-left: 280px;
+  padding-right: 10px;
+  padding-top: 32px;
+}
+
+@media (max-width: 997.98px) {
+  .br-upload {
+    background-position: center 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 180px;
+  }
+}
+
+.br-upload:hover {
+  border: 1px solid #5992ed;
+  opacity: 0.8;
+}
+
+.br-upload .upload-header {
+  color: #555555;
+  font-size: 24px;
+}
+
+.br-upload .upload-input {
+  display: none;
+}
+
+.br-upload .upload-info {
+  color: #155bcb;
+  display: block;
+  font-size: 14px;
+  margin: 16px 0;
+  padding-left: 40px;
+}
+
+  .br-upload .upload-info .fa-info-circle {
+    font-size: 26px;
+    margin-left: -40px;
+    position: absolute;
+  }
+
+.br-upload .upload-file-list ul {
+  padding-left: 0;
+}
+
+.br-upload .upload-file-list li {
+  border-bottom: 1px solid #cccccc;
+  color: #155bcb;
+  font-size: 14px;
+  list-style: none;
+  padding: 8px 0 8px 8px;
+  position: relative;
+  width: 100%;
+}
+
+  .br-upload .upload-file-list li .del {
+    cursor: pointer;
+    display: inline;
+    line-height: 24px;
+    position: absolute;
+    right: 8px;
+  }
+
+.br-upload .upload-file-list span {
+  display: inline-block;
+  overflow: hidden;
+  padding-right: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.br-upload .upload-add {
+  display: block;
+  margin: 30px 0;
+  padding-left: 32px;
+}
+
+  .br-upload .upload-add .fa-plus {
+    font-size: 16px;
+    margin-left: -28px;
+    margin-top: 6px;
+    position: absolute;
+  }
+
+.br-upload .upload-size {
+  font-size: 10px;
+  text-align: right;
+}

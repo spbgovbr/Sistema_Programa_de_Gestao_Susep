@@ -1,0 +1,54 @@
+<!-- Menu logado com foto -->
+<div id="header-site" class="header-ds background-color-secondary-01">
+  <div class="shadow-bottom">
+    <div class="container">
+      <div class="title-desktop pt-2 pb-2">
+        <div class="row align-items-center">
+          <div class="col-sm-8 logo">
+            <div class="row align-items-center">
+              <div class="col-sm-12 col-md-8 logo mt-2 pl-0">
+                <div class="header-icons float-left" >
+                  <button class="menu-hamburger text-primary" type="button" (click)="toggleMenu()">
+                    <i id="menu-hamburger-1" class="fa fa-bars"></i>
+                  </button>
+                </div>
+                <div class="ml-3 float-left">
+                  <a href="#" title="Programa de gestão Governo Federal" class="h4">
+                    Programa de gestão |
+                    <small class="d-none d-sm-inline">Governo Federal</small>
+                    <small class="d-sm-none">Govbr</small>
+                  </a>
+                  <!--<p class="version mt-1">Sistema de gestão de pessoas</p>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <app-identity></app-identity>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row page-subheader justify-content-end">
+    <div class="col">
+      <breadcrumb></breadcrumb>
+    </div>
+    <div class="col-auto">
+    </div>
+  </div>
+</div>
+
+
+<ng-template #modalLoading let-modal>
+  <div class="input-spinner">
+    <div class="text-center">
+      <div class="spinner-grow" role="status">
+        <span class="sr-only">Carregando...</span>
+      </div>
+    </div>
+  </div>
+</ng-template>

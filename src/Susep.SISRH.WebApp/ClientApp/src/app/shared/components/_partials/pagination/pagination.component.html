@@ -1,0 +1,30 @@
+<div class="paging mt-2">
+  <div *ngIf="controlePaginacao && controlePaginacao?.totalRegistros > 0">
+    <nav>
+      <ul class="br-pagination pl-2 pt-1" style="float: left">
+        <li><span>{{((controlePaginacao?.tamanhoPagina * (controlePaginacao?.paginaAtual - 1)) + 1) | number}}-{{((controlePaginacao?.tamanhoPagina * (controlePaginacao?.paginaAtual - 1)) + controlePaginacao?.totalRegistrosPaginaAtual) | number}} de {{(controlePaginacao?.totalRegistros) | number}}</span></li>
+      </ul>
+    </nav>
+    <nav>
+      <ul class="br-pagination pr-2" style="float: right">
+        <li>
+          <select class="select-selected" id="paginar-direto" name="paginar-direto" (change)="paginar($event.target.value)">
+            <option class="select-items" *ngFor="let item of counter(controlePaginacao?.totalPaginas); let i = index;" [selected]="controlePaginacao?.paginaAtual == i + 1" value="{{i + 1}}">{{i + 1}}</option>
+          </select>
+          de {{controlePaginacao?.totalPaginas | number}} páginas
+        </li>
+        <li><div class="br-divider"></div></li>
+        <li class="is-first">
+          <a href="javascript:void(0);" (click)="paginar((controlePaginacao?.paginaAtual*1) - 1)" [class.disabled]="controlePaginacao?.paginaAtual == 1">
+            <i class="fas fa-angle-left fa-2x"></i>
+          </a>
+        </li>
+        <li class="is-last">
+          <a href="javascript:void(0);" (click)="paginar((controlePaginacao?.paginaAtual*1) + 1)" [class.disabled]="controlePaginacao?.paginaAtual == controlePaginacao?.totalPaginas">
+            <i class="fas fa-angle-right fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

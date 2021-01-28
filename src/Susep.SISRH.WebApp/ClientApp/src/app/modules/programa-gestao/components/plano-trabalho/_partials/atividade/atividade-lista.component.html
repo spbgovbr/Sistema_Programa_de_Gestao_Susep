@@ -1,0 +1,86 @@
+<secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+  <div class="row mt-5" *ngIf="dadosPlano.value?.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho">
+    <div class="col-sm-12 text-right">
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastro()" [disabled]="totalDisponivelColaboradores <= 0">Cadastrar atividades</button>
+    </div>
+  </div>
+</secure-input>
+<div class="row">
+  <div class="col-sm-12 mt-5">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th style="width:250px">Modalidade de execução</th>
+                <th class="text-right" style="width:100px">Vagas</th>
+                <th>Atividades</th>
+                <!--<th>Perfil</th>-->
+                <!--<th>Descrição</th>-->
+                <th style="width:90px" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho"></th>
+                <th style="width:90px" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao"></th>
+                <th style="width:250px" *ngIf="dadosPlano.value?.situacaoId >= PlanoTrabalhoSituacaoEnum.ProntoParaExecucao">Candidados aprovados</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of atividades">
+                <td>{{item.modalidadeExecucao}}</td>
+                <td class="text-right">{{item.quantidadeColaboradores}}</td>
+                <td>
+                  <ul class="pl-2">
+                    <li *ngFor="let atividade of item.itensCatalogo">{{atividade.itemCatalogo}}</li>
+                  </ul>
+                </td>
+                <!--<td>
+                  <ul class="pl-2">
+                    <li *ngFor="let atividade of item.criterios">{{atividade.criterio}}</li>
+                  </ul>
+                </td>-->
+                <!--<td>{{item.descricao}}</td>-->
+                <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho">                  
+                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+                    <a href="javascript:void(0)" (click)="editar(item.planoTrabalhoAtividadeId)" class="mr-2"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" (click)="excluir(item.planoTrabalhoAtividadeId)"><i class="fa fa-trash"></i></a>
+                  </secure-input>
+                </td>
+                <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao" class="my-auto">
+                  <secure-input [perfis]="[PerfilEnum.Servidor]" [unidade]="unidade">
+                    <a href="javascript:void(0)" (click)="candidatar(item.planoTrabalhoAtividadeId)" *ngIf="candidato(item.planoTrabalhoAtividadeId) === -1" title="Candidatar"><i class="fa fa-2x fa-user-plus text-gray-5"></i></a>
+                  </secure-input>
+                  <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Aprovada" title="Aprovado"><i class="fa fa-2x fa-user-check text-success"></i></span>
+                  <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Rejeitada" title="Rejeitado"><i class="fa fa-2x fa-user-times text-danger"></i></span>
+                  <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Solicitada" title="Aguardando aprovação"><i class="fa fa-2x fa-user-clock text-info"></i></span>
+                </td>
+                <td *ngIf="dadosPlano.value?.situacaoId >= PlanoTrabalhoSituacaoEnum.ProntoParaExecucao">
+                  <ul class="pl-2">
+                    <li *ngFor="let candidato of candidatosAtividade(item.planoTrabalhoAtividadeId)">{{candidato.nome}}</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total de servidores do plano:</td>
+                <td class="text-right">{{totalColaboradores}}</td>
+                <td colspan="2"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <plano-atividade-cadastro [dadosPlano]="dadosPlano" [modalidades]="modalidades" [itensUnidade]="itensUnidade" [criterios]="criterios" [atividadeEdicao]="atividadeEdicao" [totalDisponivelColaboradores]="totalDisponivelColaboradores"></plano-atividade-cadastro>
+</ng-template>
+
+<ng-template #modalCandidatura let-modal>
+  <plano-atividade-candidatura [dadosPlano]="dadosPlano" [atividadeEdicao]="atividadeEdicao"></plano-atividade-candidatura>
+</ng-template>
+
+<ng-template #modalCandidatos let-modal>
+  <plano-lista-atividade-candidato [dadosPlano]="dadosPlano" [candidatos]="candidatos"></plano-lista-atividade-candidato>
+</ng-template>

@@ -1,0 +1,190 @@
+<div class="row mt-5" *ngIf="!isReadOnly">
+  <div class="col-sm-12 text-right">
+    <button class="br-button is-secondary" type="button" (click)="adicionar()">Cadastrar atividades</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 mt-5 ">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Atividade</th>
+                <th>Descrição</th>
+                <th class="text-right">Quantidade</th>
+                <th class="text-right">Tempo por item</th>
+                <th class="text-right">Tempo total</th>
+                <th class="text-center" *ngIf="saldoHoras < 0"></th>
+                <th style="width:90px" *ngIf="!isReadOnly"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of atividades.value">
+                <td>{{item.itemCatalogo}}</td>
+                <td>{{item.descricao}}</td>
+                <td class="text-right">{{item.quantidade}}</td>
+                <td class="text-right">{{item.tempoPrevistoPorItem}}</td>
+                <td class="text-right">{{item.tempoPrevistoTotal}}</td>
+                <td class="text-center" *ngIf="saldoHoras < 0">
+                  <i *ngIf="!item.adicionadoCalendario" class="fa fa-exclamation-triangle" title="Essa atividade excede a quantidade de dias disponíveis no pacto"></i>
+                </td>
+                <td *ngIf="!isReadOnly">
+                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="dadosPacto?.value.servidorId" class="d-flex">
+                    <a href="javascript:void(0)" (click)="editar(item.pactoTrabalhoAtividadeId)" class="mr-1"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" (click)="excluir(item.pactoTrabalhoAtividadeId)"><i class="fa fa-trash"></i></a>
+                  </secure-input>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="text-right">Tempo total em horas:</td>
+                <td class="text-right">{{tempoPrevistoTotal}}</td>
+                <td *ngIf="saldoHoras < 0"></td>
+                <td *ngIf="!isReadOnly"></td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-right">Saldo em horas:</td>
+                <td class="text-right">{{saldoHoras}}</td>
+                <td *ngIf="saldoHoras < 0"></td>
+                <td *ngIf="!isReadOnly"></td>
+              </tr>
+              <tr>
+                <td colspan="5" class="text-right">
+                  <span *ngIf="saldoHoras > 0" class="text-warning">O plano prevê menos horas de atividades do que o tempo total disponível</span>
+                  <span *ngIf="saldoHoras < 0" class="text-warning">O plano prevê mais horas de atividades do que o tempo total disponível</span>
+                </td>
+                <td *ngIf="saldoHoras < 0"></td>
+                <td *ngIf="!isReadOnly"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title">Cadastrar atividade</h2>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fecharModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="br-form">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Atividade">
+                <select id="itemCatalogoId" name="itemCatalogoId" formControlName="itemCatalogoId" placeholder="Selecione um atividade" (change)="mudarItemCatalogo($event.target.value)">
+                  <option value="">Selecione um atividade</option>
+                  <option class="select-items" *ngFor="let item of itensCatalogo.value" [value]="item.itemCatalogoId">{{ item.tituloCompleto }}</option>
+                </select><!--[selected]="item.id === atividadeEdicao?.modalidadeExecucaoId"-->
+              </field-validation>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="itemSelecionado">
+          <div class="col">
+            <div class="field">
+              <div class="br-input">
+                <label>Forma de cálculo do tempo</label>
+                <input value="{{itemSelecionado?.formaCalculoTempoItemCatalogo}}" disabled="disabled">
+              </div>
+            </div>
+          </div>
+          <div class="col" *ngIf="permiteMaisDeUma">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Quantidade de repetições">
+                <input id="quantidade" type="number" placeholder="Insira quantas vezes quer que a atividade se repita" name="quantidade" formControlName="quantidade" (change)="calcularTempoTotalAtividade()">
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="itemSelecionado">
+          <div class="col">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo previsto em horas por atividade">
+                <input id="tempoPrevistoPorItem" type="number" [textMask]="{mask: tempoMask}" placeholder="Insira o tempo previsto para realização dessa atividade" name="tempoPrevistoPorItem" formControlName="tempoPrevistoPorItem" (change)="calcularTempoTotalAtividade()">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col" *ngIf="permiteMaisDeUma">
+            <div class="field">
+              <div class="br-input">
+                <label>Tempo total em horas para execução da atividade</label>
+                <input value="{{tempoTotalAtividade}}" disabled="disabled">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+
+        <nav *ngIf="modo === 'avancado'">
+          <ul class="br-tabs">
+            <li class="item" [ngClass]="{'is-active': abaVisivel === 'objetos'}">
+              <a href="javascript:void(0)" (click)="alterarAba('objetos')">
+                <span class="name">Objetos</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div *ngIf="abaVisivel === 'objetos' && modo === 'avancado'">
+          <div class="row">
+            <div class="col-sm-12 mb-5">
+              <div class="table-responsive" style="height: 200px;">
+                <div class="br-table">
+                  <div class="table">
+                    <table class="full-width-table table-striped table-style mat-elevation-z8 tabela-wrapper-scroll-y tabela-scrollbar">
+                      <tbody *ngIf="objetosDoPlanoTrabalho?.length">
+                        <tr *ngFor="let objeto of objetosDoPlanoTrabalho">
+                          <td>{{ objeto.descricao }}</td>
+                          <td>
+                            <ul class="pl-2">
+                              <li *ngFor="let assunto of objeto.assuntos">{{assunto.valor}}</li>
+                            </ul>
+                          </td>
+                          <td class="text-right">
+                            <mat-slide-toggle class="example-margin"
+                                              [checked]="objeto.associado"
+                                              (change)="objeto.associado = $event.checked"></mat-slide-toggle>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="!objetosDoPlanoTrabalho?.length">
+                        <tr>
+                          <td>Nenhum objeto disponível para seleção.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+    <button class="br-button is-primary is-small" type="button" (click)="cadastrarAtividade()" [disabled]="!form.valid">Salvar</button>
+  </div>
+</ng-template>
+

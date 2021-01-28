@@ -1,0 +1,135 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">      
+
+    <h1 class="content-title">
+      Pessoa |
+      <small>{{dadosPessoa?.nome}} | </small>
+      <small>{{dadosPessoa?.unidade}}</small>
+    </h1>
+
+    <p>Veja os dados da pessoa e edite as informações relacionadas ao programa de gestão</p>
+  </header>
+  <form>
+    <div class="br-form">
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Unidade</th>
+                  <th>Modalidade</th>
+                  <th style="width:25%">Tarefas</th>
+                  <th style="width:25%">Perfil</th>
+                  <th>Situação da Candidatura</th>
+                  <th style="width:60px"></th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dadosPessoa?.candidaturas">
+                  <td>{{item.unidade}}</td>
+                  <td>{{item.modalidade}}</td>
+                  <td>
+                    <ul class="pl-2">
+                      <li *ngFor="let atividade of item.tarefas">{{atividade.itemCatalogo}}</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul class="pl-2">
+                      <li *ngFor="let atividade of item.perfis">{{atividade.criterio}}</li>
+                    </ul>
+                  </td>
+                  <td>{{item.situacao}}</td>
+                  <td>
+                    <button class="br-button is-tertiary is-small" type="button" *ngIf="item.situacaoId === planoTrabalhoSituacaoCandidatoEnum.Solicitada" (click)="responder(item)">Responder solicitação</button>
+                    <button class="br-button is-tertiary is-small" type="button" *ngIf="item.situacaoId === planoTrabalhoSituacaoCandidatoEnum.Rejeitada" (click)="visualizarJustificativa(item)"> Ver justificativa</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="actions justify-content-start">
+
+        <!--<button class="br-button is-primary" type="button">Salvar</button>-->
+
+      <button class="br-button is-cancel" type="button" [routerLink]="['/pessoa']">Voltar</button>
+</div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<ng-template #modalResponder let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Justifique a rejeição</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-secondary is-small" type="button" (click)="rejeitar()" [disabled]="!form.valid">Rejeitar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="aprovar()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #modalJustificativa let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Justificativa</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']"  label="Descrição">
+                      <textarea id="descricao"  name="descricao" formControlName="descricao" readonly></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+             <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+

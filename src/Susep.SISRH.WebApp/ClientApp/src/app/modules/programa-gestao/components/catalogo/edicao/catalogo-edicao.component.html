@@ -1,0 +1,132 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Lista de atividades | <small>{{dadosCatalogo?.unidadeSigla}}</small></h1>
+      <p>Adicione ou retire atividades da {{dadosCatalogo?.unidadeSigla}} e clique em salvar</p>
+    </header>
+    <div class="br-form">
+      <div class="row">
+        <div class="col-sm-12">
+          <nav>
+            <ul class="br-tabs">
+              <li class="item" [ngClass]="{'is-active': abaVisivel === 'unidade'}">
+                <a href="javascript:void(0)" (click)="alterarAba('unidade')">
+                  <span class="name">Atividades selecionadas para a unidade</span>
+                </a>
+              </li>
+              <li class="item" [ngClass]="{'is-active': abaVisivel === 'todos'}">
+                <a href="javascript:void(0)" (click)="alterarAba('todos')">
+                  <span class="name">Todas as atividades</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div *ngIf="abaVisivel === 'unidade'">
+            <div class="row">
+              <div class="col-sm-12 mt-5">
+                <div class="table-responsive">
+                  <div class="br-table">
+                    <div class="table">
+                      <table class="full-width-table table-striped table-style mat-elevation-z8">
+                        <thead>
+                          <tr>
+                            <th>Título</th>
+                            <th>Complexidade</th>
+                            <th>Cálculo do tempo</th>
+                            <th class="text-center">Trabalho remoto</th>
+                            <th class="text-right">Tempo presencial</th>
+                            <th class="text-right">Tempo remoto</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of dadosCatalogo?.itens">
+                            <td>{{item.titulo}}</td>
+                            <td>{{item.complexidade}}</td>
+                            <td>{{item.formaCalculoTempoItemCatalogo}}</td>
+                            <td class="text-center">{{item.permiteTrabalhoRemoto ? "Sim" : "Não"}}</td>
+                            <td class="text-right">{{item.tempoExecucaoPresencial}}</td>
+                            <td class="text-right">{{item.tempoExecucaoRemoto}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="6" *ngIf="dadosEncontrados && dadosEncontrados?.totalRegistros === 0" class="text-center">Nenhuma atividade encontrada</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="abaVisivel === 'todos'">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="br-form mt-5">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="field">
+                      <div class="br-input">
+                        <label for="item-1">Título</label>
+                        <input id="item-1" type="text" placeholder="Insira um texto para filtrar pelo título" name="titulo" formControlName="titulo">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mt-6">
+                    <div class="justify-content-start">
+                      <button class="br-button is-primary" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-12 mb-5">
+                <div class="table-responsive">
+                  <div class="br-table">
+                    <div class="table">
+                      <table class="full-width-table table-striped table-style mat-elevation-z8">
+                        <thead>
+                          <tr>
+                            <th>Título</th>
+                            <th>Complexidade</th>
+                            <th>Cálculo do tempo</th>
+                            <th class="text-center">Trabalho remoto</th>
+                            <th class="text-right">Tempo presencial</th>
+                            <th class="text-right">Tempo remoto</th>
+                            <th style="width:60px"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of  dadosEncontrados?.registros">
+                            <td>{{item.titulo}}</td>
+                            <td>{{item.complexidade}}</td>
+                            <td>{{item.formaCalculoTempoItemCatalogo}}</td>
+                            <td class="text-center">{{item.permiteTrabalhoRemoto ? "Sim" : "Não"}}</td>
+                            <td class="text-right">{{item.tempoExecucaoPresencial}}</td>
+                            <td class="text-right">{{item.tempoExecucaoRemoto}}</td>
+                            <td>
+                              <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+                                <mat-slide-toggle class="example-margin" [checked]="marcarItem(item.itemCatalogoId)" (change)="associarItem($event,item.itemCatalogoId)"></mat-slide-toggle>
+                              </secure-input>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="7" *ngIf="dadosEncontrados && dadosEncontrados?.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="pesquisar($event)"></app-pagination>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="br-divider mt-4"></div>
+      <div class="actions justify-content-start">
+        <button class="br-button is-cancel" type="button" [routerLink]="['/programagestao/catalogo']">Voltar para todas as listas de atividades</button>
+      </div>
+    </div>
+  </div>
+</section>

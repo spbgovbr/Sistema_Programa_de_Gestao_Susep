@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-12 pr-0">
+    <div class="user">
+      <div class="actions float-right d-none d-md-block">
+        <button *ngIf="isAuthenticated" class="br-button is-secondary" type="button" (click)="logoutClicked($event)">Sair</button>
+        <button *ngIf="!isAuthenticated" class="br-button is-secondary" type="button" (click)="login()"><i class="fa fa-user mr-2"></i>Entrar</button>
+      </div>
+      <div *ngIf="isAuthenticated" class="user-data d-none d-md-block float-right">
+        <div class="row title user text-right mr-2">
+          <div class="col-12 name">{{perfil?.nome}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

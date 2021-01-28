@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <base href="/">
+  <script src="env.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>SISGP :: SUSEP</title>
+  <link rel="icon" type="image/x-icon" href="./assets/images/favicon.png">
+  <link rel="shortcut icon" href="./assets/images/favicon.png" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <!-- Cabeçalho da página -->
+  <header class="page-header" id="header">
+    <!-- Barra do governo -->
+    <div id="barra-brasil"></div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main>
+    <app-root>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+          <span class="sr-only">Carregando...</span>
+        </div>
+      </div>
+    </app-root>
+  </main>
+
+  <!-- Rodapé da página -->
+  <footer>   
+    <!-- Rodapé do governo -->
+    <div id="footer-brasil" class="page-footer mt-5 mt-sm-0"></div>
+  </footer>
+
+  <!-- Script da barra de governo -->
+  <script defer="defer" src="//barra.brasil.gov.br/barra_2.0.js" type="text/javascript"></script>
+
+</body>
+</html>

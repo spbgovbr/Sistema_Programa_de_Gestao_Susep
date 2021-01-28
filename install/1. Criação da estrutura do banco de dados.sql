@@ -1,4 +1,7 @@
-﻿CREATE TABLE [dbo].[CatalogoDominio](
+﻿CREATE SCHEMA [ProgramaGestao]
+GO
+
+CREATE TABLE [dbo].[CatalogoDominio](
 	[catalogoDominioId] [int] NOT NULL,
 	[classificacao] [varchar](50) NOT NULL,
 	[descricao] [varchar](100) NOT NULL,
@@ -809,45 +812,16 @@ REFERENCES [dbo].[UF] ([ufId])
 GO
 ALTER TABLE [dbo].[Feriado] CHECK CONSTRAINT [FK_Feriado_UF]
 GO
-ALTER TABLE [dbo].[Pessoa]  WITH CHECK ADD  CONSTRAINT [FK_Pessoa_Cargo] FOREIGN KEY([cargoId])
-REFERENCES [dbo].[Cargo] ([cargoId])
-GO
-ALTER TABLE [dbo].[Pessoa] CHECK CONSTRAINT [FK_Pessoa_Cargo]
-GO
-ALTER TABLE [dbo].[Pessoa]  WITH CHECK ADD  CONSTRAINT [FK_Pessoa_ClassePadrao] FOREIGN KEY([classePadraoId])
-REFERENCES [dbo].[ClassePadrao] ([classePadraoId])
-GO
-ALTER TABLE [dbo].[Pessoa] CHECK CONSTRAINT [FK_Pessoa_ClassePadrao]
-GO
-ALTER TABLE [dbo].[Pessoa]  WITH CHECK ADD  CONSTRAINT [FK_Pessoa_Situacao_Pessoa] FOREIGN KEY([situacaoPessoaId])
-REFERENCES [dbo].[SituacaoPessoa] ([situacaoPessoaId])
-GO
-ALTER TABLE [dbo].[Pessoa] CHECK CONSTRAINT [FK_Pessoa_Situacao_Pessoa]
-GO
+
 ALTER TABLE [dbo].[Pessoa]  WITH CHECK ADD  CONSTRAINT [FK_Pessoa_TipoFuncao] FOREIGN KEY([tipoFuncaoId])
 REFERENCES [dbo].[TipoFuncao] ([tipoFuncaoId])
 GO
 ALTER TABLE [dbo].[Pessoa] CHECK CONSTRAINT [FK_Pessoa_TipoFuncao]
 GO
-ALTER TABLE [dbo].[Pessoa]  WITH CHECK ADD  CONSTRAINT [FK_Pessoa_TipoVinculo] FOREIGN KEY([tipoVinculoId])
-REFERENCES [dbo].[TipoVinculo] ([tipoVinculoId])
-GO
-ALTER TABLE [dbo].[Pessoa] CHECK CONSTRAINT [FK_Pessoa_TipoVinculo]
-GO
 ALTER TABLE [dbo].[Pessoa]  WITH CHECK ADD  CONSTRAINT [FK_Pessoa_Unidade] FOREIGN KEY([unidadeId])
 REFERENCES [dbo].[Unidade] ([unidadeId])
 GO
 ALTER TABLE [dbo].[Pessoa] CHECK CONSTRAINT [FK_Pessoa_Unidade]
-GO
-ALTER TABLE [dbo].[Unidade]  WITH CHECK ADD  CONSTRAINT [FK_Unidade_SituacaoUnidade] FOREIGN KEY([situacaoUnidadeId])
-REFERENCES [dbo].[SituacaoUnidade] ([situacaoUnidadeId])
-GO
-ALTER TABLE [dbo].[Unidade] CHECK CONSTRAINT [FK_Unidade_SituacaoUnidade]
-GO
-ALTER TABLE [dbo].[Unidade]  WITH CHECK ADD  CONSTRAINT [FK_Unidade_TipoUnidade] FOREIGN KEY([tipoUnidadeId])
-REFERENCES [dbo].[TipoUnidade] ([tipoUnidadeId])
-GO
-ALTER TABLE [dbo].[Unidade] CHECK CONSTRAINT [FK_Unidade_TipoUnidade]
 GO
 ALTER TABLE [dbo].[Unidade]  WITH CHECK ADD  CONSTRAINT [FK_Unidade_UF] FOREIGN KEY([ufId])
 REFERENCES [dbo].[UF] ([ufId])
@@ -1123,6 +1097,9 @@ ALTER TABLE [ProgramaGestao].[UnidadeModalidadeExecucao]  WITH CHECK ADD  CONSTR
 REFERENCES [dbo].[Unidade] ([unidadeId])
 GO
 ALTER TABLE [ProgramaGestao].[UnidadeModalidadeExecucao] CHECK CONSTRAINT [FK_UnidadeModalidadeExecucao_Unidade]
+GO
+CREATE NONCLUSTERED INDEX IX_Unidade_unidadeIdPai  
+    ON Unidade (unidadeIdPai);   
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Código da unidade no SIORG' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Unidade', @level2type=N'COLUMN',@level2name=N'undCodigoSIORG'
 GO

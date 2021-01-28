@@ -1,0 +1,82 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Objeto</h1>
+      <p>Veja a lista de objetos cadastrados</p>
+    </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <fieldset>          
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-input">
+                  <label for="descricao">Descrição</label>
+                  <input id="descricao" type="text" formControlName="descricao" placeholder="Insira um texto">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-select">
+                  <label for="tipo">Tipo</label>
+                  <select name="tipo" id="tipo" formControlName="tipo">
+                    <option [value]="null">Selecione o tipo</option>
+                    <option [value]="tipo.id" *ngFor="let tipo of tipos">{{ tipo.descricao }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-input">
+                  <label for="chave">Chave</label>
+                  <input id="chave" type="text" formControlName="chave" placeholder="Insira um texto" #inputChave [value]="inputChave.value.toUpperCase()">
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary ml-2" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+          <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]">
+            <button class="br-button is-secondary" type="button" [routerLink]="['/objeto/cadastro']">Cadastrar objeto</button>
+          </secure-input>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Tipo</th>
+                  <th>Chave</th>
+                  <th>Situação</th>
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>                
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{ item.descricao }}</td>
+                  <td>{{ obterDescricaoTipo(item.tipo) }}</td>
+                  <td *ngIf="item.tipo === '1'">{{ item.chave | mask: '00.000.000/0000-00' }}</td>
+                  <td *ngIf="item.tipo === '2'">{{ item.chave }}</td>
+                  <td>{{item.ativo ? 'Ativo' : 'Inativo'}}</td>
+                  <td><a href="javascript:void(0)" [routerLink]="['/objeto/editar/' + item.objetoId]"><i class="fa fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                  <td colspan="5" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="pesquisar($event)"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

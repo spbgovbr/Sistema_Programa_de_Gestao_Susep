@@ -1,0 +1,69 @@
+<secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade">
+  <div class="row mt-5" *ngIf="dadosPlano.value.situacaoId == PlanoTrabalhoSituacaoEnum.ProntoParaExecucao || dadosPlano.value.situacaoId == PlanoTrabalhoSituacaoEnum.EmExecucao">
+    <div class="col-sm-12 text-right">
+      <button class="br-button is-secondary" type="button" (click)="cadastrarPactoTrabalho()">Cadastrar plano de trabalho</button>
+    </div>
+  </div>
+</secure-input>
+<div class="row">
+  <div class="col-sm-12 mt-5">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Servidor</th>
+                <th>Modalidade de execução</th>
+                <th>Data de início</th>
+                <th>Data de fim</th>
+                <th>Situação</th>
+                <th style="width:120px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of pactos">
+                <td>{{item.pessoa}}</td>
+                <td>{{item.formaExecucao}}</td>
+                <td>{{item.dataInicio | date: 'dd/MM/yyyy'}}</td>
+                <td>{{item.dataFim | date: 'dd/MM/yyyy'}}</td>
+                <td>{{item.situacao}}</td>
+                <td>
+                  <a href="javascript:void(0)" (click)="cadastrarPactoTrabalho(item.pactoTrabalhoId)" class="mr-2" title="Copiar"><i class="fa fa-copy"></i></a>
+                  <a href="javascript:void(0)" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" class="mr-2" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                  <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+                    <a href="javascript:void(0)" (click)="excluirPactoTrabalho(item.pactoTrabalhoId)" *ngIf="item.situacaoId < 405" class="mr-2" title="Excluir"><i class="fa fa-trash"></i></a>
+                  </secure-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalConfirmacaoExclusao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confirme a exclusão do plano</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">Tem certeza que deseja excluir o plano de trabalho?</div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarExclusaoPlano()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

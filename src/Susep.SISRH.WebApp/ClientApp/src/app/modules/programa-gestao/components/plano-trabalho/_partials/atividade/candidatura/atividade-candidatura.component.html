@@ -1,0 +1,54 @@
+<div class="br-modal is-large">
+  <div class="br-modal-dialog">
+    <div class="br-modal-content">
+      <div class="br-modal-header">
+        <h2 class="text-info">Candidatar a vaga</h2>
+        <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="br-modal-body">
+        <div class="br-form">
+          <div class="row">
+            <div class="col-sm-12 pb-2">
+              <span class="text-primary">Modalidade de execução:</span><br />
+              {{atividadeEdicao.value?.modalidadeExecucao}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <span class="text-primary">Atividades a serem realizadas:</span>
+              <ol class="ml-4 pl-2">
+                <li *ngFor="let atividade of atividadeEdicao.value?.itensCatalogo">{{atividade.itemCatalogo}}</li>
+              </ol>
+            </div>
+          </div>
+          <div class="row" *ngIf="atividadeEdicao.value?.descricao">
+            <div class="col-sm-12">
+              <span class="text-primary">Descrição:</span><br />
+              {{atividadeEdicao.value?.descricao}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 pt-5" style="height: 200px;">
+              <span class="text-primary">Termo de ciência e responsabilidade:</span><br />
+              <div class="overflow-auto h-75 border p-2">
+                {{ dadosPlano.value?.termoAceite }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="br-modal-footer justify-content-end">
+        <mat-slide-toggle #chaveTermos
+                          class="example-margin mr-10 mt-1"
+                          (change)="toggleSituacao($event)">
+
+          <span class="pt-2">Aceito</span>
+        </mat-slide-toggle>
+
+        <button class="br-button is-primary is-small" type="button" (click)="candidatar()" [disabled]="!aceitouTermos">Candidatar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade" [servidor]="servidor">
+  <div class="row mt-5" *ngIf="!isReadOnly">
+    <div class="col-sm-12 text-right">
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastroAtividade()">Cadastrar atividade</button>
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaAlteracaoPrazo()">Alterar prazo</button>
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaJustificarEstouroPrazo()">Justificar estouro de prazo</button>    
+    </div>
+  </div>
+</secure-input>
+<div class="row">
+  <div class="col-sm-12 mt-5 ">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th class="text-center">Data</th>
+                <th>Solicitante</th>
+                <th>Resposta</th>
+                <th style="width:90px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of solicitacoes">
+                <td>{{item.tipoSolicitacao}}</td>
+                <td class="text-center">{{item.dataSolicitacao | date: 'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{item.solicitante}}</td>
+                <td>
+                  <span *ngIf="item.analisado && item.aprovado">Aprovado</span>
+                  <span *ngIf="item.analisado && !item.aprovado">Rejeitado</span>
+                </td>
+                <td>
+                  <a href="javascript:void(0)" (click)="verSolicitacao(item.pactoTrabalhoSolicitacaoId)" class="mr-2"><i class="fa fa-eye"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <atividade-pacto-nova [dadosPacto]="dadosPacto" [itensUnidade]="itensUnidade" [situacoesAtividade]="situacoes" *ngIf="tipoSolicitacao === 101"></atividade-pacto-nova>
+  <alteracao-prazo-pacto [dadosPacto]="dadosPacto" *ngIf="tipoSolicitacao === 102"></alteracao-prazo-pacto>
+  <pacto-detalhes-solicitacao [dadosPacto]="dadosPacto" [dadosSolicitacao]="solicitacaoEditar" *ngIf="tipoSolicitacao === 199"></pacto-detalhes-solicitacao>
+  <justificar-estouro-prazo [dadosPacto]="dadosPacto" [solicitacoes]="solicitacoes" *ngIf="tipoSolicitacao === 103"></justificar-estouro-prazo>
+</ng-template>

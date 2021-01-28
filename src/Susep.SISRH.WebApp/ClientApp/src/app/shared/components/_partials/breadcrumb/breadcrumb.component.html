@@ -1,0 +1,10 @@
+<ul class="br-breadcrumb">  
+  <li *ngFor="let breadcrumb of breadcrumbs" [ngClass]="{'is-active': breadcrumb.isActive, 'home': breadcrumb.isHome }">
+    <a [routerLink]="[breadcrumb.url]">
+      <span [ngClass]="{'sr-only': breadcrumb.isHome }">{{ breadcrumb.label }}</span>
+      <i *ngIf="breadcrumb.isHome" class="fas fa-home"></i>
+    </a>    
+  </li>
+</ul>
+
+

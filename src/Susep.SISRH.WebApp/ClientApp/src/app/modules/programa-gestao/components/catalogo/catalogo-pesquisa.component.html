@@ -1,0 +1,64 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Lista de atividades</h1>
+      <p>Preencha os campos do formulário para filtrar as listas de atividades</p>
+    </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <fieldset>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <div class="br-select">
+                  <label for="simples">Unidade</label>
+                  <select id="unidadeId" name="unidadeId" formControlName="unidadeId" placeholder="Mostrar tudo">
+                    <option class="select-items" value="null">Selecione</option>
+                    <option class="select-items" *ngFor="let item of unidadesAtivasCombo" [value]="item.id">{{ item.descricao }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary ml-2" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+          <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+            <button class="br-button is-secondary" type="button" [routerLink]="['/programagestao/catalogo/cadastro']">Cadastrar lista de atividade</button>
+          </secure-input>
+          <button class="br-button is-tertiary mr-2" type="button" [routerLink]="['/programagestao/catalogo/item']">Gerenciar atividades</button>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Unidade</th>
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{item.unidade.sigla}}</td>
+                  <td>
+                    <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+                      <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/editar/' + item.unidade.unidadeId]"><i class="fa fa-edit"></i></a>
+                    </secure-input>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="pesquisar($event)"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

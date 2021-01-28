@@ -1,0 +1,22 @@
+<nav class="ds-menu-lateral py-1 py-md-3">
+  <div class="menu-item" *ngFor="let menuItem of menuItems">
+    <a *ngIf="menuItem.url" [routerLink]="[menuItem.url]" [ngClass]="{ 'is-active': isActive(menuItem.url, false) }">{{ menuItem.text }}</a>
+    <button *ngIf="menuItem.subItems" (click)="toggle($event)" [ngClass]="{ 'is-open': menuItem.isOpen }" type="button"><span>{{ menuItem.text }}</span></button>
+    <ul *ngIf="menuItem.subItems" class="submenu level-1">
+      <li class="menu-item" *ngFor="let subMenu of menuItem.subItems">
+        <a *ngIf="subMenu.url" [routerLink]="[subMenu.url]" [ngClass]="{ 'is-active': isActive(subMenu.url, false) }">{{ subMenu.text }}</a>
+        <button *ngIf="subMenu.subItems" (click)="toggle($event)" [ngClass]="{ 'is-open': subMenu.isOpen }" type="button">{{ subMenu.text }}</button>
+        <ul *ngIf="subMenu.subItems" class="submenu level-2">
+          <li class="menu-item">
+            <a [routerLink]="[sub.url]" *ngFor="let sub of subMenu.subItems" [ngClass]="{ 'is-active': isActive(sub.url, false) }">{{ sub.text }}</a>            
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>  
+
+  
+
+
+</nav>
+

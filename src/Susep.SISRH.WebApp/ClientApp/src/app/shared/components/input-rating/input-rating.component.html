@@ -1,0 +1,17 @@
+<div class="d-flex avo">
+  <div class="pointer p-0 m-0 flex-fill" (click)="click($event, '-1')" (mouseover)="mouseover(-1)" (mouseout)="mouseout()">&nbsp;</div>
+  <div *ngFor="let v of value | keyvalue" class="p-0 m-0 flex-fill pai" (mouseover)="mouseover(v.key)" (mouseout)="mouseout()">
+    <div class="d-flex text-center filho">
+      <div class="pointer flex-fill"
+        (click)="click($event, v.key)">
+        <i class="fa-star fa-lg" [ngClass]="{ 
+            'fas': getPosicao(v.key) <= posicao, 
+            'far': getPosicao(v.key) > posicao,
+            'text-success': (!notaLimite || posicao >= notaLimite) && getPosicao(v.key) <= posicao,
+            'text-danger': notaLimite && posicao < notaLimite && getPosicao(v.key) <= posicao
+          }"></i>
+      </div>
+    </div>
+  </div>
+  <div class="p-0 m-0 flex-fill">&nbsp;</div>
+</div>

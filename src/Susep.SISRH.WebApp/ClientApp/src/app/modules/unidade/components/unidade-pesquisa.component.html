@@ -1,0 +1,63 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Unidade</h1>
+      <p>Veja a lista de unidades cadastradas</p>
+    </header>
+    <form>
+      <div class="br-form">
+        <fieldset>          
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="field">
+                <div class="br-input">
+                  <label for="item-1">Nome</label>
+                  <input id="item-1" type="text" placeholder="Insira um texto">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-input">
+                  <label for="item-1">Sigla</label>
+                  <input id="item-1" type="text" placeholder="Insira um texto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Sigla</th>
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>                
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{item.descricao}}</td>
+                  <td>{{item.sigla}}</td>
+                  <td><a href="javascript:void(0)" [routerLink]="['/unidade/editar/' + item.unidadeId]"><i class="fa fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                  <td colspan="3" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

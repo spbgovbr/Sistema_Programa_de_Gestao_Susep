@@ -1,0 +1,94 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Atividades</h1>
+      <p>Veja as atividades cadastradas</p>
+      <p>Preencha os campos do formulário para filtrar os atividades</p>
+    </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <fieldset>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-input">
+                  <label for="item-1">Título</label>
+                  <input id="item-1" type="text" placeholder="Insira um texto para filtrar pelo título" name="titulo" formControlName="titulo">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-select">
+                  <label for="formaCalculoTempoId">Forma de cálculo do tempo</label>
+                  <select id="formaCalculoTempoId" name="formaCalculoTempoId" formControlName="formaCalculoTempoId" placeholder="Mostrar tudo">
+                    <option value="null">Mostrar tudo</option>
+                    <option class="select-items" *ngFor="let item of formaCalculoTempo" [value]="item.id">{{ item.descricao }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-select">
+                  <label for="permiteTrabalhoRemoto">Permite trabalho remoto?</label>
+                  <select id="permiteTrabalhoRemoto" name="permiteTrabalhoRemoto" formControlName="permiteTrabalhoRemoto" placeholder="Mostrar tudo">
+                    <option [ngValue]="null">Mostrar tudo</option>
+                    <option [ngValue]="true">Sim</option>
+                    <option [ngValue]="false">Não</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary ml-2" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+          <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+            <button class="br-button is-secondary" type="button" [routerLink]="['/programagestao/catalogo/item/cadastro']">Cadastrar atividade</button>
+          </secure-input>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Complexidade</th>
+                  <th>Cálculo do tempo</th>
+                  <th class="text-center">Trabalho remoto</th>
+                  <th class="text-right">Tempo presencial</th>
+                  <th class="text-right">Tempo remoto</th>
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{item.titulo}}</td>
+                  <td>{{item.complexidade}}</td>
+                  <td>{{item.formaCalculoTempoItemCatalogo}}</td>
+                  <td class="text-center">{{item.permiteTrabalhoRemoto ? "Sim" : "Não"}}</td>
+                  <td class="text-right">{{item.tempoExecucaoPresencial | number}}</td>
+                  <td class="text-right">{{item.tempoExecucaoRemoto | number}}</td>
+                  <td>
+                    <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+                      <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/editar/' + item.itemCatalogoId]"><i class="fa fa-edit"></i></a>
+                    </secure-input>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="pesquisar($event)"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

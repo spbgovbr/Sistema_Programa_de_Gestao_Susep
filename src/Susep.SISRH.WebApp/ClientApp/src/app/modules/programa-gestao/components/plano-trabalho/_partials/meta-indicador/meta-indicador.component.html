@@ -1,0 +1,92 @@
+<secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+  <div class="row mt-5" *ngIf="dadosPlano.value.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho">
+    <div class="col-sm-12 text-right">
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastro()">Cadastrar meta</button>
+    </div>
+  </div>
+</secure-input>
+<div class="row">
+  <div class="col-sm-12 mt-5">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Meta</th>
+                <th>Indicador</th>
+                <th>Descrição</th>
+                <th style="width:90px" *ngIf="!isReadOnly"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dadosPlano.value.metas">
+                <td>{{item.meta}}</td>
+                <td>{{item.indicador}}</td>
+                <td>{{item.descricao}}</td>
+                <td *ngIf="!isReadOnly">
+                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+                    <a href="javascript:void(0)" (click)="editar(item.planoTrabalhoMetaId)" class="mr-2"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" (click)="excluir(item.planoTrabalhoMetaId)"><i class="fa fa-trash"></i></a>
+                  </secure-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Cadastrar meta</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <form [formGroup]="form">
+            <div class="br-form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Meta">
+                      <input id="meta" type="text" placeholder="Insira a meta" name="meta" formControlName="meta">
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Indicador">
+                      <input id="indicador" type="text" placeholder="Insira o indicador" name="indicador" formControlName="indicador">
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="submit" (click)="cadastrarMeta()" [disabled]="!form.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

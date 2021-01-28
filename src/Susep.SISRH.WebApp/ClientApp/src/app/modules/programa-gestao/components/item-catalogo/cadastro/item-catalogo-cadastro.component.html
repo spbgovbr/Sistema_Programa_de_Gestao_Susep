@@ -1,0 +1,108 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Atividade</h1>
+      <p>Preencha os campos abaixo para cadastrar um novo atividade ou altere os dados para editar um atividade existente</p>
+    </header>
+    <form [formGroup]="form">
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Título">
+                <input id="titulo" type="text" placeholder="Insira um texto" name="titulo" formControlName="titulo">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Faixa de complexidade">
+                <input id="complexidade" type="text" placeholder="Insira um texto" name="complexidade" formControlName="complexidade" (change)="mudarComplexidade($event.target.value)">
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="exibeDescricaoComplexidade">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Parâmetros para definição da faixa de complexidade">
+                <textarea id="definicaoComplexidade" type="text" placeholder="Insira um texto" name="definicaoComplexidade" formControlName="definicaoComplexidade"></textarea>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="field">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Forma de cálculo do tempo">
+                <select id="formaCalculoTempoItemCatalogoId" name="formaCalculoTempoItemCatalogoId" formControlName="formaCalculoTempoItemCatalogoId" (change)="mudarFormaCalculoTempo($event.target.value)">
+                  <option value="">Selecione uma forma de cálculo do tempo</option>
+                  <option class="select-items" *ngFor="let item of formaCalculoTempo" [ngValue]="item.id">{{ item.descricao }}</option>
+                </select>
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Permite trabalho remoto?">
+                <select id="permiteTrabalhoRemoto" name="permiteTrabalhoRemoto" formControlName="permiteTrabalhoRemoto" (change)="mudarPermiteTrabalhoRemoto($event.target.value)">
+                  <option value="">Informe se permite trabalho remoto</option>
+                  <option value="true">Sim</option>
+                  <option value="false">Não</option>
+                </select>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="tempoCalculadoPreviamente">
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo execução atuando presencialmente">
+                <input id="tempoExecucaoPresencial" type="text" placeholder="Insira um valor em horas" name="tempoExecucaoPresencial" [textMask]="{mask: tempoMask}" formControlName="tempoExecucaoPresencial" (change)="mudarTempoExecucao($event)">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4" *ngIf="permiteTrabalhoRemoto">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo execução atuando remotamente">
+                <input id="tempoExecucaoRemoto" type="text" placeholder="Insira um valor em horas" name="tempoExecucaoRemoto" [textMask]="{mask: tempoMask}" formControlName="tempoExecucaoRemoto" (change)="mudarTempoExecucao($event)">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4" *ngIf="permiteTrabalhoRemoto">
+            <div class="field">
+              <div class="br-input">
+                <label>
+                  Ganho de produtividade (%)
+                </label>
+                <input id="ganhoProdutividade" type="text" placeholder="0" name="ganhoProdutividade" disabled="disabled" [textMask]="{mask: tempoMask}" value="{{ganhoProdutividade | percent:'1.2'}}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Entregas esperadas">
+                <textarea id="entregasEsperadas" type="text" placeholder="Insira um texto" name="entregasEsperadas" formControlName="entregasEsperadas"></textarea>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Outras informações">
+                <textarea id="descricao" type="text" placeholder="Insira um texto" name="descricao" formControlName="descricao"></textarea>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary" type="submit" (click)="salvarItem()" [disabled]="!form.valid">Salvar</button>
+          <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/programagestao/catalogo/item']">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

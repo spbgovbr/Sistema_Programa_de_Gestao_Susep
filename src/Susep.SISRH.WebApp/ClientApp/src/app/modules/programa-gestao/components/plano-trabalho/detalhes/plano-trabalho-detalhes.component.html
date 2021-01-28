@@ -1,0 +1,181 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">
+        Programa de gestão |
+        <small>{{dadosPlano.value?.unidade}}</small> |
+        <small [class]="classeTextoSituacao">{{dadosPlano.value?.situacao}}</small>
+      </h1>
+      <p>Veja os detalhes do programa de gestão, proponha planos de trabalho e avalie os resultados obtidos com a execução </p>
+    </header>
+    <form>
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-6 mb-5">
+            <dl class="row">
+              <dt class="col-sm-6">Prazo de comparecimento:</dt>
+              <dd class="col-sm-6">{{dadosPlano.value?.tempoComparecimento}} dias</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-6">Total de servidores na unidade:</dt>
+              <dd class="col-sm-6">{{dadosPlano.value?.totalServidoresSetor}}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-6">Data inicio:</dt>
+              <dd class="col-sm-6">{{dadosPlano.value?.dataInicio | date: 'dd/MM/yyyy'}}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-6">Data fim:</dt>
+              <dd class="col-sm-6">{{dadosPlano.value?.dataFim | date: 'dd/MM/yyyy'}}</dd>
+            </dl>
+          </div>
+          <div class="col-sm-6 mb-5">
+            <dl class="row" *ngIf="dadosPlano.value?.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho || dadosPlano.value?.situacaoId == PlanoTrabalhoSituacaoEnum.Habilitacao">
+              <dt class="col-sm-6">Prazo da fase de habilitação:</dt>
+              <dd class="col-sm-6">{{dadosPlano.value?.tempoFaseHabilitacao}} dias</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <nav>
+              <ul class="br-tabs">
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'atividades'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('atividades')">
+                    <span class="name">Atividades<br />previstas</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'metasIndicadores'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('metasIndicadores')">
+                    <span class="name">Resultados <br />e benefícios</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'cronograma'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('cronograma')">
+                    <span class="name">Cronograma</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'custo'}" *ngIf="modo === 'avancado'">
+                  <a href="javascript:void(0)" (click)="alterarAba('custo')">
+                    <span class="name">Custo</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'objetos'}" *ngIf="modo === 'avancado'">
+                  <a href="javascript:void(0)" (click)="alterarAba('objetos')">
+                    <span class="name">Objetos</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'pactos'}" *ngIf="dadosPlano.value?.situacaoId >= PlanoTrabalhoSituacaoEnum.EmExecucao">
+                  <a href="javascript:void(0)" (click)="alterarAba('pactos')">
+                    <span class="name">Planos<br />de trabalho</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'historico'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('historico')">
+                    <span class="name">Histórico</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div *ngIf="abaVisivel === 'atividades'">
+              <plano-lista-atividade [dadosPlano]="dadosPlano"></plano-lista-atividade>
+            </div>
+            <div *ngIf="abaVisivel === 'metasIndicadores'">
+              <plano-lista-meta-indicador [dadosPlano]="dadosPlano"></plano-lista-meta-indicador>
+            </div>
+            <div *ngIf="abaVisivel === 'cronograma'">
+              <plano-cronograma [dadosPlano]="dadosPlano"></plano-cronograma>
+            </div>
+            <div *ngIf="abaVisivel === 'custo'">
+              <plano-custo [dadosPlano]="dadosPlano"></plano-custo>
+            </div>
+            <div *ngIf="abaVisivel === 'pactos'">
+              <plano-lista-pacto-trabalho [dadosPlano]="dadosPlano"></plano-lista-pacto-trabalho>
+            </div>
+            <div *ngIf="abaVisivel === 'avaliacao'">
+              <plano-avaliacao-resultados [dadosPlano]="dadosPlano"></plano-avaliacao-resultados>
+            </div>
+            <div *ngIf="abaVisivel === 'objetos'">
+              <plano-lista-objeto [dadosPlano]="dadosPlano"></plano-lista-objeto>
+            </div>
+            <div *ngIf="abaVisivel === 'historico'">
+              <plano-historico [dadosPlano]="dadosPlano"></plano-historico>
+            </div>
+          </div>
+        </div>
+        <div class="br-divider mt-4"></div>
+        <div class="actions justify-content-start">
+          <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade" *ngIf="dadosPlano.value?.atividades?.length > 0">
+            <button class="br-button is-primary" type="button" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho" (click)="abrirTelaIniciarHabilitacao()">Iniciar fase de habilitação</button>
+          </secure-input>
+          <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+            <button class="br-button is-primary" type="button" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao" (click)="concluirHabilitacao()">Selecionar candidatos e concluir fase de habilitação</button>
+          </secure-input>
+          <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+            <button class="br-button is-primary bg-danger border-0" type="button" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.EmExecucao" (click)="abrirTelConcluirExecucao()">Encerrar Programa de Gestão</button>
+          </secure-input>
+          <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/programagestao']">Voltar para a lista de programas de gestão</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<ng-template #modalInicioHabilitacao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confirme o início da fase de habilitação</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">
+              Tem certeza que deseja iniciar a fase de habilitação do programa de gestão?
+            </div>
+            <div class="mt-4 mb-4">
+              <small>Ao confirmar essa operação, o programa de gestão ficará disponível para os servidores se candidatarem às vagas disponíveis nas atividades cadastradas.</small>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="iniciarHabilitacao()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #modalConcluirExecucao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confirme o encerramento da execução do programa de gestão</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">
+              Tem certeza que deseja encerrar a execução do programa de gestão?
+            </div>
+            <div class="mt-4 mb-4">
+              <small>Ao confirmar essa operação, o programa de gestão será concluído e não poderá cadastrar mais planos de trabalho.</small>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="concluirExecucao()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

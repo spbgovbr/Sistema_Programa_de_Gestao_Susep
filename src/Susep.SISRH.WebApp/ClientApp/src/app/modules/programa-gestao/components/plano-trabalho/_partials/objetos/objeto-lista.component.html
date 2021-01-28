@@ -1,0 +1,47 @@
+<div class="row mt-5" *ngIf="dadosPlano.value?.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho">
+  <div class="col-sm-12 text-right">
+    <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastro()">Cadastrar objeto</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 mt-5">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Descrição</th>
+                <th>Chave</th>
+                <th>Tipo</th>
+                <th>Assuntos</th>
+                <th style="width:90px" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of objetos">
+                <td>{{ item.descricao }}</td>
+                <td>{{ item.chave }}</td>
+                <td>{{ descricaoTipo(item.tipo) }}</td>
+                <td>
+                  <ul class="pl-2">
+                    <li *ngFor="let assunto of item.assuntos">{{assunto.hierarquia}}</li>
+                  </ul>
+                </td>
+                <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho">
+                  <a href="javascript:void(0)" (click)="editar(item.planoTrabalhoObjetoId)" class="mr-2"><i class="fa fa-edit"></i></a>
+                  <a href="javascript:void(0)" (click)="excluir(item.planoTrabalhoObjetoId)" *ngIf="!item.associadoAtividadePlano"><i class="fa fa-trash"></i></a>
+                  <a *ngIf="item.associadoAtividadePlano"><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <plano-objeto-cadastro [dadosPlano]="dadosPlano" [objetoEdicao]="objetoEdicao"></plano-objeto-cadastro>
+</ng-template>

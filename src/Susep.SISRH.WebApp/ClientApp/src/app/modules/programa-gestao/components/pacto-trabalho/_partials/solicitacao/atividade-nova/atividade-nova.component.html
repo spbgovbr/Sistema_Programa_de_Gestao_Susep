@@ -1,0 +1,89 @@
+<div class="br-modal is-large">
+  <div class="br-modal-dialog">
+    <div class="br-modal-content">
+      <div class="br-modal-header">
+        <h2 class="br-modal-title">Cadastrar atividade</h2>
+        <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="br-modal-body">
+        <div class="br-form">
+          <form [formGroup]="form">
+            <div class="br-form">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Atividade">
+                      <select id="itemCatalogoId" name="itemCatalogoId" formControlName="itemCatalogoId" placeholder="Selecione um atividade" (change)="mudarItemCatalogo($event.target.value)">
+                        <option value="null">Selecione um atividade</option>
+                        <option class="select-items" *ngFor="let item of itensCatalogo" [value]="item.itemCatalogoId">{{ item.tituloCompleto }}</option>
+                      </select><!--[selected]="item.id === atividadeEdicao?.modalidadeExecucaoId"-->
+                    </field-validation>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Situação">
+                      <select id="situacaoId" name="situacaoId" formControlName="situacaoId" (change)="mudarSituacao($event.target.value)">
+                        <option value="null">Mostrar tudo</option>
+                        <option class="select-items" *ngFor="let item of situacoes" [value]="item.id">{{ item.descricao }}</option>
+                      </select>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6" *ngIf="exibirDataInicio">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de início">
+                      <custom-datepicker formControlName="dataInicio" [minDate]="minDataInicio" [maxDate]="maxDataInicio" [timePicker]="true" (change)="alterarDataInicio()" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+                <div class="col-sm-6" *ngIf="exibirTempoPrevisto">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo previsto (em horas)">
+                      <input id="tempoPrevistoPorItem" type="text" placeholder="Insira um valor" [textMask]="{mask: tempoMask}" name="tempoPrevistoPorItem" formControlName="tempoPrevistoPorItem">
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6" *ngIf="exibirDataFim">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
+                      <custom-datepicker formControlName="dataFim" [minDate]="minDataConclusao" [maxDate]="maxDataConclusao" [timePicker]="true" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+                <div class="col-sm-6" *ngIf="exibirTempoRealizado">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo realizado (em horas)">
+                      <input id="tempoRealizado" type="text" placeholder="Insira um valor" [textMask]="{mask: tempoMask}" name="tempoRealizado" formControlName="tempoRealizado">
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="br-modal-footer justify-content-end">
+        <button class="br-button is-cancel" type="button" (click)="fecharModal()">Cancelar</button>
+        <button class="br-button is-primary" type="button" (click)="cadastrarAtividade()" [disabled]="!form.valid">Enviar solicitação para aprovação do gestor</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

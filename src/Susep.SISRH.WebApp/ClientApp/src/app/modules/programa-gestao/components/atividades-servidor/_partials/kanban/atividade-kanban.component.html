@@ -1,0 +1,53 @@
+<div class="kanban">
+  <div class="row" cdkDropListGroup>
+    <div class="drop-container col-sm-4 todo">
+      <h3>Pendente</h3>
+
+      <div class="drop-item-container">
+        <div cdkDropList id="todoList"
+             [cdkDropListData]="todo"
+             class="drop-list"
+             (cdkDropListDropped)="drop($event)">
+          <div class="drop-box" *ngFor="let item of todo" [cdkDragData]="item" cdkDrag>{{item.itemCatalogo}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-container col-sm-4 doing">
+      <h3>Em andamento</h3>
+
+      <div class="drop-item-container">
+        <div cdkDropList id="doingList"
+             [cdkDropListData]="doing"
+             class="drop-list"
+             (cdkDropListDropped)="drop($event)">
+          <div class="drop-box" *ngFor="let item of doing" [cdkDragData]="item" [cdkDragDisabled]="item.formaCalculoTempoItemCatalogoId === 201" cdkDrag>
+            <div>
+              {{item.itemCatalogo}}<br />
+              <smaLl class="ml-4 text-gray-4" *ngIf="item.dataInicio">Início <span class="text-gray-7">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-container col-sm-4 done">
+      <h3>Concluído</h3>
+
+      <div class="drop-item-container">
+        <div cdkDropList id="doneList"
+             [cdkDropListData]="done"
+             class="drop-list"
+             (cdkDropListDropped)="drop($event)">
+          <div class="drop-box" *ngFor="let item of done" [cdkDragData]="item" cdkDrag>
+            <div>
+              {{item.itemCatalogo}}<br />
+              <smaLl class="ml-4 text-gray-4" *ngIf="item.dataInicio">Início <span class="text-gray-7">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl><br />
+              <smaLl class="ml-4 text-gray-4" *ngIf="item.dataFim">Fim <span class="text-gray-7">{{item.dataFim | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl><br />
+              <smaLl class="ml-4 text-gray-4" *ngIf="item.tempoRealizado">Tempo realizado <span class="text-gray-7">{{item.tempoRealizado}}</span></smaLl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

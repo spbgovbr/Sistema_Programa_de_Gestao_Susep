@@ -1,0 +1,79 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Pessoa</h1>
+      <p>Veja a lista de pessoas cadastradas</p>
+    </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <fieldset>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-input">
+                  <label for="item-1">Nome</label>
+                  <input id="nome" name="nome" formControlName="nome" type="text" placeholder="Insira um texto">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-select">
+                  <label for="simples">Unidade</label>
+                  <select id="unidadeId" name="unidadeId" formControlName="unidadeId" placeholder="Selecione">
+                    <option class="select-items" value="">Selecione</option>
+                    <option class="select-items" *ngFor="let item of unidadesAtivasCombo" [ngValue]="item.id">{{ item.descricao }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field">
+                <div class="br-select">
+                  <label for="simples">Programa de Gestão</label>
+                  <select id="catalogoDominioId" name="catalogoDominioId" formControlName="catalogoDominioId" placeholder="Selecione um item">
+                    <option value="">Selecione</option>
+                    <option class="select-items" [value]="planoTrabalhoSituacaoCandidatoEnum.Solicitada">Somente com candidatura pendente</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Unidade</th>
+                  <th>Carga Horária</th>                
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{item.nome}}</td>
+                  <td>{{item.unidade}}</td>
+                  <td>{{item.cargaHoraria}}</td>                             
+                  <td><a href="javascript:void(0)" [routerLink]="['/pessoa/editar/' + item.pessoaId]"><i class="fa fa-eye"></i></a></td>
+                </tr>
+                <tr>
+                  <td colspan="4" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="pesquisar($event)"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

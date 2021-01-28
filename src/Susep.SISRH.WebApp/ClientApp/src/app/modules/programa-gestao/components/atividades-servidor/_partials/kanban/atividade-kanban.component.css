@@ -1,0 +1,64 @@
+.drop-container {
+  width: 100%;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.drop-list {
+  border: solid 1px #ccc;
+  min-height: 300px;
+  overflow: hidden;
+  display: block;
+  padding: 5px;
+  background: #ededed;
+}
+
+.drop-box {
+  padding: 20px 10px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  font-size: 14px;
+  border-radius: 4px;
+  background: #f8f8f8;
+}
+
+.todo .drop-box {
+  border-left: solid 5px red;
+}
+.doing .drop-box {
+  border-left: solid 5px blue;
+}
+.done .drop-box {
+  border-left: solid 5px green;
+}
+
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drop-box:last-child {
+  
+}
+
+.drop-list.cdk-drop-list-dragging .drop-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

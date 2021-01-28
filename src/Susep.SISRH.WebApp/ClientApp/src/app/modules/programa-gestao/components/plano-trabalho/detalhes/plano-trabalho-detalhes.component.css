@@ -1,0 +1,9 @@
+.tabela-scrollbar {
+  position: relative;
+  height: 280px;
+  overflow: auto;
+}
+
+.tabela-wrapper-scroll-y {
+  display: block;
+}

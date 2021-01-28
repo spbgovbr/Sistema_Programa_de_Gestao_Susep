@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-sm-12 mt-5 ">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Situação</th>
+                <th>Responsável alteração</th>
+                <th>Data</th>
+                <th>Observações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dadosPlano.value.historico">
+                <td>{{item.situacao}}</td>
+                <td>{{item.responsavelOperacao}}</td>
+                <td>{{item.dataOperacao}}</td>
+                <td>{{item.observacoes}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

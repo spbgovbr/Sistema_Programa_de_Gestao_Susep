@@ -1,0 +1,120 @@
+<div class="br-modal is-large">
+  <div class="br-modal-dialog">
+    <div class="br-modal-content">
+      <div class="br-modal-header">
+        <h2 class="br-modal-title">Solicitação: {{dadosSolicitacao.value.tipoSolicitacao}}</h2>
+        <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="br-modal-body">
+        <div class="br-form">
+          <form [formGroup]="form">
+            <div class="br-form">
+              <div class="row" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId === 601">
+                <div class="col-sm-12">
+                  <dl class="row">
+                    <dt class="col-sm-3">Atividade:</dt>
+                    <dd class="col-sm-9">{{solicitacao.itemCatalogo}}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Situação:</dt>
+                    <dd class="col-sm-9">{{solicitacao.situacao}}</dd>
+                  </dl>
+                  <dl class="row" *ngIf="solicitacao.dataInicio">
+                    <dt class="col-sm-3">Início:</dt>
+                    <dd class="col-sm-3">{{solicitacao.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</dd>
+
+                    <dt class="col-sm-3" *ngIf="solicitacao.dataFim">Fim:</dt>
+                    <dd class="col-sm-3" *ngIf="solicitacao.dataFim">{{solicitacao.dataFim | date: 'dd/MM/yyyy HH:mm'}}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3" *ngIf="solicitacao.tempoPrevistoPorItem">Tempo previsto:</dt>
+                    <dd class="col-sm-3" *ngIf="solicitacao.tempoPrevistoPorItem">{{solicitacao.tempoPrevistoPorItem}}</dd>
+
+                    <dt class="col-sm-3" *ngIf="solicitacao.tempoRealizado">Tempo realizado:</dt>
+                    <dd class="col-sm-3" *ngIf="solicitacao.tempoRealizado">{{solicitacao.tempoRealizado}}</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="row" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId === 602">
+                <div class="col-sm-12">
+                  <dl class="row">
+                    <dt class="col-sm-3">Data proposta:</dt>
+                    <dd class="col-sm-9">{{solicitacao.dataFim | date: 'dd/MM/yyyy'}}</dd>
+                  </dl>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId === 603">
+                <div class="col-sm-12">
+                  <dl class="row">
+                    <dt class="col-sm-3">Atividade:</dt>
+                    <dd class="col-sm-9">{{solicitacao.itemCatalogo }}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Situação:</dt>
+                    <dd class="col-sm-9">{{solicitacao.situacao }}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3" >Tempo planejado:</dt>
+                    <dd class="col-sm-3" >{{solicitacao.tempoPrevistoPorItem}}</dd>
+
+                    <dt class="col-sm-3" >Tempo despendido:</dt>
+                    <dd class="col-sm-3" >{{solicitacao.tempoRealizado}}</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="row" *ngIf="solicitacao.descricao">
+                <div class="col-sm-12">
+                  <dl class="row">
+                    <dt class="col-sm-3">Observações:</dt>
+                    <dd class="col-sm-9">{{solicitacao.descricao}}</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="row" *ngIf="dadosSolicitacao.value.analisado && dadosSolicitacao.value.observacoesAnalista">
+                <div class="col-sm-12">
+                  <dl class="row">
+                    <dt class="col-sm-3">Resposta:</dt>
+                    <dd class="col-sm-9">{{dadosSolicitacao.value.observacoesAnalista}}</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="row" *ngIf="!dadosSolicitacao.value.analisado">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <secure-input [perfis]="[PerfilEnum.ChefeUnidade]" [unidade]="unidade" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId !== 602">
+                <div class="row" *ngIf="!dadosSolicitacao.value.analisado">
+                  <div class="col-sm-12">
+                    <div class="field">
+                      <label>Ajustar automaticamente o prazo?</label>
+                      <mat-slide-toggle class="ml-2" formControlName="ajustarPrazo"></mat-slide-toggle>
+                    </div>
+                  </div>
+                </div>
+              </secure-input>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="br-modal-footer justify-content-end">
+        <button class="br-button is-cancel mr-2" type="button" (click)="fecharModal()">Cancelar</button>
+        <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor">
+          <button class="br-button is-secondary mr-2" type="button" *ngIf="!dadosSolicitacao.value.analisado && solicitadoPorOutraPessoa" (click)="rejeitar()">Rejeitar</button>
+        </secure-input>
+        <secure-input [perfis]="[PerfilEnum.ChefeUnidade]" [unidade]="unidade" [servidor]="servidor">
+          <button class="br-button is-primary" type="button" *ngIf="!dadosSolicitacao.value.analisado && solicitadoPorOutraPessoa" (click)="aprovar()">Aprovar</button>
+        </secure-input>
+      </div>
+    </div>
+  </div>
+</div>
+
+

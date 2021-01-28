@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-sm-12 mb-4">
+    <h3 class="text-info">{{dadosPacto.value?.pessoa}}</h3>
+    <span class="text-info">{{dadosPacto.value?.dataInicio | date: 'dd/MM/yyyy'}} a {{dadosPacto.value?.dataFim | date: 'dd/MM/yyyy'}} </span>
+    <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor" class="text-info">
+      <a href="javascript: void();" *ngIf="dadosPacto.value?.situacaoId === 401" (click)="editarPeriodo()"><i class="fa fa-edit ml-3"></i></a>
+    </secure-input>
+  </div>
+  <div class="col-sm-6 mb-5">
+    <dl class="row">
+      <dt class="col-sm-5">Carga horária:</dt>
+      <dd class="col-sm-7">{{dadosPacto.value?.cargaHorariaDiaria}} horas / dia</dd>
+    </dl>
+    <dl class="row">
+      <dt class="col-sm-5">Tempo total do plano:</dt>
+      <dd class="col-sm-7">{{dadosPacto.value?.tempoTotalDisponivel}} horas</dd>
+    </dl>
+    <dl class="row" *ngIf="dadosPacto.value?.formaExecucaoId !== 101">
+      <dt class="col-sm-5">Prazo de comparecimento:</dt>
+      <dd class="col-sm-7">{{dadosPacto.value?.tempoComparecimento}} horas</dd>
+    </dl>
+  </div>
+  <div class="col-sm-6 mb-5">
+    <dl class="row">
+      <dt class="col-sm-5">Forma de execução:</dt>
+      <dd class="col-sm-7">{{dadosPacto.value?.formaExecucao}}</dd>
+    </dl>
+    <dl class="row" *ngIf="dadosPacto.value?.situacaoId >= 405 && dadosPacto.value?.percentualExecucao">
+      <dt class="col-sm-5">Percentual de conclusão:</dt>
+      <dd class="col-sm-7">{{dadosPacto.value?.percentualExecucao}}%</dd>
+    </dl>
+    <dl class="row" *ngIf="dadosPacto.value?.situacaoId >= 405 && dadosPacto.value?.relacaoPrevistoRealizado">
+      <dt class="col-sm-5">Produtividade:</dt>
+      <dd class="col-sm-7">{{dadosPacto.value?.relacaoPrevistoRealizado}}%</dd>
+    </dl>
+  </div>
+</div>
+
+
+<ng-template #modalDatas let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Ajuste as datas do plano</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de início">
+                      <custom-datepicker formControlName="dataInicio" [minDate]="minDataInicio" (change)="alterarDataInicio()" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
+                      <custom-datepicker formControlName="dataFim" [minDate]="minDataConclusao" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarAlteracaoDatas()" [disabled]="!form.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

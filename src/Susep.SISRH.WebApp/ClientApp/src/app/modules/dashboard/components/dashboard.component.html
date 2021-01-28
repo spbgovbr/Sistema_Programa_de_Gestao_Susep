@@ -1,0 +1,148 @@
+<section>
+  <div class="container">
+    <header class="content-header pt-3">
+      <h1 class="content-title">Bem vindo</h1>
+      <p>Esse é o Sistema do Programa de Gestão</p>
+    </header>
+
+    <div class="row" *ngIf="!gestorSistema">
+      <div class="col-lg-7 col-md-12">
+        <div class="row">
+          <div class="col-lg-12 mb-4">
+            <h5 class="mt-1 mb-4"><i class="fa fa-balance-scale"></i> Programas de gestão</h5>
+            <p>Veja abaixo os programas de gestão em andamento</p>
+            <div class="table-responsive">
+              <div class="br-table">
+                <div class="table full-width-table table-striped table-style">
+                  <table class="bg-white">
+                    <thead>
+                      <tr style="">
+                        <th scope="col">Setor</th>
+                        <th scope="col">Início</th>
+                        <th scope="col">Fim</th>
+                        <th scope="col">Situação</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dashboard?.planosTrabalho">
+                        <td [ngClass]="{'text-success': !chefe && item.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao}">{{item.unidade}}</td>
+                        <td [ngClass]="{'text-success': !chefe && item.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao}">{{item.dataInicio | date: 'dd/MM/yyyy'}}</td>
+                        <td [ngClass]="{'text-success': !chefe && item.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao}">{{item.dataFim | date: 'dd/MM/yyyy'}}</td>
+                        <td [ngClass]="{'text-success': !chefe && item.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao}">{{item.situacao}}</td>
+                        <td>
+                          <a href="javascript:void(0)" [routerLink]="['/programagestao/detalhar/' + item.planoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                        </td>
+                      </tr>
+                      <tr *ngIf="dashboard?.planosTrabalho == null || dashboard?.planosTrabalho.length == 0">
+                        <td colspan="5" class="text-center">Nenhum programa de gestão disponível</td>
+                      </tr>
+                    </tbody>
+                    <tfoot *ngIf="chefe">
+                      <tr>
+                        <td colspan="5" class="col text-center bg-gray-1">
+                          <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao">
+                            Ir para programas de gestão
+                          </button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 mb-4">
+            <h5 class="mt-1 mb-4"><i class="fa fa-business-time"></i> Planos de trabalho</h5>
+            <p>Veja abaixo seus planos de trabalho</p>
+            <div class="table-responsive">
+              <div class="br-table">
+                <div class="table full-width-table table-striped table-style">
+                  <table class="bg-white">
+                    <thead>
+                      <tr style="">
+                        <th scope="col">Setor</th>
+                        <th *ngIf="chefe" scope="col">Pessoa</th>
+                        <th scope="col">Início</th>
+                        <th scope="col">Fim</th>
+                        <th scope="col">Situação</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dashboard?.pactosTrabalho">
+                        <td>{{item.unidade}}</td>
+                        <td *ngIf="chefe">{{item.pessoa}}</td>
+                        <td>{{item.dataInicio | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{item.dataFim | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{item.situacao}}</td>
+                        <td>
+                          <a href="javascript:void(0)" *ngIf="item.situacaoId !== 405 || item.pessoaId !== usuarioLogadoId" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" *ngIf="item.situacaoId === 405 && item.pessoaId === usuarioLogadoId" [routerLink]="['/programagestao/atividade']" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                        </td>
+                      </tr>
+                      <tr *ngIf="dashboard?.pactosTrabalho == null || dashboard?.pactosTrabalho.length == 0">
+                        <td colspan="6" class="text-center">Nenhum plano de trabalho disponível</td>
+                      </tr>
+                    </tbody>
+                    <tfoot *ngIf="chefe">
+                      <tr>
+                        <td colspan="6" class="col text-center bg-gray-1">
+                          <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao/pactotrabalho">
+                            Ir para planos de trabalho
+                          </button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-12">
+        <h5 class="mt-1 mb-4"><i class="fa fa-exclamation-circle"></i> Solicitações pendentes</h5>
+        <p>Veja abaixo suas solicitações pendentes</p>
+        <div class="table-responsive">
+          <div class="br-table">
+            <div class="table full-width-table table-striped table-style">
+              <table class="bg-white">
+                <thead>
+                  <tr style="">
+                    <th scope="col" *ngIf="chefe">Pessoa</th>
+                    <th scope="col">Tipo</th>
+                    <th style="width:50px;" ></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dashboard?.solicitacoes">
+                    <td *ngIf="chefe">{{item.solicitante}}</td>
+                    <td>{{item.tipoSolicitacao}}</td>
+                    <td>
+                      <a href="javascript:void(0)" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="dashboard?.solicitacoes == null || dashboard?.solicitacoes.length == 0">
+                    <td colspan="3" class="text-center">Nenhuma solicitação disponível</td>
+                  </tr>
+                </tbody>
+                <tfoot *ngIf="chefe">
+                  <tr>
+                    <td colspan="3" class="col text-center bg-gray-1">
+                      <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao/pactotrabalho">
+                        Ir para planos de trabalho
+                      </button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

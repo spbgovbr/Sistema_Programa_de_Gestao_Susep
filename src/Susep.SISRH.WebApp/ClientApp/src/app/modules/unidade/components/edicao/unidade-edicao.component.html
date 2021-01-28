@@ -1,0 +1,57 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Unidade | <small>CGJUL</small></h1>
+      <p>Veja os dados da unidade e edite as informações relacionadas ao programa de gestão</p>
+    </header>
+    <div class="row">
+      <div class="col-sm-10 mb-5">
+        <dl class="row">
+          <dt class="col-sm-3">Nome:</dt>
+          <dd class="col-sm-9">Coordenação Geral de Julgamentos</dd>
+        </dl>
+        <dl class="row">
+          <dt class="col-sm-3">Sigla:</dt>
+          <dd class="col-sm-9">CGJUL</dd>
+        </dl>
+      </div>
+    </div>
+    <form>
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="field">
+                  <div class="br-select">
+                    <label for="simples">Modalidade de trabalho</label>
+                    <select id="simples">
+                      <option value="0">Selecione</option>
+                      <option value="opcao-1">Presencial</option>
+                      <option value="opcao-2">Semipresencial</option>
+                      <option value="opcao-1">Teletrabalho</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="field">
+                  <div class="br-input">
+                    <label for="simples">Perfil</label>
+                    <textarea id="perfil"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary" type="button">Salvar</button>
+          <button class="br-button is-cancel" type="button" [routerLink]="['/unidade']">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-sm-12 mt-5">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th colspan="2">Assuntos associados</th>                
+              </tr>
+              <tr>
+                <th colspan="2" class="pt-2 pb-2">
+                  <form [formGroup]="form">
+                    <div class="row mt-5">
+                      <div class="col-sm-12 br-input">
+                        <input-autocomplete-async [datasource]="datasource"
+                                                  [chavesJaEscolhidas]="chavesJaEscolhidas"
+                                                  [modo]="'adicao'"
+                                                  (acaoBotao)="associar()"
+                                                  formControlName="assuntoId"></input-autocomplete-async>
+                      </div>
+                    </div>
+                  </form>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="assuntos.length">
+              <tr *ngFor="let assunto of assuntos">
+                <td>{{ assunto.hierarquia }}</td>
+                <td class="text-right"><a href="javascript:void(0)" (click)="excluir(assunto)"><i class="fa fa-trash"></i></a></td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="!assuntos.length">
+              <tr>
+                <td colspan="2" class="text-center">
+                  Nenhum assunto associado.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

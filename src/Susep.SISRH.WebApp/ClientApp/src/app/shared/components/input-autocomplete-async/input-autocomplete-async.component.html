@@ -1,0 +1,22 @@
+<div class="input-group mb-3">
+  <input #inputtext class="form-control" matInput placeholder="Digite para pesquisar" [matAutocomplete]="auto" [formControl]="control">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" (click)="limpar()" *ngIf="!disabled && modo === 'selecao'" [disabled]="!control.value || !control.value.chave">
+      <i class="fas fa-times"></i>
+    </button>
+    <button class="btn btn-outline-secondary" type="button" (click)="click($event)" *ngIf="!disabled && modo === 'adicao'" [disabled]="!control.value || !control.value.chave">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</div>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-option *ngIf="isLoading" class="is-loading" disabled>
+    <mat-spinner diameter="30"></mat-spinner>
+  </mat-option>
+  <ng-container *ngIf="!isLoading">
+    <mat-option *ngFor="let item of itensLista | filtrarJaEscolhidos: chavesJaEscolhidas" [value]="item">
+      <small>{{ item.descricao }}</small>
+    </mat-option>
+  </ng-container>
+</mat-autocomplete>

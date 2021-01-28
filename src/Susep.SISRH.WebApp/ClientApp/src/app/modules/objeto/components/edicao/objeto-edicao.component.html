@@ -1,0 +1,57 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Objeto</h1>
+      <p>Preencha os campos abaixo para cadastrar um novo objeto ou altere os dados para editar um objeto existente</p>
+    </header>
+    <form [formGroup]="form">
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Tipo">
+                <select name="tipo" id="tipo" formControlName="tipo" (change)="alterouTipo($event.target.value)">
+                  <option [value]="null">Selecione um tipo</option>
+                  <option [value]="tipo.id" *ngFor="let tipo of tipos">{{ tipo.descricao }}</option>
+                </select>
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="CNPJ" *ngIf="ehEmpresa">
+                <input id="chave" type="text" mask="00.000.000/0000-00" placeholder="Insira um texto" formControlName="cnpj">
+              </field-validation>
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Chave" *ngIf="!ehEmpresa">
+                <input id="chave" type="text" placeholder="Insira um texto" formControlName="chave" #inputChave [value]="inputChave.value.toUpperCase()">
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div class="field">
+              <field-validation [classList]="['br-input', 'is-medium']" errorMessage="Campo obrigatório." label="Descrição">
+                <input id="descricao" type="text" placeholder="Insira um texto" formControlName="descricao">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-1" *ngIf="entidadeEmEdicao">
+            <div class="field">
+              <field-validation [classList]="['br-input', 'is-medium']" errorMessage="Campo obrigatório." label="Ativo">
+                <mat-slide-toggle formControlName="ativo"></mat-slide-toggle>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="actions justify-content-start">
+          <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+            <button class="br-button is-primary" type="submit" (click)="salvar()" *ngIf="!entidadeEmEdicao" [disabled]="!form.valid">Salvar</button>
+            <button class="br-button is-primary" type="submit" (click)="atualizar()" *ngIf="entidadeEmEdicao" [disabled]="!form.valid">Atualizar</button>
+          </secure-input>
+          <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/objeto/pesquisa']">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

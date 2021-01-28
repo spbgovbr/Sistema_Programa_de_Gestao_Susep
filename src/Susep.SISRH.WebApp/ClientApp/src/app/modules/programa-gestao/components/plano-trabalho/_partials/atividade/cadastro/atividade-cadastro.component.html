@@ -1,0 +1,61 @@
+<div class="modal-header">
+  <h5 class="modal-title text-info">Cadastrar atividade</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fecharModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="br-form">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div class="field">
+            <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Modalidade de execução">
+              <select id="modalidadeExecucaoId" name="modalidadeExecucaoId" formControlName="modalidadeExecucaoId" placeholder="Selecione uma modalidade" (change)="mudarFormaExecucao($event.target.value)">
+                <option value="">Selecione uma modalidade</option>
+                <option class="select-items" *ngFor="let item of modalidades?.value" [value]="item.id">{{ item.descricao }}</option>
+              </select>
+            </field-validation>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="field">
+            <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Quantidade de servidores">
+              <input id="quantidadeColaboradores" type="number" placeholder="Insira a quantidade de servidores" [textMask]="{mask: tempoMask}" name="quantidadeColaboradores" formControlName="quantidadeColaboradores" (change)="mudarQtdeVagas($event.target.value)">
+            </field-validation>
+            <small>Disponível: {{totalDisponivelColaboradores}}</small>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-12 mb-5">
+        <span class="text-primary">Tarefas:</span><br />
+        <div class="table-responsive" style="height: 200px;">
+          <div class="br-table">
+            <div class="table">
+              <table class="full-width-table table-striped table-style mat-elevation-z8 tabela-wrapper-scroll-y tabela-scrollbar">
+                <tbody>
+                  <tr *ngFor="let item of itensCatalogo">
+                    <td>{{item.titulo}}</td>
+                    <td>{{item.complexidade}}</td>
+                    <td class="text-right">
+                      <mat-slide-toggle class="example-margin"
+                                        [checked]="true"
+                                        [(ngModel)]="item.tempoExecucaoPreviamenteDefinido"
+                                        (change)="toggleSituacao()"></mat-slide-toggle>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>    
+  </div>
+</div>
+<div class="modal-footer justify-content-end">
+  <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+  <button class="br-button is-primary is-small" type="button" (click)="cadastrarAtividade()" [disabled]="!form.valid || !vagasMaiorQueZero || !itemSelecionado || !criterioSelecionado">Salvar</button>
+</div>

@@ -1,0 +1,44 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Assunto</h1>
+      <p>Preencha os campos abaixo para cadastrar um novo assunto ou altere os dados para editar um assunto existente</p>
+    </header>
+    <form [formGroup]="form">
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Assunto pai">
+                <input-autocomplete-async [datasource]="datasource" formControlName="paiId"></input-autocomplete-async>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div class="field">
+              <field-validation [classList]="['br-input', 'is-medium']" errorMessage="Campo obrigatório." label="Valor">
+                <input id="valor" type="text" placeholder="Insira um texto" formControlName="valor">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-1 mr-2" *ngIf="entidadeEmEdicao">
+            <div class="field">
+              <field-validation [classList]="['br-input', 'is-medium', 'float-right']" errorMessage="Campo obrigatório." label="Ativo">
+                <mat-slide-toggle formControlName="ativo"></mat-slide-toggle>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="actions justify-content-start">
+          <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+            <button class="br-button is-primary" type="submit" (click)="salvar()" *ngIf="!entidadeEmEdicao" [disabled]="!form.valid">Salvar</button>
+            <button class="br-button is-primary" type="submit" (click)="atualizar()" *ngIf="entidadeEmEdicao" [disabled]="!form.valid">Atualizar</button>
+          </secure-input>
+          <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/assunto/pesquisa']">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

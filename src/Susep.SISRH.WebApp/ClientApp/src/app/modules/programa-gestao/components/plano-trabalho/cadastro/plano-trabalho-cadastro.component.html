@@ -1,0 +1,69 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Programa de gestão</h1>
+      <p>Preencha os campos abaixo para cadastrar um novo programa de gestão</p>
+    </header>
+    <form [formGroup]="form">
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Unidade">
+                <select id="unidadeId" name="unidadeId" formControlName="unidadeId" placeholder="Selecione uma unidade">
+                  <option value="">Selecione uma unidade</option>
+                  <option class="select-items" *ngFor="let item of unidades" [ngValue]="item.id">{{ item.descricao }}</option>
+                </select>
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Prazo em dias para comparecimento">
+                <input id="tempoComparecimento" type="text" placeholder="Insira um valor em dias corridos" name="tempoComparecimento" [textMask]="{mask: tempoMask}" formControlName="tempoComparecimento">
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Prazo em dias da fase de habilitação">
+                <input id="tempoFaseHabilitacao" type="text" placeholder="Insira um valor em dias corridos" name="tempoFaseHabilitacao" [textMask]="{mask: tempoMask}" formControlName="tempoFaseHabilitacao">
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de início">
+                <custom-datepicker formControlName="dataInicio" [minDate]="minDate" placeholder="Selecione uma data"></custom-datepicker>
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
+                <custom-datepicker formControlName="dataFim" [minDate]="minDate" placeholder="Selecione uma data"></custom-datepicker>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Termo de aceite">
+                <textarea id="termoAceite" placeholder="Preencha os termos que devem ser aceitos pelos servidores" name="termoAceite" formControlName="termoAceite"></textarea>
+              </field-validation>
+            </div>
+          </div>
+        </div>
+        <div class="actions justify-content-start">
+          <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]">
+            <button class="br-button is-primary" type="submit" (click)="cadastrar()" [disabled]="!form.valid">Avançar</button>
+          </secure-input>
+          <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/programagestao']">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

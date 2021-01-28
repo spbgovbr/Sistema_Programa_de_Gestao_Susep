@@ -1,0 +1,71 @@
+<div class="br-modal is-large">
+  <div class="br-modal-dialog">
+    <div class="br-modal-content">
+      <div class="br-modal-header">
+        <h2 class="br-modal-title">Justificar estouro de prazo</h2>
+        <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="br-modal-body">
+        <div class="br-form">
+            <div class="br-form">              
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                      <div class="table-responsive">
+                        <div class="br-table">
+                          <div class="table">
+                            <table class="full-width-table table-striped table-style mat-elevation-z8">
+                              <thead>
+                                <tr>
+                                  <th>Atividade</th>
+                                  <th>Situação</th>
+                                  <th class="text-right">Tempo planejado</th>
+                                  <th class="text-right">Tempo despendido</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of atividades">
+                                  <td>{{item.itemCatalogo}}</td>
+                                  <td>{{item.situacao}}</td>
+                                  <td class="text-right">{{item.tempoPrevistoTotal}}</td>
+                                  <td class="text-right">{{item.tempoRealizado}}</td>
+                                  <td>
+                                    <mat-slide-toggle class="ml-2"
+                                                      [(ngModel)]="item.adicionadoCalendario"
+                                                      (change)="toggleSituacao($event, item.pactoTrabalhoAtividadeId)"></mat-slide-toggle>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <form [formGroup]="form">
+                    <div class="field">
+                      <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Justificativa">
+                        <textarea id="descricao" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+                      </field-validation>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="br-modal-footer justify-content-end">
+        <button class="br-button is-cancel" type="button" (click)="fecharModal()">Cancelar</button>
+        <button class="br-button is-primary" type="button" (click)="justificarEstouroDePrazo()" [disabled]="!form.valid || !atividadeSelecionada">Enviar solicitação para aprovação do gestor</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

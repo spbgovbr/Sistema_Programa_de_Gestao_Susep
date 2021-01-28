@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="col-sm-12 mt-5 ">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Atividade</th>
+                <th>Situação</th>
+                <th class="text-right">Tempo planejado</th>
+                <th class="text-center">Data início</th>
+                <th class="text-center">Data fim</th>
+                <th class="text-right">Tempo despendido</th>
+                <th class="text-center">Avaliação</th>
+                <th class="text-right">Tempo homologado</th>
+                <th style="width:90px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dadosPacto.value?.atividades">
+                <td>{{item.itemCatalogo}}</td>
+                <td>{{item.situacao}}</td>
+                <td class="text-right">{{item.tempoPrevistoTotal}}</td>
+                <td class="text-center">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</td>
+                <td class="text-center">{{item.dataFim | date: 'dd/MM/yyyy HH:mm'}}</td>
+                <td class="text-right">{{item.tempoRealizado}}</td>
+                <td class="text-center">
+                  <span *ngIf="item.nota === 0 || item.nota">{{ item.nota }}</span>
+                  <secure-input *ngIf="item.situacaoId === 503" [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+                    <a *ngIf="item.nota !== 0 && !item.nota" href="javascript:void(0)" (click)="avaliar(item.pactoTrabalhoAtividadeId)">avaliar</a>
+                  </secure-input>
+                </td>
+                <td class="text-right">{{item.tempoHomologado}}</td>
+                <td class="text-center">
+                  <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor" *ngIf="!isReadOnly.value">
+                    <a href="javascript:void(0)" (click)="editar(item.pactoTrabalhoAtividadeId)" *ngIf="(item.nota === 0 || !item.nota) && item.formaCalculoTempoItemCatalogoId !== 201" class="mr-2"><i class="fa fa-edit"></i></a>
+                  </secure-input>
+                  <a href="javascript:void(0)" title="Ver detalhes" (click)="exibirDetalhes(item.pactoTrabalhoAtividadeId)"><i class="fa fa-eye"></i></a>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="text-right">Totais:</td>
+                <td class="text-right">{{tempoPrevistoTotal}}</td>
+                <td colspan="2" class="text-right"></td>
+                <td class="text-right">{{tempoRealizado}}</td>
+                <td></td>
+                <td class="text-right">{{tempoHomologado}}</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Informar o andamento da atividade</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Situação">
+                      <select id="situacaoId" name="situacaoId" formControlName="situacaoId" (change)="mudarSituacao($event.target.value)">
+                        <option value="">Mostrar tudo</option>
+                        <option class="select-items" *ngFor="let item of situacoes" [value]="item.id">{{ item.descricao }}</option>
+                      </select>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6" *ngIf="situacaoId >= 502">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de início">
+                      <custom-datepicker formControlName="dataInicio" [minDate]="minDataInicio" [maxDate]="maxDataInicio" [timePicker]="true" placeholder="Selecione uma data" (change)="alterarDataInicio()"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+                <div class="col-sm-6" *ngIf="situacaoId == 503">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
+                      <custom-datepicker formControlName="dataFim" [minDate]="minDataConclusao" [maxDate]="maxDataConclusao" [timePicker]="true" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="situacaoId == 503">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo gasto para realizar a tarefa (em horas)">
+                      <input id="tempoRealizado" type="text" placeholder="Insira um valor" [textMask]="{mask: tempoMask}" name="tempoRealizado" formControlName="tempoRealizado">
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="situacaoId == 503">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="O tamanho máximo é de 2000 caracteres." label="Descrição da entrega">
+                      <textarea id="consideracoes" placeholder="Insira a descrição da entrega" name="consideracoes" formControlName="consideracoes"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="editarAtividade()" [disabled]="!form.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalAvaliacao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Avaliar atividade</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="formAvaliacao">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <div>
+                      <label>Avaliação</label>
+                      <input-rating name="avaliacao" [notaLimite]="5" formControlName="avaliacao"></input-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Necessário preencher caso a avaliação dada seja menor que 5." label="Justificativa">
+                      <textarea id="justificativa" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="salvarAvaliacao()" [disabled]="!formAvaliacao.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConsideracoes let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Considerações</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="formConsideracoes">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Necessário preencher caso a avaliação dada seja menor que 5." label="Descrição da atividade">
+                      <textarea id="descricao" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="situacaoIdDetalhes == 503">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Necessário preencher caso a avaliação dada seja menor que 5." label="Considerações da conclusão">
+                      <textarea id="consideracoes" name="consideracoes" formControlName="consideracoes"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-primary is-small" type="button" (click)="fecharModal()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

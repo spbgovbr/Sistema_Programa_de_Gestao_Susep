@@ -1,0 +1,22 @@
+<!-- Conteúdo principal -->
+<div class="container-fluid">
+  <div class="row no-gutters">    
+    <div class="col">
+      <app-page-header></app-page-header>
+      <main id="content" class="page-content p-3">
+        <div class="row">
+          <div class="col-md-3 d-none" id="menu-col">
+            <app-nav-menu></app-nav-menu>
+          </div>
+          <div class="col">
+            <router-outlet></router-outlet>
+            <!-- Navegação adicional para celular -->
+            <nav class="content-navigation"></nav>
+            <!-- Conteúdo acessório -->
+            <aside class="content-aside"></aside>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>

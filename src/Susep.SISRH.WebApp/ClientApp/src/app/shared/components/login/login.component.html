@@ -1,0 +1,49 @@
+<section>
+  <div class="container">
+    <div class="row">      
+      <div class="col-md-4 offset-lg-4 col-sm-12 bg-white">
+        <!-- Conteúdo principal -->
+        <main id="content" class="page-content">
+          <header class="content-header pb-5 pb-sm-8 pt-3">
+            <h1 class="content-title text-center">Acesse sua conta</h1>
+          </header>
+
+          <div class="row">
+            <div class="col-12">
+              <!-- Área de preenchimento do usuário -->
+              <section class="br-form">
+                <form [formGroup]="form">
+
+                  <!-- Informar login -->
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Login de rede">
+                      <input id="username" type="text" placeholder="Digite seu login de rede" name="username" formControlName="username">
+                    </field-validation>
+                  </div>
+
+                  <!-- Informar a senha -->
+                  <div class="field">
+                    <field-validation [classList]="['br-input', 'is-action']" errorMessage="Campo obrigatório." label="Senha">
+                      <input id="password" type={{passwordType}} #password placeholder="Digite sua senha" name="password" formControlName="password">
+                      <a class="action" id="showPassword" href="javascript:void(0);" (click)="toggleMostrarPassword()">
+                        <span class="sr-only">Mostrar senha</span>
+                        <i class="fas fa-eye"></i>
+                      </a>
+                    </field-validation>
+                  </div>
+
+                  <div class=" field text-danger text-center" *ngIf="loginError !== ''">{{loginError}}</div>
+
+                  <!-- Botões de ação -->
+                  <div class="actions justify-content-center">
+                    <button class="button is-primary" name="button" value="login" (click)="logar()">Entrar</button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>

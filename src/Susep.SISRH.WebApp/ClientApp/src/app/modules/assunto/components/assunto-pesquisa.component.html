@@ -1,0 +1,58 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Assunto</h1>
+      <p>Veja a lista de assuntos cadastrados</p>
+    </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <fieldset>          
+          <div class="row">
+            <div class="col">
+              <div class="field">
+                <div class="br-input">
+                  <label for="valor">Descrição</label>
+                  <input id="valor" type="text" formControlName="valor" placeholder="Insira um texto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary ml-2" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+          <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]">
+            <button class="br-button is-secondary" type="button" [routerLink]="['/assunto/cadastro']">Cadastrar assunto</button>
+          </secure-input>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Situação</th>
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>                
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{item.hierarquia}}</td>
+                  <td>{{item.ativo ? 'Ativo' : 'Inativo'}}</td>
+                  <td><a href="javascript:void(0)" [routerLink]="['/assunto/editar/' + item.assuntoId]"><i class="fa fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                  <td colspan="3" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="changePage($event)"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Lista de atividade</h1>
+      <p>Preencha os campos abaixo para cadastrar o lista de atividade de uma unidade</p>
+    </header>
+    <form [formGroup]="form">
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <div class="br-select">
+                <label for="simples">Unidade</label>
+                <select id="unidadeId" name="unidadeId" formControlName="unidadeId" placeholder="Selecione">
+                  <option class="select-items" value="">Selecione</option>
+                  <option class="select-items" *ngFor="let item of unidadesCadastroCombo" [ngValue]="item.id">{{ item.descricao }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="actions justify-content-start">
+          <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+            <button class="br-button is-primary" type="submit" (click)="cadastrar()">Avançar</button>
+          </secure-input>
+          <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/programagestao/catalogo']">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

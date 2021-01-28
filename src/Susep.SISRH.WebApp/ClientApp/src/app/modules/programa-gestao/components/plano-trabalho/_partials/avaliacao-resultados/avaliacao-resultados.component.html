@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-sm-12 mt-5 ">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Avaliador</th>
+                <th>Nota</th>
+                <th class="text-center" style="width:100px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chefe da unidade</td>
+                <td>-</td>
+                <td class="text-center">
+                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+                    <a target="_blank" href="https://forms.office.com/Pages/ResponsePage.aspx?id=Z7tkGJbQyEyE0suJAktjDDw9gtWnhkVCv29g5bznSbVUOU5aMUJPQjQ2RzIyR1pIME9WUzlRQTFKMy4u"><i class="fa fa-external-link"></i> Avaliar</a>
+                  </secure-input>
+                </td>
+              </tr>
+              <tr>
+                <td>Diretor</td>
+                <td>-</td>
+                <td class="text-center">
+                  <secure-input [perfis]="[PerfilEnum.Diretor]" [unidade]="unidade">
+                    <a target="_blank" href="https://forms.office.com/Pages/ResponsePage.aspx?id=Z7tkGJbQyEyE0suJAktjDDw9gtWnhkVCv29g5bznSbVUMjBINTNWTDFIS0lVNkc3NFFBSVZJUlRXMy4u"><i class="fa fa-external-link"></i> Avaliar</a>
+                  </secure-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

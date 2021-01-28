@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Susep.SISRH.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{3d3d3720-be8d-425f-93bb-3cc2c5d0ff67}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Susep.SISRH.Database</RootNamespace>
+    <AssemblyName>Susep.SISRH.Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="ProgramaGestao\" />
+    <Folder Include="ProgramaGestao\Tables\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="ProgramaGestao\Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Unidade.sql" />
+    <Build Include="dbo\Tables\Pessoa.sql" />
+    <Build Include="ProgramaGestao\Tables\UnidadeModalidadeExecucao.sql" />
+    <Build Include="ProgramaGestao\Tables\PessoaModalidadeExecucao.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalho.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalho.sql" />
+    <Build Include="ProgramaGestao\Tables\CatalogoItemCatalogo.sql" />
+    <Build Include="ProgramaGestao\Tables\Catalogo.sql" />
+    <Build Include="ProgramaGestao\Tables\ItemCatalogo.sql" />
+    <Build Include="Security\ProgramaGestao.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoReuniao.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoMeta.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoAtividade.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoAtividade.sql" />
+    <Build Include="dbo\Views\VW_UnidadeSiglaCompleta.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoAtividadeItem.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoHistorico.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoHistorico.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoSolicitacao.sql" />
+    <Build Include="dbo\Tables\CatalogoDominio.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoAtividadeCandidatoHistorico.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoAtividadeCandidato.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoAtividadeCriterio.sql" />
+    <Build Include="dbo\Tables\TipoFuncao.sql" />
+    <Build Include="dbo\Tables\UF.sql" />
+    <Build Include="dbo\Tables\Feriado.sql" />
+    <Build Include="ProgramaGestao\Tables\Assunto.sql" />
+    <Build Include="ProgramaGestao\Views\VW_AssuntoChaveCompleta_1.sql" />
+    <Build Include="ProgramaGestao\Tables\ItemCatalogoAssunto.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoAtividadeAssunto.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoCusto.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoAtividadeAssunto.sql" />
+    <Build Include="ProgramaGestao\Tables\Objeto.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoObjetoAssunto.sql" />
+    <Build Include="ProgramaGestao\Tables\PlanoTrabalhoObjeto.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoAtividadePlanoObjeto.sql" />
+  </ItemGroup>
+</Project>

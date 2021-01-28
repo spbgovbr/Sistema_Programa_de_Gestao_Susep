@@ -1,0 +1,44 @@
+<div class="br-modal is-large">
+  <div class="br-modal-dialog">
+    <div class="br-modal-content">
+      <div class="br-modal-header">
+        <h2 class="br-modal-title">Alterar data fim do plano de trabalho</h2>
+        <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="br-modal-body">
+        <div class="br-form">
+          <form [formGroup]="form">
+            <div class="br-form">              
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
+                      <custom-datepicker formControlName="dataFim" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="br-modal-footer justify-content-end">
+        <button class="br-button is-cancel" type="button" (click)="fecharModal()">Cancelar</button>
+        <button class="br-button is-primary" type="button" (click)="alterarPrazo()">Enviar solicitação para aprovação do gestor</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

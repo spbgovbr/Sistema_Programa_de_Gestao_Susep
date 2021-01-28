@@ -1,0 +1,226 @@
+<div class="modal-header">
+  <h5 class="modal-title text-info">Cadastrar objeto</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fecharModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="br-form">
+    <form [formGroup]="formObjeto">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Objeto">
+              <input-autocomplete-async 
+                [chavesJaEscolhidas]="objetosJaEscolhidos"
+                [datasource]="objetoDatasource" 
+                formControlName="objetoId"></input-autocomplete-async>
+            </field-validation>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <nav>
+          <ul class="br-tabs">
+            <li class="item" [ngClass]="{'is-active': abaVisivel === 'assuntos'}">
+              <a href="javascript:void(0)" (click)="alterarAba('assuntos')">
+                <span class="name">Assuntos</span>
+              </a>
+            </li>
+            <li class="item" [ngClass]="{'is-active': abaVisivel === 'custos'}">
+              <a href="javascript:void(0)" (click)="alterarAba('custos')">
+                <span class="name">Custos</span>
+              </a>
+            </li>
+            <li class="item" [ngClass]="{'is-active': abaVisivel === 'reunioes'}">
+              <a href="javascript:void(0)" (click)="alterarAba('reunioes')">
+                <span class="name">Reuniões</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div *ngIf="abaVisivel === 'assuntos'">
+          <div class="row">
+            <div class="col-sm-12 mt-5">
+              <div class="table-responsive">
+                <div class="br-table">
+                  <div class="table">
+                    <table class="full-width-table table-striped table-style mat-elevation-z8">
+                      <thead>
+                        <tr>
+                          <th colspan="2" class="pt-2 pb-2">
+                            <form [formGroup]="formAssunto">
+                              <div class="row my-5">
+                                <div class="col br-input">
+                                  <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Assunto">
+                                    <input-autocomplete-async 
+                                      [datasource]="assuntoDatasource" 
+                                      [chavesJaEscolhidas]="assuntosJaEscolhidos"
+                                      [modo]="'adicao'"
+                                      (acaoBotao)="adicionarAssunto()"
+                                      formControlName="assuntoId"></input-autocomplete-async>
+                                  </field-validation>
+                                </div>
+                              </div>
+                            </form>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="objetoEdicao.value?.assuntos.length">
+                        <tr *ngFor="let assunto of objetoEdicao.value?.assuntos">
+                          <td>{{ assunto.hierarquia }}</td>
+                          <td class="text-right"><a href="javascript:void(0)" (click)="excluirAssunto(assunto)"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="!objetoEdicao.value?.assuntos.length">
+                        <tr>
+                          <td colspan="2" class="text-center">
+                            Nenhum assunto associado.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="abaVisivel === 'custos'">
+          <div class="row">
+            <div class="col-sm-12 mt-5">
+              <div class="table-responsive">
+                <div class="br-table">
+                  <div class="table">
+                    <table class="full-width-table table-striped table-style mat-elevation-z8">
+                      <thead>
+                        <!--tr>
+                          <th colspan="3">Custos</th>                
+                        </tr-->
+                        <tr>
+                          <th colspan="3" class="pt-2 pb-2">
+                            <form [formGroup]="formCusto">
+                              <div class="row my-5">
+                                <div class="col-sm-6 br-input">
+                                  <field-validation [classList]="['br-input', 'is-xsmall']" errorMessage="Campo obrigatório." label="Descrição">
+                                    <input type="text" formControlName="descricao">
+                                  </field-validation>
+                                </div>
+                                <div class="col-sm-4 br-input">
+                                  <field-validation [classList]="['br-input', 'is-xsmall']" errorMessage="Campo obrigatório." label="Valor">
+                                    <input-currency formControlName="valor"></input-currency>
+                                  </field-validation>
+                                </div>
+                                <div class="col-sm-2 mt-2">
+                                  <button class="br-button is-secondary is-small" type="button" (click)="adicionarCusto()" [disabled]="!formCusto.valid">Adicionar</button>
+                                </div>
+                              </div>
+                            </form>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>Descrição</th>
+                          <th>Valor</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="objetoEdicao.value?.custos.length">
+                        <tr *ngFor="let custo of objetoEdicao.value?.custos">
+                          <td>{{ custo.descricao }}</td>
+                          <td>{{ custo.valor | currency:'BRL':'symbol' }}</td>
+                          <td class="text-right"><a href="javascript:void(0)" (click)="excluirCusto(custo)"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="!objetoEdicao.value?.custos.length">
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            Nenhum custo associado.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="abaVisivel === 'reunioes'">
+          <div class="row">
+            <div class="col-sm-12 mt-5">
+              <div class="table-responsive">
+                <div class="br-table">
+                  <div class="table">
+                    <table class="full-width-table table-striped table-style mat-elevation-z8">
+                      <thead>
+                        <!--tr>
+                          <th colspan="2">Reuniões</th>                
+                        </tr-->
+                        <tr>
+                          <th colspan="4" class="pt-2 pb-2">
+                            <form [formGroup]="formReuniao">
+                              <div class="row my-5">
+                                <div class="col-sm-3 br-input">
+                                  <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data">
+                                    <custom-datepicker formControlName="data" [minDate]="minDate" placeholder="Insira a data"></custom-datepicker>
+                                  </field-validation>
+                                </div>
+                                <div class="col-sm-3 br-input">
+                                  <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Título">
+                                    <input id="titulo" type="text" placeholder="Insira o título" name="titulo" formControlName="titulo">
+                                  </field-validation>
+                                </div>
+                                <div class="col-sm-4 br-input">
+                                  <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
+                                    <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                                  </field-validation>
+                                </div>
+                                <div class="col-sm-2 mt-2">
+                                  <button class="br-button is-secondary is-small" type="button" (click)="adicionarReuniao()" [disabled]="!formReuniao.valid">Adicionar</button>
+                                </div>
+                              </div>
+                            </form>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th style="width:100px">Data</th>
+                          <th style="width:200px">Título</th>
+                          <th>Descrição</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="objetoEdicao.value?.reunioes.length">
+                        <tr *ngFor="let reuniao of objetoEdicao.value?.reunioes">
+                          <td>{{ reuniao.data | date: 'dd/MM/yyyy' }}</td>
+                          <td>{{ reuniao.titulo }}</td>
+                          <td>{{ (reuniao.descricao.length > 100) ? (reuniao.descricao | slice:0:100) + '..' : (reuniao.descricao) }}</td>
+                          
+                          <td class="text-right"><a href="javascript:void(0)" (click)="excluirReuniao(reuniao)"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="!objetoEdicao.value?.reunioes.length">
+                        <tr>
+                          <td colspan="4" class="text-center">
+                            Nenhuma reunião cadastrada.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer justify-content-end">
+  <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+  <button class="br-button is-primary is-small" type="button" (click)="cadastrarObjeto()" [disabled]="!botaoSalvarHabilitado()">Salvar</button>
+</div>

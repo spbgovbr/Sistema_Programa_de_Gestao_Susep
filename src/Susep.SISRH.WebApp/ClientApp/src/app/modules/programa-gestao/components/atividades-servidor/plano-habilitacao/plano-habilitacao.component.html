@@ -1,0 +1,66 @@
+<section>
+  <div class="container" *ngIf="!dadosPlano.value">
+    <div class="text-center mt-10 mb-10">
+      Nenhum programa de gestão disponível para habilitação no momento
+    </div>
+  </div>
+  <div class="container" *ngIf="dadosPlano.value">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">
+        Programa de gestão |
+        <small>{{dadosPlano.value?.unidade}}</small> |
+        <small [class]="classeTextoSituacao">{{dadosPlano.value?.situacao}}</small>
+      </h1>
+      <p>Veja os detalhes do programa de gestão, proponha planos de trabalho e avalie os resultados obtidos com a execução </p>
+    </header>
+    <form>
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-7 mb-5">
+            <dl class="row">
+              <dt class="col-sm-5">Prazo de comparecimento:</dt>
+              <dd class="col-sm-7">{{dadosPlano.value?.tempoComparecimento}} horas</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-5">Total de servidores na unidade:</dt>
+              <dd class="col-sm-7">{{dadosPlano.value?.totalServidoresSetor}}</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <nav>
+              <ul class="br-tabs">
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'atividades'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('atividades')">
+                    <span class="name">Atividades<br />previstas</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'metasIndicadores'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('metasIndicadores')">
+                    <span class="name">Metas e <br />indicadores</span>
+                  </a>
+                </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'cronograma'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('cronograma')">
+                    <span class="name">Cronograma</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div *ngIf="abaVisivel === 'atividades'">
+              <plano-lista-atividade [dadosPlano]="dadosPlano"></plano-lista-atividade>
+            </div>
+            <div *ngIf="abaVisivel === 'metasIndicadores'">
+              <plano-lista-meta-indicador [dadosPlano]="dadosPlano"></plano-lista-meta-indicador>
+            </div>
+            <div *ngIf="abaVisivel === 'cronograma'">
+              <plano-cronograma [dadosPlano]="dadosPlano"></plano-cronograma>
+            </div>
+          </div>
+        </div>
+        <div class="br-divider mt-4"></div>
+      </div>
+    </form>
+  </div>
+</section>
