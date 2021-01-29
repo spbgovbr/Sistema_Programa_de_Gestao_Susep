@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  web-api:
+    image: pgd
+    working_dir: /app/api/
+    command: dotnet Susep.SISRH.WebApi.dll
+    volumes:
+      - ./api/Settings:/app/api/Settings:ro
+      - ../log/api:/app/api/Logs:rw
+    # Habilitar somente para debug
+    ports:
+      - 8082:80
+  # api-gateway:
+  #   image: pgd
+  #   command: dotnet Susep.SISRH.ApiGateway.dll
+  #   working_dir: /app/gateway/
+  #   volumes:
+  #     - ./gateway/Settings:/app/gateway/Settings:ro
+  #     - ../log/gateway:/app/gateway/Logs:rw
+  #   environment: 
+  #     - ASPNETCORE_ENVIRONMENT=Homolog
+  #   ports:
+  #     - 8081:80
+  # web-app:
+  #   image: mcr.microsoft.com/dotnet/aspnet:3.1
+  #   working_dir: /App
+  #   command: dotnet Susep.SISRH.WebApp.dll
+  #   volumes:
+  #     - ./install/3. Susep.SISRH.WebApp:/App:rw
+  ##     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/App/env.js:ro
+  #   ports:
+  #     - 8080:80
+  ## Utilização do Nginx no lugar do aspnet
+  # web-app-nginx:
+  #   image: nginx:1.19-alpine
+  #   volumes:
+  #     - ./install/3. Susep.SISRH.WebApp/ClientApp/dist:/usr/share/nginx/html:rw
+  #     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/usr/share/nginx/html/env.js:ro
+  #   ports:
+  #     - 8080:80
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "P1ssw@rd"
+      ACCEPT_EULA: "Y"
+    command: /bin/bash /scripts/start-sql-server.sh
+    volumes:
+      - ../install/1. Criação da estrutura do banco de dados.sql:/scripts/1.estrutura_dados.sql:ro
+      - ../install/2. Inserir dados de domínio.sql:/scripts/2.dados_dominio.sql:ro
+      - ../install/3. Inserir dados de teste.sql:/scripts/3.dados_teste:ro
+      - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
+    ports:
+      - 1433:1433

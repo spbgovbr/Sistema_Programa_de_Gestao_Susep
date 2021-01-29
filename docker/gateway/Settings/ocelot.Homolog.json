@@ -1,0 +1,1914 @@
+{
+  "ReRoutes": [
+    {
+      "UpstreamPathTemplate": "/swagger/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/swagger/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false
+    },
+
+    {
+      "UpstreamPathTemplate": "/connect/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/connect/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false
+    },
+
+    {
+      "UpstreamPathTemplate": "/dominio/ModalidadeExecucao",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/ModalidadeExecucao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "ModalidadeExecucao"
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/dominio/FormaCalculoTempoItemCatalogo",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/FormaCalculoTempoItemCatalogo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "FormaCalculoTempoItemCatalogo"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/dominio/SituacaoPlanoTrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoPlanoTrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "SituacaoPlanoTrabalho"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/dominio/SituacaoPactoTrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoPactoTrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "SituacaoPactoTrabalho"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/dominio/SituacaoAtividadePactoTrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoAtividadePactoTrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "SituacaoAtividadePactoTrabalho"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/dominio/CriterioPerfilAtividadePlano",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/CriterioPerfilAtividadePlano",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "CriterioPerfilAtividadePlano"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "FileCacheOptions": {
+        "TtlSeconds": 3600,
+        "Region": "SituacaoCandidaturaPlanoTrabalhoSolicitada"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/catalogo",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo/{unidadeId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{unidadeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo/{unidadeId}/itens",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{unidadeId}/itens",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo/{Catalogoid}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{Catalogoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo/{Catalogoid}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{Catalogoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo/{catalogoid}/item",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{catalogoid}/item",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/catalogo/{catalogoid}/item/{itemCatalogoId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{catalogoid}/item/{itemCatalogoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/itemcatalogo",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo/{itemCatalogoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/itemcatalogo",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo/{itemCatalogoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo/{itemCatalogoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/pactotrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/atual",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/atual",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/periodo",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/periodo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/historico",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/historico",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/aceitar",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/aceitar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/rejeitar",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/rejeitar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/avaliar",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/avaliar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/pessoa",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pessoa/perfil",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/perfil",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pessoa/{pessoaId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/{pessoaId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pessoa/{pessoaId}/feriados",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/{pessoaId}/feriados",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pessoa/compactotrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/compactotrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/planotrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/atual",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/atual",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/habilitacao",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/habilitacao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/historico",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/historico",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/situacao",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/situacao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/candidato",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/candidato",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/objetos/{planoTrabalhoObjetoId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/objetos/{planoTrabalhoObjetoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/unidade/ativas",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/ativas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/unidade/complanotrabalho",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/complanotrabalho",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/unidade/semcatalogocadastrado",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/semcatalogocadastrado",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/unidade/comcatalogocadastrado",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/comcatalogocadastrado",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/unidade/{unidadeId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/{unidadeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/unidade/{unidadeId}/modalidadeexecucao",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/{unidadeId}/modalidadeexecucao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/unidade/{unidadeId}/pessoas",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/{unidadeId}/pessoas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+    {
+      "UpstreamPathTemplate": "/assunto",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/assunto",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/assunto",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/assunto/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/assunto/texto",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto/texto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+
+    {
+      "UpstreamPathTemplate": "/objeto",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/objeto",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/objeto",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/objeto/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/objeto/texto",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto/texto",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-api",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    }
+
+
+  ],
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "BaseUrl": "http://web-api/gateway"
+    }
+  }
+}
