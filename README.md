@@ -16,4 +16,12 @@ dotnet build --configuration Release
 # Limpar
 sudo rm -r src/Susep.*/bin
 sudo rm -r src/Susep.*/obj
+
+# Build da imagem
+docker build -f docker/Dockerfile -t pgd .
+# Subir container
+docker-compose -f docker/docker-compose.yml up
 ```
+
+* http://localhost:8081/gateway/dominio/ModalidadeExecucao
+* http://localhost:8082/api/v1/dominio/ModalidadeExecucao

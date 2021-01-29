@@ -8,20 +8,24 @@ services:
     volumes:
       - ./api/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Homolog
     # Habilitar somente para debug
     ports:
       - 8082:80
-  # api-gateway:
-  #   image: pgd
-  #   command: dotnet Susep.SISRH.ApiGateway.dll
-  #   working_dir: /app/gateway/
-  #   volumes:
-  #     - ./gateway/Settings:/app/gateway/Settings:ro
-  #     - ../log/gateway:/app/gateway/Logs:rw
-  #   environment: 
-  #     - ASPNETCORE_ENVIRONMENT=Homolog
-  #   ports:
-  #     - 8081:80
+
+  api-gateway:
+    image: pgd
+    command: dotnet Susep.SISRH.ApiGateway.dll
+    working_dir: /app/gateway/
+    volumes:
+      - ./gateway/Settings:/app/gateway/Settings:ro
+      - ../log/gateway:/app/gateway/Logs:rw
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Homolog
+    ports:
+      - 8081:80
+
   # web-app:
   #   image: mcr.microsoft.com/dotnet/aspnet:3.1
   #   working_dir: /App
