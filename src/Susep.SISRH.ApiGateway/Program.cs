@@ -34,9 +34,9 @@ namespace Susep.SISRH.ApiGateway
                 .UseSerilog((context, config) => {
                     config.ReadFrom.Configuration(context.Configuration);
 
-                    config
-                        .Enrich.FromLogContext()
-                        .WriteTo.File(@"Logs\log.txt", rollingInterval: RollingInterval.Day);
+                    // config
+                    //     .Enrich.FromLogContext()
+                    //    .WriteTo.File(@"Logs\log.txt", rollingInterval: RollingInterval.Day);
                 });
         }
     }
