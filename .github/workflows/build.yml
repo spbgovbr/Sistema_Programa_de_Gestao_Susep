@@ -43,9 +43,9 @@ jobs:
         with:
           path: .
           dockerfile: docker/Dockerfile
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: srmourasilva/sistema_programa_de_gestao_susep/pgs
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
           tags: latest
           tag_with_ref: true
           tag_with_sha: true
