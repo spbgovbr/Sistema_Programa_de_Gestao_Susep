@@ -18,8 +18,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:3.1
 
 WORKDIR /app
 
-RUN addgroup --group susep \
- && adduser --ingroup susep --no-create-home pgd \
+RUN addgroup --group susep --gid 1000 \
+ && adduser --ingroup susep --no-create-home --uid 1000 pgd \
  && chown -R pgd:susep /app
 
 USER pgd
