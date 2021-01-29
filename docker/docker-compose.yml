@@ -5,8 +5,6 @@ services:
   traefik:
     image: traefik:2.4
     command: >
-      --api.dashboard=true
-      --api.insecure=true
       --providers.docker=true
       --entrypoints.web.address=:8000
       --entrypoints.web-secure.address=:8443
@@ -16,7 +14,6 @@ services:
     restart: unless-stopped
     # --providers.file.directory=/traefik-config
     ports:
-      - 8080:8080 # The HTTP port
       - 80:8000 # The HTTP port
       - 443:8443 # The HTTPS port
     volumes:
