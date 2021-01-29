@@ -6,10 +6,20 @@
 
 
   <ItemGroup>
-    <PackageReference Include="SUSEP.Framework.Result" Version="3.3.2" />
-    <PackageReference Include="SUSEP.Framework.SeedWorks" Version="3.7.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <!-- <PackageReference Include="SUSEP.Framework.Result" Version="3.3.2" />
+    <PackageReference Include="SUSEP.Framework.SeedWorks" Version="3.7.3" /> -->
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Reference Include="SUSEP.Framework.Result">
+      <HintPath>..\Susep.libs\SUSEP.Framework.Result.dll</HintPath>
+    </Reference>
+    <Reference Include="SUSEP.Framework.SeedWorks">
+      <HintPath>..\Susep.libs\SUSEP.Framework.SeedWorks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Events\" />
     <Folder Include="Mappers\" />
