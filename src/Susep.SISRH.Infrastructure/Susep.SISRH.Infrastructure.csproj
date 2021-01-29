@@ -34,5 +34,8 @@
     <Reference Include="SUSEP.Framework.Utils">
       <HintPath>..\Susep.libs\SUSEP.Framework.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="SUSEP.Framework.SeedWorks">
+      <HintPath>..\Susep.libs\SUSEP.Framework.SeedWorks.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

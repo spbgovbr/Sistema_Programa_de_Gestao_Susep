@@ -49,6 +49,12 @@
     <Reference Include="SUSEP.Framework.Result">
       <HintPath>..\Susep.libs\SUSEP.Framework.Result.dll</HintPath>
     </Reference>
+    <Reference Include="SUSEP.Framework.CoreFilters">
+      <HintPath>..\Susep.libs\SUSEP.Framework.CoreFilters.dll</HintPath>
+    </Reference>
+    <Reference Include="SUSEP.Framework.Messages">
+      <HintPath>..\Susep.libs\SUSEP.Framework.Messages.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

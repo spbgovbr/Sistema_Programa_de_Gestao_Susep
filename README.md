@@ -8,7 +8,12 @@ Para entender os conceitos e principais funcionalidades, assista à apresentaç�
 ```
 docker run -it --rm -v $(pwd)/src/:/src mcr.microsoft.com/dotnet/sdk:3.1 /bin/bash
 cd /src
+apt-get update
 apt-get install -y nodejs npm --no-install-recommends
 npm i npm@latest -g
-dotnet build
+dotnet build --configuration Release
+
+# Limpar
+sudo rm -r src/Susep.*/bin
+sudo rm -r src/Susep.*/obj
 ```
