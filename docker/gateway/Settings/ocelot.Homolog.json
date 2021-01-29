@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "UpstreamPathTemplate": "/gateway/swagger/{everything}",
+      "UpstreamPathTemplate": "/swagger/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/swagger/{everything}",
       "DownstreamScheme": "http",
@@ -15,7 +15,7 @@
     },
 
     {
-      "UpstreamPathTemplate": "/gateway/connect/{everything}",
+      "UpstreamPathTemplate": "/connect/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST" ],
       "DownstreamPathTemplate": "/connect/{everything}",
       "DownstreamScheme": "http",
@@ -29,7 +29,7 @@
     },
 
     {
-      "UpstreamPathTemplate": "/gateway/dominio/ModalidadeExecucao",
+      "UpstreamPathTemplate": "/dominio/ModalidadeExecucao",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/ModalidadeExecucao",
       "DownstreamScheme": "http",
@@ -46,7 +46,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/dominio/FormaCalculoTempoItemCatalogo",
+      "UpstreamPathTemplate": "/dominio/FormaCalculoTempoItemCatalogo",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/FormaCalculoTempoItemCatalogo",
       "DownstreamScheme": "http",
@@ -67,7 +67,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/dominio/SituacaoPlanoTrabalho",
+      "UpstreamPathTemplate": "/dominio/SituacaoPlanoTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/SituacaoPlanoTrabalho",
       "DownstreamScheme": "http",
@@ -88,7 +88,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/dominio/SituacaoPactoTrabalho",
+      "UpstreamPathTemplate": "/dominio/SituacaoPactoTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/SituacaoPactoTrabalho",
       "DownstreamScheme": "http",
@@ -109,7 +109,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/dominio/SituacaoAtividadePactoTrabalho",
+      "UpstreamPathTemplate": "/dominio/SituacaoAtividadePactoTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/SituacaoAtividadePactoTrabalho",
       "DownstreamScheme": "http",
@@ -130,7 +130,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/dominio/CriterioPerfilAtividadePlano",
+      "UpstreamPathTemplate": "/dominio/CriterioPerfilAtividadePlano",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/CriterioPerfilAtividadePlano",
       "DownstreamScheme": "http",
@@ -151,7 +151,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
+      "UpstreamPathTemplate": "/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
       "DownstreamScheme": "http",
@@ -174,7 +174,7 @@
 
 
     {
-      "UpstreamPathTemplate": "/gateway/catalogo",
+      "UpstreamPathTemplate": "/catalogo",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/catalogo",
       "DownstreamScheme": "http",
@@ -191,7 +191,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo/{unidadeId}",
+      "UpstreamPathTemplate": "/catalogo/{unidadeId}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/catalogo/{unidadeId}",
       "DownstreamScheme": "http",
@@ -208,7 +208,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo/{unidadeId}/itens",
+      "UpstreamPathTemplate": "/catalogo/{unidadeId}/itens",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/catalogo/{unidadeId}/itens",
       "DownstreamScheme": "http",
@@ -225,7 +225,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo",
+      "UpstreamPathTemplate": "/catalogo",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/catalogo",
       "DownstreamScheme": "http",
@@ -242,7 +242,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo/{Catalogoid}",
+      "UpstreamPathTemplate": "/catalogo/{Catalogoid}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/catalogo/{Catalogoid}",
       "DownstreamScheme": "http",
@@ -259,7 +259,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo/{Catalogoid}",
+      "UpstreamPathTemplate": "/catalogo/{Catalogoid}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/catalogo/{Catalogoid}",
       "DownstreamScheme": "http",
@@ -276,7 +276,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo/{catalogoid}/item",
+      "UpstreamPathTemplate": "/catalogo/{catalogoid}/item",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/catalogo/{catalogoid}/item",
       "DownstreamScheme": "http",
@@ -293,7 +293,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/catalogo/{catalogoid}/item/{itemCatalogoId}",
+      "UpstreamPathTemplate": "/catalogo/{catalogoid}/item/{itemCatalogoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/catalogo/{catalogoid}/item/{itemCatalogoId}",
       "DownstreamScheme": "http",
@@ -312,7 +312,7 @@
 
 
     {
-      "UpstreamPathTemplate": "/gateway/itemcatalogo",
+      "UpstreamPathTemplate": "/itemcatalogo",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/itemcatalogo",
       "DownstreamScheme": "http",
@@ -329,7 +329,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/itemcatalogo/{itemCatalogoid}",
+      "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/itemcatalogo/{itemCatalogoid}",
       "DownstreamScheme": "http",
@@ -346,7 +346,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/itemcatalogo",
+      "UpstreamPathTemplate": "/itemcatalogo",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/itemcatalogo",
       "DownstreamScheme": "http",
@@ -363,7 +363,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/itemcatalogo/{itemCatalogoid}",
+      "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/itemcatalogo/{itemCatalogoid}",
       "DownstreamScheme": "http",
@@ -380,7 +380,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/itemcatalogo/{itemCatalogoid}",
+      "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/itemcatalogo/{itemCatalogoid}",
       "DownstreamScheme": "http",
@@ -399,7 +399,7 @@
 
 
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho",
+      "UpstreamPathTemplate": "/pactotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho",
       "DownstreamScheme": "http",
@@ -416,7 +416,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/atual",
+      "UpstreamPathTemplate": "/pactotrabalho/atual",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/atual",
       "DownstreamScheme": "http",
@@ -433,7 +433,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}",
       "DownstreamScheme": "http",
@@ -450,7 +450,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/periodo",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/periodo",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/periodo",
       "DownstreamScheme": "http",
@@ -467,7 +467,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}",
       "DownstreamScheme": "http",
@@ -484,7 +484,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho",
+      "UpstreamPathTemplate": "/pactotrabalho",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho",
       "DownstreamScheme": "http",
@@ -501,7 +501,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}",
       "DownstreamScheme": "http",
@@ -518,7 +518,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/historico",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/historico",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/historico",
       "DownstreamScheme": "http",
@@ -535,7 +535,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
       "DownstreamScheme": "http",
@@ -552,7 +552,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/aceitar",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/aceitar",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/aceitar",
       "DownstreamScheme": "http",
@@ -569,7 +569,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/rejeitar",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/rejeitar",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/rejeitar",
       "DownstreamScheme": "http",
@@ -586,7 +586,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
       "DownstreamScheme": "http",
@@ -603,7 +603,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
       "DownstreamScheme": "http",
@@ -620,7 +620,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
       "DownstreamScheme": "http",
@@ -637,7 +637,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/avaliar",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/avaliar",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/avaliar",
       "DownstreamScheme": "http",
@@ -654,7 +654,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
@@ -671,7 +671,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
@@ -688,7 +688,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
@@ -705,7 +705,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
@@ -722,7 +722,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
       "DownstreamScheme": "http",
@@ -739,7 +739,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
       "DownstreamScheme": "http",
@@ -756,7 +756,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
       "DownstreamScheme": "http",
@@ -773,7 +773,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
       "DownstreamScheme": "http",
@@ -790,7 +790,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
       "DownstreamScheme": "http",
@@ -807,7 +807,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/solicitacao",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao",
       "DownstreamScheme": "http",
@@ -824,7 +824,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
       "DownstreamScheme": "http",
@@ -841,7 +841,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
       "DownstreamScheme": "http",
@@ -858,7 +858,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
       "DownstreamScheme": "http",
@@ -875,7 +875,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
       "DownstreamScheme": "http",
@@ -892,7 +892,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
       "DownstreamScheme": "http",
@@ -911,7 +911,7 @@
 
 
     {
-      "UpstreamPathTemplate": "/gateway/pessoa",
+      "UpstreamPathTemplate": "/pessoa",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pessoa",
       "DownstreamScheme": "http",
@@ -928,7 +928,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pessoa/perfil",
+      "UpstreamPathTemplate": "/pessoa/perfil",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pessoa/perfil",
       "DownstreamScheme": "http",
@@ -945,7 +945,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pessoa/{pessoaId}",
+      "UpstreamPathTemplate": "/pessoa/{pessoaId}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pessoa/{pessoaId}",
       "DownstreamScheme": "http",
@@ -962,7 +962,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pessoa/{pessoaId}/feriados",
+      "UpstreamPathTemplate": "/pessoa/{pessoaId}/feriados",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pessoa/{pessoaId}/feriados",
       "DownstreamScheme": "http",
@@ -979,7 +979,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/pessoa/compactotrabalho",
+      "UpstreamPathTemplate": "/pessoa/compactotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/pessoa/compactotrabalho",
       "DownstreamScheme": "http",
@@ -998,7 +998,7 @@
 
 
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho",
+      "UpstreamPathTemplate": "/planotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho",
       "DownstreamScheme": "http",
@@ -1015,7 +1015,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}",
       "DownstreamScheme": "http",
@@ -1032,7 +1032,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/atual",
+      "UpstreamPathTemplate": "/planotrabalho/atual",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/atual",
       "DownstreamScheme": "http",
@@ -1049,7 +1049,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/habilitacao",
+      "UpstreamPathTemplate": "/planotrabalho/habilitacao",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/habilitacao",
       "DownstreamScheme": "http",
@@ -1066,7 +1066,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho",
+      "UpstreamPathTemplate": "/planotrabalho",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho",
       "DownstreamScheme": "http",
@@ -1083,7 +1083,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}",
       "DownstreamScheme": "http",
@@ -1100,7 +1100,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
       "DownstreamScheme": "http",
@@ -1117,7 +1117,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/historico",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/historico",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/historico",
       "DownstreamScheme": "http",
@@ -1134,7 +1134,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/situacao",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/situacao",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/situacao",
       "DownstreamScheme": "http",
@@ -1151,7 +1151,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
@@ -1168,7 +1168,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
@@ -1185,7 +1185,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
@@ -1202,7 +1202,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
@@ -1219,7 +1219,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades/candidato",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/candidato",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades/candidato",
       "DownstreamScheme": "http",
@@ -1236,7 +1236,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "DownstreamScheme": "http",
@@ -1253,7 +1253,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "DownstreamScheme": "http",
@@ -1270,7 +1270,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
       "DownstreamScheme": "http",
@@ -1287,7 +1287,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
       "DownstreamScheme": "http",
@@ -1304,7 +1304,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/metas",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/metas",
       "DownstreamScheme": "http",
@@ -1321,7 +1321,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/metas",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/metas",
       "DownstreamScheme": "http",
@@ -1338,7 +1338,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "DownstreamScheme": "http",
@@ -1355,7 +1355,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "DownstreamScheme": "http",
@@ -1372,7 +1372,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/reunioes",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
       "DownstreamScheme": "http",
@@ -1389,7 +1389,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/reunioes",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
       "DownstreamScheme": "http",
@@ -1406,7 +1406,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "DownstreamScheme": "http",
@@ -1423,7 +1423,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "DownstreamScheme": "http",
@@ -1441,7 +1441,7 @@
     },
 
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/custos",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/custos",
       "DownstreamScheme": "http",
@@ -1458,7 +1458,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/custos",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/custos",
       "DownstreamScheme": "http",
@@ -1475,7 +1475,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "DownstreamScheme": "http",
@@ -1492,7 +1492,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "DownstreamScheme": "http",
@@ -1509,7 +1509,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/objetos",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
       "DownstreamScheme": "http",
@@ -1526,7 +1526,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
       "DownstreamScheme": "http",
@@ -1543,7 +1543,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/objetos/{planoTrabalhoObjetoId}",
+      "UpstreamPathTemplate": "/planotrabalho/objetos/{planoTrabalhoObjetoId}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/objetos/{planoTrabalhoObjetoId}",
       "DownstreamScheme": "http",
@@ -1560,7 +1560,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "DownstreamScheme": "http",
@@ -1577,7 +1577,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/objetos",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
       "DownstreamScheme": "http",
@@ -1594,7 +1594,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "DownstreamScheme": "http",
@@ -1613,7 +1613,7 @@
 
 
     {
-      "UpstreamPathTemplate": "/gateway/unidade/ativas",
+      "UpstreamPathTemplate": "/unidade/ativas",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/ativas",
       "DownstreamScheme": "http",
@@ -1630,7 +1630,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/unidade/complanotrabalho",
+      "UpstreamPathTemplate": "/unidade/complanotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/complanotrabalho",
       "DownstreamScheme": "http",
@@ -1647,7 +1647,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/unidade/semcatalogocadastrado",
+      "UpstreamPathTemplate": "/unidade/semcatalogocadastrado",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/semcatalogocadastrado",
       "DownstreamScheme": "http",
@@ -1664,7 +1664,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/unidade/comcatalogocadastrado",
+      "UpstreamPathTemplate": "/unidade/comcatalogocadastrado",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/comcatalogocadastrado",
       "DownstreamScheme": "http",
@@ -1681,7 +1681,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/unidade/{unidadeId}",
+      "UpstreamPathTemplate": "/unidade/{unidadeId}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/{unidadeId}",
       "DownstreamScheme": "http",
@@ -1698,7 +1698,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/unidade/{unidadeId}/modalidadeexecucao",
+      "UpstreamPathTemplate": "/unidade/{unidadeId}/modalidadeexecucao",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/{unidadeId}/modalidadeexecucao",
       "DownstreamScheme": "http",
@@ -1715,7 +1715,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/unidade/{unidadeId}/pessoas",
+      "UpstreamPathTemplate": "/unidade/{unidadeId}/pessoas",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/unidade/{unidadeId}/pessoas",
       "DownstreamScheme": "http",
@@ -1733,7 +1733,7 @@
     },
 
     {
-      "UpstreamPathTemplate": "/gateway/assunto",
+      "UpstreamPathTemplate": "/assunto",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/assunto",
       "DownstreamScheme": "http",
@@ -1750,7 +1750,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/assunto",
+      "UpstreamPathTemplate": "/assunto",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/assunto",
       "DownstreamScheme": "http",
@@ -1767,7 +1767,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/assunto",
+      "UpstreamPathTemplate": "/assunto",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/assunto",
       "DownstreamScheme": "http",
@@ -1784,7 +1784,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/assunto/{id}",
+      "UpstreamPathTemplate": "/assunto/{id}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/assunto/{id}",
       "DownstreamScheme": "http",
@@ -1801,7 +1801,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/assunto/texto",
+      "UpstreamPathTemplate": "/assunto/texto",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/assunto/texto",
       "DownstreamScheme": "http",
@@ -1819,7 +1819,7 @@
     },
 
     {
-      "UpstreamPathTemplate": "/gateway/objeto",
+      "UpstreamPathTemplate": "/objeto",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/objeto",
       "DownstreamScheme": "http",
@@ -1836,7 +1836,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/objeto",
+      "UpstreamPathTemplate": "/objeto",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/v1/objeto",
       "DownstreamScheme": "http",
@@ -1853,7 +1853,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/objeto",
+      "UpstreamPathTemplate": "/objeto",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/api/v1/objeto",
       "DownstreamScheme": "http",
@@ -1870,7 +1870,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/objeto/{id}",
+      "UpstreamPathTemplate": "/objeto/{id}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/objeto/{id}",
       "DownstreamScheme": "http",
@@ -1887,7 +1887,7 @@
       }
     },
     {
-      "UpstreamPathTemplate": "/gateway/objeto/texto",
+      "UpstreamPathTemplate": "/objeto/texto",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/objeto/texto",
       "DownstreamScheme": "http",

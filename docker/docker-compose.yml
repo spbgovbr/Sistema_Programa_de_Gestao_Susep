@@ -1,6 +1,35 @@
 version: "3.8"
 
 services:
+  # Proxy reverso
+  traefik:
+    image: traefik:2.4
+    command: >
+      --api.dashboard=true
+      --api.insecure=true
+      --providers.docker=true
+      --entrypoints.web.address=:8000
+      --entrypoints.web-secure.address=:8443
+      --log.level="DEBUG"
+      --providers.docker.exposedbydefault=false
+      --serversTransport.insecureSkipVerify=true
+    restart: unless-stopped
+    # --providers.file.directory=/traefik-config
+    ports:
+      - 8080:8080 # The HTTP port
+      - 80:8000 # The HTTP port
+      - 443:8443 # The HTTPS port
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+     - traefik.enable=true
+     - traefik.http.routers.traefik.rule=Host(`traefik.api.localhost`)
+     - traefik.http.routers.traefik.entryPoints=web
+     - traefik.http.routers.traefik.tls=false
+     - traefik.http.services.traefik.loadbalancer.server.port=8080
+    networks:
+      - pgd
+    
   web-api:
     image: pgd
     working_dir: /app/api/
@@ -13,6 +42,10 @@ services:
     # Habilitar somente para debug
     ports:
       - 8082:80
+    labels:
+      - traefik.enable=false
+    networks:
+      - pgd
 
   api-gateway:
     image: pgd
@@ -23,18 +56,36 @@ services:
       - ../log/gateway:/app/gateway/Logs:rw
     environment: 
       - ASPNETCORE_ENVIRONMENT=Homolog
-    ports:
-      - 8081:80
+    labels:
+     - traefik.enable=true
+     - traefik.http.routers.gateway.rule=PathPrefix(`/gateway`)
+     - traefik.http.routers.gateway.entrypoints=web
+     - traefik.http.routers.gateway.tls=false
+     - traefik.http.services.gateway.loadbalancer.server.port=80
+     - traefik.http.services.gateway.loadbalancer.server.scheme=http
+     - traefik.http.routers.gateway.middlewares=gateway_stripprefix
+     - traefik.http.middlewares.gateway_stripprefix.stripprefix.prefixes=/gateway/
+    networks:
+      - pgd
 
-  # web-app:
-  #   image: mcr.microsoft.com/dotnet/aspnet:3.1
-  #   working_dir: /App
-  #   command: dotnet Susep.SISRH.WebApp.dll
-  #   volumes:
-  #     - ./install/3. Susep.SISRH.WebApp:/App:rw
-  ##     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/App/env.js:ro
-  #   ports:
-  #     - 8080:80
+  web-app:
+    image: pgd
+    command: dotnet Susep.SISRH.WebApp.dll
+    working_dir: /app/app/
+    volumes:
+      - ./app/env.js:/app/app/ClientApp/dist/env.js:ro
+    labels:
+     - traefik.enable=true
+     - traefik.http.routers.app.rule=PathPrefix(`/`)
+     - traefik.http.routers.app.entrypoints=web
+     - traefik.http.routers.app.tls=false
+     - traefik.http.services.app.loadbalancer.server.port=80
+     - traefik.http.services.app.loadbalancer.server.scheme=http
+     - traefik.http.routers.app.middlewares=app_stripprefix
+     - traefik.http.middlewares.app_stripprefix.stripprefix.prefixes=/safe/sisgp/programagestao/app/
+    networks:
+      - pgd
+
   ## Utilização do Nginx no lugar do aspnet
   # web-app-nginx:
   #   image: nginx:1.19-alpine
@@ -54,5 +105,14 @@ services:
       - ../install/2. Inserir dados de domínio.sql:/scripts/2.dados_dominio.sql:ro
       - ../install/3. Inserir dados de teste.sql:/scripts/3.dados_teste:ro
       - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
-    ports:
-      - 1433:1433
+    # ports:
+    #   - 1433:1433
+    labels:
+      - traefik.enable=false
+    networks:
+      - pgd
+
+networks:
+  pgd:
+    name: pgd
+    driver: bridge
