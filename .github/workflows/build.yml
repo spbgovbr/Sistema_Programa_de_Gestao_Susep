@@ -29,4 +29,4 @@ jobs:
           push: true
           # cache-from: type=registry,ref=myorg/myrepository:latest
           # cache-to: type=inline
-          tags: sistema_programa_de_gestao_susep/sgd:latest
+          tags: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
