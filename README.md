@@ -24,22 +24,20 @@ Mais detalhes:
 ### Configurando a aplicação
 
 Em uma máquina que tenha o [Docker](https://docs.docker.com/engine/install/) e o [docker-compose](https://docs.docker.com/compose/install/) instalados, baixe o código. Esse passo pode ser via git
-```
+```bash
 git clone https://github.com/SrMouraSilva/Sistema_Programa_de_Gestao_Susep.git
 git checkout docker-codigo-fonte
 ```
-ou baixando diretamente o código pelo link abaixo
-```
-https://github.com/SrMouraSilva/Sistema_Programa_de_Gestao_Susep/archive/docker-codigo-fonte.zip
-```
+ou baixando diretamente o código pelo link:
+* <https://github.com/SrMouraSilva/Sistema_Programa_de_Gestao_Susep/archive/docker-codigo-fonte.zip>
 
 Após baixar, acesse a pasta do projeto pelo terminal
-```
+```bash
 cd Sistema_Programa_de_Gestao_Susep
 ```
 
 Por fim, execute o seguinte comando
-```
+```bash
 docker-compose -f docker/docker-compose.yml up -d
 ```
 
@@ -47,8 +45,8 @@ Pronto, a aplicação está acessível no endereço http://localhost.
 
 #### Configurações
 
-Quando editar uma configuração, execute
-```
+Após alterar uma configuração, execute
+```bash
 docker-compose -f docker/docker-compose.yml down
 docker-compose -f docker/docker-compose.yml up -d
 ```
@@ -56,7 +54,7 @@ docker-compose -f docker/docker-compose.yml up -d
 ##### Configurar Servidor de email
 
 Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as seguintes linhas
-```
+```json
 "emailOptions": {
   "EmailRemetente": "ENDEREÇO EMAIL REMETENTE SAIDA",
   "NomeRemetente": "NOME REMETENTE SAIDA",
@@ -68,7 +66,7 @@ Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as segui
 ##### Configurar Servidor ldap
 
 Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as seguintes linhas
-```
+```json
 "ldapOptions": {
   "Url": "URL SERVIDOR LDAP",
   "Port": 389,
@@ -85,7 +83,7 @@ Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as segui
 
 Caso você queira utilizar um servidor de banco de dados SQL Server com a devida licença, será necessário alterar a configuração do banco.
 Acesse o arquivo `connectionstrings.Homolog.json` e edite as seguintes linhas:
-```
+```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "data source=db;initial catalog=master;User ID=sa;Password=P1ssw@rd;"
@@ -103,4 +101,7 @@ Edite o arquivo `install/3. Inserir dados de teste.sql`, conforme desejado.
 
 ## Trabalhos futuros
 
-1. Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo.
+1. Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo (criar um docker-compose específico)
+2. Evitar que o scripts sqls sejam executados mais de uma vez
+3. Configurar adequadamente o volume do banco
+4. Deixar banco opcional (criar um docker-compose específico)
