@@ -37,8 +37,8 @@ services:
     environment: 
       - ASPNETCORE_ENVIRONMENT=Homolog
     # Habilitar somente para debug
-    ports:
-      - 8082:80
+    # ports:
+    #   - 8082:80
     labels:
       - traefik.enable=false
     networks:
@@ -100,10 +100,10 @@ services:
     volumes:
       - ../install/1. Criação da estrutura do banco de dados.sql:/scripts/1.estrutura_dados.sql:ro
       - ../install/2. Inserir dados de domínio.sql:/scripts/2.dados_dominio.sql:ro
-      - ../install/3. Inserir dados de teste.sql:/scripts/3.dados_teste:ro
+      - ../install/3. Inserir dados de teste.sql:/scripts/3.dados_teste.sql:ro
       - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
-    # ports:
-    #   - 1433:1433
+    ports:
+      - 1433:1433
     labels:
       - traefik.enable=false
     networks:

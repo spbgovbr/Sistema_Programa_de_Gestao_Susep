@@ -105,3 +105,10 @@ Edite o arquivo `install/3. Inserir dados de teste.sql`, conforme desejado.
 2. Evitar que o scripts sqls sejam executados mais de uma vez
 3. Configurar adequadamente o volume do banco
 4. Deixar banco opcional (criar um docker-compose específico)
+
+#### Outras informações
+
+Caso você deseje fazer o build local ao invés de utilizar a imagem preparada:
+```
+docker build -f docker/Dockerfile -t susep .
+```
