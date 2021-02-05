@@ -41,7 +41,7 @@ Por fim, execute o seguinte comando
 docker-compose -f docker/docker-compose.yml up -d
 ```
 
-Pronto, a aplicação está acessível no endereço http://localhost.
+Pronto, a aplicação está acessível no endereço http://localhost. Porém você não irá conseguir se logar se não configurar o LDAP (veja abaixo) e se não inserir as pessoas na tabela de pessoas.
 
 #### Configurações
 
@@ -79,6 +79,13 @@ Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as segui
 }
 ```
 
+###### Observações
+
+* O login só ocorrerá adequadamente caso exista um usuário na tabela `[dbo].[Pessoa]` com o CPF e o email igual ao usuário do LDAP;
+* Caso seja consultado uma pessoa que não exista na base do LDAP, o `api-gateway` retornará um erro `500` e nada será exibido para o usuário pelo `web-app`. No response você poderá ver uma mensagem como `System.Threading.Tasks.TaskCanceledException: A task was canceled.`;
+* Por algum motivo desconhecido, em alguns casos é necessário pressionar o botão de `Entrar` duas vezes;
+* A aplicação possui um [backdook](https://pt.wikipedia.org/wiki/Backdoor) para simplificar o processo de homologação. Você pode ver [a lista completa dos usuários que não necessitam de senha](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/97892e1/src/Susep.SISRH.Application/Auth/ResourceOwnerPasswordValidator.cs#L45-L54). Caso utilize em produção, **RETIRE ESSES USUÁRIOS DO SCRIPT** `install/3. Inserir dados de teste.sql`. [Desconheço se o compilado disponibilizado pela SUSEP possui também esse backdoor](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/tree/97892e1/install).
+
 ##### Configurar Acesso ao Banco de Dados
 
 Caso você queira utilizar um servidor de banco de dados SQL Server com a devida licença, será necessário alterar a configuração do banco.
@@ -105,6 +112,9 @@ Edite o arquivo `install/3. Inserir dados de teste.sql`, conforme desejado.
 2. Evitar que o scripts sqls sejam executados mais de uma vez
 3. Configurar adequadamente o volume do banco
 4. Deixar banco opcional (criar um docker-compose específico)
+5. Ajustar configurações para uso em produção para evitar exibir stacktrace desnecessário para os usuários:
+   * Mudar arquivos de configuração de `Homolog` para `Production`;
+   * Mudar variáveis de ambiente de `Homolog` para `Production`.
 
 #### Outras informações
 
