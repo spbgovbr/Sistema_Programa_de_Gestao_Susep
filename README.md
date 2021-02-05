@@ -21,6 +21,15 @@ Mais detalhes:
 1. A ausência da necessidade de possuir licenças para o Windows Server para rodar a aplicação, tendo em vista que as imagens foram configuradas utilizando Microsoft suporta oficialmente;
 1. A ausência da obrigatoriedade de configurar um servidor SQL Server. O docker-compose utiliza o SQL Server 2019 para Linux, oficialmente suportado para a Microsoft, no modo de avaliação. Atente-se que a utilização em produção exige uma licença válida.
 
+**Observações:**
+
+* Para possibilitar a execução em ambiente docker (imagens linux/amd64), realizamos uma troca do plugin de logs Eventlog para o Serilog, pois o Serilog é multiplataforma. É possível ver todas as mudanças e adições realizadas neste [pull request](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/pull/17);
+* Dado que até o momento o código fonte não foi completamente compartilhado, tivemos de utilizar algumas `dlls` já compiladas, disponibilizadas pela SUSEP. Elas foram copiadas da pasta [install/](install/) para a pasta [src/Susep.libs/](src/Susep.libs/);
+* Deve ser possível utilizar a mesma solução em servidores Windows, caso ele esteja configurado para rodar imagens Linux. Porém, o desempenho possivelmente será ligeiramente inferior do que se configurar diretamente com IIS. Não foi testado;
+  * A microsoft também disponibiliza imagens docker nativas para Windows. Porém a minha versão do SO não é a Professional, então não tive como testar. A geração de imagens com Github actions está nos planos futuros.
+* A aplicação provavelmente deve funcionar em máquinas Mac, mas também não foi testado.
+
+
 ### Configurando a aplicação
 
 Em uma máquina que tenha o [Docker](https://docs.docker.com/engine/install/) e o [docker-compose](https://docs.docker.com/compose/install/) instalados, baixe o código. Esse passo pode ser via git
@@ -108,15 +117,18 @@ Edite o arquivo `install/3. Inserir dados de teste.sql`, conforme desejado.
 
 ## Trabalhos futuros
 
-1. Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo (criar um docker-compose específico)
-2. Evitar que o scripts sqls sejam executados mais de uma vez
-3. Configurar adequadamente o volume do banco
-4. Deixar banco opcional (criar um docker-compose específico)
-5. Ajustar configurações para uso em produção para evitar exibir stacktrace desnecessário para os usuários:
-   * Mudar arquivos de configuração de `Homolog` para `Production`;
-   * Mudar variáveis de ambiente de `Homolog` para `Production`.
+1. Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo (criar um docker-compose específico);
+1. Banco de homologação
+   1. Configurar adequadamente o volume do banco;
+   1. Evitar que o scripts sqls sejam executados mais de uma vez em caso de reinício do banco de dados;
+1. Criar docker compose de produção:
+   1. Sem banco de dados;
+   1. Ajustar configurações para uso em produção para evitar exibir stacktrace  desnecessário para os usuários:
+      * Mudar arquivos de configuração de `Homolog` para `Production`;
+      * Mudar variáveis de ambiente de `Homolog` para `Production`.
+1. Gerar imagens nativas para Windows por Github Actions.
 
-#### Outras informações
+## Outras informações
 
 Caso você deseje fazer o build local ao invés de utilizar a imagem preparada:
 ```
