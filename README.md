@@ -60,6 +60,28 @@ docker-compose -f docker/docker-compose.yml down
 docker-compose -f docker/docker-compose.yml up -d
 ```
 
+##### Verificando se deu certo
+
+Execute o seguinte comando
+```bash
+docker-compose -f docker/docker-compose.yml ps -a
+```
+Os 5 containers devem estar ativos. Caso nenhum dos três relacionados ao dotnet subirem (`web-app`, `web-api`, `gateway`), provavelmente o usuário **dos containers** não tem permissão o suficiente para subir o processo e utilizar a porta 80. Esse erro foi detectado no CentOs, mas não ocorre no Debian e nem no Ubuntu. A forma que sabemos até o momento de "contornar" esse problema é dizer que o usuário root que irá rodar esse processo. Altere o docker-compose adicionando o seguinte:
+```diff
+web-api:
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
++    user: 0:0
+...
+api-gateway:
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
++    user: 0:0
+...
+web-app:
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
++    user: 0:0
+```
+Atente-se que o yml é sensível a identação e que foi utilizado espaço como identação.
+
 ##### Configurar Servidor de email
 
 Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as seguintes linhas
