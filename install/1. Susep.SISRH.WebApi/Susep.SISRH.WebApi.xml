@@ -510,6 +510,14 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostProporExcluirAtividadePacto(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.ProporExcluirAtividadeCommand)">
+            <summary>
+            Solicita a exclusão de uma atividade do pacto
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutResponderPropostaAtividadePacto(System.Guid,System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.ResponderSolitacaoPactoTrabalhoAtividadeCommand)">
             <summary>
             Altera uma atividade do pacto de trabalho

@@ -21,6 +21,7 @@ INSERT INTO [dbo].[CatalogoDominio] VALUES(503, 'SituacaoAtividadePactoTrabalho'
 INSERT INTO [dbo].[CatalogoDominio] VALUES(601, 'TipoSolicitacaoPactoTrabalho', 'Nova atividade', 1)
 INSERT INTO [dbo].[CatalogoDominio] VALUES(602, 'TipoSolicitacaoPactoTrabalho', 'Alteração prazo', 1)
 INSERT INTO [dbo].[CatalogoDominio] VALUES(603, 'TipoSolicitacaoPactoTrabalho', 'Prazo de atividade ultrapassado', 1)
+insert into [dbo].[CatalogoDominio] values(604, 'TipoSolicitacaoPactoTrabalho', 'Excluir atividade', 1)
 INSERT INTO [dbo].[CatalogoDominio] VALUES(701, 'TipoRespostaQuestionario', 'Texto livre', 1)
 INSERT INTO [dbo].[CatalogoDominio] VALUES(702, 'TipoRespostaQuestionario', 'Decimal', 1)
 INSERT INTO [dbo].[CatalogoDominio] VALUES(703, 'TipoRespostaQuestionario', 'Inteiro', 1)
