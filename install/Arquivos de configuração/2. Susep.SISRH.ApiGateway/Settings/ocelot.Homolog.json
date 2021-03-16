@@ -43,10 +43,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 3600,
         "Region": "ModalidadeExecucao"
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
       }
     },
     {
