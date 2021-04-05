@@ -2,7 +2,7 @@
   <div class="br-modal-dialog">
     <div class="br-modal-content">
       <div class="br-modal-header">
-        <h2 class="br-modal-title">Justificar estouro de prazo</h2>
+        <h2 class="br-modal-title">Excluir atividade</h2>
         <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -20,18 +20,12 @@
                               <thead>
                                 <tr>
                                   <th>Atividade</th>
-                                  <th>Situação</th>
-                                  <th class="text-right">Tempo planejado</th>
-                                  <th class="text-right">Tempo despendido</th>
                                   <th></th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr *ngFor="let item of atividades">
                                   <td>{{item.itemCatalogo}}</td>
-                                  <td>{{item.situacao}}</td>
-                                  <td class="text-right">{{item.tempoPrevistoTotal}}</td>
-                                  <td class="text-right">{{item.tempoRealizado}}</td>
                                   <td>
                                     <mat-slide-toggle class="ml-2"
                                                       [(ngModel)]="item.adicionadoCalendario"
@@ -39,6 +33,11 @@
                                   </td>
                                 </tr>
                               </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td colspan="2"><small>* Só é possível excluir atividades que ainda não foram iniciadas</small></td>
+                                </tr>
+                              </tfoot>
                             </table>
                           </div>
                         </div>

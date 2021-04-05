@@ -26,8 +26,8 @@
                 <td>{{item.itemCatalogo}}</td>
                 <td>{{item.descricao}}</td>
                 <td class="text-right">{{item.quantidade}}</td>
-                <td class="text-right">{{item.tempoPrevistoPorItem}}</td>
-                <td class="text-right">{{item.tempoPrevistoTotal}}</td>
+                <td class="text-right">{{item.tempoPrevistoPorItem | number}}</td>
+                <td class="text-right">{{item.tempoPrevistoTotal | number}}</td>
                 <td class="text-center" *ngIf="saldoHoras < 0">
                   <i *ngIf="!item.adicionadoCalendario" class="fa fa-exclamation-triangle" title="Essa atividade excede a quantidade de dias disponíveis no pacto"></i>
                 </td>
@@ -42,13 +42,13 @@
             <tfoot>
               <tr>
                 <td colspan="4" class="text-right">Tempo total em horas:</td>
-                <td class="text-right">{{tempoPrevistoTotal}}</td>
+                <td class="text-right">{{tempoPrevistoTotal | number}}</td>
                 <td *ngIf="saldoHoras < 0"></td>
                 <td *ngIf="!isReadOnly"></td>
               </tr>
               <tr>
                 <td colspan="4" class="text-right">Saldo em horas:</td>
-                <td class="text-right">{{saldoHoras}}</td>
+                <td class="text-right">{{saldoHoras | number}}</td>
                 <td *ngIf="saldoHoras < 0"></td>
                 <td *ngIf="!isReadOnly"></td>
               </tr>
@@ -112,7 +112,7 @@
           <div class="col">
             <div class="field">
               <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo previsto em horas por atividade">
-                <input id="tempoPrevistoPorItem" type="number" [textMask]="{mask: tempoMask}" placeholder="Insira o tempo previsto para realização dessa atividade" name="tempoPrevistoPorItem" formControlName="tempoPrevistoPorItem" (change)="calcularTempoTotalAtividade()">
+                <input id="tempoPrevistoPorItem" type="number" placeholder="Insira o tempo previsto para realização dessa atividade" name="tempoPrevistoPorItem" formControlName="tempoPrevistoPorItem" (change)="calcularTempoTotalAtividade()">
               </field-validation>
             </div>
           </div>
@@ -120,7 +120,7 @@
             <div class="field">
               <div class="br-input">
                 <label>Tempo total em horas para execução da atividade</label>
-                <input value="{{tempoTotalAtividade}}" disabled="disabled">
+                <input value="{{tempoTotalAtividade | number}}" disabled="disabled">
               </div>
             </div>
           </div>

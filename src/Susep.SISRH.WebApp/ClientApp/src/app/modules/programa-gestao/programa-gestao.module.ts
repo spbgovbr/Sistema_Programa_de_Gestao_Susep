@@ -61,6 +61,7 @@ import { JustificarEstouroPrazoPactoComponent } from './components/pacto-trabalh
 import { AssuntosAssociadosComponent } from './components/item-catalogo/cadastro/assuntos-associados/assuntos-associados.component';
 import { PactoEmpresasComponent } from './components/pacto-trabalho/_partials/empresas/empresas.component';
 import { PlanoObjetoCadastroComponent } from './components/plano-trabalho/_partials/objetos/cadastro/objeto-cadastro.component';
+import { AtividadeExcluirComponent } from './components/pacto-trabalho/_partials/solicitacao/atividade-excluir/atividade-excluir.component';
 
 registerLocaleData(localePt)
 
@@ -118,6 +119,7 @@ registerLocaleData(localePt)
     PactoListaSolicitacaoComponent,
     AlteracaoPrazoPactoComponent,
     JustificarEstouroPrazoPactoComponent,
+    AtividadeExcluirComponent,
     PactoDetalhesSolicitacaoComponent,
     PlanoHabilitacaoComponent,
     AssuntosAssociadosComponent,

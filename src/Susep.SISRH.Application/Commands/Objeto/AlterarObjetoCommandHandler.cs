@@ -35,7 +35,7 @@ namespace Susep.SISRH.Application.Commands.Assunto
             var objeto = await ObjetoRepository.ObterAsync(request.ObjetoId);
 
             //Monta o objeto
-            objeto.Alterar(request.Chave, request.Descricao, request.Tipo, request.Ativo);
+            objeto.Alterar(request.Chave.Replace("###", ""), request.Descricao, request.Tipo, request.Ativo);
 
             try
             {

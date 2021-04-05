@@ -134,8 +134,8 @@
             {
                 return @"
 
-
-                        SELECT   p.planoTrabalhoId
+                        --Planos não encerrados nas unidades em que a pessoa é chefe:
+						SELECT   p.planoTrabalhoId
                                 ,u1.undSiglaCompleta unidade  
                                 ,p.dataInicio    
                                 ,p.dataFim
@@ -144,27 +144,54 @@
                         FROM [ProgramaGestao].[PlanoTrabalho] p
 	                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u1 ON u1.unidadeId = p.unidadeId
 	                        INNER JOIN [dbo].[CatalogoDominio] cd2 ON p.situacaoId = cd2.catalogoDominioId
-	                        
 							INNER JOIN (
-		                        SELECT CASE WHEN pe.tipoFuncaoId IS NULL THEN pe.pessoaId ELSE NULL END pessoaId
-			                           ,u.undSiglaCompleta 
-		                        FROM [dbo].Pessoa pe
-			                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = pe.unidadeId 
-		                        WHERE pessoaId = @pessoaId
-								UNION 
-								SELECT pe.pessoaId
-			                           ,up.undSiglaCompleta
-		                        FROM [dbo].Pessoa pe
-			                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = pe.unidadeId 
-									INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] up ON up.unidadeId = u.unidadeIdPai 
-		                        WHERE pessoaId = @pessoaId AND pe.tipoFuncaoId IS NOT NULL
+								SELECT u.undSiglaCompleta
+								FROM [dbo].Pessoa pe
+									INNER JOIN [dbo].[TipoFuncao] tf ON tf.tipoFuncaoId = pe.tipoFuncaoId
+									INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = pe.unidadeId 
+								WHERE pessoaId = @pessoaId AND tf.tfnIndicadorChefia = 1
+							) chefe ON (u1.undSiglaCompleta like chefe.undSiglaCompleta + '%') 
+						WHERE p.situacaoId <= 309
 
-	                        ) chefe ON (u1.undSiglaCompleta = chefe.undSiglaCompleta AND chefe.pessoaId IS NOT NULL) OR 
-									   (u1.undSiglaCompleta like chefe.undSiglaCompleta + '%' AND chefe.pessoaId IS NULL) 
+						UNION 
 
-						WHERE 
-							p.situacaoId >= CASE WHEN chefe.pessoaId IS NULL THEN 301 ELSE 307 END AND p.situacaoId <= 309
-                        ORDER BY p.dataInicio, p.dataFim
+						-- Planos em execução que o servidor foi selecionado
+						SELECT   DISTINCT p.planoTrabalhoId
+                                ,u1.undSiglaCompleta unidade  
+                                ,p.dataInicio    
+                                ,p.dataFim
+                                ,p.situacaoId
+		                        ,cd2.descricao situacao                            
+                        FROM [ProgramaGestao].[PlanoTrabalho] p
+	                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u1 ON u1.unidadeId = p.unidadeId
+	                        INNER JOIN [dbo].[CatalogoDominio] cd2 ON p.situacaoId = cd2.catalogoDominioId
+							INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividade] pa ON pa.planoTrabalhoId = p.planoTrabalhoId
+							INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] pac ON pa.planoTrabalhoAtividadeId = pac.planoTrabalhoAtividadeId
+						WHERE p.situacaoId = 309 AND pac.pessoaId = @pessoaId AND pac.situacaoId = 804 
+
+						UNION
+						-- Planos em habilitação na(s) unidades do servidor
+						SELECT   p.planoTrabalhoId
+                                ,u1.undSiglaCompleta unidade  
+                                ,p.dataInicio    
+                                ,p.dataFim
+                                ,p.situacaoId
+		                        ,cd2.descricao situacao                            
+                        FROM [ProgramaGestao].[PlanoTrabalho] p
+	                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u1 ON u1.unidadeId = p.unidadeId
+	                        INNER JOIN [dbo].[CatalogoDominio] cd2 ON p.situacaoId = cd2.catalogoDominioId
+							INNER JOIN (
+								SELECT pe.unidadeId unidadeId
+								FROM [dbo].Pessoa pe
+								WHERE pessoaId = @pessoaId
+								UNION
+								SELECT u.unidadeIdPai unidadeId
+								FROM [dbo].Pessoa pe
+									INNER JOIN [dbo].[TipoFuncao] tf ON tf.tipoFuncaoId = pe.tipoFuncaoId
+									INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = pe.unidadeId 
+								WHERE pessoaId = @pessoaId AND tf.tfnIndicadorChefia = 1
+							) us ON p.unidadeId = us.unidadeId
+						WHERE p.situacaoId = 307
 
 
 
@@ -196,7 +223,8 @@
 		                        WHERE pessoaId = @pessoaId AND pe.tipoFuncaoId IS NOT NULL
 	                        ) chefe ON (u1.undSiglaCompleta = chefe.undSiglaCompleta AND chefe.pessoaId IS NOT NULL) OR 
 									   (u1.undSiglaCompleta like chefe.undSiglaCompleta + '%' AND chefe.pessoaId IS NULL) 
-						WHERE p.situacaoId <= 405
+						WHERE p.situacaoId <= 405 AND 
+                            (chefe.pessoaId IS NULL OR p.pessoaId = @pessoaId)
                         ORDER BY p.dataInicio, p.dataFim
 
 
@@ -205,6 +233,7 @@
                                 ,u1.undSiglaCompleta unidade  
 		                        ,pe.pesNome solicitante
 		                        ,cd2.descricao tipoSolicitacao
+                                ,s.dataSolicitacao
                         FROM [ProgramaGestao].[PactoTrabalhoSolicitacao] s
 	                        INNER JOIN [ProgramaGestao].[PactoTrabalho] p ON s.pactoTrabalhoId = p.pactoTrabalhoId
 	                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u1 ON u1.unidadeId = p.unidadeId   
@@ -226,7 +255,7 @@
 		                        WHERE pessoaId = @pessoaId AND pe.tipoFuncaoId IS NOT NULL
 	                        ) chefe ON (u1.undSiglaCompleta = chefe.undSiglaCompleta AND chefe.pessoaId IS NOT NULL) OR 
 									   (u1.undSiglaCompleta like chefe.undSiglaCompleta + '%' AND chefe.pessoaId IS NULL) 
-                        WHERE s.analisado = 0
+                        WHERE s.analisado = 0 AND p.situacaoId = 405
                         ORDER BY dataSolicitacao
 
                 ";
@@ -262,7 +291,7 @@
                 return @"
 					SELECT DISTINCT 
                           p.pessoaId
-                          ,p.pesNome nome
+                          ,RTRIM(LTRIM(p.pesNome)) nome
                           ,p.unidadeId
                           ,u.undSiglaCompleta unidade
                           ,u.tipoFuncaoUnidadeId
@@ -273,6 +302,7 @@
 					    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId  
 					    LEFT OUTER JOIN [dbo].[TipoFuncao] t ON t.tipoFuncaoId = p.tipoFuncaoId
 	                    INNER JOIN [ProgramaGestao].[PactoTrabalho] pe ON pe.pessoaId = p.pessoaId 
+                    ORDER BY nome
                 ";
             }
         }

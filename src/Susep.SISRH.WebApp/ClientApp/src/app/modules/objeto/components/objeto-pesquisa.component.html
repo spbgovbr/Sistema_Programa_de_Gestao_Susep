@@ -11,8 +11,8 @@
             <div class="col-sm-4">
               <div class="field">
                 <div class="br-input">
-                  <label for="descricao">Descrição</label>
-                  <input id="descricao" type="text" formControlName="descricao" placeholder="Insira um texto">
+                  <label for="descricao">Título</label>
+                  <input id="descricao" type="text" formControlName="descricao" placeholder="Insira um texto para filtrar">
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
             <table class="full-width-table table-striped table-style mat-elevation-z8">
               <thead>
                 <tr>
-                  <th>Descrição</th>
+                  <th>Título</th>
                   <th>Tipo</th>
                   <th>Chave</th>
                   <th>Situação</th>
@@ -63,9 +63,8 @@
                 <tr *ngFor="let item of dadosEncontrados?.registros">
                   <td>{{ item.descricao }}</td>
                   <td>{{ obterDescricaoTipo(item.tipo) }}</td>
-                  <td *ngIf="item.tipo === '1'">{{ item.chave | mask: '00.000.000/0000-00' }}</td>
-                  <td *ngIf="item.tipo === '2'">{{ item.chave }}</td>
-                  <td>{{item.ativo ? 'Ativo' : 'Inativo'}}</td>
+                  <td>{{ item.chave }}</td>
+                  <td>{{ item.ativo ? 'Ativo' : 'Inativo'}}</td>
                   <td><a href="javascript:void(0)" [routerLink]="['/objeto/editar/' + item.objetoId]"><i class="fa fa-edit"></i></a></td>
                 </tr>
                 <tr>

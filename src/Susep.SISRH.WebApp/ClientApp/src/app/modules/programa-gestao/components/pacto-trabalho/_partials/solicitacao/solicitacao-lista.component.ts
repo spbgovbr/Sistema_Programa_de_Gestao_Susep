@@ -101,6 +101,11 @@ export class PactoListaSolicitacaoComponent implements OnInit {
     this.modalService.open(this.modalCadastro, { size: 'sm' });
   }
 
+  abrirTelaExclusaoAtividade() {
+    this.tipoSolicitacao = 104;
+    this.modalService.open(this.modalCadastro, { size: 'sm' });
+  }
+
   verSolicitacao(pactoTrabalhoSolicitacaoId: string) {
     this.solicitacaoEditar.next(this.solicitacoes.filter(s => s.pactoTrabalhoSolicitacaoId === pactoTrabalhoSolicitacaoId)[0]);
     this.tipoSolicitacao = 199;

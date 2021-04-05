@@ -57,14 +57,33 @@
                     <dd class="col-sm-9">{{solicitacao.situacao }}</dd>
                   </dl>
                   <dl class="row">
-                    <dt class="col-sm-3" >Tempo planejado:</dt>
-                    <dd class="col-sm-3" >{{solicitacao.tempoPrevistoPorItem}}</dd>
+                    <dt class="col-sm-3">Tempo planejado:</dt>
+                    <dd class="col-sm-3">{{solicitacao.tempoPrevistoPorItem}}</dd>
 
-                    <dt class="col-sm-3" >Tempo despendido:</dt>
-                    <dd class="col-sm-3" >{{solicitacao.tempoRealizado}}</dd>
+                    <dt class="col-sm-3">Tempo despendido:</dt>
+                    <dd class="col-sm-3">{{solicitacao.tempoRealizado}}</dd>
                   </dl>
                 </div>
               </div>
+
+
+              <div class="row" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId === 604">
+                <div class="col-sm-12">
+                  <dl class="row">
+                    <dt class="col-sm-3">Atividade:</dt>
+                    <dd class="col-sm-9">{{solicitacao.itemCatalogo }}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Situação:</dt>
+                    <dd class="col-sm-9">{{solicitacao.situacao }}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Tempo planejado:</dt>
+                    <dd class="col-sm-3">{{solicitacao.tempoPrevistoPorItem}}</dd>
+                  </dl>
+                </div>
+              </div>
+
               <div class="row" *ngIf="solicitacao.descricao">
                 <div class="col-sm-12">
                   <dl class="row">
@@ -90,7 +109,7 @@
                   </div>
                 </div>
               </div>
-              <secure-input [perfis]="[PerfilEnum.ChefeUnidade]" [unidade]="unidade" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId !== 602">
+              <secure-input [perfis]="[PerfilEnum.ChefeUnidade]" [unidade]="unidade" *ngIf="dadosSolicitacao.value.tipoSolicitacaoId !== 602 && dadosSolicitacao.value.tipoSolicitacaoId !== 604">
                 <div class="row" *ngIf="!dadosSolicitacao.value.analisado">
                   <div class="col-sm-12">
                     <div class="field">

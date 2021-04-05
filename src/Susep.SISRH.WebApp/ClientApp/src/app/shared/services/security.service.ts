@@ -213,14 +213,14 @@ export class SecurityService implements OnInit {
   public logoff() {
 
     // Monta a URL de logoff
-    let domainUrl = window.location.href.replace(this.location.path(), '');
-    if (domainUrl.includes('#'))
-      domainUrl = domainUrl.substr(0, domainUrl.indexOf('#'));
-    domainUrl = domainUrl.endsWith('/') ? domainUrl : `${domainUrl}/`;
+    //let domainUrl = window.location.href.replace(this.location.path(), '');
+    //if (domainUrl.includes('#'))
+    //  domainUrl = domainUrl.substr(0, domainUrl.indexOf('#'));
+    //domainUrl = domainUrl.endsWith('/') ? domainUrl : `${domainUrl}/`;
     
     let params = new HttpParams({ encoder: new CustomHttpParamEncoder() });
     params = params.set('id_token_hint', this.storage.retrieve('userAuthorizationIdToken'));
-    params = params.set('post_logout_redirect_uri', domainUrl);
+    //params = params.set('post_logout_redirect_uri', domainUrl);
 
     //Remove os dados de autenticação
     this.resetUserAuthorizationData();

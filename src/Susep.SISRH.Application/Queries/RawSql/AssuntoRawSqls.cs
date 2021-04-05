@@ -14,7 +14,7 @@
                            a.nivel,
                            a.ativo
                     FROM [ProgramaGestao].[VW_AssuntoChaveCompleta] a
-                    WHERE (@valor IS NULL OR a.valor LIKE '%' + @valor + '%')  
+                    WHERE (@valor IS NULL OR a.hierarquia LIKE '%' + @valor + '%')  
                     ORDER BY a.hierarquia
 
                     OFFSET @Offset ROWS
@@ -45,6 +45,22 @@
 	                    from ProgramaGestao.Assunto a
 	                    where a.assuntoId = @id
                     );                
+                ";
+            }
+        }
+        public static string ObterAtivos
+        {
+            get
+            {
+                return @"
+                    SELECT a.assuntoId,
+                           a.valor,
+                           a.hierarquia,
+                           a.nivel,
+                           a.ativo
+                    FROM [ProgramaGestao].[VW_AssuntoChaveCompleta] a
+                    WHERE a.ativo = 1
+                    ORDER BY a.hierarquia;                
                 ";
             }
         }

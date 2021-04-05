@@ -12,6 +12,7 @@ namespace Susep.SISRH.Application.Queries.Abstractions
     public interface IAssuntoQuery
     {
         Task<IApplicationResult<DadosPaginadosViewModel<AssuntoViewModel>>> ObterPorFiltroAsync(AssuntoFiltroRequest request);
+        Task<IApplicationResult<IEnumerable<AssuntoViewModel>>> ObterAtivosAsync(); 
         Task<IApplicationResult<AssuntoEdicaoViewModel>> ObterPorIdAsync(Guid id);
         Task<IApplicationResult<IEnumerable<AssuntoViewModel>>> ObterPorTextoAsync(string texto);
         Task<IApplicationResult<IEnumerable<Guid>>> ObterIdsDeTodosOsPaisAsync(Guid assuntoId);

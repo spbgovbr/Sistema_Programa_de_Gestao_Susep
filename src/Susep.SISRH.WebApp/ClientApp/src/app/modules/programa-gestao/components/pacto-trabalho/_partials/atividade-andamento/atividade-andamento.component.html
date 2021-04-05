@@ -26,9 +26,9 @@
                 <td class="text-center">{{item.dataFim | date: 'dd/MM/yyyy HH:mm'}}</td>
                 <td class="text-right">{{item.tempoRealizado}}</td>
                 <td class="text-center">
-                  <span *ngIf="item.nota === 0 || item.nota">{{ item.nota }}</span>
+                  <div *ngIf="item.nota === 0 || item.nota" title="{{item.justificativa}}">{{ item.nota }}</div>
                   <secure-input *ngIf="item.situacaoId === 503" [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
-                    <a *ngIf="item.nota !== 0 && !item.nota" href="javascript:void(0)" (click)="avaliar(item.pactoTrabalhoAtividadeId)">avaliar</a>
+                    <a *ngIf="dentroPrazoAvaliacao" href="javascript:void(0)" (click)="avaliar(item.pactoTrabalhoAtividadeId)">avaliar</a>
                   </secure-input>
                 </td>
                 <td class="text-right">{{item.tempoHomologado}}</td>
@@ -117,7 +117,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row" *ngIf="situacaoId == 503">
+              <div class="row" *ngIf="situacaoId >= 502">
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="O tamanho máximo é de 2000 caracteres." label="Descrição da entrega">

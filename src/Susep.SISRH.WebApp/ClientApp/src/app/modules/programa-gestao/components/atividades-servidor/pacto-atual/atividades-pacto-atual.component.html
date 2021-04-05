@@ -86,7 +86,7 @@
         <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 403 && periodoExecucao" (click)="iniciarExecucao()">Iniciar execução</button>
       </secure-input>
       <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
-        <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelConcluirExecucao()">Concluir execução</button>
+        <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelConcluirExecucao()">Encerrar Plano de Trabalho</button>
       </secure-input>
     </div>
   </div>
@@ -138,7 +138,7 @@
         </div>
         <div class="br-modal-body">
           <div class="row">
-            <div class="col-sm-12 pt-5" style="height: 200px;">
+            <div class="col-sm-12 pt-5" style="height: 200px; width: 620px;">
               <span class="text-primary">Termo de ciência e responsabilidade:</span><br />
               <div class="overflow-auto h-75 border p-2">
                 {{termoAceite}}                

@@ -7,34 +7,41 @@
     <form [formGroup]="form">
       <div class="br-form">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             <div class="field">
-              <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Assunto pai">
-                <input-autocomplete-async [datasource]="datasource" formControlName="paiId"></input-autocomplete-async>
+              <field-validation [classList]="['br-input', 'is-medium']" errorMessage="Campo obrigatório." label="Título">
+                <input id="valor" type="text" placeholder="Insira um título para o assunto" formControlName="valor">
               </field-validation>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm">
+          <div class="col-12">
             <div class="field">
-              <field-validation [classList]="['br-input', 'is-medium']" errorMessage="Campo obrigatório." label="Valor">
-                <input id="valor" type="text" placeholder="Insira um texto" formControlName="valor">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Assunto pai">
+                <select id="assuntoPaiId" name="assuntoPaiId" formControlName="assuntoPaiId">
+                  <option value="">Selecione um assunto pai</option>
+                  <option class="select-items" *ngFor="let item of assuntos" [ngValue]="item.assuntoId">{{ item.hierarquia }}</option>
+                </select>
               </field-validation>
             </div>
           </div>
-          <div class="col-sm-1 mr-2" *ngIf="entidadeEmEdicao">
+        </div>
+        <div class="row">
+          <div class="col-12" *ngIf="assunto">
             <div class="field">
-              <field-validation [classList]="['br-input', 'is-medium', 'float-right']" errorMessage="Campo obrigatório." label="Ativo">
-                <mat-slide-toggle formControlName="ativo"></mat-slide-toggle>
+              <field-validation [classList]="['br-input', 'is-medium']" errorMessage="Campo obrigatório." label="Situação">
+                <mat-slide-toggle formControlName="ativo">
+                  <span class="pt-2" *ngIf="assunto.ativo">Ativo</span>
+                  <span class="pt-2" *ngIf="!assunto.ativo">Inativo</span>
+                </mat-slide-toggle>
               </field-validation>
             </div>
           </div>
         </div>
         <div class="actions justify-content-start">
           <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
-            <button class="br-button is-primary" type="submit" (click)="salvar()" *ngIf="!entidadeEmEdicao" [disabled]="!form.valid">Salvar</button>
-            <button class="br-button is-primary" type="submit" (click)="atualizar()" *ngIf="entidadeEmEdicao" [disabled]="!form.valid">Atualizar</button>
+            <button class="br-button is-primary" type="submit" (click)="salvar()" [disabled]="!form.valid">Salvar</button>
           </secure-input>
           <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/assunto/pesquisa']">Cancelar</button>
         </div>

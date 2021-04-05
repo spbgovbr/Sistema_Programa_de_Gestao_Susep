@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DataService } from '../../../shared/services/data.service';
-import { ConfigurationService } from '../../../shared/services/configuration.service';
-import { ApplicationResult } from '../../../shared/models/application-result.model';
-import { IAssunto, IAssuntoCadastro, IAssuntoHierarquia, IAssuntoEdicao } from '../models/assunto.model';
-import { IAssuntoPesquisa } from '../models/assunto.pesquisa.model';
-import { IDadosPaginados } from 'src/app/shared/models/pagination.model';
 import { Guid } from 'src/app/shared/helpers/guid.helper';
+import { IDadosPaginados } from 'src/app/shared/models/pagination.model';
+import { ApplicationResult } from '../../../shared/models/application-result.model';
+import { ConfigurationService } from '../../../shared/services/configuration.service';
+import { DataService } from '../../../shared/services/data.service';
+import { IAssunto } from '../models/assunto.model';
+import { IAssuntoPesquisa } from '../models/assunto.pesquisa.model';
+
 
 @Injectable()
 export class AssuntoDataService {
@@ -27,7 +27,16 @@ export class AssuntoDataService {
     }));
   }
 
-  ObterPorId(id: Guid): Observable<ApplicationResult<IAssuntoEdicao>> {
+  ObterAtivos(): Observable<ApplicationResult<IAssunto[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}assunto/ativos`;
+
+    return this.service.get(url).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  ObterPorId(id: Guid): Observable<ApplicationResult<IAssunto>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}assunto/${id}`;
 
@@ -36,7 +45,7 @@ export class AssuntoDataService {
     }));
   }
 
-  ObterAssuntosPorTexto(texto: string): Observable<ApplicationResult<IAssuntoHierarquia[]>> {
+  ObterAssuntosPorTexto(texto: string): Observable<ApplicationResult<IAssunto[]>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const params = this.service.toQueryParams({texto: texto});
     const url = `${baseURI}assunto/texto?${params}`;
@@ -46,7 +55,7 @@ export class AssuntoDataService {
     }));
   }
 
-  CadastrarAssunto(dados: IAssuntoCadastro): Observable<ApplicationResult<boolean>> {
+  CadastrarAssunto(dados: IAssunto): Observable<ApplicationResult<boolean>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}assunto`;
 
@@ -55,18 +64,11 @@ export class AssuntoDataService {
     }));
   }
 
-  AtualizarAssunto(dados: IAssuntoEdicao): Observable<ApplicationResult<boolean>> {
+  AtualizarAssunto(dados: IAssunto): Observable<ApplicationResult<boolean>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}assunto`;
 
-    const dadosEntidade = {
-      assuntoId: dados.assuntoId,
-      valor: dados.valor,
-      assuntoPaiId: dados.paiId,
-      ativo: dados.ativo
-    };
-
-    return this.service.put(url, dadosEntidade).pipe(map((response: any) => {
+    return this.service.put(url, dados).pipe(map((response: any) => {
       return response;
     }));
   }

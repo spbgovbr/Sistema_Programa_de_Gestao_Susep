@@ -20,7 +20,7 @@
                 <!--<th>Descrição</th>-->
                 <th style="width:90px" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho"></th>
                 <th style="width:90px" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao"></th>
-                <th style="width:250px" *ngIf="dadosPlano.value?.situacaoId >= PlanoTrabalhoSituacaoEnum.ProntoParaExecucao">Candidados aprovados</th>
+                <th style="width:250px" *ngIf="dadosPlano.value?.situacaoId >= PlanoTrabalhoSituacaoEnum.ProntoParaExecucao">Candidatos aprovados</th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +45,7 @@
                   </secure-input>
                 </td>
                 <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao" class="my-auto">
-                  <secure-input [perfis]="[PerfilEnum.Servidor]" [unidade]="unidade">
+                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade">
                     <a href="javascript:void(0)" (click)="candidatar(item.planoTrabalhoAtividadeId)" *ngIf="candidato(item.planoTrabalhoAtividadeId) === -1" title="Candidatar"><i class="fa fa-2x fa-user-plus text-gray-5"></i></a>
                   </secure-input>
                   <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Aprovada" title="Aprovado"><i class="fa fa-2x fa-user-check text-success"></i></span>

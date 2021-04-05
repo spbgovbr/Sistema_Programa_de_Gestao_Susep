@@ -18,8 +18,6 @@ export class DashboardComponent implements OnInit {
   chefe: boolean;
   usuarioLogadoId: number;
 
-  gestorSistema: boolean;
-
   constructor(
     private pessoaDataService: PessoaDataService,
     private applicationState: ApplicationStateService) {
@@ -34,9 +32,6 @@ export class DashboardComponent implements OnInit {
 
     this.applicationState.perfilUsuario.subscribe(perfil => {
       this.usuarioLogadoId = perfil.pessoaId;
-
-      this.gestorSistema = perfil.perfis.filter(p =>
-        p.perfil === PerfilEnum.Gestor).length > 0;
 
       this.chefe = perfil.perfis.filter(p =>
         p.perfil === PerfilEnum.Gestor ||

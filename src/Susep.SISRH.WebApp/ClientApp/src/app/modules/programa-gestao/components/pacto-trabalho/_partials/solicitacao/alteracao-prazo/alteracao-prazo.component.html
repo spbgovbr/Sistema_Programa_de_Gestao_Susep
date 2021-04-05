@@ -35,7 +35,7 @@
       </div>
       <div class="br-modal-footer justify-content-end">
         <button class="br-button is-cancel" type="button" (click)="fecharModal()">Cancelar</button>
-        <button class="br-button is-primary" type="button" (click)="alterarPrazo()">Enviar solicitação para aprovação do gestor</button>
+        <button class="br-button is-primary" type="button" (click)="alterarPrazo()" [disabled]="!form.valid">Enviar solicitação para aprovação</button>
       </div>
     </div>
   </div>

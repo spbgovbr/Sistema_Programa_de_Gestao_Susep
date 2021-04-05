@@ -12,7 +12,7 @@
               <div class="field">
                 <field-validation [classList]="['br-select', 'is-medium']" label="Unidade">
                   <select id="unidadeId" name="unidadeId" formControlName="unidadeId" placeholder="Selecione uma unidade">
-                    <option value="">Selecione uma unidade</option>
+                    <option value="null">Selecione uma unidade</option>
                     <option class="select-items" *ngFor="let item of unidades" [ngValue]="item.id">{{ item.descricao }}</option>
                   </select>
                 </field-validation>
@@ -22,7 +22,7 @@
               <div class="field">
                 <field-validation [classList]="['br-select', 'is-medium']" label="Pessoa">
                   <select id="pessoaId" name="pessoaId" formControlName="pessoaId" placeholder="Selecione uma pessoa">
-                    <option value="">Selecione uma pessoa</option>
+                    <option value="null">Selecione uma pessoa</option>
                     <option class="select-items" *ngFor="let item of pessoas" [ngValue]="item.id">{{ item.descricao }}</option>
                   </select>
                 </field-validation>
@@ -32,7 +32,7 @@
               <div class="field">
                 <field-validation [classList]="['br-select', 'is-medium']" label="Forma de execução">
                   <select id="formaExecucaoId" name="formaExecucaoId" formControlName="formaExecucaoId" placeholder="Selecione uma forma de execução">
-                    <option value="">Selecione uma forma de execução</option>
+                    <option value="null">Selecione uma forma de execução</option>
                     <option class="select-items" *ngFor="let item of formasExecucao" [ngValue]="item.id">{{ item.descricao }}</option>
                   </select>
                 </field-validation>
@@ -44,7 +44,7 @@
               <div class="field">
                 <field-validation [classList]="['br-select', 'is-medium']" label="Situação">
                   <select id="situacaoId" name="situacaoId" formControlName="situacaoId" placeholder="Selecione uma situação">
-                    <option value="">Selecione uma situação</option>
+                    <option value="null">Selecione uma situação</option>
                     <option class="select-items" *ngFor="let item of situacoes" [ngValue]="item.id">{{ item.descricao }}</option>
                   </select>
                 </field-validation>

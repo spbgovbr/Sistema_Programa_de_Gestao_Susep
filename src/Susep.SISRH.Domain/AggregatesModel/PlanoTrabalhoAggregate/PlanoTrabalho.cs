@@ -283,8 +283,14 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
                 foreach (var candidatura in atividade.Candidatos)
                 {
                     var situacaoCandidatura = (int)SituacaoCandidaturaPlanoTrabalhoEnum.Rejeitada;
-                    if (aprovados.Any(candidatoAprovadoId => candidatura.PlanoTrabalhoAtividadeCandidatoId == Guid.Parse(candidatoAprovadoId)))
+                    Guid candidatoId;
+                    if (aprovados.Any(candidatoAprovadoId =>
+                            !String.IsNullOrEmpty(candidatoAprovadoId) &&
+                            Guid.TryParse(candidatoAprovadoId, out candidatoId) &&
+                            candidatura.PlanoTrabalhoAtividadeCandidatoId == Guid.Parse(candidatoAprovadoId)))
+                    {
                         situacaoCandidatura = (int)SituacaoCandidaturaPlanoTrabalhoEnum.Aprovada;
+                    }
 
                     candidatura.AlterarSituacao(situacaoCandidatura, responsavelOperacaoId, observacoes);
                 }

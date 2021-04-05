@@ -390,8 +390,9 @@ namespace Susep.SISRH.Application.Queries.Concrete
             //Se não for gestor do sistema, deve filtrar
             if (!perfisUsuario.Result.Perfis.Any(p => p.Perfil == (int)PerfilUsuarioEnum.Gestor))
             {
-                //Obtém as unidades em que o usuário é chefe
+                //Se for chefe, obtém as unidades em que o usuário é chefe
                 var unidadesChefia = (from perfil in perfisUsuario.Result.Perfis
+                                      where perfil.Perfil == (int)PerfilUsuarioEnum.ChefeUnidade
                                       from unidade in perfil.Unidades
                                       select unidade).Distinct().ToList();
 

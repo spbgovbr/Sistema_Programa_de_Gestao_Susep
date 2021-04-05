@@ -2,8 +2,9 @@
   <div class="row mt-5" *ngIf="!isReadOnly">
     <div class="col-sm-12 text-right">
       <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastroAtividade()">Cadastrar atividade</button>
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaExclusaoAtividade()">Excluir atividade</button>
       <button class="br-button is-secondary" type="button" (click)="abrirTelaAlteracaoPrazo()">Alterar prazo</button>
-      <button class="br-button is-secondary" type="button" (click)="abrirTelaJustificarEstouroPrazo()">Justificar estouro de prazo</button>    
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaJustificarEstouroPrazo()">Justificar estouro de prazo</button>
     </div>
   </div>
 </secure-input>
@@ -48,4 +49,5 @@
   <alteracao-prazo-pacto [dadosPacto]="dadosPacto" *ngIf="tipoSolicitacao === 102"></alteracao-prazo-pacto>
   <pacto-detalhes-solicitacao [dadosPacto]="dadosPacto" [dadosSolicitacao]="solicitacaoEditar" *ngIf="tipoSolicitacao === 199"></pacto-detalhes-solicitacao>
   <justificar-estouro-prazo [dadosPacto]="dadosPacto" [solicitacoes]="solicitacoes" *ngIf="tipoSolicitacao === 103"></justificar-estouro-prazo>
+  <atividade-excluir [dadosPacto]="dadosPacto" [solicitacoes]="solicitacoes" *ngIf="tipoSolicitacao === 104"></atividade-excluir>
 </ng-template>

@@ -23,7 +23,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
     {
 
         public Guid PactoTrabalhoId { get; private set; }
-        public Guid PlanoTrabalhoId { get; private set; }        
+        public Guid PlanoTrabalhoId { get; private set; }
         public Int64 PessoaId { get; private set; }
         public Int64 UnidadeId { get; private set; }
         public DateTime DataInicio { get; private set; }
@@ -35,7 +35,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         public Decimal? PercentualExecucao { get; private set; }
         public Decimal? RelacaoPrevistoRealizado { get; private set; }
         public Int32 TempoTotalDisponivel { get; private set; }
-        
+
 
         public PlanoTrabalho PlanoTrabalho { get; private set; }
         public Pessoa Pessoa { get; private set; }
@@ -203,7 +203,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             }
             if (idsObjetos != null)
             {
-                foreach(var idObjeto in idsObjetos)
+                foreach (var idObjeto in idsObjetos)
                 {
                     atividade.AdicionarObjeto(idObjeto);
                 }
@@ -306,9 +306,40 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         {
             this.AtualizarTempoAtividadesPorDia();
 
-            var tempoPrevistoAtividadesConcluidas = this.Atividades.Where(a => a.DataFim.HasValue).Sum(a => a.TempoPrevistoTotal);
-            var tempoRealizadoAtividadesConcluidas = this.Atividades.Where(a => a.DataFim.HasValue).Sum(a => a.TempoRealizado.HasValue ? a.TempoRealizado.Value : 0);
-            var tempoPrevistoTotal = this.Atividades.Sum(a => a.TempoPrevistoTotal);
+            #region Atividades por tarefa
+
+            //Recupera somente as atividades por tarefa
+            var atividadesPorItem = this.Atividades.Where(a => a.ItemCatalogo == null || a.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)Enums.FormaCalculoTempoItemCatalogoEnum.PredefinidoPorTarefa);
+            var tempoPrevistoTotal = atividadesPorItem.Sum(a => a.TempoPrevistoPorItem);
+            var tempoPrevistoAtividadesConcluidas = atividadesPorItem.Where(a => a.DataFim.HasValue).Sum(a => a.TempoPrevistoPorItem);
+
+            //No tempo realizado considera as seguintes regras:
+            //  1. Se o tempo tiver sido homologado e não tiver sido zero, considera o tempo homologado
+            //  2. Se tiver sido homologado como zero, considera o tempo que estava previsto
+            //  3. Se ainda não tiver sido homologado, considera o tempo realizado
+            var tempoRealizadoAtividadesConcluidas = atividadesPorItem.Where(a => a.DataFim.HasValue).Sum(a => a.TempoHomologado.HasValue ? (a.TempoHomologado.Value > 0 ? a.TempoHomologado.Value : a.TempoPrevistoPorItem) : (a.TempoRealizado.HasValue ? a.TempoRealizado.Value : 0));
+
+            #endregion
+
+            #region Atividades por dia
+            var atividadesPorDia = this.Atividades.Except(atividadesPorItem);
+
+            //Calcula a quantidade total de dias do pacto
+            var diasTotaisPacto = this.TempoTotalDisponivel / this.CargaHorariaDiaria;
+            tempoPrevistoTotal += (diasTotaisPacto * atividadesPorDia.Sum(a => a.TempoPrevistoPorItem));
+
+            //Se tiver alguma atividade concluída, usa a quantidade total de dias para calcular
+            //  Caso contrário, usa o número de dias já executado
+            var diasExecutadosPacto = diasTotaisPacto;
+            if (!this.Atividades.Any(a => a.DataFim.HasValue))
+            {//Para esse cálculo desconsidera os feriados
+                diasExecutadosPacto = WorkingDays.DiffDays(this.DataInicio, DateTime.Now.Date > this.DataFim.Date ? this.DataFim.Date : DateTime.Now.Date, null, false);
+            }
+
+            tempoPrevistoAtividadesConcluidas += (diasExecutadosPacto * atividadesPorDia.Sum(a => a.TempoPrevistoPorItem));
+            tempoRealizadoAtividadesConcluidas += (diasExecutadosPacto * atividadesPorDia.Sum(a => a.TempoHomologado.HasValue ? (a.TempoHomologado.Value > 0 ? a.TempoHomologado.Value : a.TempoPrevistoPorItem) : a.TempoPrevistoPorItem));
+
+            #endregion
 
             this.PercentualExecucao = 0;
             if (tempoPrevistoTotal > 0)
@@ -333,6 +364,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         {
             var atividade = this.Atividades.FirstOrDefault(r => r.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId);
             atividade.Avaliar(nota, justificativa);
+            this.AtualizarPercentualExecucao();
         }
 
         #endregion
@@ -374,30 +406,34 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                         break;
 
                     case (int)TipoSolicitacaoPactoTrabalhoEnum.AlterarPrazo:
-                        
+
                         this.AlterarPeriodo((DateTime)dadosSolicitacao.dataFim);
                         break;
 
 
                     case (int)TipoSolicitacaoPactoTrabalhoEnum.JustificarEstouroPrazo:
-                        if (aprovado)
+
+                        Guid? pactoTrabalhoAtividadeId = dadosSolicitacao.pactoTrabalhoAtividadeId;
+                        var atividade = this.Atividades
+                            .FirstOrDefault(a => a.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId);
+
+                        if (atividade.SituacaoId == (int)SituacaoAtividadePactoTrabalhoEnum.Done)
                         {
-
-                            Guid? pactoTrabalhoAtividadeId = dadosSolicitacao.pactoTrabalhoAtividadeId;
-                            var atividade = this.Atividades
-                                .FirstOrDefault(a => a.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId);
-
-                            if (atividade.SituacaoId == (int)SituacaoAtividadePactoTrabalhoEnum.Done)
+                            if (atualizarPrazo)
                             {
-                                if (atualizarPrazo)
-                                {
-                                    var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis);
-                                    this.AlterarPeriodo(novaDataFim);
-                                }
-
-                                atividade.AjustarTemposPrevistoEHomologadoAoTempoRealizado();
+                                var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis);
+                                this.AlterarPeriodo(novaDataFim);
                             }
+
+                            atividade.AjustarTemposPrevistoEHomologadoAoTempoRealizado();
+                            this.AtualizarPercentualExecucao();
                         }
+
+                        break;
+
+                    case (int)TipoSolicitacaoPactoTrabalhoEnum.ExcluirAtividade:
+                        Guid pactoTrabalhoAtividadeExcluirId = dadosSolicitacao.pactoTrabalhoAtividadeId;
+                        this.Atividades.RemoveAll(a => a.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeExcluirId);                        
                         break;
                 }
             }

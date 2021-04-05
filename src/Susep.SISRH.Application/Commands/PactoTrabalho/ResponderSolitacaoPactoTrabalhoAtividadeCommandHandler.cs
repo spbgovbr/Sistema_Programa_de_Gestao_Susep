@@ -62,10 +62,13 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
             //Monta os dados do pacto de trabalho
             var pacto = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
 
+            //Obtém os dados da solicitação
+            var solicitacao = pacto.Solicitacoes.Where(s => s.PactoTrabalhoSolicitacaoId == request.PactoTrabalhoSolicitacaoId).FirstOrDefault();
+
             if (request.AjustarPrazo)
             {
                 //Obtém os dias não úteis da pessoa
-                var dias = diasAumentoPrazo(pacto, request.PactoTrabalhoSolicitacaoId);
+                var dias = diasAumentoPrazo(pacto, solicitacao);
 
                 if (dias == null)
                 {
@@ -74,6 +77,12 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 }
 
                 var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(pacto.PessoaId, pacto.DataInicio, pacto.DataFim.AddDays(Convert.ToDouble(Decimal.Round(dias.Value))));
+                pacto.DiasNaoUteis = diasNaoUteis.Result.ToList();
+            }
+            else if (solicitacao.TipoSolicitacaoId == (int)SISRH.Domain.Enums.TipoSolicitacaoPactoTrabalhoEnum.AlterarPrazo)
+            {
+                dynamic dadosSolicitacao = JsonConvert.DeserializeObject(solicitacao.DadosSolicitacao);
+                var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(pacto.PessoaId, pacto.DataFim, (DateTime)dadosSolicitacao.dataFim);
                 pacto.DiasNaoUteis = diasNaoUteis.Result.ToList();
             }
 
@@ -139,10 +148,8 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
         #endregion
 
 
-        private Decimal? diasAumentoPrazo(Domain.AggregatesModel.PactoTrabalhoAggregate.PactoTrabalho pacto, Guid pactoTrabalhoSolicitacaoId)
+        private Decimal? diasAumentoPrazo(Domain.AggregatesModel.PactoTrabalhoAggregate.PactoTrabalho pacto, PactoTrabalhoSolicitacao solicitacao)
         {
-            var solicitacao = pacto.Solicitacoes.Where(s => s.PactoTrabalhoSolicitacaoId == pactoTrabalhoSolicitacaoId).FirstOrDefault();
-
             dynamic dadosSolicitacao = JsonConvert.DeserializeObject(solicitacao.DadosSolicitacao);
 
             if (solicitacao != null)
@@ -160,6 +167,7 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                             }
                         }
                         break;
+
                     case ((int)TipoSolicitacaoPactoTrabalhoEnum.NovaAtividade):
                         decimal tempoPrevistoPorItem = dadosSolicitacao.tempoPrevistoPorItem;
                         return Decimal.Divide(tempoPrevistoPorItem, pacto.Pessoa.CargaHoraria);

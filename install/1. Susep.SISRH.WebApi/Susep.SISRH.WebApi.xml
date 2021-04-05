@@ -23,6 +23,12 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetAtivos">
+            <summary>
+            Obtém os assuntos cadastrados
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetById(System.Guid)">
             <summary>
             Obtém o assunto por id

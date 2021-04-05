@@ -15,11 +15,12 @@ namespace Susep.SISRH.Infrastructure.EntityConfigurations
             builder.HasKey(p => p.PessoaId);
 
             builder.Ignore(p => p.Id)
-                   .Ignore(p => p.RequestedHashCode);
+                   .Ignore(p => p.RequestedHashCode)
+                   .Ignore(p => p.CargaHoraria);
 
             builder.Property(p => p.PessoaId).HasColumnName("pessoaId");
             builder.Property(p => p.Nome).HasColumnName("pesNome");
-            builder.Property(p => p.CargaHoraria).HasColumnName("cargaHoraria");
+            builder.Property(p => p.CargaHorariaDb).HasColumnName("cargaHoraria");
             builder.Property(p => p.TipoFuncaoId).HasColumnName("tipoFuncaoId");
             builder.Property(p => p.Cpf).HasColumnName("pesCPF");
             builder.Property(p => p.Email).HasColumnName("pesEmail");

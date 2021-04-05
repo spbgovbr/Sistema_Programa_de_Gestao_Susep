@@ -65,8 +65,8 @@ namespace Susep.SISRH.Domain.Helpers
             {                
                 if (from.DayOfWeek != DayOfWeek.Saturday &&
                     from.DayOfWeek != DayOfWeek.Sunday &&
-                    feriados != null &&
-                    !feriados.Any(f => f.Date == from.Date))
+                    (feriados == null || 
+                     (feriados != null && !feriados.Any(f => f.Date == from.Date))))
                 {
                     dates.Add(from.Date);
                 }

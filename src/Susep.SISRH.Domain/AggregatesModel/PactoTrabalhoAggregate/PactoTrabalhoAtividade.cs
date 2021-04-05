@@ -137,8 +137,10 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             if (this.SituacaoId != (int)SituacaoAtividadePactoTrabalhoEnum.Done)
                 throw new SISRHDomainException("Não é possível ajustar os tempos previsto e homologado se a atividade não estiver concluída.");
             
-            this.TempoPrevistoTotal = this.TempoRealizado.Value;
-            this.TempoHomologado = this.TempoRealizado.Value;
+            this.TempoPrevistoPorItem = this.TempoRealizado.Value;
+
+            if (this.TempoHomologado.HasValue)
+                this.TempoHomologado = this.TempoRealizado.Value;
         }
 
         #region Ações do kanban
@@ -212,6 +214,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             this.DataInicio = null;
             this.DataFim = null;
             this.TempoRealizado = null;
+            this.ConsideracoesConclusao = consideracoes;
 
             switch (this.SituacaoId)
             {
@@ -232,7 +235,6 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                     this.DataInicio = dataInicio;
                     this.DataFim = dataConclusao;
                     this.TempoRealizado = tempoRealizado;
-                    this.ConsideracoesConclusao = consideracoes;
                     break;
             }
         }

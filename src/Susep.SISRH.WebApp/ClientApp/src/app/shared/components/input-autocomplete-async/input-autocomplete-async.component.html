@@ -1,4 +1,4 @@
-<div class="input-group mb-3">
+<div class="input-group">
   <input #inputtext class="form-control" matInput placeholder="Digite para pesquisar" [matAutocomplete]="auto" [formControl]="control">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" (click)="limpar()" *ngIf="!disabled && modo === 'selecao'" [disabled]="!control.value || !control.value.chave">

@@ -23,6 +23,12 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetAtivos">
+            <summary>
+            Obtém os assuntos cadastrados
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.AssuntoController.GetById(System.Guid)">
             <summary>
             Obtém o assunto por id
@@ -505,6 +511,14 @@
         <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostJustificarEstouroPrazoAtividade(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.JustificarEstouroPrazoAtividadeCommand)">
             <summary>
             Justificativa de estouro de prazo
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostProporExcluirAtividadePacto(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.ProporExcluirAtividadeCommand)">
+            <summary>
+            Solicita a exclusão de uma atividade do pacto
             </summary>
             <param name="pactoTrabalhoid"></param>
             <param name="command"></param>

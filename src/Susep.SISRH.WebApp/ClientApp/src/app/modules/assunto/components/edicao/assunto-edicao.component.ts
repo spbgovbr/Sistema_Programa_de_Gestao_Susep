@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AssuntoDataService } from '../../services/assunto.service';
-import { map } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PerfilEnum } from 'src/app/modules/programa-gestao/enums/perfil.enum';
-import { IAssuntoCadastro, IAssuntoEdicao, IAssuntoHierarquia } from '../../models/assunto.model';
-import { IDatasourceAutocompleteAsync, IChaveDescricao } from 'src/app/shared/components/input-autocomplete-async/input-autocomplete-async.component';
-import { of } from 'rxjs';
+import { IAssunto } from '../../models/assunto.model';
+import { AssuntoDataService } from '../../services/assunto.service';
 
 @Component({
   selector: 'assunto-edicao',
@@ -18,105 +15,72 @@ export class AssuntoEdicaoComponent implements OnInit {
 
   form: FormGroup;
 
-  datasource: IDatasourceAutocompleteAsync;
-
-  entidadeEmEdicao: IAssuntoEdicao;
+  assunto: IAssunto;
+  assuntos: IAssunto[];
 
   constructor(
-    public router: Router,    
+    public router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private assuntoDataService: AssuntoDataService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.criarForm();
-    this.carregarDados();
-    this.datasource = this.criarDatasource();
-  }
-
-  private criarDatasource(): IDatasourceAutocompleteAsync {
-    return {
-      buscarPorChave: (chave: any) => of(this.entidadeEmEdicao ? this.entidadeEmEdicao.pai : null),
-      buscarPorValor: (valor: string) => this.assuntoDataService.ObterAssuntosPorTexto(valor).pipe(
-        map(result => result.retorno
-          .filter(a => this.deveExibirAssunto(a))
-          .sort((a, b) => ('' + a.hierarquia).localeCompare(b.hierarquia)))
-        ),
-      modelToValue: (model: any) => this.toIChaveDescricao(model)
-    };
-  }
-
-  private deveExibirAssunto(assunto: IAssuntoHierarquia): boolean {
-    if (!this.entidadeEmEdicao) return true;
-    if (!assunto.hierarquia || !assunto.hierarquia.trim().length) return true;
-    // Não pode exibir o próprio assunto em edição ou os assuntos que forem ancestrais dele.
-    return !assunto.hierarquia.includes(this.entidadeEmEdicao.valor);
-  }
-
-  private toIChaveDescricao(value: IAssuntoHierarquia): IChaveDescricao {
-    return {
-      chave: value.assuntoId,
-      descricao: value.hierarquia
-    };
-  }
-
-  private criarForm(): void {
 
     this.form = this.formBuilder.group({
       valor: ['', [Validators.required, Validators.minLength(5)]],
-      paiId: [null, []],
+      assuntoPaiId: [null, []],
       ativo: [null, []]
     });
-    
-  }
 
-  private carregarDados() {
+    this.assuntoDataService.ObterAtivos().subscribe(result => {
+      this.assuntos = result.retorno;
+    });
+
     const id = this.route.snapshot.params.id;
     if (id) {
       this.assuntoDataService.ObterPorId(id).subscribe(result => {
-        this.entidadeEmEdicao = result.retorno;
-        this.fillForm();
-      });
-    } 
-  }
+        this.assunto = result.retorno;
 
-  private fillForm(): void {
-    this.form.patchValue({
-      valor: this.entidadeEmEdicao.valor,
-      paiId: this.entidadeEmEdicao.pai ? this.entidadeEmEdicao.pai.assuntoId : null,
-      ativo: this.entidadeEmEdicao.ativo
-    });
+        this.form.patchValue({
+          valor: this.assunto.valor,
+          assuntoPaiId: this.assunto.assuntoPaiId,
+          ativo: this.assunto.ativo
+        });
+      });
+    }
   }
 
   salvar() {
     if (this.form.valid) {
-      const formValue = this.form.value;
-      const dados: IAssuntoCadastro = {
-        valor: formValue.valor,
-        assuntoPaiId: formValue.paiId
-      };
-      this.assuntoDataService.CadastrarAssunto(dados).subscribe(result => {
-        if (result.retorno) {
-          this.router.navigateByUrl('/assunto');
-        }
-      });
+      const dados : IAssunto = this.form.value;
+
+      if (this.assunto) {
+        dados.assuntoId = this.assunto.assuntoId;
+        this.assuntoDataService.AtualizarAssunto(dados).subscribe(result => {
+          if (result.retorno) {
+            this.router.navigateByUrl('/assunto');
+          }
+        });
+      }
+      else {
+        this.assuntoDataService.CadastrarAssunto(dados).subscribe(result => {
+          if (result.retorno) {
+            this.router.navigateByUrl('/assunto');
+          }
+        });
+      }
+    }
+    else {
+      this.getFormValidationErrors(this.form)
     }
   }
 
-  atualizar() {
-    if (this.form.valid) {
-      const formValue = this.form.value;
-
-      const dados = Object.assign({...this.entidadeEmEdicao}, formValue);
-
-      this.assuntoDataService.AtualizarAssunto(dados).subscribe(result => {
-        if (result.retorno) {
-          this.router.navigateByUrl('/assunto');
-        }
-      });
-      
-    }
+  getFormValidationErrors(form) {
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      control.markAsDirty({ onlySelf: true });
+    });
   }
 
 }
