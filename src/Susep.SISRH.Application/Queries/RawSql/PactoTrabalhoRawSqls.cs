@@ -197,6 +197,7 @@
 		                    ,cd.descricao situacao
 		                    ,p.descricao
                             ,p.nota
+                            ,p.justificativa
                             ,p.consideracoesConclusao as consideracoes
                     FROM [ProgramaGestao].[PactoTrabalhoAtividade] p
 	                    INNER JOIN [ProgramaGestao].[ItemCatalogo] i ON p.itemCatalogoId = i.itemCatalogoId 

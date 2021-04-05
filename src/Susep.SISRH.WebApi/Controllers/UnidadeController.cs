@@ -89,7 +89,7 @@ namespace Susep.SISRH.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("{unidadeId}/modalidadeexecucao"), Produces("application/json", Type = typeof(IApplicationResult<DadosComboViewModel>))]
         public async Task<IActionResult> GetModalidadeExecucaoById([FromRoute]Int64 unidadeId)
-            => await UnidadeQuery.ObterModalidadesExecucaoAsync(unidadeId);
+            => await DominioQuery.ObterDominioPorClassificacaoAsync(Domain.Enums.ClassificacaoCatalogoDominioEnum.ModalidadeExecucao);
 
         /// <summary>
         /// Obtém as pessoas de uma unidade

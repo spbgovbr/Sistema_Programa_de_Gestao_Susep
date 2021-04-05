@@ -55,6 +55,22 @@ namespace Susep.SISRH.Application.Queries.Concrete
 
             return result;
         }
+        public async Task<IApplicationResult<IEnumerable<AssuntoViewModel>>> ObterAtivosAsync()
+        {
+            var result = new ApplicationResult<IEnumerable<AssuntoViewModel>>();
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                result.Result = await connection.QueryAsync<AssuntoViewModel>(AssuntoRawSqls.ObterAtivos);
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
 
         public async Task<IApplicationResult<AssuntoEdicaoViewModel>> ObterPorIdAsync(Guid id)
         {

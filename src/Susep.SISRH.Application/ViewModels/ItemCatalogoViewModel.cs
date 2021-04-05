@@ -45,6 +45,9 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "entregasEsperadas")]
         public String EntregasEsperadas { get; private set; }
 
+        [DataMember(Name = "temPactoCadastrado")]
+        public bool TemPactoCadastrado { get; set; }
+
 
         [DataMember(Name ="assuntos")]
         public IEnumerable<AssuntoViewModel> Assuntos { get; set; }

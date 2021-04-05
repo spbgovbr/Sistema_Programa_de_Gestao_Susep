@@ -95,7 +95,7 @@
             <button class="br-button is-primary mr-2 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="rejeitar()">Rejeitar</button>
             <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 404" (click)="voltarParaRascunho()">Voltar para rascunho</button>
             <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 403 && periodoExecucao" (click)="iniciarExecucao()">Iniciar execução</button>
-            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelConcluirExecucao()">Concluir execução</button>
+            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelConcluirExecucao()">Encerrar Plano de Trabalho</button>
           </secure-input>
           <button class="br-button is-cancel mr-2" type="button" (click)="voltarParaPlano()">Voltar para o programa de gestão</button>
           <button class="br-button is-cancel" type="button" [routerLink]="['/programagestao/pactotrabalho']">Voltar para a lista de planos de trabalho</button>

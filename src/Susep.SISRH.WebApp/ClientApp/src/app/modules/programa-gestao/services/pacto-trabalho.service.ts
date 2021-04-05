@@ -257,6 +257,15 @@ export class PactoTrabalhoDataService {
     }));
   }
 
+  ProporExclusaoAtividade(dados: IPactoTrabalhoAtividade): Observable<ApplicationResult<IJustificarEstouroPrazoAtividade[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${dados.pactoTrabalhoId}/solicitacao/excluiratividade`;
+
+    return this.service.post(url, dados).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
   ResponderSolicitacao(dados: IPactoTrabalhoSolicitacao): Observable<ApplicationResult<IPactoTrabalhoAtividade[]>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}pactotrabalho/${dados.pactoTrabalhoId}/solicitacao/${dados.pactoTrabalhoSolicitacaoId}/responder`;

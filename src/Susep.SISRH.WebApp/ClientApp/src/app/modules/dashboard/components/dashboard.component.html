@@ -5,7 +5,7 @@
       <p>Esse é o Sistema do Programa de Gestão</p>
     </header>
 
-    <div class="row" *ngIf="!gestorSistema">
+    <div class="row">
       <div class="col-lg-7 col-md-12">
         <div class="row">
           <div class="col-lg-12 mb-4">
@@ -114,24 +114,27 @@
                   <tr style="">
                     <th scope="col" *ngIf="chefe">Pessoa</th>
                     <th scope="col">Tipo</th>
-                    <th style="width:50px;" ></th>
+                    <th scope="col">Data</th>
+                    <th style="width:50px;"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of dashboard?.solicitacoes">
                     <td *ngIf="chefe">{{item.solicitante}}</td>
                     <td>{{item.tipoSolicitacao}}</td>
+                    <td>{{item.dataSolicitacao | date: 'dd/MM/yyyy'}}</td>
+                    
                     <td>
                       <a href="javascript:void(0)" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                     </td>
                   </tr>
                   <tr *ngIf="dashboard?.solicitacoes == null || dashboard?.solicitacoes.length == 0">
-                    <td colspan="3" class="text-center">Nenhuma solicitação disponível</td>
+                    <td colspan="4" class="text-center">Nenhuma solicitação disponível</td>
                   </tr>
                 </tbody>
                 <tfoot *ngIf="chefe">
                   <tr>
-                    <td colspan="3" class="col text-center bg-gray-1">
+                    <td colspan="4" class="col text-center bg-gray-1">
                       <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao/pactotrabalho">
                         Ir para planos de trabalho
                       </button>

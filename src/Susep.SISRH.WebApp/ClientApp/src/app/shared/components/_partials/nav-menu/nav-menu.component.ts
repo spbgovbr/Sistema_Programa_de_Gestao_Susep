@@ -119,9 +119,9 @@ export class NavMenuComponent implements OnInit {
           {
             text: 'Meu trabalho',
             subItems: [
-              { text: 'Atual', url: '/programagestao/atividade' },
+              { text: 'Plano em execução', url: '/programagestao/atividade' },
               { text: 'Habilitação', url: '/programagestao/atividade/habilitacao' },
-              { text: 'Meus planos de trabalho', url: '/programagestao/atividade/historico' },
+              { text: 'Histórico de planos de trabalho', url: '/programagestao/atividade/historico' },
             ]
           }]);
 

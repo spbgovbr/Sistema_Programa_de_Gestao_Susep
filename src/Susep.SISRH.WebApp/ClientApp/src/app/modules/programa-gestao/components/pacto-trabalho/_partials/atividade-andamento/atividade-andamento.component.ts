@@ -43,6 +43,8 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
   tempoRealizado = 0;
   tempoHomologado = 0;
 
+  dentroPrazoAvaliacao: boolean;
+
   public tempoMask: any;
   minDataInicio: any;
   maxDataInicio: any;
@@ -103,6 +105,11 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
   }
 
   carregarAtividades() {
+    const timeDiff = Math.abs(new Date(this.dadosPacto.value.dataFim).getTime() - new Date().getTime());
+    const tempoEncerramentoPacto = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    this.dentroPrazoAvaliacao = this.dadosPacto.value.situacaoId === 405 || tempoEncerramentoPacto <= 40;
+
     this.servidor.next(this.dadosPacto.value.pessoaId);
     this.isReadOnly.next(this.readOnly || this.dadosPacto.value.situacaoId !== 405);
     this.pactoTrabalhoDataService.ObterAtividades(this.dadosPacto.value.pactoTrabalhoId).subscribe(
@@ -177,6 +184,8 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
       this.form.get('dataFim').clearValidators();
       this.form.get('tempoRealizado').setValue(null);
       this.form.get('tempoRealizado').clearValidators(); 
+      this.form.get('consideracoes').setValue(null);
+      this.form.get('consideracoes').clearValidators();
     }
     else if (+value === 502) {
       this.form.get('dataInicio').setValidators(Validators.required);
@@ -184,15 +193,18 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
       this.form.get('dataFim').clearValidators();
       this.form.get('tempoRealizado').setValue(null);
       this.form.get('tempoRealizado').clearValidators();
+      this.form.get('consideracoes').clearValidators();
     }                 
     else {
       this.form.get('dataInicio').setValidators(Validators.required);
       this.form.get('dataFim').setValidators(Validators.required);
       this.form.get('tempoRealizado').setValidators(Validators.required);
+      this.form.get('consideracoes').setValidators(Validators.required);
     }
     this.form.get('dataInicio').updateValueAndValidity();
     this.form.get('dataFim').updateValueAndValidity();
     this.form.get('tempoRealizado').updateValueAndValidity();
+    this.form.get('consideracoes').updateValueAndValidity();
   }
 
   getDataInicio() {
@@ -215,7 +227,16 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
   avaliar(pactoTrabalhoAtividadeId: string) {
     this.atividadeAvaliacao = this.dadosPacto.value.atividades.filter(a => a.pactoTrabalhoAtividadeId === pactoTrabalhoAtividadeId)[0];
     this.abrirTelaAvaliacao();
-    this.formAvaliacao.reset();
+
+    if (this.atividadeAvaliacao.nota) {
+      this.formAvaliacao.patchValue({
+        avaliacao: this.atividadeAvaliacao.nota,
+        justificativa: this.atividadeAvaliacao.justificativa
+      })
+    }
+    else {
+      this.formAvaliacao.reset();
+    }
   }
 
   salvarAvaliacao() {

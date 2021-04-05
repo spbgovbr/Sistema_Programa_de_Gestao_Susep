@@ -39,7 +39,7 @@
              [cdkDropListData]="done"
              class="drop-list"
              (cdkDropListDropped)="drop($event)">
-          <div class="drop-box" *ngFor="let item of done" [cdkDragData]="item" cdkDrag>
+          <div class="drop-box" *ngFor="let item of done" [cdkDragData]="item" [cdkDragDisabled]="item.nota" cdkDrag>
             <div>
               {{item.itemCatalogo}}<br />
               <smaLl class="ml-4 text-gray-4" *ngIf="item.dataInicio">Início <span class="text-gray-7">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl><br />

@@ -11,7 +11,7 @@ import { IDatasourceAutocompleteAsync } from 'src/app/shared/components/input-au
 import { ObjetoDataService } from 'src/app/modules/objeto/services/objeto.service';
 import { AssuntoDataService } from 'src/app/modules/assunto/services/assunto.service';
 import { Guid } from 'src/app/shared/helpers/guid.helper';
-import { IAssuntoHierarquia } from 'src/app/modules/assunto/models/assunto.model';
+import { IAssunto } from 'src/app/modules/assunto/models/assunto.model';
 
 @Component({
   selector: 'plano-objeto-cadastro',
@@ -35,7 +35,7 @@ export class PlanoObjetoCadastroComponent implements OnInit {
 
   abaVisivel = 'assuntos';
 
-  private assuntosCarregados: Map<Guid, IAssuntoHierarquia> = new Map();
+  private assuntosCarregados: Map<Guid, IAssunto> = new Map();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -88,7 +88,7 @@ export class PlanoObjetoCadastroComponent implements OnInit {
         map(r => r.retorno),
         tap(a => a.forEach(a => this.assuntosCarregados.set(a.assuntoId, a))),
       ),
-      modelToValue: (v: IAssuntoHierarquia) => { return { chave: v.assuntoId, descricao: v.hierarquia }; }
+      modelToValue: (v: IAssunto) => { return { chave: v.assuntoId, descricao: v.hierarquia }; }
     };
   }
 
@@ -122,10 +122,10 @@ export class PlanoObjetoCadastroComponent implements OnInit {
   private carregarAssuntosDoObjetoEdicao(): void {
     if (this.objetoEdicao.value) {
       this.objetoEdicao.value.assuntos.forEach(a => {
-        const assunto: IAssuntoHierarquia = {
+        const assunto: IAssunto = {
           assuntoId: a.assuntoId,
           hierarquia: a.hierarquia,
-          filhos: [],
+          //filhos: [],
           nivel: null
         }
         this.assuntosCarregados.set(a.assuntoId, assunto);

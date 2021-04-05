@@ -55,7 +55,7 @@ export class PactoDetalhesSolicitacaoComponent implements OnInit {
 
       this.solicitacao = JSON.parse(this.dadosSolicitacao.value.dadosSolicitacao);
 
-      if (this.dadosSolicitacao.value.tipoSolicitacaoId === 603) {
+      if (this.dadosSolicitacao.value.tipoSolicitacaoId === 603 || this.dadosSolicitacao.value.tipoSolicitacaoId === 604) {
         const descricao = this.solicitacao.justificativa;
         this.solicitacao = this.dadosPacto.value.atividades.filter(a => a.pactoTrabalhoAtividadeId === this.solicitacao.pactoTrabalhoAtividadeId)[0];
         this.solicitacao.descricao = descricao;

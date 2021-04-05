@@ -75,7 +75,7 @@
                   <td class="text-right">{{item.tempoExecucaoPresencial | number}}</td>
                   <td class="text-right">{{item.tempoExecucaoRemoto | number}}</td>
                   <td>
-                    <secure-input [perfis]="[PerfilEnum.GestorIndicadores]">
+                    <secure-input [perfis]="[PerfilEnum.GestorIndicadores]" *ngIf="!item.temPactoCadastrado">
                       <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/editar/' + item.itemCatalogoId]"><i class="fa fa-edit"></i></a>
                     </secure-input>
                   </td>

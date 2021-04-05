@@ -46,6 +46,16 @@ namespace Susep.SISRH.WebApi.Controllers
         }
 
         /// <summary>
+        /// Obtém os assuntos cadastrados
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("ativos"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<AssuntoViewModel>>))]
+        public async Task<IActionResult> GetAtivos()
+        {
+            return await AssuntoQuery.ObterAtivosAsync();
+        }
+
+        /// <summary>
         /// Obtém o assunto por id
         /// </summary>
         /// <param name="id"></param>

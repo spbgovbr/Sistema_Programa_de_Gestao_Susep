@@ -46,8 +46,11 @@ export class PlanoListaAtividadeCandidatoComponent implements OnInit {
   }
 
   salvar() {
-    const aprovados =
+    let aprovados =
       this.candidatos.value.filter(c => c.aprovado).map(a => { return a.planoTrabalhoAtividadeCandidatoId });
+
+    if (aprovados.length === 0)
+      aprovados = ['null'];
 
     this.planoTrabalhoDataService.AlterarFase(this.dadosPlano.value.planoTrabalhoId, PlanoTrabalhoSituacaoEnum.EmExecucao, this.form.get('justificativa').value, aprovados).subscribe(
       resultado => {

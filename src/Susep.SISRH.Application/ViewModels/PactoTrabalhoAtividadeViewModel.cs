@@ -61,6 +61,9 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "consideracoes")]
         public String Consideracoes { get; set; }
 
+        [DataMember(Name = "justificativa")]
+        public String Justificativa { get; set; }
+
         [DataMember(Name = "nota")]
         public int? Nota { get; set; }
 

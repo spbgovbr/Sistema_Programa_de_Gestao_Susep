@@ -875,6 +875,23 @@
       }
     },
     {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/excluiratividade",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/excluiratividade",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "caminhointernoservicos",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
       "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",

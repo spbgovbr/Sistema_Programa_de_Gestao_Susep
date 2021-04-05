@@ -390,6 +390,20 @@ namespace Susep.SISRH.WebApi.Controllers
             return await Mediator.Send(command);
         }
 
+
+        /// <summary>
+        /// Solicita a exclusão de uma atividade do pacto
+        /// </summary>
+        /// <param name="pactoTrabalhoid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("{pactoTrabalhoid}/solicitacao/excluiratividade"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> PostProporExcluirAtividadePacto([FromRoute] Guid pactoTrabalhoid, [FromBody] ProporExcluirAtividadeCommand command)
+        {
+            command.PactoTrabalhoId = pactoTrabalhoid;
+            return await Mediator.Send(command);
+        }
+
         /// <summary>
         /// Altera uma atividade do pacto de trabalho
         /// </summary>

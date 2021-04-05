@@ -20,6 +20,7 @@
                             ,i.complexidade   
                             ,i.definicaoComplexidade   
                             ,i.entregasEsperadas    
+                            ,(SELECT CAST(COUNT(1) AS BIT) FROM [ProgramaGestao].[PactoTrabalhoAtividade] WHERE itemCatalogoId = i.itemCatalogoId) temPactoCadastrado
                     FROM [ProgramaGestao].[ItemCatalogo] i
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON i.calculoTempoId = cd.catalogoDominioId
                     WHERE i.itemCatalogoId = @itemCatalogoId;
@@ -69,14 +70,12 @@
 					SELECT  i.itemCatalogoId 
 							,i.titulo             
 							,i.calculoTempoId formaCalculoTempoItemCatalogoId
-							,cd.descricao formaCalculoTempoItemCatalogo 
 							,i.permiteRemoto permiteTrabalhoRemoto 
 							,i.tempoPresencial tempoExecucaoPresencial
 							,i.tempoRemoto tempoExecucaoRemoto   
 							,i.descricao       
                             ,i.complexidade   
-                            ,i.definicaoComplexidade   
-                            ,i.entregasEsperadas 
+                            ,(SELECT CAST(COUNT(1) AS BIT) FROM [ProgramaGestao].[PactoTrabalhoAtividade] WHERE itemCatalogoId = i.itemCatalogoId) temPactoCadastrado
                     FROM [ProgramaGestao].[ItemCatalogo] i
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON i.calculoTempoId = cd.catalogoDominioId
                     WHERE   (@titulo IS NULL OR i.titulo LIKE '%' + @titulo + '%')
@@ -91,7 +90,7 @@
                     SELECT COUNT(*)
                     FROM [ProgramaGestao].[ItemCatalogo] i
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON i.calculoTempoId = cd.catalogoDominioId
-                    WHERE   (@titulo IS NULL OR i.titulo = '%' + @titulo + '%')
+                    WHERE   (@titulo IS NULL OR i.titulo LIKE '%' + @titulo + '%')
                             AND (@formaCalculoTempoId IS NULL OR i.calculoTempoId = @formaCalculoTempoId)
                             AND (@permiteTrabalhoRemoto IS NULL OR i.permiteRemoto = @permiteTrabalhoRemoto)
                 ";

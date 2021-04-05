@@ -16,6 +16,7 @@ export interface IItemCatalogo
   definicaoComplexidade?: string;
   entregasEsperadas?: string;
   assuntos: IItemCatalogoAssunto[];
+  temPactoCadastrado?: boolean;
 }
 
 export interface IItemCatalogoAssunto {

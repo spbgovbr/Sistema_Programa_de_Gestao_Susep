@@ -34,7 +34,7 @@ namespace Susep.SISRH.Application.Commands.Assunto
 
             //Monta o objeto com os dados do assunto
             var objeto = Objeto.Criar(
-                request.Chave,
+                request.Chave.Replace("###", ""),
                 request.Descricao,
                 request.Tipo);
 

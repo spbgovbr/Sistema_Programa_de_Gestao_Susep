@@ -8,6 +8,7 @@ namespace Susep.SISRH.Domain.Enums
     {
         NovaAtividade = 601,
         AlterarPrazo = 602,
-        JustificarEstouroPrazo = 603
+        JustificarEstouroPrazo = 603,
+        ExcluirAtividade = 604,
     }
 }
