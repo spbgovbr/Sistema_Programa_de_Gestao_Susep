@@ -1,5 +1,5 @@
 <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
-  <div class="row mt-5" *ngIf="dadosPlano.value.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho">
+  <div class="row mt-5" *ngIf="!isReadOnly">
     <div class="col-sm-12 text-right">
       <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastro()">Cadastrar meta</button>
     </div>

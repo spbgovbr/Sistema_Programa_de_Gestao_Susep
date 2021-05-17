@@ -52,6 +52,15 @@ export class ItemCatalogoDataService {
     return this.service.put(url, item).pipe(map((response: any) => {
       return response;
     }));
+  }
+
+  Excluir(itemCatalogoId: string): Observable<ApplicationResult<IItemCatalogo>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}itemcatalogo/${itemCatalogoId}`;
+
+    return this.service.delete(url).pipe(map((response: any) => {
+      return response;
+    }));
   }  
 
 

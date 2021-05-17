@@ -232,9 +232,12 @@ namespace Susep.SISRH.Application.Queries.Concrete
                 if (incluirUnidadePaiSeChefe && unidadesChefia.Any())
                 {
                     var unidadeChefe = items.FirstOrDefault(u => u.UnidadeId == perfisUsuario.Result.UnidadeId);
-                    var unidadePaiChefe = items.FirstOrDefault(u => u.UnidadeId == unidadeChefe.UnidadeIdPai);
-                    if (unidadePaiChefe != null)
-                        retorno.Add(unidadePaiChefe);
+                    if (unidadeChefe != null)
+                    {
+                        var unidadePaiChefe = items.FirstOrDefault(u => u.UnidadeId == unidadeChefe.UnidadeIdPai);
+                        if (unidadePaiChefe != null)
+                            retorno.Add(unidadePaiChefe);
+                    }
                 }
             }
             return retorno;
