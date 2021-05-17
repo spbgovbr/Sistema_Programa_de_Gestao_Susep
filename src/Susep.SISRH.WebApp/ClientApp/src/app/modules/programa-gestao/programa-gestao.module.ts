@@ -25,6 +25,7 @@ import { CatalogoCadastroComponent } from './components/catalogo/cadastro/catalo
 import { CatalogoEdicaoComponent } from './components/catalogo/edicao/catalogo-edicao.component';
 import { ItemCatalogoPesquisaComponent } from './components/item-catalogo/item-catalogo-pesquisa.component';
 import { ItemCatalogoCadastroComponent } from './components/item-catalogo/cadastro/item-catalogo-cadastro.component';
+import { ItemCatalogoDetalhesComponent } from './components/item-catalogo/detalhes/item-catalogo-detalhes.component';
 import { PlanoTrabalhoPesquisaComponent } from './components/plano-trabalho/plano-trabalho-pesquisa.component';
 import { PlanoTrabalhoCadastroComponent } from './components/plano-trabalho/cadastro/plano-trabalho-cadastro.component';
 import { PlanoTrabalhoDetalhesComponent } from './components/plano-trabalho/detalhes/plano-trabalho-detalhes.component';
@@ -87,6 +88,7 @@ registerLocaleData(localePt)
     CatalogoEdicaoComponent,
     ItemCatalogoPesquisaComponent,
     ItemCatalogoCadastroComponent,
+    ItemCatalogoDetalhesComponent,
     PlanoTrabalhoPesquisaComponent,
     PlanoTrabalhoCadastroComponent,    
     PlanoTrabalhoDetalhesComponent,

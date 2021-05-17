@@ -169,12 +169,8 @@ export class PactoListaAtividadeComponent implements OnInit {
   }
 
   excluir(pactoTrabalhoAtividadeId: string) {
-    alert(1)
-    alert(this.dadosPacto.value.pactoTrabalhoId)
-    alert(pactoTrabalhoAtividadeId)
     this.pactoTrabalhoDataService.ExcluirAtividade(this.dadosPacto.value.pactoTrabalhoId, pactoTrabalhoAtividadeId).subscribe(
       appResult => {
-        alert(2)
         this.carregarDados();
       }
     );

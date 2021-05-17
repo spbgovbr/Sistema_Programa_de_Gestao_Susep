@@ -48,6 +48,11 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "temPactoCadastrado")]
         public bool TemPactoCadastrado { get; set; }
 
+        [DataMember(Name = "temUnidadeAssociada")]
+        public bool TemUnidadeAssociada { get; set; }
+
+        
+
 
         [DataMember(Name ="assuntos")]
         public IEnumerable<AssuntoViewModel> Assuntos { get; set; }

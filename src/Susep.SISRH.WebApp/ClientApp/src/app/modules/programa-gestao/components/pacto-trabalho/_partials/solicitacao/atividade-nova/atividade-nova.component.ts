@@ -110,7 +110,6 @@ export class AtividadesPactoNovaComponent implements OnInit {
   }
 
   configurarCampos() {
-    //alert(!(this.tipoItemSelecionado === 203 && this.situacaoId === 503))
     this.exibirTempoPrevisto = (this.tipoItemSelecionado !== 201) &&
                                !(this.tipoItemSelecionado > 202 && this.situacaoId > 502);
     this.configurarCampo('tempoPrevistoPorItem', this.exibirTempoPrevisto);

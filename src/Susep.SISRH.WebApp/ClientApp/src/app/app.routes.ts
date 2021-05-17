@@ -11,6 +11,7 @@ import { CatalogoCadastroComponent } from "./modules/programa-gestao/components/
 import { CatalogoEdicaoComponent } from "./modules/programa-gestao/components/catalogo/edicao/catalogo-edicao.component";
 import { ItemCatalogoCadastroComponent } from "./modules/programa-gestao/components/item-catalogo/cadastro/item-catalogo-cadastro.component";
 import { ItemCatalogoPesquisaComponent } from "./modules/programa-gestao/components/item-catalogo/item-catalogo-pesquisa.component";
+import { ItemCatalogoDetalhesComponent } from "./modules/programa-gestao/components/item-catalogo/detalhes/item-catalogo-detalhes.component";
 import { PlanoTrabalhoPesquisaComponent } from "./modules/programa-gestao/components/plano-trabalho/plano-trabalho-pesquisa.component";
 import { PlanoTrabalhoCadastroComponent } from "./modules/programa-gestao/components/plano-trabalho/cadastro/plano-trabalho-cadastro.component";
 import { PlanoTrabalhoDetalhesComponent } from "./modules/programa-gestao/components/plano-trabalho/detalhes/plano-trabalho-detalhes.component";
@@ -54,7 +55,10 @@ const routes: Routes = [
               { path: '', component: ItemCatalogoPesquisaComponent, data: { breadcrumb: 'Pesquisa' } },
               { path: 'pesquisa', component: ItemCatalogoPesquisaComponent, data: { breadcrumb: 'Pesquisa' } },
               { path: 'cadastro', component: ItemCatalogoCadastroComponent, data: { breadcrumb: 'Cadastro' } },
-              { path: 'editar/:id', component: ItemCatalogoCadastroComponent, data: { breadcrumb: 'Editar' } }
+              { path: 'editar/:id', component: ItemCatalogoCadastroComponent, data: { breadcrumb: 'Editar' } },
+              { path: 'copiar/:id', component: ItemCatalogoCadastroComponent, data: { breadcrumb: 'Copiar' } },
+              { path: 'detalhar/:id', component: ItemCatalogoDetalhesComponent, data: { breadcrumb: 'Detalhes' } },  
+              { path: 'excluir/:id', component: ItemCatalogoDetalhesComponent, data: { breadcrumb: 'Excluir' } }             
             ]
           },
         ]

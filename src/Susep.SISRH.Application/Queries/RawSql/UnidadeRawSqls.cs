@@ -143,10 +143,11 @@
             get
             {
                 return @"
-                    SELECT pessoaId as id, pesNome descricao
+                    SELECT p.pessoaId as id, pesNome descricao
                     FROM [dbo].[Pessoa] p
-			            INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId 
-                    WHERE (p.unidadeId = @unidadeId) OR (u.unidadeIdPai = @unidadeId and p.tipoFuncaoId IS NOT NULL) 
+			            LEFT OUTER JOIN [dbo].[PessoaAlocacaoTemporaria] a ON a.pessoaId = p.pessoaId AND a.dataFim IS NULL
+	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = COALESCE(a.unidadeId, p.unidadeId)
+                    WHERE (COALESCE(a.unidadeId, p.unidadeId) = @unidadeId) OR (u.unidadeIdPai = @unidadeId and p.tipoFuncaoId IS NOT NULL) 
                     ORDER BY pesNome
                 ";
             }

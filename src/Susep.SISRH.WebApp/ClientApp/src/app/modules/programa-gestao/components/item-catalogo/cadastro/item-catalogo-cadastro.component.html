@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="actions justify-content-start">
-          <button class="br-button is-primary" type="submit" (click)="salvarItem()" [disabled]="!form.valid || dadosItemCatalogo?.temPactoCadastrado">Salvar</button>
+          <button class="br-button is-primary" type="submit" (click)="salvarItem()" *ngIf="!dadosItemCatalogo?.temPactoCadastrado" [disabled]="!form.valid">Salvar</button>
           <button class="br-button is-cancel mr-2" type="button" [routerLink]="['/programagestao/catalogo/item']">Cancelar</button>
         </div>
       </div>
