@@ -26,4 +26,5 @@ export class StorageService {
       this.storage.removeItem(key);
     }
   }
+
 }

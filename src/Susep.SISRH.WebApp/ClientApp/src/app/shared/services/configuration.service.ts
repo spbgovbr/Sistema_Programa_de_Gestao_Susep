@@ -32,6 +32,8 @@ export class ConfigurationService {
       identityUrl: this.environment.identityUrl,
       apiGatewayUrl: this.environment.apiGatewayUrl,
       modo: this.environment.modo,
+      valorPadraoTempoComparecimento: this.environment.valorPadraoTempoComparecimento,
+      valorPadraoTermosUso: this.environment.valorPadraoTermosUso,
       clientId: this.environment.client.id,
       clientSecret: this.environment.client.secret,
       clientAuthScope: this.environment.client.scope,
@@ -43,6 +45,15 @@ export class ConfigurationService {
     this.storageService.store('apiGatewayUrl', this.serverSettings.apiGatewayUrl);
 
     this.storageService.store('modo', this.serverSettings.modo);
+
+    if (this.serverSettings.valorPadraoTempoComparecimento)
+      this.storageService.store('tempoComparecimento', this.serverSettings.valorPadraoTempoComparecimento);
+    else this.storageService.store('tempoComparecimento', null);
+
+    if (this.serverSettings.valorPadraoTermosUso)
+      this.storageService.store('termosUso', this.serverSettings.valorPadraoTermosUso);
+    else this.storageService.store('termosUso', null);
+
     // Para permitir exibir o modo avançado durante a homologação
     this.applicationStateService.perfilUsuario.subscribe(usuario => {
       if (usuario && usuario.perfis.find(p => p.perfil === 1009)) {
@@ -95,6 +106,18 @@ export class ConfigurationService {
       default:
         return 'normal';
     }
+  }
+
+  //Retorna o prazo padrão para comparecimento
+  getTempoComparecimento(): string {
+    const tempoComparecimento = this.storageService.retrieve('tempoComparecimento');
+    return tempoComparecimento;
+  }
+
+  //Retorna o prazo padrão para comparecimento
+  getTermosUso(): string {
+    const termosUso = this.storageService.retrieve('termosUso');
+    return termosUso;
   }
 
   //Retorna o client id da aplicação

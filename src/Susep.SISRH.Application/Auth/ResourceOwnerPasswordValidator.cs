@@ -63,48 +63,53 @@ namespace Susep.SISRH.Application.Auth
                 {
                     pessoa = await Task.Run(() =>
                     {
-                        using (var connection = new Novell.Directory.Ldap.LdapConnection())
+                        foreach (var configuration in this.Options.Value.Configurations)
                         {
-                            connection.Connect(this.Options.Value.Url, this.Options.Value.Port);
-                            connection.Bind(this.Options.Value.BindDN, this.Options.Value.BindPassword);
-
-                            List<string> attibutes = new List<string>();
-                            if (!String.IsNullOrEmpty(this.Options.Value.SisrhIdAttributeFilter)) attibutes.Add(this.Options.Value.SisrhIdAttributeFilter);
-                            if (!String.IsNullOrEmpty(this.Options.Value.EmailAttributeFilter)) attibutes.Add(this.Options.Value.EmailAttributeFilter);
-                            if (!String.IsNullOrEmpty(this.Options.Value.CpfAttributeFilter)) attibutes.Add(this.Options.Value.CpfAttributeFilter);
-
-                            var searchFilter = String.Format(this.Options.Value.SearchFilter, context.UserName);
-                            var entities = connection.Search(
-                                this.Options.Value.SearchBaseDC,
-                                Novell.Directory.Ldap.LdapConnection.ScopeSub,
-                                searchFilter,
-                                attibutes.ToArray(),
-                                false);
-
-                            while (entities.HasMore())
+                            using (var connection = new Novell.Directory.Ldap.LdapConnection())
                             {
-                                var entity = entities.Next();
-                                var entityAttributes = entity.GetAttributeSet();
+                                connection.Connect(configuration.Url, configuration.Port);
+                                connection.Bind(configuration.BindDN, configuration.BindPassword);
 
-                            //Valida o password
-                            connection.Bind(entity.Dn, context.Password);
+                                List<string> attibutes = new List<string>();
+                                if (!String.IsNullOrEmpty(configuration.SisrhIdAttributeFilter)) attibutes.Add(configuration.SisrhIdAttributeFilter);
+                                if (!String.IsNullOrEmpty(configuration.EmailAttributeFilter)) attibutes.Add(configuration.EmailAttributeFilter);
+                                if (!String.IsNullOrEmpty(configuration.CpfAttributeFilter)) attibutes.Add(configuration.CpfAttributeFilter);
 
-                                var sisrhId = GetAttributeValue(entity, this.Options.Value.SisrhIdAttributeFilter);
-                                if (!String.IsNullOrEmpty(sisrhId))
+                                var searchFilter = String.Format(configuration.SearchFilter, context.UserName);
+                                var entities = connection.Search(
+                                    configuration.SearchBaseDC,
+                                    Novell.Directory.Ldap.LdapConnection.ScopeSub,
+                                    searchFilter,
+                                    attibutes.ToArray(),
+                                    false);
+
+                                while (entities.HasMore())
                                 {
-                                    var _pessoa = this.PessoaRepository.ObterAsync(Int64.Parse(sisrhId));
-                                    if (_pessoa != null)
-                                        return _pessoa;
-                                }
+                                    var entity = entities.Next();
+                                    var entityAttributes = entity.GetAttributeSet();
 
-                                string email = GetAttributeValue(entity, this.Options.Value.EmailAttributeFilter);
-                                string cpf = GetAttributeValue(entity, this.Options.Value.CpfAttributeFilter);
+                                    //Valida o password
+                                    connection.Bind(entity.Dn, context.Password);
 
-                                return this.PessoaRepository.ObterPorCriteriosAsync(email, cpf);
+                                    var sisrhId = GetAttributeValue(entity, configuration.SisrhIdAttributeFilter);
+                                    if (!String.IsNullOrEmpty(sisrhId))
+                                    {
+                                        var _pessoa = this.PessoaRepository.ObterAsync(Int64.Parse(sisrhId));
+                                        if (_pessoa != null)
+                                            return _pessoa;
+                                    }
+
+                                    string email = GetAttributeValue(entity, configuration.EmailAttributeFilter);
+                                    string cpf = GetAttributeValue(entity, configuration.CpfAttributeFilter);
+
+                                    var dadosPessoa = this.PessoaRepository.ObterPorCriteriosAsync(email, cpf);
+                                    if (dadosPessoa != null)
+                                        return dadosPessoa;
+                                }                                
                             }
-
-                            return null;
                         }
+
+                        return null;
                     });
                 }
 
