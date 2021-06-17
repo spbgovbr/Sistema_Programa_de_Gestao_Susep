@@ -36,6 +36,18 @@ Dimensionamento de recursos, pré-requisitos, dependências, etc.
 
 ✔Microsoft Windows Desktop Runtime –3.1.9 (x64)
 
+# INFRAESTRUTURA
+
+### Sequência de passos 
+>1. Habilitar IIS -> "[Imagem de exemplo](https://github.com/henrique-prog/ambiente-de-teste/blob/main/Habilita%C3%A7%C3%A3o%20IIS.jpg)".
+
+> Realizar a instalação através do Server Manager (Add roles and features);
+> Selecionar o Role Web Server (IIS);
+> Selecionar (IIS);
+> Em Application Development: ASP.NET
+
+>2. Instalar os arquivos da pasta "[dependências](https://github.com/henrique-prog/ambiente-de-teste/blob/main/Instala%C3%A7%C3%A3o%20de%20Depend%C3%AAncias%20.NET%20-%20AMBIENTE.txt)".
+
 # DIAGRAMA DE INSTALAÇÃO!
 
 Passa-se, então, à configuração dos componentes da aplicação. O sistema segue modelos de arquitetura de micro serviços e utiliza estruturas separadas para o front-end e para o back-end. Diante disso, faz-se necessário configurar diferentes pacotes para o correto funcionamento da aplicação.
@@ -120,7 +132,7 @@ A API é onde estão as regras de negócio, funcionalidades, operações de pers
 
 >1. No arquivo “web.config”, alterar o valor da variável ASPNETCORE_ENVIRONMENT com um dos valores a seguir, de acordo com o ambiente: Dev, Homolog ou Prod.
 >2. Em “Settings/connectionstrings.AMBIENTE.json”, informar os valores para conexão com o banco de dados, sendo “data source” oservidor, “initial catalog” o nome do banco, “User ID” o usuário e “Password” a senha.
->3. Em “Settings/appsettings.AMBIENTE.json”, configurar o servidor de e-mail SMTP e o LDAP para autenticação dos usuários.
+>3. Em “Settings/appsettings.AMBIENTE.json”, configurar o servidor de e-mail SMTP e o LDAP para autenticação dos usuários - ESTA ETAPA PODE OCORRER APÓS VALIDAÇÃO DA APLICAÇÃO COM USERS DE TESTE.
 
 ### VALIDAÇÃO DA INSTALAÇÃO –1ª ETAPA
 
@@ -187,4 +199,26 @@ A tag action do tipo Rewrite deve ser alterada para refletir o caminho em que a 
 >3. No arquivo “ClientApp/dist/web.config”, dentro da tag `<action />` do tipo Rewrite, colocar na url o caminho da publicação da pasta app no servidor.
 >4. Acessar a url do app e verificar se a instalação foi realizada corretamente. Ela deverá retornar a tela de login do sistema.
 
+### VALIDAÇÃO DA INSTALAÇÃO –3ª ETAPA
 
+Após instalação e configuração da aplicação, recomenda-se a validação dessa etapa acesdo a aplicação com os usuários de teste cadastrados na carga de teste: 
+
+>**URL da aplicação**
+
+#### Usuários:
+
+- sisgp_gestor
+- sisgp_cg   
+- sisgp_coget          
+- sisgp_coordenador       
+- sisgp_diretor     
+- sisgp_servidor     
+- sisgp_servidor1
+- sisgp_servidor2
+-  sisgp_servidor3
+- sisgp_servidor4
+- Obs.: Senha para todos os usuários ("qualquer carácter")
+
+> Assim que o sistema entrar em produção, os dados da tabela **Pessoa** e **Unidade** cadastrados por esse script devem ser apagados da base de dados.
+
+### Volte à etapa BACK-END! e vincule o LDAP
