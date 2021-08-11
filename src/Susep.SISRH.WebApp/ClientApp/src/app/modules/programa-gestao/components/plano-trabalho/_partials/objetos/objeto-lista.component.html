@@ -1,8 +1,10 @@
-<div class="row mt-5" *ngIf="dadosPlano.value?.situacaoId == PlanoTrabalhoSituacaoEnum.Rascunho">
-  <div class="col-sm-12 text-right">
-    <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastro()">Cadastrar objeto</button>
+<secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
+  <div class="row mt-5" *ngIf="!isReadOnly">
+    <div class="col-sm-12 text-right">
+      <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastro()">Cadastrar objeto</button>
+    </div>
   </div>
-</div>
+</secure-input>
 <div class="row">
   <div class="col-sm-12 mt-5">
     <div class="table-responsive">
@@ -15,7 +17,7 @@
                 <th>Chave</th>
                 <th>Tipo</th>
                 <th>Assuntos</th>
-                <th style="width:90px" *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho"></th>
+                <th style="width:90px" *ngIf="!isReadOnly"></th>
               </tr>
             </thead>
             <tbody>
@@ -28,7 +30,7 @@
                     <li *ngFor="let assunto of item.assuntos">{{assunto.hierarquia}}</li>
                   </ul>
                 </td>
-                <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho">
+                <td *ngIf="!isReadOnly">
                   <a href="javascript:void(0)" (click)="editar(item.planoTrabalhoObjetoId)" class="mr-2"><i class="fa fa-edit"></i></a>
                   <a href="javascript:void(0)" (click)="excluir(item.planoTrabalhoObjetoId)" *ngIf="!item.associadoAtividadePlano"><i class="fa fa-trash"></i></a>
                   <a *ngIf="item.associadoAtividadePlano"><i class="fa fa-trash"></i></a>

@@ -65,7 +65,8 @@ export class PlanoCronogramaComponent implements OnInit {
         this.dadosPlano.value.reunioes = resultado.retorno;
       }
     );
-    this.isReadOnly = this.dadosPlano.value.situacaoId !== PlanoTrabalhoSituacaoEnum.Rascunho;
+    this.isReadOnly = this.dadosPlano.value.situacaoId === PlanoTrabalhoSituacaoEnum.Executado ||
+                      this.dadosPlano.value.situacaoId === PlanoTrabalhoSituacaoEnum.Concluído;
   }
 
   abrirTelaCadastro() {

@@ -15,6 +15,7 @@ namespace Susep.SISRH.Application.Configurations
             //services.Configure<BrokerOptions>(options => configuration.GetSection("brokerOptions").Bind(options));
             services.Configure<EmailOptions>(options => configuration.GetSection("emailOptions").Bind(options));
             services.Configure<LdapOptions>(options => configuration.GetSection("ldapOptions").Bind(options));
+            services.Configure<PadroesOptions>(options => configuration.GetSection("padroesOptions").Bind(options));
 
         }
     }

@@ -43,11 +43,14 @@ export class PlanoListaObjetoComponent implements OnInit {
   candidatos = new BehaviorSubject<IPlanoTrabalhoAtividadeCandidato[]>(null);
   assuntos = new BehaviorSubject<IAssunto[]>(null);
   todosOsObjetos = new BehaviorSubject<IObjeto[]>(null);
+  unidade = new BehaviorSubject<number>(null);
 
   totalColaboradores = 0;
   totalDisponivelColaboradores = 0;
 
   itemSelecionado: boolean;
+
+  isReadOnly: boolean;
 
   constructor(
     private modalService: NgbModal,
@@ -66,11 +69,14 @@ export class PlanoListaObjetoComponent implements OnInit {
 
   carregarObjetos() {
     if (this.dadosPlano.value) {
+      this.unidade.next(this.dadosPlano.value.unidadeId);
       this.planoTrabalhoDataService.ObterObjetos(this.dadosPlano.value.planoTrabalhoId).subscribe(
         resultado => {
           this.objetos = this.dadosPlano.value.objetos = resultado.retorno;
         }
       );
+      this.isReadOnly = this.dadosPlano.value.situacaoId === PlanoTrabalhoSituacaoEnum.Executado ||
+        this.dadosPlano.value.situacaoId === PlanoTrabalhoSituacaoEnum.Concluído;
     }
   }
 

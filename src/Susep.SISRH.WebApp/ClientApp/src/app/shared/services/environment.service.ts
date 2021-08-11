@@ -9,6 +9,8 @@ export class EnvironmentService implements OnInit {
   public identityUrl = '';
   public apiGatewayUrl = '';
   public modo = '';
+  public valorPadraoTempoComparecimento = null;
+  public valorPadraoTermosUso = null;
   public client: IClientConfiguration = {};
 
   constructor() {}
@@ -18,6 +20,8 @@ export class EnvironmentService implements OnInit {
     this.identityUrl = environment.identityUrl;
     this.apiGatewayUrl = environment.apiGatewayUrl;
     this.modo = environment.modo;
+    this.valorPadraoTempoComparecimento = environment.valorPadraoTempoComparecimento;
+    this.valorPadraoTermosUso = environment.valorPadraoTermosUso;
     this.client = environment.client;
   }
 

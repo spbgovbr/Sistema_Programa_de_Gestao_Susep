@@ -60,7 +60,8 @@ export class PlanoCustoComponent implements OnInit {
         this.dadosPlano.value.custos = resultado.retorno;
       }
     );
-    this.isReadOnly = this.dadosPlano.value.situacaoId !== PlanoTrabalhoSituacaoEnum.Rascunho;
+    this.isReadOnly = this.dadosPlano.value.situacaoId === PlanoTrabalhoSituacaoEnum.Executado ||
+                      this.dadosPlano.value.situacaoId === PlanoTrabalhoSituacaoEnum.Concluído;
   }
 
   abrirTelaCadastro() {
