@@ -75,7 +75,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
 
         public void AdicionarAtividade(Int32 modalidadeExecucaoId, Int32 quantidadeColaboradores, string descricao, IEnumerable<Guid> itensCatalogo, IEnumerable<Int32> criterios, IEnumerable<Guid> idsAssuntos)
         {
-            VerificarPossibilidadeAlteracao();
+            VerificarPossibilidadeAlteracaoAtividades();
             var atividade = PlanoTrabalhoAtividade.Criar(this.PlanoTrabalhoId, modalidadeExecucaoId, quantidadeColaboradores, descricao, itensCatalogo, criterios);
             if (idsAssuntos != null)
             {
@@ -90,7 +90,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
 
         public void AlterarAtividade(Guid planoTrabalhoAtividadeId, Int32 modalidadeExecucaoId, Int32 quantidadeColaboradores, string descricao, IEnumerable<Guid> itensCatalogo, IEnumerable<Int32> criterios, IEnumerable<Guid> idsAssuntos)
         {
-            VerificarPossibilidadeAlteracao();
+            VerificarPossibilidadeAlteracaoAtividades();
             var atividade = this.Atividades.FirstOrDefault(r => r.PlanoTrabalhoAtividadeId == planoTrabalhoAtividadeId);
             atividade.Alterar(modalidadeExecucaoId, quantidadeColaboradores, descricao, itensCatalogo, criterios);
             if (idsAssuntos != null)
@@ -113,7 +113,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
 
         public void RemoverAtividade(Guid planoTrabalhoAtividadeId)
         {
-            VerificarPossibilidadeAlteracao();
+            VerificarPossibilidadeAlteracaoAtividades();
             this.Atividades.RemoveAll(r => r.PlanoTrabalhoAtividadeId == planoTrabalhoAtividadeId);
         }
 
@@ -339,10 +339,16 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
 
             return true;
         }
+        private void VerificarPossibilidadeAlteracaoAtividades()
+        {
+            if (SituacaoId != (int)SituacaoPlanoTrabalhoEnum.Rascunho)
+                throw new SISRHDomainException("As atividades de um programa de gestão só podem ser alteradas enquanto estiver na situação rascunho");
+        }
 
         private void VerificarPossibilidadeAlteracao()
         {
-            if (SituacaoId != (int)SituacaoPlanoTrabalhoEnum.Rascunho)
+            if (SituacaoId == (int)SituacaoPlanoTrabalhoEnum.Executado ||
+                SituacaoId == (int)SituacaoPlanoTrabalhoEnum.Concluido)
                 throw new SISRHDomainException("O programa de gestão só pode ser alterado enquanto estiver na situação rascunho");
         }
 

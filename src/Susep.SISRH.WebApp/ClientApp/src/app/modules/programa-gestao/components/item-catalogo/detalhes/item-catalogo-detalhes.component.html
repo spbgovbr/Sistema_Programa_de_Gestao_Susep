@@ -1,0 +1,88 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Atividade: <small>{{dadosItemCatalogo?.titulo}}</small></h1>
+      <p>Veja os detalhes da atividade '{{dadosItemCatalogo?.titulo}}'</p>
+    </header>
+    <div class="row" *ngIf="exibeDescricaoComplexidade">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Faixa de complexidade:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.complexidade}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row" *ngIf="exibeDescricaoComplexidade">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Parâmetros para definição da faixa de complexidade:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.definicaoComplexidade}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Forma de cálculo do tempo:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.formaCalculoTempoItemCatalogo}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Permite trabalho remoto?</dt>
+          <dd class="col-sm-7">
+            <span *ngIf="dadosItemCatalogo?.permiteTrabalhoRemoto">Sim</span>
+            <span *ngIf="!dadosItemCatalogo?.permiteTrabalhoRemoto">Não</span>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row" *ngIf="tempoCalculadoPreviamente">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Tempo execução atuando presencialmente:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.tempoExecucaoPresencial}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row" *ngIf="tempoCalculadoPreviamente && permiteTrabalhoRemoto">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Tempo execução atuando remotamente:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.tempoExecucaoRemoto}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row" *ngIf="tempoCalculadoPreviamente && permiteTrabalhoRemoto">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Ganho de produtividade (%):</dt>
+          <dd class="col-sm-7">{{ganhoProdutividade | percent:'1.2'}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Entregas esperadas:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.entregasEsperadas}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row" *ngIf="dadosItemCatalogo?.descricao">
+      <div class="col-sm-12">
+        <dl class="row">
+          <dt class="col-sm-5">Outras informações:</dt>
+          <dd class="col-sm-7">{{dadosItemCatalogo?.descricao}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="actions justify-content-start">
+      <button class="br-button is-primary bg-danger border-0 float-right" type="button" (click)="excluirItem()" *ngIf="excluir && !dadosItemCatalogo?.temPactoCadastrado && !dadosItemCatalogo?.temUnidadeAssociada">Excluir</button>
+      <button class="br-button is-cancel mr-2 mt-2 float-right" type="button" [routerLink]="['/programagestao/catalogo/item']">Voltar</button>
+    </div>
+
+  </div>
+</section>

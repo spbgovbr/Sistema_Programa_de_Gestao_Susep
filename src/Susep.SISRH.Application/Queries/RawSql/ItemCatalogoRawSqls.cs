@@ -21,6 +21,7 @@
                             ,i.definicaoComplexidade   
                             ,i.entregasEsperadas    
                             ,(SELECT CAST(COUNT(1) AS BIT) FROM [ProgramaGestao].[PactoTrabalhoAtividade] WHERE itemCatalogoId = i.itemCatalogoId) temPactoCadastrado
+                            ,(SELECT CAST(COUNT(1) AS BIT) FROM [ProgramaGestao].[CatalogoItemCatalogo] WHERE itemCatalogoId = i.itemCatalogoId) temUnidadeAssociada
                     FROM [ProgramaGestao].[ItemCatalogo] i
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON i.calculoTempoId = cd.catalogoDominioId
                     WHERE i.itemCatalogoId = @itemCatalogoId;
@@ -70,12 +71,14 @@
 					SELECT  i.itemCatalogoId 
 							,i.titulo             
 							,i.calculoTempoId formaCalculoTempoItemCatalogoId
+		                    ,cd.descricao formaCalculoTempoItemCatalogo 
 							,i.permiteRemoto permiteTrabalhoRemoto 
 							,i.tempoPresencial tempoExecucaoPresencial
 							,i.tempoRemoto tempoExecucaoRemoto   
 							,i.descricao       
                             ,i.complexidade   
                             ,(SELECT CAST(COUNT(1) AS BIT) FROM [ProgramaGestao].[PactoTrabalhoAtividade] WHERE itemCatalogoId = i.itemCatalogoId) temPactoCadastrado
+                            ,(SELECT CAST(COUNT(1) AS BIT) FROM [ProgramaGestao].[CatalogoItemCatalogo] WHERE itemCatalogoId = i.itemCatalogoId) temUnidadeAssociada
                     FROM [ProgramaGestao].[ItemCatalogo] i
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON i.calculoTempoId = cd.catalogoDominioId
                     WHERE   (@titulo IS NULL OR i.titulo LIKE '%' + @titulo + '%')

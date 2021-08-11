@@ -247,8 +247,9 @@
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON p.situacaoId = cd.catalogoDominioId 
                     WHERE p.unidadeId = (SELECT case when p1.tipoFuncaoId IS NOT NULL THEN u.unidadeIdPai ELSE u.unidadeId END 
 					                     FROM [dbo].[Pessoa] p1 
-						                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p1.unidadeId 
-						                    WHERE pessoaId = @pessoaId)
+						                    LEFT OUTER JOIN [dbo].[PessoaAlocacaoTemporaria] a ON a.pessoaId = p1.pessoaId AND a.dataFim IS NULL
+	                                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = COALESCE(a.unidadeId, p1.unidadeId) 
+						                 WHERE p1.pessoaId = @pessoaId)
                         AND situacaoId = @situacao
                 ";
             }
