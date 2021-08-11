@@ -7,6 +7,7 @@ import { PlanoTrabalhoDataService } from '../../../services/plano-trabalho.servi
 import { Router } from '@angular/router';
 import { PerfilEnum } from '../../../enums/perfil.enum';
 import { DecimalValuesHelper } from '../../../../../shared/helpers/decimal-valuesr.helper';
+import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 
 @Component({
   selector: 'plano-trabalho-cadastro',
@@ -22,11 +23,15 @@ export class PlanoTrabalhoCadastroComponent implements OnInit {
 
   dadosPlano: IPlanoTrabalho = {};
 
+  tempoComparecimentoPadrao: string;
+  termosUsoPadrao: string;
+
   public tempoMask: any;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
+    private configurationService: ConfigurationService,
     private decimalValuesHelper: DecimalValuesHelper,
     private unidadeDataService: UnidadeDataService,
     private planoTrabalhoDataService: PlanoTrabalhoDataService) {
@@ -41,19 +46,35 @@ export class PlanoTrabalhoCadastroComponent implements OnInit {
       }
     );
 
+    this.tempoComparecimentoPadrao = this.configurationService.getTempoComparecimento();
+    this.termosUsoPadrao = this.configurationService.getTermosUso();
+
     this.form = this.formBuilder.group({
       unidadeId: ['', [Validators.required]],
       dataInicio: [new Date(), [Validators.required]],
       dataFim: [new Date(), [Validators.required]],
-      tempoComparecimento: [null, [Validators.required]],
+      tempoComparecimento: [this.tempoComparecimentoPadrao, [Validators.required]],
       tempoFaseHabilitacao: [null, [Validators.required]],    
-      termoAceite: [null, [Validators.required, Validators.maxLength(8000)]]  
+      termoAceite: [this.termosUsoPadrao, [Validators.required, Validators.maxLength(8000)]]  
     });
+
+    if (this.tempoComparecimentoPadrao)
+      this.form.get('tempoComparecimento').disable();
+
+    if (this.termosUsoPadrao)
+      this.form.get('termoAceite').disable();
   }
 
   cadastrar() {
     if (this.form.valid) {
-      const dados = this.form.value;
+      const dados: IPlanoTrabalho = this.form.value;
+
+      if (this.tempoComparecimentoPadrao)
+        dados.tempoComparecimento = parseInt(this.tempoComparecimentoPadrao);
+
+      if (this.termosUsoPadrao)
+        dados.termoAceite = this.termosUsoPadrao;
+
       this.planoTrabalhoDataService.Cadastrar(dados).subscribe(
         r => {
           this.router.navigateByUrl(`/programagestao/detalhar/${r.retorno}`);

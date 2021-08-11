@@ -34,8 +34,8 @@
                   <label for="permiteTrabalhoRemoto">Permite trabalho remoto?</label>
                   <select id="permiteTrabalhoRemoto" name="permiteTrabalhoRemoto" formControlName="permiteTrabalhoRemoto" placeholder="Mostrar tudo">
                     <option [ngValue]="null">Mostrar tudo</option>
-                    <option [ngValue]="true">Sim</option>
-                    <option [ngValue]="false">Não</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
                   </select>
                 </div>
               </div>
@@ -63,7 +63,7 @@
                   <th class="text-center">Trabalho remoto</th>
                   <th class="text-right">Tempo presencial</th>
                   <th class="text-right">Tempo remoto</th>
-                  <th style="width:60px"></th>
+                  <th style="width:140px"></th>
                 </tr>
               </thead>
               <tbody>
@@ -75,8 +75,11 @@
                   <td class="text-right">{{item.tempoExecucaoPresencial | number}}</td>
                   <td class="text-right">{{item.tempoExecucaoRemoto | number}}</td>
                   <td>
+                    <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/detalhar/' + item.itemCatalogoId]" class="mr-2" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                    <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/copiar/' + item.itemCatalogoId]" class="mr-2" title="Copiar"><i class="fa fa-copy"></i></a>
                     <secure-input [perfis]="[PerfilEnum.GestorIndicadores]" *ngIf="!item.temPactoCadastrado">
-                      <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/editar/' + item.itemCatalogoId]"><i class="fa fa-edit"></i></a>
+                      <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/editar/' + item.itemCatalogoId]" class="mr-2"><i class="fa fa-edit"></i></a>
+                      <a href="javascript:void(0)" [routerLink]="['/programagestao/catalogo/item/excluir/' + item.itemCatalogoId]" *ngIf="!item.temUnidadeAssociada"><i class="fa fa-trash"></i></a>
                     </secure-input>
                   </td>
                 </tr>

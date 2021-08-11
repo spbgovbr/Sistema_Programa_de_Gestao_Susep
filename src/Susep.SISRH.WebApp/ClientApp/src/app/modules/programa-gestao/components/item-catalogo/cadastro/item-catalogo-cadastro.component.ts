@@ -73,10 +73,15 @@ export class ItemCatalogoCadastroComponent implements OnInit {
 
   carregarDados() {
     const itemCatalogoId = this.activatedRoute.snapshot.paramMap.get('id');
-    if (itemCatalogoId) {
+    if (itemCatalogoId) {      
       this.itemCatalogoDataService.ObterItem(itemCatalogoId).subscribe(
         resultado => {
           this.dadosItemCatalogo = resultado.retorno;
+
+          if (this.router.url.indexOf('/copiar/') > -1) {
+            this.dadosItemCatalogo.temPactoCadastrado = false;
+          }
+
           this.assuntos = this.dadosItemCatalogo.assuntos;
           this.fillForm();
         }
@@ -167,19 +172,22 @@ export class ItemCatalogoCadastroComponent implements OnInit {
     if (this.form.valid) {
       const dados = this.form.value;
       dados.assuntos = this.assuntos && this.assuntos.length ? this.assuntos : null;
-      const itemCatalogoId = this.activatedRoute.snapshot.paramMap.get('id');      
-      if (!itemCatalogoId) {
-        this.itemCatalogoDataService.Cadastrar(dados).subscribe(
-          r => {
-            this.carregarDados();
-            this.router.navigateByUrl(`/programagestao/catalogo/item`); });
-      }
-      else {
+      const itemCatalogoId = this.activatedRoute.snapshot.paramMap.get('id');
+      const edicao = itemCatalogoId && this.router.url.indexOf('/copiar/') === -1;
+      if (edicao) {
         dados.itemCatalogoId = itemCatalogoId;
         this.itemCatalogoDataService.Alterar(dados).subscribe(
           r => {
             this.carregarDados();
-            this.router.navigateByUrl(`/programagestao/catalogo/item`); });
+            this.router.navigateByUrl(`/programagestao/catalogo/item`);
+          });        
+      }
+      else {
+        this.itemCatalogoDataService.Cadastrar(dados).subscribe(
+          r => {
+            this.carregarDados();
+            this.router.navigateByUrl(`/programagestao/catalogo/item`);
+          });
       }
     }
     else {

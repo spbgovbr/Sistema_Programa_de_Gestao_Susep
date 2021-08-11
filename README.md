@@ -1,17 +1,6 @@
-# Sistema Programa de Gestão de Desempenho - PGD
+# Sistema Programa de Gestão de Desempenho - PGD - Fork Docker
 
-Esse é o Sistema da Superintendência de Seguros Privados (Susep) para a gestão do Programa de Gestão de Desempenho (PGD) em conformidade com a [IN65/2020](https://www.in.gov.br/en/web/dou/-/instrucao-normativa-n-65-de-30-de-julho-de-2020-269669395).
-
-~~Para a correta instalação, consulte o manual de instalação e utilize os arquivos disponibilizados na pasta `install/`~~ (veja a próxima seção).
-
-Para acesso ao código fonte, utilize os arquivos disponibilizados na pasta `src/`
-
-Para entender os conceitos e principais funcionalidades, assista à apresentação [Sistema SUSEP - Programa de Gestão - Teletrabalho](https://youtu.be/VU_1TTAMg2Y).
-
-Mais detalhes:
-
-* https://www.gov.br/servidor/pt-br/assuntos/programa-de-gestao
-
+Versão do [Sistema_Programa_de_Gestao_Susep](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep) que sobe em containers Docker.
 
 ## Subir aplicação em ambiente Docker
 
@@ -115,7 +104,7 @@ Acesse o arquivo `docker/api/Settings/appsettings.Homolog.json` e edite as segui
 * O login só ocorrerá adequadamente caso exista um usuário na tabela `[dbo].[Pessoa]` com o CPF e o email igual ao usuário do LDAP;
 * Caso seja consultado uma pessoa que não exista na base do LDAP, o `api-gateway` retornará um erro `500` e nada será exibido para o usuário pelo `web-app`. No response você poderá ver uma mensagem como `System.Threading.Tasks.TaskCanceledException: A task was canceled.`;
 * Por algum motivo desconhecido, em alguns casos é necessário pressionar o botão de `Entrar` duas vezes;
-* A aplicação possui um [backdook](https://pt.wikipedia.org/wiki/Backdoor) para simplificar o processo de homologação. Você pode ver [a lista completa dos usuários que não necessitam de senha](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/97892e1/src/Susep.SISRH.Application/Auth/ResourceOwnerPasswordValidator.cs#L45-L54). Caso utilize em produção, **RETIRE ESSES USUÁRIOS DO SCRIPT** `install/3. Inserir dados de teste.sql`. [Desconheço se o compilado disponibilizado pela SUSEP possui também esse backdoor](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/tree/97892e1/install).
+* A aplicação possui [usuários de teste](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep#valida%C3%A7%C3%A3o-da-instala%C3%A7%C3%A3o-3%C2%AA-etapa) para simplificar o processo de homologação. Você pode ver [a lista completa dos usuários que não necessitam de senha](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/97892e1/src/Susep.SISRH.Application/Auth/ResourceOwnerPasswordValidator.cs#L45-L54). Caso utilize em produção, **RETIRE ESSES USUÁRIOS DO SCRIPT** `install/3. Inserir dados de teste.sql`. Caso não sejam retirados, estes usuários poderão serem utilizados por pessoas má-intensionadas como [backdook](https://pt.wikipedia.org/wiki/Backdoor).
 
 ##### Configurar Acesso ao Banco de Dados
 

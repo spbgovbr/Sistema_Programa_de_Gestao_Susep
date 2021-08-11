@@ -291,7 +291,7 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
       const dayOfWeek = curDate.getDay();
       const feriado = this.feriados.filter(f => curDate.getTime() === new Date(f).getTime()).length > 0;
       const fimSemana = (dayOfWeek === 6) || (dayOfWeek === 0);
-      //alert(feriado)
+      
       if (!feriado && !fimSemana)
         days.push({ date: new Date(curDate), ultimoHorarioOcupado: this.horaInicio, events: []});
       curDate.setDate(curDate.getDate() + 1);
