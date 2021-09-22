@@ -1,0 +1,9 @@
+Faz-se necessário a habilitação instalação das seguintes dependências:
+
+1 - Instalação do IIS:
+Realizar a instalação através do Server Manager (Add roles and features);
+Selecionar o Role Web Server (IIS);
+Na tela do Role Services para o Web Server (IIS) selecionar também:
+Em Application Development: ASP.NET 
+
+2 - https://drive.google.com/drive/folders/1FcynRsEF9zGBrf8x9FrBqO5jtLk-5O-G?usp=sharing

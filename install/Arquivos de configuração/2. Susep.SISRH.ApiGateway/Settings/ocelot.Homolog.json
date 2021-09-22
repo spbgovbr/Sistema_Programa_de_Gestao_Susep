@@ -3,7 +3,7 @@
     {
       "UpstreamPathTemplate": "/swagger/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/SISGP/api/api/swagger/{everything}",
+      "DownstreamPathTemplate": "/SISGP/api/swagger/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -17,7 +17,7 @@
     {
       "UpstreamPathTemplate": "/connect/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST" ],
-      "DownstreamPathTemplate": "/SISGP/api/api/connect/{everything}",
+      "DownstreamPathTemplate": "/SISGP/api/connect/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
