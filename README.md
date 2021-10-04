@@ -65,6 +65,7 @@ Sequência de instalação sugerida
 
 O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com a ferramenta ORM da Microsoft Entity Framework Core nas funções de persistência e com SQL ANSI nas funções de consulta a dados.Em teoria, essa configuração permite que diferentes tecnologias de bancos de dados sejam utilizadas. Entretanto, a equipe de tecnologia da Susep garante a compatibilidade e realizou testes apenas com o Microsoft SQL Server.
 
+
 ## Sequência de passos (SQL Server)
 
 >1. Criar banco de dados DBSISGP.
@@ -80,6 +81,9 @@ Uma vez criada a estrutura de banco de dados, é necessário fazer a importaçã
 > **TOME NOTA** O script “Inserir dados de teste”traz um exemplo de carga com dados fictícios (CPFs gerados aleatoriamente e unidades da estrutura da Susep), serve para permitir o acesso e a validação do sistema. Assim que o sistema entrar em produção, os dados da tabela **Pessoa** e **Unidade** cadastrados por esse script devem ser apagados da base de dados.
 
 Os perfis do sistema serão derivados da estrutura real do órgão. Desse modo, servidores que não tem função de chefia no órgão recebem valor null na coluna tipoFuncaoIdda tabela Pessoae deste modo terão habilitadas apenas funções de acompanhamento dos seus próprios planos de trabalho, ao passo que servidores com função de chefia poderão ter acesso aos planos de trabalho das suas respectivas equipes e terão acesso às funções de programas de gestão (cadastro, seleção, avaliação,etc). Servidores que trabalham na área de indicadores poderão, além de acompanhar seus próprios planos de trabalho, cadastrar as listas de atividades do órgão e dos demais setores.
+
+## Sugestão Carga de dados
+https://github.com/henrique-prog/pdg-carga-de-dados
 
 # Configurar gestores do sistema (1º Acesso)
 
