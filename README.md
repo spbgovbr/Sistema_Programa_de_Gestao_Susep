@@ -62,11 +62,11 @@ O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com 
 ##### Sequência de passos (SQL Server)
 
 1. Criar banco de dados DBSISGP;
-2. Executar o script [1. Criação da estrutura do banco de dados - Obrigatorio.sql](install/1. Criação da estrutura do banco de dados - Obrigatorio.sql);
-3. Executar o script [2. Inserir dados de domínio.sql](install/2. Inserir dados de domínio - Obrigatorio.sql);
-4. Executar o script [2. Inserir dados de domínio.sql](install/Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql);
-4. Se for ambiente de desenvolvimento/homologação,executar o script [4. Inserir dados de teste - Opcional.sql](install/4. Inserir dados de teste - Opcional.sql);
-5. Criar um usuário de aplicação com permissões de leitura e escrita.
+2. Executar o script `install/1. Criação da estrutura do banco de dados - Obrigatorio.sql`;
+3. Executar o script `install/2. Inserir dados de domínio - Obrigatorio.sql`;
+4. Executar o script `install/Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql`;
+5. Se for ambiente de desenvolvimento/homologação,executar o script `install/4. Inserir dados de teste - Opcional.sql`;
+6. Criar um usuário de aplicação com permissões de leitura e escrita.
 
 ##### Importação de usuários (desenvolvimento/homologação/produção)
 
@@ -89,20 +89,21 @@ Em determinadas situações como, por exemplo, no caso fictício em que o titula
 
 A publicação deve ser feita em algum servidor de aplicação. Sugere-se o Internet Information Services (IIS) na seguinte estrutura:
 
-I. Servidor web, acessível apenas por meio da máquina do Gateway, em que fica publicada a API.
+1.  Servidor web, acessível apenas por meio da máquina do Gateway, em que fica publicada a API.
  * SISGP
    * API
-II. Servidor web, aberto para a internet, em que ficam publicados o Gateway (pasta Gateway) e o front-end (pasta APP).
- * SISGP
-   * APP
-   * Gateway
+2. Servidor web, aberto para a internet, em que ficam publicados o Gateway (pasta Gateway) e o front-end (pasta APP).
+   * SISGP
+     * APP
+     * Gateway
 
 As pastas APP, gateway e APIdevem ser convertidas em aplicações no IIS e sugere-se que rodem sob um mesmo Application Pool.
 
 > **TOME NOTA:** Para ambiente de desenvolvimento/homologação, é suficiente apenas servidor interno. Já para produção, faz-se necessário um servidor interno e outro externo, e nesse caso as pastas `Gateway` e `APP` deverão estar no servidor externo enquanto a pasta `API` estará no servidor interno.
 
 As pastas APP, Gateway e API devem ser convertidas em aplicações no IIS e sugere-se que rodem sob um mesmo Application Pool. Os nomes e as estruturas das pastas poderão variar de acordo com a conveniência do Órgão, todavia será importante conhecer o caminho para cada uma delas.
-	Para facilitar o entendimento do roteiro, considera-se que os seguintes caminhos foram configurados:
+
+Para facilitar o entendimento do roteiro, considera-se que os seguintes caminhos foram configurados:
 
 * APP: `https://**servidorExterno**/sisgp/app`
 * Gateway: `https://**servidorExterno**/sisgp/gateway`
@@ -134,17 +135,17 @@ A API é onde estão as regras de negócio, funcionalidades, operações de pers
 ##### Validação da Instalação – 1ª Etapa
 
 Após instalação e configuração da base de dados e API, recomenda-se a validação dessas etapas pela seguinte URL: 
-> **URL da Aplicação**/api/api/v1/dominio/ModalidadeExecucao
+> `**URL da Aplicação**/api/api/v1/dominio/ModalidadeExecucao`
 
 Se a instalação foi realizada corretamente, deverá retornar um json com as modalidades de trabalho da tabela catálogo domínio.
 
 ###### Em caso de erro
 
-I. Abra um prompt de comando
-II. Navegue até a pasta da API e digite o comando
-```bash
-Dotnet susep.sisrh.webapi.dll
-```
+1. Abra um prompt de comando
+2. Navegue até a pasta da API e digite o comando
+	```bash
+	Dotnet susep.sisrh.webapi.dll
+	```
 
 O retorno é o possível erro.
 
@@ -162,14 +163,14 @@ O Gateway adiciona camadas de segurança, cache e outros recursos à API. É ess
 
 Após instalação e configuração do Gateway, recomenda-se a validação dessa etapa pela seguinte URL: 
 
-> **URL da aplicação**/gateway/dominio/ModalidadeExecucao
+> `**URL da aplicação**/gateway/dominio/ModalidadeExecucao`
 
 Se a instalação foi realizada corretamente, deverá retornar um json com as modalidades de trabalho da tabela catálogo domínio (mesmo retorno da validação da API).
 
 ###### Em caso de erro:
 
-I. Abra um prompt de comando
-II. Navegue até a pasta do Gateway e digite o comando
+1. Abra um prompt de comando
+2. Navegue até a pasta do Gateway e digite o comando
 ```bash
 Dotnet susep.sisrh.webapi.dll
 ```
@@ -217,7 +218,7 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 - `sisgp_servidor3`
 - `sisgp_servidor4`
 
-- Obs.: Senha para todos os usuários ("qualquer carácter")
+**Obs.:** Senha para todos os usuários ("qualquer carácter")
 
 > **ATENÇÃO** Assim que o sistema entrar em produção, os dados da tabela `Pessoa` e `Unidade` cadastrados por esse script devem ser apagados da base de dados.
 
