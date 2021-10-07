@@ -34,7 +34,7 @@ services:
       - pgd
     
   web-api:
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/spbgovbr/Sistema_Programa_de_Gestao_Susep/sgd:latest
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
     volumes:
@@ -86,7 +86,7 @@ services:
       - pgd
 
   api-gateway:
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/spbgovbr/Sistema_Programa_de_Gestao_Susep/sgd:latest
     command: dotnet Susep.SISRH.ApiGateway.dll
     working_dir: /app/gateway/
     volumes:
@@ -107,7 +107,7 @@ services:
       - pgd
 
   web-app:
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/spbgovbr/Sistema_Programa_de_Gestao_Susep/sgd:latest
     command: dotnet Susep.SISRH.WebApp.dll
     working_dir: /app/app/
     volumes:
