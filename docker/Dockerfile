@@ -9,6 +9,16 @@ RUN apt-get update \
 COPY src/ src/
 WORKDIR src/
 
+ARG diretorio="install/1. Susep.SISRH.WebApi"
+
+COPY ${diretorio}/SUSEP.Framework.CoreFilters.dll Susep.libs/SUSEP.Framework.CoreFilters.dll
+COPY ${diretorio}/SUSEP.Framework.Data.dll Susep.libs/SUSEP.Framework.Data.dll
+COPY ${diretorio}/SUSEP.Framework.MessageBroker.dll Susep.libs/SUSEP.Framework.MessageBroker.dll
+COPY ${diretorio}/SUSEP.Framework.Messages.dll Susep.libs/SUSEP.Framework.Messages.dll
+COPY ${diretorio}/SUSEP.Framework.Result.dll Susep.libs/SUSEP.Framework.Result.dll
+COPY ${diretorio}/SUSEP.Framework.SeedWorks.dll Susep.libs/SUSEP.Framework.SeedWorks.dll
+COPY ${diretorio}/SUSEP.Framework.Utils.dll Susep.libs/SUSEP.Framework.Utils.dll
+
 #RUN dotnet build --configuration Release
 RUN dotnet publish --configuration Release
 
