@@ -2,7 +2,7 @@ name: Build-deploy-image-docker
 
 on:
   push:
-    branches: docker
+    branches: main
 
 
 jobs:
@@ -29,4 +29,4 @@ jobs:
           push: true
           # cache-from: type=registry,ref=myorg/myrepository:latest
           # cache-to: type=inline
-          tags: ghcr.io/spbgovbr/Sistema_Programa_de_Gestao_Susep/sgd:latest
+          tags: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
