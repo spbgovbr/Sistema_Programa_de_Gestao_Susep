@@ -3,6 +3,7 @@ version: "3.8"
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    user: "${UID}:${GID}"
     environment:
       SA_PASSWORD: "P1ssw@rd"
       ACCEPT_EULA: "Y"
@@ -13,6 +14,7 @@ services:
       - ../install/3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql:/scripts/2.pessoa_alocacao_temporaria.sql:ro
       - ../install/4. Inserir dados de teste - Opcional.sql:/scripts/4.dados_teste.sql:ro
       - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
+      - ./volume/mssql:/var/opt/mssql:rw
     ports:
       - 1433:1433
     labels:
@@ -24,4 +26,4 @@ networks:
   pgd:
     external: true
     name: pgd
-    #driver: bridge
+

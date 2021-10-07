@@ -145,9 +145,6 @@ Edite o arquivo `install/4. Inserir dados de teste - Opcional.sql`, conforme des
 ## Trabalhos futuros
 
 1. Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo (criar um docker-compose específico);
-1. Banco de homologação
-   1. Configurar adequadamente o volume do banco;
-   1. Evitar que o scripts sqls sejam executados mais de uma vez em caso de reinício do banco de dados;
 1. Gerar imagens nativas para Windows por Github Actions.
 
 ## Outras informações

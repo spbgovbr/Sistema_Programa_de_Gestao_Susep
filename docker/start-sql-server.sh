@@ -11,9 +11,20 @@ while [ $is_up -ne 0 ] ; do
     sleep 5 
 done
 
-for foo in /scripts/*.sql
-    do /opt/mssql-tools/bin/sqlcmd -U sa -P $SA_PASSWORD -l 30 -e -i $foo
-done
+exists=$(/opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $SA_PASSWORD -Q "SET NOCOUNT ON SELECT case when name is not null then 1 else 0 end as existe from master.sys.databases where name = 'programa_gestao'")
+if [[ $exists -eq 1 ]];
+then
+    echo "The database isn't empty. No one script will be executed"
+else
+    # Create default database
+    /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $SA_PASSWORD -Q "CREATE DATABASE programa_gestao"
+
+    # Run migrations
+    for foo in /scripts/*.sql
+        do /opt/mssql-tools/bin/sqlcmd -d programa_gestao -U sa -P $SA_PASSWORD -l 30 -e -i $foo
+    done
+fi
+
 # So that the container doesn't shut down, sleep this thread
 wait $pid
 exit 0
