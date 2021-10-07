@@ -15,9 +15,8 @@ services:
       --entrypoints.web.address=:8000
       --entrypoints.web-interno.address=:80
       --entrypoints.web-secure.address=:8443
-      --log.level="DEBUG"
+      --log.level="INFO"
       --providers.docker.exposedbydefault=false
-      --serversTransport.insecureSkipVerify=true
     restart: unless-stopped
     # --providers.file.directory=/traefik-config
     ports:
@@ -43,6 +42,34 @@ services:
       - ../log/api:/app/api/Logs:rw
     environment: 
       - ASPNETCORE_ENVIRONMENT=Homolog
+
+      # Configurações de banco de dados
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
+
+      # Configurações de e-mail - Exemplo: Ministério da Economia
+      - emailOptions__EmailRemetente=no-reply@me.gov.br
+      - emailOptions__NomeRemetente=Programa de Gestão - ME
+      - emailOptions__SmtpServer=smtp.me.gov.br
+      - emailOptions__Port=25
+
+      # LDAP
+      # -> URL do Servidor LDAP
+      - ldapOptions__Configurations__0__Url=
+      # -> Porta do Servidor LDAP
+      - ldapOptions__Configurations__0__Port=389
+      # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
+      - ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
+      # -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
+      - ldapOptions__Configurations__0__BindPassword=
+      # -> DC que será utilizado para chegar à base de usuários no LDAP
+      - ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
+      # -> Consulta a ser aplicada no LDAP para encontrar os usuários
+      - ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
+      # -> Campo do LDAP em que será encontrado o CPF do usuário
+      - ldapOptions__Configurations__0__CpfAttributeFilter=
+      # -> Campo do LDAP em que será encontrado o e-mail do usuário
+      - ldapOptions__Configurations__0__EmailAttributeFilter=
+
     # Habilitar somente para debug
     # ports:
     #   - 8082:80
@@ -105,24 +132,6 @@ services:
   #     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/usr/share/nginx/html/env.js:ro
   #   ports:
   #     - 8080:80
-  db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "P1ssw@rd"
-      ACCEPT_EULA: "Y"
-    command: /bin/bash /scripts/start-sql-server.sh
-    volumes:
-      - ../install/1. Criação da estrutura do banco de dados - Obrigatorio.sql:/scripts/1.estrutura_dados.sql:ro
-      - ../install/2. Inserir dados de domínio - Obrigatorio.sql:/scripts/2.dados_dominio.sql:ro
-      - ../install/3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql:/scripts/2.pessoa_alocacao_temporaria.sql:ro
-      - ../install/4. Inserir dados de teste - Opcional.sql:/scripts/4.dados_teste.sql:ro
-      - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
-    ports:
-      - 1433:1433
-    labels:
-      - traefik.enable=false
-    networks:
-      - pgd
 
 networks:
   pgd:

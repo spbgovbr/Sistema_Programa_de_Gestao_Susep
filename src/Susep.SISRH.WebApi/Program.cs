@@ -28,29 +28,15 @@ namespace Susep.SISRH.WebApi
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            var environmentName = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            
-            var configurationBuilder = new ConfigurationBuilder().SetBasePath(Path.Combine(System.Environment.CurrentDirectory, "Settings"))
-                                        .AddJsonFile($"appsettings.{environmentName}.json", true, true)
-                                        .AddEnvironmentVariables();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                   .ConfigureAppConfiguration((hostingContext, config) =>
+                       config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
+                             .AddJsonFile($"connectionstrings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"messagebroker.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddEnvironmentVariables())
+                    .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))
+                   .UseStartup<Startup>();
 
-            return WebHost.CreateDefaultBuilder(args)
-                   .ConfigureLogging(logging =>
-                   {
-                       logging.ClearProviders();
-                    //    logging.AddEventLog(new EventLogSettings() { Filter = (source, level) => level == LogLevel.Error });
-                   })
-                   .UseStartup<Startup>()
-                   .UseConfiguration(configurationBuilder.Build())
-                   .UseSerilog((context, config) => {
-                        config.ReadFrom.Configuration(context.Configuration);
-
-                        // config
-                        //     .Enrich.FromLogContext()
-                        //     .WriteTo.File(@"Logs\log.txt", rollingInterval: RollingInterval.Day);
-                    });
-        }
     }
 }

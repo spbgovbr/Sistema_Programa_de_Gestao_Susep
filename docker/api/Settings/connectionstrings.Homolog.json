@@ -1,5 +1,0 @@
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "data source=db;initial catalog=master;User ID=sa;Password=P1ssw@rd;"
-  }
-}
