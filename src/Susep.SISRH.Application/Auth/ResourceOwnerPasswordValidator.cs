@@ -61,14 +61,26 @@ namespace Susep.SISRH.Application.Auth
                 }
                 else
                 {
-                    pessoa = await Task.Run(() =>
+                    if (this.Options.Value.Configurations == null)
+                    {
+                        context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "As configurações do LDAP são inválidas", null);
+                    }
+                    else
                     {
                         foreach (var configuration in this.Options.Value.Configurations)
                         {
                             using (var connection = new Novell.Directory.Ldap.LdapConnection())
                             {
-                                connection.Connect(configuration.Url, configuration.Port);
-                                connection.Bind(configuration.BindDN, configuration.BindPassword);
+                                try
+                                {
+                                    connection.Connect(configuration.Url, configuration.Port);
+                                    connection.Bind(configuration.BindDN, configuration.BindPassword);
+                                }
+                                catch
+                                {
+                                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Não foi possível pesquisar no LDAP. A autenticação do usuário de serviço falhou", null);
+                                    return;
+                                }
 
                                 List<string> attibutes = new List<string>();
                                 if (!String.IsNullOrEmpty(configuration.SisrhIdAttributeFilter)) attibutes.Add(configuration.SisrhIdAttributeFilter);
@@ -94,28 +106,30 @@ namespace Susep.SISRH.Application.Auth
                                     var sisrhId = GetAttributeValue(entity, configuration.SisrhIdAttributeFilter);
                                     if (!String.IsNullOrEmpty(sisrhId))
                                     {
-                                        var _pessoa = this.PessoaRepository.ObterAsync(Int64.Parse(sisrhId));
+                                        var _pessoa = await this.PessoaRepository.ObterAsync(Int64.Parse(sisrhId));
                                         if (_pessoa != null)
-                                            return _pessoa;
+                                            pessoa = _pessoa;
                                     }
 
                                     string email = GetAttributeValue(entity, configuration.EmailAttributeFilter);
                                     string cpf = GetAttributeValue(entity, configuration.CpfAttributeFilter);
 
-                                    var dadosPessoa = this.PessoaRepository.ObterPorCriteriosAsync(email, cpf);
+                                    var dadosPessoa = await this.PessoaRepository.ObterPorCriteriosAsync(email, cpf);
                                     if (dadosPessoa != null)
-                                        return dadosPessoa;
-                                }                                
+                                        pessoa = dadosPessoa;
+                                }
                             }
                         }
-
-                        return null;
-                    });
+                    }
                 }
 
                 if (pessoa != null)
                 {
                     context.Result = new GrantValidationResult(pessoa.PessoaId.ToString(), "password", null, "local", null);
+                }
+                else
+                {
+                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Não foi encontrado usuário com esse login", null);
                 }
 
             }

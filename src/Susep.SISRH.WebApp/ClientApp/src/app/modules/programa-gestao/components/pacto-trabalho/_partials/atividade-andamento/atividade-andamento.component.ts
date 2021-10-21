@@ -44,6 +44,7 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
   tempoHomologado = 0;
 
   dentroPrazoAvaliacao: boolean;
+  teletrabalhoParcial: boolean;
 
   public tempoMask: any;
   minDataInicio: any;
@@ -109,6 +110,8 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
     const tempoEncerramentoPacto = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     this.dentroPrazoAvaliacao = this.dadosPacto.value.situacaoId === 405 || tempoEncerramentoPacto <= 40;
+
+    this.teletrabalhoParcial = this.dadosPacto.value.formaExecucaoId === 102;
 
     this.servidor.next(this.dadosPacto.value.pessoaId);
     this.isReadOnly.next(this.readOnly || this.dadosPacto.value.situacaoId !== 405);

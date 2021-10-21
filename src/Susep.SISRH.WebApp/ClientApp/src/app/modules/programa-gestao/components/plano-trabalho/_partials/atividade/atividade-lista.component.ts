@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
 import { PlanoTrabalhoSituacaoEnum } from '../../../../enums/plano-trabalho-situacao.enum';
-import { IPlanoTrabalho, IPlanoTrabalhoAtividade, IPlanoTrabalhoAtividadeCandidato } from '../../../../models/plano-trabalho.model';
+import { IPlanoTrabalho, IPlanoTrabalhoAtividade, IPlanoTrabalhoAtividadeCandidato, IPlanoTrabalhoAtividadeItem } from '../../../../models/plano-trabalho.model';
 import { PlanoTrabalhoDataService } from '../../../../services/plano-trabalho.service';
 import { IDadosCombo } from '../../../../../../shared/models/dados-combo.model';
 import { IItemCatalogo } from '../../../../models/item-catalogo.model';
@@ -15,6 +15,7 @@ import { PerfilEnum } from '../../../../enums/perfil.enum';
 import { IUsuario } from '../../../../../../shared/models/perfil-usuario.model';
 import { ApplicationStateService } from '../../../../../../shared/services/application.state.service';
 import { PlanoTrabalhoSituacaoCandidatoEnum } from '../../../../enums/plano-trabalho-situacao-candidato.enum';
+import { ItemCatalogoDataService } from '../../../../services/item-catalogo.service';
 
 @Component({
   selector: 'plano-lista-atividade',
@@ -31,10 +32,12 @@ export class PlanoListaAtividadeComponent implements OnInit {
   @Input() dadosPlano: BehaviorSubject<IPlanoTrabalho>;
   unidade = new BehaviorSubject<number>(null);
   atividades: IPlanoTrabalhoAtividade[];
+  itensCatalogoDetalhar: IItemCatalogo[];
 
   @ViewChild('modalCadastro', { static: true }) modalCadastro;
   @ViewChild('modalCandidatura', { static: true }) modalCandidatura;
   @ViewChild('modalCandidatos', { static: true }) modalCandidatos;
+  @ViewChild('modalDetalhesAtividades', { static: true }) modalDetalhesAtividades;
 
   form: FormGroup;
 
@@ -55,6 +58,7 @@ export class PlanoListaAtividadeComponent implements OnInit {
     private unidadeDataService: UnidadeDataService,
     private catalogoDataService: CatalogoDataService,
     private dominioDataService: DominioDataService,
+    private itemCatalogoDataService: ItemCatalogoDataService,
     private applicationState: ApplicationStateService,
     private planoTrabalhoDataService: PlanoTrabalhoDataService,) { }
 
@@ -145,7 +149,7 @@ export class PlanoListaAtividadeComponent implements OnInit {
 
   excluir(planoTrabalhoAtividadeId: string) {
     this.planoTrabalhoDataService.ExcluirAtividade(this.dadosPlano.value.planoTrabalhoId, planoTrabalhoAtividadeId).subscribe(
-      appResult => {
+      () => {
         this.carregarAtividades();
       }
     );
@@ -181,6 +185,22 @@ export class PlanoListaAtividadeComponent implements OnInit {
   fecharModal() {
     this.atividadeEdicao.next({});
     this.modalService.dismissAll();
+  }
+
+  abrirTelaDetalhesAtividades(itensCatalogoDetalhar: IPlanoTrabalhoAtividadeItem[]) {
+    let quantidadeRetornado = 0;
+    this.itensCatalogoDetalhar = [];
+
+    itensCatalogoDetalhar.forEach(ic => {
+      this.itemCatalogoDataService.ObterItem(ic.itemCatalogoId).subscribe(ret => {
+        quantidadeRetornado++;
+
+        this.itensCatalogoDetalhar.push(ret.retorno);
+
+        if (quantidadeRetornado === itensCatalogoDetalhar.length)
+          this.modalService.open(this.modalDetalhesAtividades, { size: 'xl' });
+      });
+    });
   }
 
 

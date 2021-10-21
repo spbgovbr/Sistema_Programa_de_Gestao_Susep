@@ -39,6 +39,11 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "totalServidoresSetor")]
         public Int32 TotalServidoresSetor { get; set; }
 
+        [DataMember(Name = "totalServidoresAprovados")]
+        public Int32 TotalServidoresAprovados { get; set; }
+
+        
+
         [DataMember(Name = "termoAceite")]
         public string TermoAceite { get; set; }
 

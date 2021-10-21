@@ -30,11 +30,25 @@
     </form>
     <div class="row">
       <div class="col-sm-12 mb-5">
-        <span class="text-primary">Tarefas:</span><br />
         <div class="table-responsive" style="height: 200px;">
           <div class="br-table">
             <div class="table">
               <table class="full-width-table table-striped table-style mat-elevation-z8 tabela-wrapper-scroll-y tabela-scrollbar">
+                <thead>
+                  <tr>
+                    <th colspan="2" class="pt-2 pb-2">Tarefas:</th>
+                    <th class="text-right pt-2 pb-2">
+                      <div class="float-right">
+                        <mat-slide-toggle class="example-margin"
+                                          [checked]="todasSelecionadas"
+                                          (change)="toggleTodas()"
+                                          [labelPosition]="labelPosition">
+                          <small>Marcar/Desmarcar todas</small>
+                        </mat-slide-toggle>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr *ngFor="let item of itensCatalogo">
                     <td>{{item.titulo}}</td>
@@ -51,8 +65,8 @@
             </div>
           </div>
         </div>
-      </div>      
-    </div>    
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal-footer justify-content-end">

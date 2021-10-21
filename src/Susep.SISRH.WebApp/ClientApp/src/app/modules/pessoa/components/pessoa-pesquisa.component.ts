@@ -53,7 +53,7 @@ export class PessoaPesquisaComponent implements OnInit {
   }  
 
   montarComboUnidades() {
-    this.unidadeDataService.ObterAtivasDadosCombo().subscribe(
+    this.unidadeDataService.ObterTodasAtivasDadosCombo().subscribe(
       appResult => {
         this.unidadesAtivasCombo = appResult.retorno;
       }

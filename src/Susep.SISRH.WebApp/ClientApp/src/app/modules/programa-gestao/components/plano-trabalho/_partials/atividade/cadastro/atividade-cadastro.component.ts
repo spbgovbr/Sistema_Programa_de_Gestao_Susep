@@ -31,6 +31,9 @@ export class PlanoAtividadeCadastroComponent implements OnInit {
 
   form: FormGroup;
 
+  labelPosition = 'before';
+  todasSelecionadas = false;
+
   itensCatalogo: IItemCatalogo[] = [];
   criteriosPerfil: IDominio[] = [];
 
@@ -200,11 +203,18 @@ export class PlanoAtividadeCadastroComponent implements OnInit {
 
   verificarPossibilidadeSalvar() {
     this.itemSelecionado = this.itensCatalogo.filter(i => i.tempoExecucaoPreviamenteDefinido).length > 0;
+    this.todasSelecionadas = this.itensCatalogo.filter(i => !i.tempoExecucaoPreviamenteDefinido).length === 0;
     this.criterioSelecionado = true;//this.criteriosPerfil.filter(i => i.ativo).length > 0;
   }
 
   fecharModal() {
     this.modalService.dismissAll();
+  }
+
+  toggleTodas() {
+    const marcarTodas = !this.todasSelecionadas;
+    this.itensCatalogo.forEach(a => a.tempoExecucaoPreviamenteDefinido = marcarTodas);
+    this.todasSelecionadas = marcarTodas;
   }
 
 }

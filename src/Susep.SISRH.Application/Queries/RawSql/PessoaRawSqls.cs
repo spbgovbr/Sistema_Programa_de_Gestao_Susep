@@ -12,14 +12,17 @@
                           ,p.pesNome nome
                           ,p.unidadeId
                           ,u.undSiglaCompleta unidade
+                          ,sp.situacaoPessoaId
+                          ,sp.spsDescricao situacaoPessoa
+                          ,tv.tipoVinculoId
+                          ,tv.tvnDescricao tipoVinculo
                           ,p.CargaHoraria
                     FROM [dbo].[Pessoa] p
                         INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId   
-					    LEFT OUTER JOIN [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] c ON p.pessoaId = c.pessoaId
-					    LEFT OUTER JOIN  [dbo].[CatalogoDominio] d ON d.catalogoDominioId = c.situacaoId 
+					    INNER JOIN  [dbo].[situacaoPessoa] sp ON sp.situacaoPessoaId = p.situacaoPessoaId
+					    INNER JOIN  [dbo].[TipoVinculo] tv ON tv.tipoVinculoId = p.tipoVinculoId
                     WHERE   (@unidadeId IS NULL OR p.unidadeId = @unidadeId)
-                            AND (@pesNome IS NULL OR p.pesNome  LIKE '%' + @pesNome + '%')  
-                            AND  (@catalogoDominioId IS NULL OR d.catalogoDominioId = @catalogoDominioId)                    
+                            AND (@pesNome IS NULL OR p.pesNome  LIKE '%' + @pesNome + '%')                    
                     ORDER BY pesNome ASC, unidadeId DESC, CargaHoraria ASC
 
                     OFFSET @Offset ROWS
@@ -28,11 +31,10 @@
                     SELECT COUNT(*)
                     FROM [dbo].[Pessoa] p
                         INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId   
-					    LEFT OUTER JOIN [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] c ON p.pessoaId = c.pessoaId
-					    LEFT OUTER JOIN  [dbo].[CatalogoDominio] d ON d.catalogoDominioId = c.situacaoId 
+					    INNER JOIN  [dbo].[situacaoPessoa] sp ON sp.situacaoPessoaId = p.situacaoPessoaId
+					    INNER JOIN  [dbo].[TipoVinculo] tv ON tv.tipoVinculoId = p.tipoVinculoId
                     WHERE   (@unidadeId IS NULL OR p.unidadeId = @unidadeId)
-                            AND (@pesNome IS NULL OR p.pesNome  LIKE '%' + @pesNome + '%')  
-                            AND  (@catalogoDominioId IS NULL OR d.catalogoDominioId = @catalogoDominioId)                     
+                            AND (@pesNome IS NULL OR p.pesNome  LIKE '%' + @pesNome + '%')                      
                 ";
             }
         }
@@ -262,7 +264,9 @@
 		                        WHERE pe.pessoaId = @pessoaId AND pe.tipoFuncaoId IS NOT NULL
 	                        ) chefe ON (u1.undSiglaCompleta = chefe.undSiglaCompleta AND chefe.pessoaId IS NOT NULL) OR 
 									   (u1.undSiglaCompleta like chefe.undSiglaCompleta + '%' AND chefe.pessoaId IS NULL) 
-                        WHERE s.analisado = 0 AND p.situacaoId = 405
+                        WHERE s.analisado = 0 AND 
+                              p.situacaoId = 405 AND
+                              (chefe.pessoaId IS NULL OR p.pessoaId = @pessoaId)
                         ORDER BY dataSolicitacao
 
                 ";
@@ -275,18 +279,19 @@
             {
                 return @"
 					SELECT p.pessoaId
-                            ,p.pesNome nome
+                            ,LTRIM(RTRIM(p.pesNome)) nome
                             ,COALESCE(a.unidadeId, p.unidadeId) unidadeId
                             ,u.undSiglaCompleta unidade
+                            ,u.undNivel nivelUnidade
                             ,u.tipoFuncaoUnidadeId
                             ,p.CargaHoraria
                             ,p.tipoFuncaoId
-                            ,t.tfnIndicadorChefia chefe
+                            ,IIF(u1.unidadeId IS NOT NULL, 1, 0) chefe
                     FROM [dbo].[Pessoa] p
-	                    LEFT OUTER JOIN [dbo].[TipoFuncao] t ON t.tipoFuncaoId = p.tipoFuncaoId
                         LEFT OUTER JOIN [dbo].[PessoaAlocacaoTemporaria] a ON a.pessoaId = p.pessoaId AND a.dataFim IS NULL
-	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = COALESCE(a.unidadeId, p.unidadeId) 
-                    WHERE p.pessoaId = @pessoaId
+                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = COALESCE(a.unidadeId, p.unidadeId) 
+                        LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = COALESCE(a.unidadeId, p.unidadeId) AND (u1.pessoaIdChefe = @pessoaId OR u1.pessoaIdChefeSubstituto = @pessoaId)
+                    WHERE p.pessoaId = @pessoaId                    
                 ";
             }
         }

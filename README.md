@@ -222,3 +222,38 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 > Assim que o sistema entrar em produção, os dados da tabela **Pessoa** e **Unidade** cadastrados por esse script devem ser apagados da base de dados.
 
 ### Volte à etapa BACK-END! e vincule o LDAP
+
+
+### Nota da versão 7 ###
+Principais funcionalidades adicionadas:
+	Chefe passa a ter acesso a todos os planos dos servidores da sua unidade, mesmo que o plano tenha sido executado em outra unidade
+	Adição de tela para a consulta da estrutura hierárquica
+	Criação da possibilidade de reabertura de plano
+	Adição de botão para marcar/desmarcar todas as atividades ao criar um PGD
+	Ajustes gerais de layout
+
+Principais bugs corrigidos:
+	Problemas no aceite do plano
+	Retirada de possibilidade de abrir mais de um plano de trabalho para o mesmo período
+	Ajustes na data de encerramento do plano
+	Atualização do tempo total do plano após alterar o periodo
+	Retirada da possibilidade de abrir mais de uma solicitação de exclusão da mesma atividade
+
+
+Arquivos de configuração alterados:
+	Gateway:
+		Ocelot.json
+			* Novas rotas: 
+				/pactotrabalho/{pactoTrabalhoid}/reabrir
+
+
+	API:
+		AppSettings.json
+			* Configuração dos textos dos e-mails para deixar de ficar hard coded
+
+	
+Alterações na estrutura do BD (arquivo '5. Alteracoes da estrutura do BD para a V7.sql'):
+	Aumento dos tamanhos dos campos Titulo e Entregas Esperadas da tabela ItemCatalogo
+	Adição de campo na tabela PactoTrabalhoAtividade para informar onde (se local ou remoto) a atividade foi executada
+	Adição de campos para registrar o chefe e o substituto da unidade
+

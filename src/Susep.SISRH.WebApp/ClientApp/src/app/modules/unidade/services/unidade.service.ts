@@ -15,6 +15,15 @@ export class UnidadeDataService {
     private service: DataService,
     private configuration: ConfigurationService) { }
 
+  ObterTodasAtivasDadosCombo(): Observable<ApplicationResult<IDadosCombo[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}unidade/todasativas`;
+
+    return this.service.get(url).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
   ObterAtivasDadosCombo(): Observable<ApplicationResult<IDadosCombo[]>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}unidade/ativas`;

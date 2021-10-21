@@ -31,6 +31,7 @@ namespace Susep.SISRH.Infrastructure.EntityConfigurations.ProgramaGestao
             builder.Property(p => p.TempoRealizado).HasColumnName("tempoRealizado");
             builder.Property(p => p.TempoHomologado).HasColumnName("tempoHomologado");            
             builder.Property(p => p.SituacaoId).HasColumnName("situacaoId");
+            builder.Property(p => p.ModalidadeExecucaoId).HasColumnName("modalidadeExecucaoId");
             builder.Property(p => p.Descricao).HasColumnName("descricao");
             builder.Property(p => p.ConsideracoesConclusao).HasColumnName("consideracoesConclusao");
             builder.Property(p => p.Nota).HasColumnName("nota");
