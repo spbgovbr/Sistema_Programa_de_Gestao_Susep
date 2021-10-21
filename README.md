@@ -226,14 +226,14 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 
 # Nota da versão 7
 
-##Principais funcionalidades adicionadas:
+## Principais funcionalidades adicionadas:
 	Chefe passa a ter acesso a todos os planos dos servidores da sua unidade, mesmo que o plano tenha sido executado em outra unidade
 	Adição de tela para a consulta da estrutura hierárquica
 	Criação da possibilidade de reabertura de plano
 	Adição de botão para marcar/desmarcar todas as atividades ao criar um PGD
 	Ajustes gerais de layout
 
-##Principais bugs corrigidos:
+## Principais bugs corrigidos:
 	Problemas no aceite do plano
 	Retirada de possibilidade de abrir mais de um plano de trabalho para o mesmo período
 	Ajustes na data de encerramento do plano
@@ -241,7 +241,7 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 	Retirada da possibilidade de abrir mais de uma solicitação de exclusão da mesma atividade
 
 
-##Arquivos de configuração alterados:
+## Arquivos de configuração alterados:
 ### Gateway:
 	Ocelot.json
 		* Novas rotas: 
@@ -253,7 +253,7 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 		* Configuração dos textos dos e-mails para deixar de ficar hard coded
 
 	
-##Alterações na estrutura do BD (arquivo '5. Alteracoes da estrutura do BD para a V7.sql'):
+## Alterações na estrutura do BD (arquivo '5. Alteracoes da estrutura do BD para a V7.sql'):
 	Aumento dos tamanhos dos campos Titulo e Entregas Esperadas da tabela ItemCatalogo
 	Adição de campo na tabela PactoTrabalhoAtividade para informar onde (se local ou remoto) a atividade foi executada
 	Adição de campos para registrar o chefe e o substituto da unidade
