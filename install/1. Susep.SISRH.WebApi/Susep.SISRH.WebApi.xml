@@ -995,7 +995,7 @@
             Construtor das configuraçoes do sistema
             </summary>
         </member>
-        <member name="M:Susep.SISRH.WebApi.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:Susep.SISRH.WebApi.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Construtor da classe
             </summary>
