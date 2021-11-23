@@ -8,6 +8,8 @@ import { IPactoTrabalho, IPactoTrabalhoAtividade, IAvaliacaoAtividade } from '..
 import { PactoTrabalhoDataService } from '../../../../services/pacto-trabalho.service';
 import { PerfilEnum } from '../../../../enums/perfil.enum';
 import { DecimalValuesHelper } from '../../../../../../shared/helpers/decimal-valuesr.helper';
+import { IUsuario } from '../../../../../../shared/models/perfil-usuario.model';
+import { ApplicationStateService } from '../../../../../../shared/services/application.state.service';
 
 @Component({
   selector: 'pacto-lista-atividade-andamento',
@@ -43,7 +45,9 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
   tempoRealizado = 0;
   tempoHomologado = 0;
 
-  dentroPrazoAvaliacao: boolean;
+  usuarioPodeAvaliar: boolean;
+  perfilUsuario: IUsuario;
+  gestorUnidade: boolean;
   teletrabalhoParcial: boolean;
 
   public tempoMask: any;
@@ -56,6 +60,7 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private decimalValuesHelper: DecimalValuesHelper,
+    private applicationState: ApplicationStateService,
     private pactoTrabalhoDataService: PactoTrabalhoDataService,
     private dominioDataService: DominioDataService) { }
 
@@ -83,6 +88,18 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
 
     this.tempoMask = this.decimalValuesHelper.numberMask(3, 1);
 
+    this.applicationState.perfilUsuario.subscribe(appResult => {
+      this.perfilUsuario = appResult;
+      this.gestorUnidade = this.perfilUsuario.perfis.filter(p =>
+        p.perfil === PerfilEnum.Gestor ||
+        p.perfil === PerfilEnum.Administrador ||
+        p.perfil === PerfilEnum.Diretor ||
+        p.perfil === PerfilEnum.CoordenadorGeral ||
+        p.perfil === PerfilEnum.ChefeUnidade).length > 0;
+
+      this.verificarSeUsuarioPodeAceitar();
+    });
+
     this.dadosPacto.subscribe(val => this.carregarAtividades());
 
     this.dominioDataService.ObterSituacaoAtividadePactoTrabalho().subscribe(
@@ -90,6 +107,14 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
         this.situacoes = appResult.retorno;
       }
     );
+  }
+
+  verificarSeUsuarioPodeAceitar() {
+    if (this.perfilUsuario.pessoaId && this.dadosPacto.value.responsavelEnvioAceite) {
+
+      this.usuarioPodeAvaliar =
+        (this.perfilUsuario.pessoaId !== this.dadosPacto.value.pessoaId && this.dadosPacto.value.situacaoId >= 405);
+    }
   }
 
   fillForm() {
@@ -105,11 +130,8 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
     this.form.controls['descricao'].disable();
   }
 
-  carregarAtividades() {
-    const timeDiff = Math.abs(new Date(this.dadosPacto.value.dataFim).getTime() - new Date().getTime());
-    const tempoEncerramentoPacto = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-    this.dentroPrazoAvaliacao = this.dadosPacto.value.situacaoId === 405 || tempoEncerramentoPacto <= 40;
+  carregarAtividades() {    
+    this.verificarSeUsuarioPodeAceitar();
 
     this.teletrabalhoParcial = this.dadosPacto.value.formaExecucaoId === 102;
 
@@ -240,10 +262,15 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
     else {
       this.formAvaliacao.reset();
     }
+
+    if (!this.usuarioPodeAvaliar) {
+      this.formAvaliacao.get('avaliacao').disable();
+      this.formAvaliacao.get('justificativa').disable();
+    }
   }
 
   salvarAvaliacao() {
-    if (this.formAvaliacao.valid) {
+    if (this.usuarioPodeAvaliar && this.formAvaliacao.valid) {
       const dadosForm = this.formAvaliacao.value;
       const dados: IAvaliacaoAtividade = {
         nota: dadosForm.avaliacao,

@@ -71,16 +71,23 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         }
         public decimal? DiferencaPrevistoParaRealizadoEmDias
         {
-            get => DiferencaRealizadoEPrevistoEmHoras == null || DiferencaRealizadoEPrevistoEmHoras == Decimal.Zero ?
+            get => TempoEmDias(DiferencaRealizadoEPrevistoEmHoras, PactoTrabalho.Pessoa.CargaHoraria);
+        }
+
+        private decimal TempoEmDias(decimal? tempoEmHoras, decimal cargaHoraria)
+        {
+            return (tempoEmHoras == null || tempoEmHoras == Decimal.Zero) ?
                 Decimal.Zero :
-                Decimal.Divide(DiferencaRealizadoEPrevistoEmHoras.Value, PactoTrabalho.Pessoa.CargaHoraria);
+                Decimal.Divide(tempoEmHoras.Value, cargaHoraria);
         }
 
         public PactoTrabalhoAtividade() { }
 
-        public DateTime CalcularAjusteNoPrazo(DateTime prazoAtual, List<DateTime> diasNaoUteis)
+        public DateTime CalcularAjusteNoPrazo(DateTime prazoAtual, List<DateTime> diasNaoUteis, Decimal tempoAtividade = 0)
         {
             var diasAlemDoPrevisto = this.DiferencaPrevistoParaRealizadoEmDias;
+            diasAlemDoPrevisto += TempoEmDias(tempoAtividade, PactoTrabalho.Pessoa.CargaHoraria);           
+
             var diasAdicionados = 0;
             var novaDataFim = prazoAtual;
             while (diasAdicionados < diasAlemDoPrevisto)
@@ -138,9 +145,12 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             Descricao = descricao;
         }
 
-        public void AtualizarTempoPrevistoTotal(int quantideDias)
+        public void AtualizarTempoPrevistoTotal(int quantideDias, decimal? tempoPorItem = null)
         {
-            this.TempoPrevistoTotal = Decimal.Multiply(quantideDias, this.TempoPrevistoTotal);
+            decimal tempoConsiderar = this.TempoPrevistoTotal;
+            if (tempoPorItem.HasValue)
+                tempoConsiderar = tempoPorItem.Value;
+            this.TempoPrevistoTotal = Decimal.Multiply(quantideDias, tempoConsiderar);
         }
 
         public void AjustarTemposPrevistoEHomologadoAoTempoRealizado()
@@ -280,7 +290,14 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             }
             else
             {
-                this.TempoHomologado = this.TempoPrevistoPorItem;
+                if (this.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
+                {
+                    this.TempoHomologado = this.TempoPrevistoTotal;
+                }
+                else
+                {
+                    this.TempoHomologado = this.TempoPrevistoPorItem;
+                }
             }
 
             this.Nota = nota;

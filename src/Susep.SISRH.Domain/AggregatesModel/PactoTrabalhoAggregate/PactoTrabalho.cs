@@ -93,6 +93,10 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             this.DataInicio = dataInicio;
             this.DataFim = dataFim;
             this.TempoTotalDisponivel = this.CargaHorariaDiaria * WorkingDays.DiffDays(dataInicio, dataFim, DiasNaoUteis, false);
+
+            var atividadesDiarias = this.Atividades.Where(it => it.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia).ToList();
+            var quantidadeDias = WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false);
+            atividadesDiarias.ForEach(it => it.AtualizarTempoPrevistoTotal(quantidadeDias, it.TempoPrevistoPorItem));
         }
 
         #region Fluxo de aprovação do pacto
@@ -378,7 +382,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         private void AtualizarTempoAtividadesPorDia()
         {
-            var diasExecutados = WorkingDays.DiffDays(this.DataInicio, DateTime.Now.Date, this.DiasNaoUteis, false);
+            var dataFim = DateTime.Now.Date < this.DataFim ? DateTime.Now.Date : this.DataFim;
+            var diasExecutados = WorkingDays.DiffDays(this.DataInicio, dataFim, this.DiasNaoUteis, false);
             var atividadesPorDia = this.Atividades.Where(a => a.ItemCatalogo != null && a.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia).ToList();
             atividadesPorDia.ForEach(a => a.AlterarTempoRealizado(diasExecutados * a.TempoPrevistoPorItem));
         }
@@ -523,7 +528,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
             if (atualizarPrazo)
             {
-                var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis);
+                var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis, tempoPrevistoPorItem);
                 this.AlterarPeriodo(novaDataFim);
             }
         }

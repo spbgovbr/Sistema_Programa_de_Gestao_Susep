@@ -78,6 +78,8 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 //Obtém os dados da solicitação
                 var solicitacao = pacto.Solicitacoes.Where(s => s.PactoTrabalhoSolicitacaoId == request.PactoTrabalhoSolicitacaoId).FirstOrDefault();
 
+                var dataFim = pacto.DataFim;
+
                 Susep.SISRH.Domain.AggregatesModel.CatalogoAggregate.ItemCatalogo itemCatalogo = null;
                 if (request.AjustarPrazo)
                 {
@@ -90,24 +92,24 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                         return result;
                     }
 
-                    var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(pacto.PessoaId, pacto.DataInicio, pacto.DataFim.AddDays(Convert.ToDouble(Decimal.Round(dias.Value))));
-                    pacto.DiasNaoUteis = diasNaoUteis.Result.ToList();
+                    dataFim = pacto.DataFim.AddDays(Convert.ToDouble(Decimal.Round(dias.Value)));                    
                 }
-                else if (solicitacao.TipoSolicitacaoId == (int)SISRH.Domain.Enums.TipoSolicitacaoPactoTrabalhoEnum.AlterarPrazo)
-                {
-                    dynamic dadosSolicitacao = JsonConvert.DeserializeObject(solicitacao.DadosSolicitacao);
-                    var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(pacto.PessoaId, pacto.DataInicio, (DateTime)dadosSolicitacao.dataFim);
-                    pacto.DiasNaoUteis = diasNaoUteis.Result.ToList();
-                }
-                else if (solicitacao.TipoSolicitacaoId == (int)SISRH.Domain.Enums.TipoSolicitacaoPactoTrabalhoEnum.NovaAtividade)
-                {
-                    dynamic dadosSolicitacao = JsonConvert.DeserializeObject(solicitacao.DadosSolicitacao);
-                    Guid itemCatalogoId = dadosSolicitacao.itemCatalogoId;
-                    itemCatalogo = await ItemCatalogoRepository.ObterAsync(itemCatalogoId);
 
-                    var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(pacto.PessoaId, pacto.DataInicio, pacto.DataFim);
-                    pacto.DiasNaoUteis = diasNaoUteis.Result.ToList();
-                }
+                dynamic dadosSolicitacao = JsonConvert.DeserializeObject(solicitacao.DadosSolicitacao);
+                switch (solicitacao.TipoSolicitacaoId)
+                {
+                    case (int)SISRH.Domain.Enums.TipoSolicitacaoPactoTrabalhoEnum.AlterarPrazo:                        
+                        dataFim = (DateTime)dadosSolicitacao.dataFim;
+                        break;
+
+                    case (int)SISRH.Domain.Enums.TipoSolicitacaoPactoTrabalhoEnum.NovaAtividade:
+                        Guid itemCatalogoId = dadosSolicitacao.itemCatalogoId;
+                        itemCatalogo = await ItemCatalogoRepository.ObterAsync(itemCatalogoId);
+                        break;
+                }                
+
+                var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(pacto.PessoaId, pacto.DataInicio, dataFim);
+                pacto.DiasNaoUteis = diasNaoUteis.Result.ToList();
 
                 //Responde a solicitação
                 pacto.ResponderSolicitacao(request.PactoTrabalhoSolicitacaoId, request.UsuarioLogadoId.ToString(), request.Aprovado, request.AjustarPrazo, request.Descricao, itemCatalogo);
@@ -201,14 +203,14 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                             var atividade = pacto.Atividades.Where(a => a.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId).FirstOrDefault();
                             if (atividade != null)
                             {
-                                return atividade.DiferencaPrevistoParaRealizadoEmDias;
+                                return atividade.DiferencaPrevistoParaRealizadoEmDias * 5;
                             }
                         }
                         break;
 
                     case ((int)TipoSolicitacaoPactoTrabalhoEnum.NovaAtividade):
                         decimal tempoPrevistoPorItem = dadosSolicitacao.tempoPrevistoPorItem;
-                        return Decimal.Divide(tempoPrevistoPorItem, pacto.Pessoa.CargaHoraria);
+                        return Decimal.Divide(tempoPrevistoPorItem, pacto.Pessoa.CargaHoraria) * 5;
                 }
             }
 

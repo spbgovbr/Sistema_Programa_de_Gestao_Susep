@@ -9,6 +9,7 @@ using Serilog.Events;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Microsoft.AspNetCore.Builder;
+using System;
 
 namespace Susep.SISRH.ApiGateway
 {
@@ -20,24 +21,16 @@ namespace Susep.SISRH.ApiGateway
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            var environmentName = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            var configurationBuilder = new ConfigurationBuilder().SetBasePath(Path.Combine(System.Environment.CurrentDirectory, "Settings"))
-                                        .AddJsonFile($"appsettings.{environmentName}.json", true, true)
-                                        .AddEnvironmentVariables();
-
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseConfiguration(configurationBuilder.Build())
-                .UseSerilog((context, config) => {
-                    config.ReadFrom.Configuration(context.Configuration);
-
-                    config
-                        .Enrich.FromLogContext()
-                        .WriteTo.File(@"Logs\log.txt", rollingInterval: RollingInterval.Day);
-                });
-        }
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+             WebHost.CreateDefaultBuilder(args)
+                    .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development")
+                    .ConfigureAppConfiguration((hostingContext, config) =>
+                       config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
+                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddEnvironmentVariables()
+                    )
+                    .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))
+                    .UseStartup<Startup>();
     }
 }
