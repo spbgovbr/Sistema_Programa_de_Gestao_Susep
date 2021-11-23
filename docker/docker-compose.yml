@@ -124,7 +124,7 @@ services:
     networks:
       - pgd
 
-  ## Utilização do Nginx no lugar do aspnet
+  ## FIXME - Utilização do Nginx no lugar do aspnet
   # web-app-nginx:
   #   image: nginx:1.19-alpine
   #   volumes:

@@ -1,6 +1,6 @@
 ######################
 # Build
-FROM mcr.microsoft.com/dotnet/sdk:3.1 as builder
+FROM mcr.microsoft.com/dotnet/sdk:3.1-bullseye as builder
 
 RUN apt-get update \
  && apt-get install -y nodejs npm --no-install-recommends \

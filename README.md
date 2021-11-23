@@ -89,9 +89,9 @@ Em determinadas situações como, por exemplo, no caso fictício em que o titula
 
 A publicação deve ser feita em algum servidor de aplicação. Sugere-se o Internet Information Services (IIS) na seguinte estrutura:
 
-1.  Servidor web, acessível apenas por meio da máquina do Gateway, em que fica publicada a API.
- * SISGP
-   * API
+1. Servidor web, acessível apenas por meio da máquina do Gateway, em que fica publicada a API.
+   * SISGP
+     * API
 2. Servidor web, aberto para a internet, em que ficam publicados o Gateway (pasta Gateway) e o front-end (pasta APP).
    * SISGP
      * APP
@@ -225,12 +225,13 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 
 ##### Volte à etapa [Back-end](#Back-end) e vincule o LDAP
 
+----------------
 
-# Changelog
+## Changelog
 
-## Nota da versão 7
+### Nota da versão 7
 
-### Principais funcionalidades adicionadas:
+#### Principais funcionalidades adicionadas:
 
 * Chefe passa a ter acesso a todos os planos dos servidores da sua unidade, mesmo que o plano tenha sido executado em outra unidade
 * Adição de tela para a consulta da estrutura hierárquica
@@ -238,7 +239,7 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 * Adição de botão para marcar/desmarcar todas as atividades ao criar um PGD
 * Ajustes gerais de layout
 
-### Principais bugs corrigidos:
+#### Principais bugs corrigidos:
 
 * Problemas no aceite do plano
 * Retirada de possibilidade de abrir mais de um plano de trabalho para o mesmo período
@@ -246,20 +247,20 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 * Atualização do tempo total do plano após alterar o periodo
 * Retirada da possibilidade de abrir mais de uma solicitação de exclusão da mesma atividade
 
-### Arquivos de configuração alterados:
+#### Arquivos de configuração alterados:
 
-#### Gateway:
+##### Gateway:
 
 * `Ocelot.json`
 	* Novas rotas: `/pactotrabalho/{pactoTrabalhoid}/reabrir`
 
-#### API:
+##### API:
 
 * `AppSettings.json`
 	* Configuração dos textos dos e-mails para deixar de ficar hard coded.
 
 	
-#### Banco de dados:
+##### Banco de dados:
 
 * `5. Alteracoes da estrutura do BD para a V7.sql`: Alterações na estrutura do banco
 	* Aumento dos tamanhos dos campos Titulo e Entregas Esperadas da tabela ItemCatalogo;
