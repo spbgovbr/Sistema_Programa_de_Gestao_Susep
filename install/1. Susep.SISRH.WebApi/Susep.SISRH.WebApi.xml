@@ -408,6 +408,13 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.Reabrir(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
+            <summary>
+            Altera a situação do pacto
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.Avaliar(Susep.SISRH.Application.Commands.PactoTrabalho.AlterarSituacaoPactoTrabalhoCommand)">
             <summary>
             Altera a situação do pacto
@@ -900,6 +907,13 @@
             <param name="dominioQuery"></param>
             <param name="estruturaOrganizacionalQuery"></param>     
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetTodasAtivasDadosCombo">
+            <summary>
+            Obtém todas as unidades ativas para preenchimento de combos
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetAtivasDadosCombo(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
             <summary>
             Obtém as unidades ativas para preenchimento de combos
@@ -981,7 +995,7 @@
             Construtor das configuraçoes do sistema
             </summary>
         </member>
-        <member name="M:Susep.SISRH.WebApi.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:Susep.SISRH.WebApi.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Construtor da classe
             </summary>

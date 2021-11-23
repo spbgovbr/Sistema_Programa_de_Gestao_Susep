@@ -17,6 +17,11 @@ namespace Susep.SISRH.Application.Requests
 
         [DataMember(Name = "catalogoDominioId")]
         public Int32? CatalogoDominioId { get; set; }
-      
+
+
+
+        [DataMember(Name = "unidadesUsuario")]
+        public List<Int64> UnidadesUsuario { get; set; }
+
     }
 }

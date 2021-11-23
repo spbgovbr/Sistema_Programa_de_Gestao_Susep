@@ -9,6 +9,7 @@ using Serilog.Events;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Microsoft.AspNetCore.Builder;
+using System;
 
 namespace Susep.SISRH.ApiGateway
 {
@@ -20,15 +21,16 @@ namespace Susep.SISRH.ApiGateway
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>    
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
              WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                   config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
-                         .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                         .AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                         .AddEnvironmentVariables()
-                )
-                .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))
-                .UseStartup<Startup>();
+                    .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development")
+                    .ConfigureAppConfiguration((hostingContext, config) =>
+                       config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
+                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddEnvironmentVariables()
+                    )
+                    .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))
+                    .UseStartup<Startup>();
     }
 }

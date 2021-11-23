@@ -75,6 +75,7 @@ const routes: Routes = [
         path: 'atividade', data: { breadcrumb: 'Atividades' }, children: [      
           { path: '', component: AtividadesPactoAtualComponent, data: { breadcrumb: 'Pacto atual' } },
           { path: 'atual', component: AtividadesPactoAtualComponent, data: { breadcrumb: 'Pacto atual' } },
+          { path: 'atual/:id', component: AtividadesPactoAtualComponent, data: { breadcrumb: 'Pacto atual' } },
           { path: 'habilitacao', component: PlanoHabilitacaoComponent, data: { breadcrumb: 'Habilitação' } },
           { path: 'historico', component: AtividadesServidorHistoricoComponent, data: { breadcrumb: 'Meus planos de trabalho' } },
         ]
@@ -82,17 +83,17 @@ const routes: Routes = [
     ],
   },  
   {
-    path: 'pessoa', canActivate: [AuthGuard], data: { breadcrumb: 'Pessoas', roles: [PerfilEnum.GestorPessoas] }, children: [      
+    path: 'pessoa', canActivate: [AuthGuard], data: { breadcrumb: 'Pessoas' }, children: [      
       { path: '', component: PessoaPesquisaComponent, data: { breadcrumb: 'Pesquisa' } },
       { path: 'pesquisa', component: PessoaPesquisaComponent, data: { breadcrumb: 'Pesquisa' } },
-      { path: 'editar/:id', component: PessoaEdicaoComponent, data: { breadcrumb: 'Editar' } },
+      //{ path: 'editar/:id', component: PessoaEdicaoComponent, data: { breadcrumb: 'Editar' } },
     ]
   },
   {
-    path: 'unidade', canActivate: [AuthGuard], data: { breadcrumb: 'Unidades', roles: [PerfilEnum.GestorPessoas] }, children: [      
+    path: 'unidade', canActivate: [AuthGuard], data: { breadcrumb: 'Unidades' }, children: [      
       { path: '', component: UnidadePesquisaComponent, data: { breadcrumb: 'Pesquisa' } },
       { path: 'pesquisa', component: UnidadePesquisaComponent, data: { breadcrumb: 'Pesquisa' } },
-      { path: 'editar/:id', component: UnidadeEdicaoComponent, data: { breadcrumb: 'Editar' } },
+      //{ path: 'editar/:id', component: UnidadeEdicaoComponent, data: { breadcrumb: 'Editar' } },
     ]
   },
   {

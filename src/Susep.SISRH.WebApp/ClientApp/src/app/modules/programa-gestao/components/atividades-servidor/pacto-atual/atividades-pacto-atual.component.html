@@ -76,11 +76,9 @@
     </form>
     <div class="br-divider mt-4"></div>
     <div class="actions justify-content-start text-right float-right">
-      <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
-        <button class="br-button is-primary mr-2 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402" (click)="rejeitar()">Rejeitar</button>
-      </secure-input>
-      <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
-        <button class="br-button is-primary bg-success border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402" (click)="aceitar()">Aceitar</button>
+      <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor">
+        <button class="br-button is-primary mr-2 bg-success border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="aceitar()">Aceitar</button>
+        <button class="br-button is-primary ml-0 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="rejeitar()">Rejeitar</button>
       </secure-input>
       <secure-input [perfis]="[PerfilEnum.Servidor]" [servidor]="servidor">
         <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 403 && periodoExecucao" (click)="iniciarExecucao()">Iniciar execução</button>
@@ -109,7 +107,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -126,7 +125,7 @@
   </div>
 </ng-template>
 
-<ng-template #modalAceite let-modal>
+<ng-template #modalAceiteComTermoAceite let-modal>
   <div class="br-modal is-large">
     <div class="br-modal-dialog">
       <div class="br-modal-content">
@@ -141,7 +140,7 @@
             <div class="col-sm-12 pt-5" style="height: 200px; width: 620px;">
               <span class="text-primary">Termo de ciência e responsabilidade:</span><br />
               <div class="overflow-auto h-75 border p-2">
-                {{termoAceite}}                
+                {{termoAceite}}
               </div>
             </div>
           </div>
@@ -156,6 +155,32 @@
           </mat-slide-toggle>
 
           <button class="br-button is-primary is-small" type="button" (click)="confirmarAceite()" [disabled]="!aceitouTermos">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalAceite let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confira as informações e confirme a operação</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">
+              Tem certeza que deseja aceitar o plano de trabalho?
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarAceite()">Confirmar</button>
         </div>
       </div>
     </div>

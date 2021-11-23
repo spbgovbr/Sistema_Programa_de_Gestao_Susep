@@ -41,16 +41,22 @@ export class InputRatingComponent implements ControlValueAccessor
   getPosicao = (indice: string) => parseInt(indice) + 1;
 
   click(evt: MouseEvent, key: string) {
-    const index = parseInt(key);
-    this.writeValue(index + 1);
+    if (!this.disabled) {
+      const index = parseInt(key);
+      this.writeValue(index + 1);
+    }
   }
 
   mouseover(key) {
-    this._posicaoHover = parseInt(key) + 1;
+    if (!this.disabled) {
+      this._posicaoHover = parseInt(key) + 1;
+    }
   }
 
   mouseout() {
-    this._posicaoHover = null;
+    if (!this.disabled) {
+      this._posicaoHover = null;
+    }
   }
 
   // Implementando CustomValueAccessor
