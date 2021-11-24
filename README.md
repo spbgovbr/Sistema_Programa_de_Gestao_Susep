@@ -6,6 +6,8 @@ Para entender os conceitos e principais funcionalidades, assista à apresentaç�
 
 * SUSEP - Superintendência de Seguros Privados
 * DTI ME - Diretoria de Tecnologia da Informação do Ministério da Economia
+* STI UFC - Superintendência de Tecnologia da Informação da Universidade Federal do Ceará
+  * Docker: [Elano Rolim](https://github.com/rmvs) (UFC) e [Paulo Mateus](https://github.com/SrMouraSilva) (UFC).
 
 # Introdução
 
@@ -56,25 +58,27 @@ Sequência de instalação sugerida:
 
 ### Base de dados
 
-O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com a ferramenta ORM da Microsoft Entity Framework Core nas funções de persistência e com SQL ANSI nas funções de consulta a dados.Em teoria, essa configuração permite que diferentes tecnologias de bancos de dados sejam utilizadas. Entretanto, a equipe de tecnologia da Susep garante a compatibilidade e realizou testes apenas com o Microsoft SQL Server.
+O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com a ferramenta ORM da Microsoft Entity Framework Core nas funções de persistência e com SQL ANSI nas funções de consulta a dados. Em teoria, essa configuração permite que diferentes tecnologias de bancos de dados sejam utilizadas. Entretanto, a equipe de tecnologia da Susep garante a compatibilidade e realizou testes apenas com o Microsoft SQL Server.
 
 
 ##### Sequência de passos (SQL Server)
 
 1. Criar banco de dados DBSISGP;
-2. Executar o script `install/1. Criação da estrutura do banco de dados - Obrigatorio.sql`;
-3. Executar o script `install/2. Inserir dados de domínio - Obrigatorio.sql`;
-4. Executar o script `install/Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql`;
-5. Se for ambiente de desenvolvimento/homologação,executar o script `install/4. Inserir dados de teste - Opcional.sql`;
-6. Criar um usuário de aplicação com permissões de leitura e escrita.
+1. Executar os scripts que se encontram na pasta `install/` na seguinte ordem:
+    1. Obrigatório: `install/1. Criação da estrutura do banco de dados - Obrigatorio.sql`;
+    1. Obrigatório: `install/2. Inserir dados de domínio - Obrigatorio.sql`;
+    1. Obrigatório: `install/Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql`;
+    1. Se for ambiente de desenvolvimento/homologação:  `install/4. Inserir dados de teste - Opcional.sql`;
+    1. Obrigatório: `5. Alteracoes da estrutura do BD para a V7.sql`
+1. Criar um usuário de aplicação com permissões de leitura e escrita.
 
 ##### Importação de usuários (desenvolvimento/homologação/produção)
 
 Uma vez criada a estrutura de banco de dados, é necessário fazer a importação dos dados do órgão no SIAPE para a estrutura do sistema.
 
-> **TOME NOTA** O script `Inserir dados de teste` traz um exemplo de carga com dados fictícios (CPFs gerados aleatoriamente e unidades da estrutura da Susep), serve para permitir o acesso e a validação do sistema. Assim que o sistema entrar em produção, os dados da tabela `Pessoa` e `Unidade` cadastrados por esse script devem ser apagados da base de dados.
+> **TOME NOTA:** O script `Inserir dados de teste` traz um exemplo de carga com dados fictícios (CPFs gerados aleatoriamente e unidades da estrutura da Susep), serve para permitir o acesso e a validação do sistema. Assim que o sistema entrar em produção, os dados da tabela `Pessoa` e `Unidade` cadastrados por esse script devem ser apagados da base de dados.
 
-Os perfis do sistema serão derivados da estrutura real do órgão. Desse modo, servidores que não tem função de chefia no órgão recebem valor `null` na coluna `tipoFuncaoIdda` tabela `Pessoae` deste modo terão habilitadas apenas funções de acompanhamento dos seus próprios planos de trabalho, ao passo que servidores com função de chefia poderão ter acesso aos planos de trabalho das suas respectivas equipes e terão acesso às funções de programas de gestão (cadastro, seleção, avaliação,etc). Servidores que trabalham na área de indicadores poderão, além de acompanhar seus próprios planos de trabalho, cadastrar as listas de atividades do órgão e dos demais setores.
+Os perfis do sistema serão derivados da estrutura real do órgão. Desse modo, servidores que não tem função de chefia no órgão recebem valor `null` na coluna `tipoFuncaoId` da tabela `Pessoa` deste modo terão habilitadas apenas funções de acompanhamento dos seus próprios planos de trabalho, ao passo que servidores com função de chefia poderão ter acesso aos planos de trabalho das suas respectivas equipes e terão acesso às funções de programas de gestão (cadastro, seleção, avaliação, etc). Servidores que trabalham na área de indicadores poderão, além de acompanhar seus próprios planos de trabalho, cadastrar as listas de atividades do órgão e dos demais setores.
 
 ##### Sugestão Carga de dados
 https://github.com/henrique-prog/pdg-carga-de-dados
@@ -266,7 +270,3 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 	* Aumento dos tamanhos dos campos Titulo e Entregas Esperadas da tabela ItemCatalogo;
 	* Adição de campo na tabela PactoTrabalhoAtividade para informar onde (se local ou remoto) a atividade foi executada;
 	* Adição de campos para registrar o chefe e o substituto da unidade.
-
-## Contribuições e parcerias
-
-* Docker: [Elano Rolim](https://github.com/rmvs) (UFC) e [Paulo Mateus](https://github.com/SrMouraSilva) (UFC).
