@@ -136,11 +136,13 @@ Acesse o arquivo ``docker/docker-compose.yml` e edite as seguintes linhas:
 
 #### Configurar Script de inserção de dados no Banco de Dados
 
-**Obs:** Este passo só é necessário caso você utilize o banco de dados configurado no `docker-compose.sqlserver-homologacao.yml`. Caso você decida utilizar outro banco de dados (por exemplo, um banco SQL Server com licença), naturalmente você deverá executar todos os scripts do banco.
+**Obs:** Este passo só é necessário caso você utilize o banco de dados configurado no `docker-compose.sqlserver-homologacao.yml`. Caso você decida utilizar outro banco de dados (por exemplo, um banco SQL Server com licença), naturalmente você deverá executar todos os scripts do banco definidos como obrigatório.
 
 Edite o arquivo `install/4. Inserir dados de teste - Opcional.sql`, conforme desejado.
 
-**Obs:** Quando o banco de dados aplicação sobe, são executados os três arquivos `.sql` automaticamente.
+Caso não seja detectada a existência do banco `programa_gestao`, ele será criado e os scripts `.sql` serão executados, conforme definido em `docker-compose.sqlserver-homologacao.yml`. Os registros do banco são persistidos na pasta `docker/volume` por meio de volume docker ([bind mount](https://docs.docker.com/storage/bind-mounts/)). Caso seja detectado a existência do banco `programa_gestao`, nenhum script será executado, mesmo que você adicione um novo script sql na lista de volumes.
+
+Se por ventura você editar os arquivos `sql`, eles somente serão automaticamente executados caso você exclua os arquivos da pasta `docker/volume`. Entretanto, isto acarretará na perda de todos os dados. Caso você venha de uma versão anterior (a partir da 1.7), e queira manter os dados que existiam anteriormente, execute os eventuais novos scripts em sql manualmente.
 
 ## Trabalhos futuros
 

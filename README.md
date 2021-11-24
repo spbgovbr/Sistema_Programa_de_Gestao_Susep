@@ -266,3 +266,7 @@ Após instalação e configuração da aplicação, recomenda-se a validação d
 	* Aumento dos tamanhos dos campos Titulo e Entregas Esperadas da tabela ItemCatalogo;
 	* Adição de campo na tabela PactoTrabalhoAtividade para informar onde (se local ou remoto) a atividade foi executada;
 	* Adição de campos para registrar o chefe e o substituto da unidade.
+
+## Contribuições e parcerias
+
+* Docker: [Elano Rolim](https://github.com/rmvs) (UFC) e [Paulo Mateus](https://github.com/SrMouraSilva) (UFC).
