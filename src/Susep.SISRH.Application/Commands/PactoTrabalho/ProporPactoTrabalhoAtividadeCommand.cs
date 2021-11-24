@@ -24,6 +24,9 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
         [DataMember(Name = "itemCatalogo")]
         public string ItemCatalogo { get; set; }
 
+        [DataMember(Name = "execucaoRemota")]
+        public Boolean? ExecucaoRemota { get; set; }
+
         [DataMember(Name = "situacaoId")]
         public Int32 SituacaoId { get; set; }
 
@@ -32,6 +35,9 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
 
         [DataMember(Name = "tempoPrevistoPorItem")]
         public Decimal? TempoPrevistoPorItem { get; set; }
+
+        [DataMember(Name = "tempoPrevistoPorItemStr")]
+        public String TempoPrevistoPorItemStr { get; set; }
 
         [DataMember(Name = "dataInicio")]
         public DateTime? DataInicio { get; set; }

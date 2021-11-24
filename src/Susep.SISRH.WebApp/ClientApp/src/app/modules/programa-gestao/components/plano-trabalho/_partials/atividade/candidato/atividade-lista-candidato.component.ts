@@ -45,7 +45,7 @@ export class PlanoListaAtividadeCandidatoComponent implements OnInit {
       this.candidatos.value.filter(c => { return c.planoTrabalhoAtividadeId === planoTrabalhoAtividadeId });
   }
 
-  salvar() {
+  salvar() {   
     let aprovados =
       this.candidatos.value.filter(c => c.aprovado).map(a => { return a.planoTrabalhoAtividadeCandidatoId });
 
@@ -55,6 +55,18 @@ export class PlanoListaAtividadeCandidatoComponent implements OnInit {
     this.planoTrabalhoDataService.AlterarFase(this.dadosPlano.value.planoTrabalhoId, PlanoTrabalhoSituacaoEnum.EmExecucao, this.form.get('justificativa').value, aprovados).subscribe(
       resultado => {
         this.dadosPlano.value.situacaoId = PlanoTrabalhoSituacaoEnum.EmExecucao;
+        this.dadosPlano.value.situacao = 'Em execução';
+        this.dadosPlano.next(this.dadosPlano.value);
+      }
+    );
+  }
+
+  salvarDeserto() {
+    this.planoTrabalhoDataService.AlterarFase(this.dadosPlano.value.planoTrabalhoId, PlanoTrabalhoSituacaoEnum.EmExecucao, '', ['null'], true).subscribe(
+      resultado => {
+        this.dadosPlano.value.situacaoId = PlanoTrabalhoSituacaoEnum.Concluído;
+        this.dadosPlano.value.situacao = 'Concluído';
+        
         this.dadosPlano.next(this.dadosPlano.value);
       }
     );
@@ -88,10 +100,14 @@ export class PlanoListaAtividadeCandidatoComponent implements OnInit {
     return false;
   }
 
+  deserto() {
+    return this.candidatos.value.length === 0;
+  }
+
   podeSalvar() {
     if (this.candidatos.value) {
       const justificativaPreenchida = this.form.get('justificativa').value;
-      return this.candidatos.value.length > 0 && !this.temPessoaSemAtividade() || justificativaPreenchida;
+      return (this.candidatos.value.length > 0 && !this.temPessoaSemAtividade()) || justificativaPreenchida;
     }
     return false;
   }

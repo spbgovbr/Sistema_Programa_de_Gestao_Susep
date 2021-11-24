@@ -122,6 +122,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
             var query = PactoTrabalhoRawSqls.ObterPorFiltro;
 
             DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pessoaLogadaId", request.UsuarioLogadoId, DbType.Int64, ParameterDirection.Input);
             parameters.Add("@pessoaId", request.PessoaId, DbType.Int64, ParameterDirection.Input);
             parameters.Add("@formaExecucaoId", request.FormaExecucaoId, DbType.Int64, ParameterDirection.Input);
             parameters.Add("@situacaoId", request.SituacaoId, DbType.Int32, ParameterDirection.Input);
@@ -129,21 +130,12 @@ namespace Susep.SISRH.Application.Queries.Concrete
             parameters.Add("@dataFim", request.DataFim, DbType.Date, ParameterDirection.Input);
 
             parameters.Add("@offset", (request.Page - 1) * request.PageSize, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("@pageSize", request.PageSize, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@pageSize", request.PageSize, DbType.Int32, ParameterDirection.Input);            
 
-            var unidades = new List<Int64>();
-            if (request.UnidadeId.HasValue) 
-                unidades.Add(request.UnidadeId.Value);
-            else if (request.UnidadesUsuario != null)
-            {
-                foreach (var unidadeId in request.UnidadesUsuario)
-                    unidades.Add(unidadeId);
-            }
-
-            if (unidades.Any())
-                query = query.Replace("#UNIDADES#", " AND p.unidadeId in (" + String.Join(',', unidades) + " )");
+            if (!request.IsGestor)
+                query = query.Replace("#CONTROLE#", PactoTrabalhoRawSqls.ControleAcesso);
             else
-                query = query.Replace("#UNIDADES#", string.Empty);
+                query = query.Replace("#CONTROLE#", string.Empty);
 
             using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
             {

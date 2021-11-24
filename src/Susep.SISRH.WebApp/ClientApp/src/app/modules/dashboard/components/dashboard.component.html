@@ -79,8 +79,9 @@
                         <td>{{item.dataFim | date: 'dd/MM/yyyy'}}</td>
                         <td>{{item.situacao}}</td>
                         <td>
-                          <a href="javascript:void(0)" *ngIf="item.situacaoId !== 405 || item.pessoaId !== usuarioLogadoId" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                          <a href="javascript:void(0)" *ngIf="item.situacaoId === 405 && item.pessoaId === usuarioLogadoId" [routerLink]="['/programagestao/atividade']" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" *ngIf="item.situacaoId === 401" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" *ngIf="item.situacaoId !== 401" [routerLink]="['/programagestao/atividade/atual/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <!--<a href="javascript:void(0)" *ngIf="item.situacaoId === 405 && item.pessoaId === usuarioLogadoId" [routerLink]="['/programagestao/atividade']" title="Ver detalhes"><i class="fa fa-eye"></i></a>-->
                         </td>
                       </tr>
                       <tr *ngIf="dashboard?.pactosTrabalho == null || dashboard?.pactosTrabalho.length == 0">
@@ -91,7 +92,7 @@
                       <tr>
                         <td colspan="6" class="col text-center bg-gray-1">
                           <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao/pactotrabalho">
-                            Ir para planos de trabalho
+                            Ir para histórico de planos de trabalho
                           </button>
                         </td>
                       </tr>

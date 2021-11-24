@@ -92,39 +92,34 @@ namespace Susep.SISRH.Application.Queries.Concrete
 
             #region Perfis pelo servidor
 
-            if (dadosPessoa.Result.TipoFuncaoId.HasValue)
+            //Se a pessoa for chefe, tem que dar um tratamento diferenciado
+            if (dadosPessoa.Result.Chefe.HasValue && dadosPessoa.Result.Chefe.Value)
             {
-                //Se tiver função na unidade dele, tem perfil servidor na unidade acima
+                //Se for chefe na unidade dele, tem perfil servidor na unidade acima
                 var unidadeChefe = await UnidadeQuery.ObterPorChaveAsync(dadosPessoa.Result.UnidadeId);
                 if (unidadeChefe.Result.UnidadeIdPai.HasValue)
                     result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Servidor, Unidades = new List<long>() { unidadeChefe.Result.UnidadeIdPai.Value } });
 
-                if (dadosPessoa.Result.Chefe.HasValue && dadosPessoa.Result.Chefe.Value)
+                //Obtém as unidades subordinadas à que a pessoa é chefe
+                var unidadesSubordinadas = await UnidadeQuery.ObterSubordinadasAsync(dadosPessoa.Result.UnidadeId);
+                var idsUnidades = unidadesSubordinadas.Result.Select(u => Int64.Parse(u.Id)).ToList();
+
+                //Adiciona os perfis de chefia
+                result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.ChefeUnidade, Unidades = idsUnidades });
+
+                //Se a unidade tiver nível 1 ou 2, é superintendente, diretor ou equiparado
+                if (dadosPessoa.Result.NivelUnidade <= 2)
                 {
-                    //Obtém as unidades subordinadas à que a pessoa é chefe
-                    var unidadesSubordinadas = await UnidadeQuery.ObterSubordinadasAsync(dadosPessoa.Result.UnidadeId);
-                    var idsUnidades = unidadesSubordinadas.Result.Select(u => Int64.Parse(u.Id)).ToList();
-
-                    //Adiciona os perfis de chefia
-                    result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.ChefeUnidade, Unidades = idsUnidades });
-
-                    if (dadosPessoa.Result.TipoFuncaoId == (int)TipoFuncaoPessoaEnum.ChefeDepartamento ||
-                        dadosPessoa.Result.TipoFuncaoId == (int)TipoFuncaoPessoaEnum.CoordenadorGeral)
-                    {
-                        result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.CoordenadorGeral, Unidades = idsUnidades });
-                    }
-
-                    if (dadosPessoa.Result.TipoFuncaoId == (int)TipoFuncaoPessoaEnum.Superintendente ||
-                        dadosPessoa.Result.TipoFuncaoId == (int)TipoFuncaoPessoaEnum.Diretor)
-                    {
-                        result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Diretor, Unidades = idsUnidades });
-                    }
+                    result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Diretor, Unidades = idsUnidades });
+                }//Se tiver nível 3, é CG ou equiparado
+                else if (dadosPessoa.Result.NivelUnidade == 3)
+                {
+                    result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.CoordenadorGeral, Unidades = idsUnidades });
                 }
             }
-            else
-            {
-                result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Servidor, Unidades = new List<long>() { dadosPessoa.Result.UnidadeId } });
-            }
+
+            result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Servidor, Unidades = new List<long>() { dadosPessoa.Result.UnidadeId } });
+
 
             #endregion
 
@@ -141,7 +136,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
             if (!perfisUsuario.Result.Perfis.Any(p => p.Perfil == (int)PerfilUsuarioEnum.Gestor))
             {
                 //Obtém as unidades em que o usuário é chefe
-                var unidadesChefia = (from perfil in perfisUsuario.Result.Perfis                                      
+                var unidadesChefia = (from perfil in perfisUsuario.Result.Perfis
                                       from unidade in perfil.Unidades
                                       select unidade).Distinct().ToList();
 
@@ -345,9 +340,8 @@ namespace Susep.SISRH.Application.Queries.Concrete
         {
             var result = new ApplicationResult<DadosPaginadosViewModel<PactoTrabalhoViewModel>>();
 
-            var unidadesUsuario = await ObterUnidadesPerfilPessoa(request);
-            if (unidadesUsuario != null)
-                request.UnidadesUsuario = unidadesUsuario.ToList();
+            var perfil = await ObterPerfilPessoaAsync(request);
+            request.IsGestor = perfil.Result.Perfis.Any(p => p.Perfil == (int)Domain.Enums.PerfilUsuarioEnum.Gestor);
 
             //Obtém as unidades
             var dados = await PactoTrabalhoQuery.ObterPorFiltroAsync(request);
@@ -399,8 +393,13 @@ namespace Susep.SISRH.Application.Queries.Concrete
                                       from unidade in perfil.Unidades
                                       select unidade).Distinct().ToList();
 
+                //Obtém as pessoas da unidade
+                var pessoasQueEhChefe = await UnidadeQuery.ObterPessoasAsync(perfisUsuario.Result.UnidadeId);
+
                 //Filtra pelas unidades em que é chefe ou o plano é dele
-                items = items.Where(p => unidadesChefia.Any(uu => uu == p.UnidadeId) || p.PessoaId == perfisUsuario.Result.PessoaId);
+                items = items.Where(p => unidadesChefia.Any(uu => uu == p.UnidadeId) ||
+                                        p.PessoaId == perfisUsuario.Result.PessoaId ||
+                                        pessoasQueEhChefe.Result.Any(pc => p.PessoaId == pc.PessoaId));
             }
 
             return items;

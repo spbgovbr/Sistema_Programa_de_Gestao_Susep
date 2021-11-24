@@ -36,6 +36,27 @@ namespace Susep.SISRH.Domain.AggregatesModel.CatalogoAggregate
             }
         }
 
+        public String TituloCompletoComTempos
+        {
+            get
+            {
+                return String.Format("{0} (pres.:{1}h / rem.:{2}h)",
+                    TituloCompleto,
+                    TempoExecucaoPresencial,
+                    TempoExecucaoRemoto);
+            }
+        }
+
+        public String TituloCompleto
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(Complexidade))
+                    return Titulo + " - " + Complexidade;
+                return Titulo;
+            }
+        }
+
         public CatalogoDominio FormaCalculoTempoItemCatalogo { get; private set; }
         public List<CatalogoItemCatalogo> Catalogos { get; private set; }
         public List<PlanoTrabalhoAtividadeItem> PlanosTrabalhoAtividadesItens { get; private set; }

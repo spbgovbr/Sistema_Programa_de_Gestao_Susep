@@ -66,10 +66,24 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-sm-12" *ngIf="teletrabalhoParcial">
+                  <div class="field">
+                    <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Local de execução">
+                      <select id="execucaoRemota" name="execucaoRemota" formControlName="execucaoRemota">
+                        <option value="">Selecione uma opção</option>
+                        <option class="select-items" [value]="true">Remoto</option>
+                        <option class="select-items" [value]="false">Presencial</option>
+                      </select>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>

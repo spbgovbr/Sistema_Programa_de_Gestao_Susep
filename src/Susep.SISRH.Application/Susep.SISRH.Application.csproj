@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Queries\RawSql\PessoaRawSqls.cs~RF173d0cc9.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DomainEventHandlers\" />
     <Folder Include="IntegrationEventHandlers\" />
     <Folder Include="Mappers\" />

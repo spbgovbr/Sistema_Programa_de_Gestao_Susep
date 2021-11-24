@@ -15,25 +15,32 @@
                 <div class="col-sm-12">
                   <dl class="row">
                     <dt class="col-sm-3">Atividade:</dt>
-                    <dd class="col-sm-9">{{solicitacao.itemCatalogo}}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.itemCatalogo}}</dd>
                   </dl>
                   <dl class="row">
                     <dt class="col-sm-3">Situação:</dt>
-                    <dd class="col-sm-9">{{solicitacao.situacao}}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.situacao}}</dd>
                   </dl>
                   <dl class="row" *ngIf="solicitacao.dataInicio">
                     <dt class="col-sm-3">Início:</dt>
-                    <dd class="col-sm-3">{{solicitacao.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</dd>
+                    <dd class="col-sm-3">{{solicitacao?.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</dd>
 
                     <dt class="col-sm-3" *ngIf="solicitacao.dataFim">Fim:</dt>
-                    <dd class="col-sm-3" *ngIf="solicitacao.dataFim">{{solicitacao.dataFim | date: 'dd/MM/yyyy HH:mm'}}</dd>
+                    <dd class="col-sm-3" *ngIf="solicitacao.dataFim">{{solicitacao?.dataFim | date: 'dd/MM/yyyy HH:mm'}}</dd>
                   </dl>
                   <dl class="row">
                     <dt class="col-sm-3" *ngIf="solicitacao.tempoPrevistoPorItem">Tempo previsto:</dt>
-                    <dd class="col-sm-3" *ngIf="solicitacao.tempoPrevistoPorItem">{{solicitacao.tempoPrevistoPorItem}}</dd>
+                    <dd class="col-sm-3" *ngIf="solicitacao.tempoPrevistoPorItem">{{solicitacao?.tempoPrevistoPorItem}}</dd>
 
                     <dt class="col-sm-3" *ngIf="solicitacao.tempoRealizado">Tempo realizado:</dt>
-                    <dd class="col-sm-3" *ngIf="solicitacao.tempoRealizado">{{solicitacao.tempoRealizado}}</dd>
+                    <dd class="col-sm-3" *ngIf="solicitacao.tempoRealizado">{{solicitacao?.tempoRealizado}}</dd>
+                  </dl>
+                  <dl class="row" *ngIf="solicitacao.execucaoRemota !== null">
+                    <dt class="col-sm-3">Local execução:</dt>
+                    <dd class="col-sm-9">
+                      <span *ngIf="solicitacao.execucaoRemota">Remoto</span>
+                      <span *ngIf="!solicitacao.execucaoRemota">Presencial</span>
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -41,7 +48,7 @@
                 <div class="col-sm-12">
                   <dl class="row">
                     <dt class="col-sm-3">Data proposta:</dt>
-                    <dd class="col-sm-9">{{solicitacao.dataFim | date: 'dd/MM/yyyy'}}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.dataFim | date: 'dd/MM/yyyy'}}</dd>
                   </dl>
                 </div>
               </div>
@@ -50,18 +57,18 @@
                 <div class="col-sm-12">
                   <dl class="row">
                     <dt class="col-sm-3">Atividade:</dt>
-                    <dd class="col-sm-9">{{solicitacao.itemCatalogo }}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.itemCatalogo }}</dd>
                   </dl>
                   <dl class="row">
                     <dt class="col-sm-3">Situação:</dt>
-                    <dd class="col-sm-9">{{solicitacao.situacao }}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.situacao }}</dd>
                   </dl>
                   <dl class="row">
                     <dt class="col-sm-3">Tempo planejado:</dt>
-                    <dd class="col-sm-3">{{solicitacao.tempoPrevistoPorItem}}</dd>
+                    <dd class="col-sm-3">{{solicitacao?.tempoPrevistoPorItem}}</dd>
 
                     <dt class="col-sm-3">Tempo despendido:</dt>
-                    <dd class="col-sm-3">{{solicitacao.tempoRealizado}}</dd>
+                    <dd class="col-sm-3">{{solicitacao?.tempoRealizado}}</dd>
                   </dl>
                 </div>
               </div>
@@ -71,24 +78,24 @@
                 <div class="col-sm-12">
                   <dl class="row">
                     <dt class="col-sm-3">Atividade:</dt>
-                    <dd class="col-sm-9">{{solicitacao.itemCatalogo }}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.itemCatalogo }}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row" *ngIf="solicitacao?.situacao">
                     <dt class="col-sm-3">Situação:</dt>
-                    <dd class="col-sm-9">{{solicitacao.situacao }}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.situacao}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row" *ngIf="solicitacao?.tempoPrevistoPorItem">
                     <dt class="col-sm-3">Tempo planejado:</dt>
-                    <dd class="col-sm-3">{{solicitacao.tempoPrevistoPorItem}}</dd>
+                    <dd class="col-sm-3">{{solicitacao?.tempoPrevistoPorItem}}</dd>
                   </dl>
                 </div>
               </div>
 
-              <div class="row" *ngIf="solicitacao.descricao">
+              <div class="row" *ngIf="solicitacao?.descricao">
                 <div class="col-sm-12">
                   <dl class="row">
                     <dt class="col-sm-3">Observações:</dt>
-                    <dd class="col-sm-9">{{solicitacao.descricao}}</dd>
+                    <dd class="col-sm-9">{{solicitacao?.descricao}}</dd>
                   </dl>
                 </div>
               </div>
@@ -104,7 +111,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>

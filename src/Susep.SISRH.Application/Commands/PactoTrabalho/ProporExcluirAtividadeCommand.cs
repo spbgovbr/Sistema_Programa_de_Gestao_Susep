@@ -20,6 +20,9 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
         [DataMember(Name = "pactoTrabalhoAtividadeId")]
         public Guid PactoTrabalhoAtividadeId { get; set; }
 
+        [DataMember(Name = "itemCatalogo")]
+        public string ItemCatalogo { get; set; }
+
         [DataMember(Name = "justificativa")]
         public string Justificativa { get; set; }
 

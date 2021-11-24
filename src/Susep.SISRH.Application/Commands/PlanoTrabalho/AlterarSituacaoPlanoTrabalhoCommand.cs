@@ -25,6 +25,9 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
         [DataMember(Name = "aprovados")]
         public String[] Aprovados { get; set; }
 
+        [DataMember(Name = "deserto")]
+        public Boolean Deserto { get; set; }
+
 
 
 

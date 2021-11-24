@@ -29,11 +29,12 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         public decimal TempoPrevistoTotal { get; private set; }
         public decimal? TempoRealizado { get; private set; }
         public decimal? TempoHomologado { get; private set; }
-        
+
         public DateTime? DataInicio { get; private set; }
         public DateTime? DataFim { get; private set; }
 
         public Int32 SituacaoId { get; private set; }
+        public Int32? ModalidadeExecucaoId { get; private set; }
         public String Descricao { get; private set; }
         public String ConsideracoesConclusao { get; private set; }
 
@@ -49,35 +50,44 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         public string Justificativa { get; private set; }
 
-        public decimal? diferencaRealizadoEPrevistoEmHoras
+        public decimal? DiferencaRealizadoEPrevistoEmHoras
         {
-            get {
+            get
+            {
                 var realizado = TempoRealizado != null ? TempoRealizado.Value : 0;
 
-                switch (this.SituacaoId) {
-                    case ((int)SituacaoAtividadePactoTrabalhoEnum.ToDo): 
+                switch (this.SituacaoId)
+                {
+                    case ((int)SituacaoAtividadePactoTrabalhoEnum.ToDo):
                         return Decimal.Zero;
-                    case ((int)SituacaoAtividadePactoTrabalhoEnum.Doing): 
+                    case ((int)SituacaoAtividadePactoTrabalhoEnum.Doing):
                         return TempoPrevistoTotal > realizado ? Decimal.Subtract(TempoPrevistoTotal, realizado) : Decimal.Zero;
-                    case ((int)SituacaoAtividadePactoTrabalhoEnum.Done): 
+                    case ((int)SituacaoAtividadePactoTrabalhoEnum.Done):
                         return realizado > TempoPrevistoTotal ? Decimal.Subtract(realizado, TempoPrevistoTotal) : Decimal.Zero;
                 }
 
                 return Decimal.Zero;
             }
         }
-        public decimal? diferencaPrevistoParaRealizadoEmDias
+        public decimal? DiferencaPrevistoParaRealizadoEmDias
         {
-            get => diferencaRealizadoEPrevistoEmHoras == null || diferencaRealizadoEPrevistoEmHoras == Decimal.Zero ? 
+            get => TempoEmDias(DiferencaRealizadoEPrevistoEmHoras, PactoTrabalho.Pessoa.CargaHoraria);
+        }
+
+        private decimal TempoEmDias(decimal? tempoEmHoras, decimal cargaHoraria)
+        {
+            return (tempoEmHoras == null || tempoEmHoras == Decimal.Zero) ?
                 Decimal.Zero :
-                Decimal.Divide(diferencaRealizadoEPrevistoEmHoras.Value, PactoTrabalho.Pessoa.CargaHoraria);
+                Decimal.Divide(tempoEmHoras.Value, cargaHoraria);
         }
 
         public PactoTrabalhoAtividade() { }
 
-        public DateTime CalcularAjusteNoPrazo(DateTime prazoAtual, List<DateTime> diasNaoUteis)
+        public DateTime CalcularAjusteNoPrazo(DateTime prazoAtual, List<DateTime> diasNaoUteis, Decimal tempoAtividade = 0)
         {
-            var diasAlemDoPrevisto = this.diferencaPrevistoParaRealizadoEmDias;
+            var diasAlemDoPrevisto = this.DiferencaPrevistoParaRealizadoEmDias;
+            diasAlemDoPrevisto += TempoEmDias(tempoAtividade, PactoTrabalho.Pessoa.CargaHoraria);           
+
             var diasAdicionados = 0;
             var novaDataFim = prazoAtual;
             while (diasAdicionados < diasAlemDoPrevisto)
@@ -93,7 +103,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             return novaDataFim;
         }
 
-        public static PactoTrabalhoAtividade Criar(Guid pactoTrabalhoId, Guid itemCatalogoId, int quantidade, decimal tempoPrevistoPorItem, string descricao)
+        public static PactoTrabalhoAtividade Criar(Guid pactoTrabalhoId, Guid itemCatalogoId, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, string descricao)
         {
             //Constrói a atividade do pacto de trabalho
             return new PactoTrabalhoAtividade()
@@ -101,6 +111,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 PactoTrabalhoId = pactoTrabalhoId,
                 ItemCatalogoId = itemCatalogoId,
                 Quantidade = quantidade,
+                ModalidadeExecucaoId = modalidaExecucaoId,
                 TempoPrevistoPorItem = tempoPrevistoPorItem,
                 TempoPrevistoTotal = Decimal.Multiply(quantidade, tempoPrevistoPorItem),
                 SituacaoId = (int)SituacaoAtividadePactoTrabalhoEnum.ToDo,
@@ -110,33 +121,43 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             };
         }
 
-        public static PactoTrabalhoAtividade Criar(PactoTrabalho pactoTrabalho, Guid itemCatalogoId, int quantidade, decimal tempoPrevistoPorItem, string descricao)
+        public static PactoTrabalhoAtividade Criar(PactoTrabalho pactoTrabalho, Guid itemCatalogoId, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, string descricao)
         {
-            var atividade = Criar(pactoTrabalho.PlanoTrabalhoId, itemCatalogoId, quantidade, tempoPrevistoPorItem, descricao);
+            var atividade = Criar(pactoTrabalho.PlanoTrabalhoId, itemCatalogoId, quantidade, modalidaExecucaoId, tempoPrevistoPorItem, descricao);
             atividade.PactoTrabalho = pactoTrabalho;
             return atividade;
         }
+        public static PactoTrabalhoAtividade Criar(PactoTrabalho pactoTrabalho, ItemCatalogo itemCatalogo, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, string descricao)
+        {
+            var objeto = Criar(pactoTrabalho, itemCatalogo.ItemCatalogoId, quantidade, modalidaExecucaoId, tempoPrevistoPorItem, descricao);
+            objeto.ItemCatalogo = itemCatalogo;
+            return objeto;
+        }
 
 
-        public void Alterar(Guid itemCatalogoId, int quantidade, decimal tempoPrevistoPorItem, string descricao)
+        public void Alterar(Guid itemCatalogoId, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, string descricao)
         {
             ItemCatalogoId = itemCatalogoId;
             Quantidade = quantidade;
+            ModalidadeExecucaoId = modalidaExecucaoId;
             TempoPrevistoPorItem = tempoPrevistoPorItem;
             TempoPrevistoTotal = Decimal.Multiply(quantidade, tempoPrevistoPorItem);
             Descricao = descricao;
         }
 
-        public void AtualizarTempoPrevistoTotal(int quantideDias)
+        public void AtualizarTempoPrevistoTotal(int quantideDias, decimal? tempoPorItem = null)
         {
-            this.TempoPrevistoTotal = Decimal.Multiply(quantideDias, this.TempoPrevistoTotal);
+            decimal tempoConsiderar = this.TempoPrevistoTotal;
+            if (tempoPorItem.HasValue)
+                tempoConsiderar = tempoPorItem.Value;
+            this.TempoPrevistoTotal = Decimal.Multiply(quantideDias, tempoConsiderar);
         }
 
         public void AjustarTemposPrevistoEHomologadoAoTempoRealizado()
         {
             if (this.SituacaoId != (int)SituacaoAtividadePactoTrabalhoEnum.Done)
                 throw new SISRHDomainException("Não é possível ajustar os tempos previsto e homologado se a atividade não estiver concluída.");
-            
+
             this.TempoPrevistoPorItem = this.TempoRealizado.Value;
 
             if (this.TempoHomologado.HasValue)
@@ -170,14 +191,14 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         /// <summary>
         /// Ação utilizada quando no quadro Kanban uma atividade passar para a raia DONE
         /// </summary>
-        public void DefinirComoConcluida(List<DateTime> feriados, int cargaHoraria)
+        public void DefinirComoConcluida(DateTime dataFim, List<DateTime> feriados, int cargaHoraria)
         {
             //Só muda se tiver utilizado o Kanban para registrar o início da execução
             if (this.SituacaoId != (int)SituacaoAtividadePactoTrabalhoEnum.Doing)
                 throw new SISRHDomainException("Não é possível alterar para concluída uma atividade que ainda não está em execução");
 
             this.SituacaoId = (int)SituacaoAtividadePactoTrabalhoEnum.Done;
-            this.DataFim = DateTime.Now;
+            this.DataFim = dataFim;
             this.TempoRealizado = Decimal.Round(CalcularTempoRealizado(feriados, cargaHoraria), 1);
         }
 
@@ -189,7 +210,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         {
             if (this.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
             {
-                return this.TempoPrevistoTotal;
+                var quantidadeDias = WorkingDays.DiffDays(this.DataInicio.Value, this.DataFim.Value, feriados, false);
+                return quantidadeDias * this.TempoPrevistoPorItem;
             }
             else
             {
@@ -265,9 +287,17 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                     throw new SISRHDomainException("Se a nota for inferior a 5, a justificativa é obrigatória.");
 
                 this.TempoHomologado = 0;
-            } else
+            }
+            else
             {
-                this.TempoHomologado = this.TempoPrevistoPorItem;
+                if (this.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
+                {
+                    this.TempoHomologado = this.TempoPrevistoTotal;
+                }
+                else
+                {
+                    this.TempoHomologado = this.TempoPrevistoPorItem;
+                }
             }
 
             this.Nota = nota;

@@ -3,7 +3,7 @@
     {
       "UpstreamPathTemplate": "/swagger/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/swagger/{everything}",
+      "DownstreamPathTemplate": "/SISGP/api/swagger/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -17,7 +17,7 @@
     {
       "UpstreamPathTemplate": "/connect/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST" ],
-      "DownstreamPathTemplate": "/api/connect/{everything}",
+      "DownstreamPathTemplate": "/SISGP/api/connect/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -31,7 +31,7 @@
     {
       "UpstreamPathTemplate": "/dominio/ModalidadeExecucao",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/ModalidadeExecucao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/ModalidadeExecucao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -48,7 +48,7 @@
     {
       "UpstreamPathTemplate": "/dominio/FormaCalculoTempoItemCatalogo",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/FormaCalculoTempoItemCatalogo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/FormaCalculoTempoItemCatalogo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -69,7 +69,7 @@
     {
       "UpstreamPathTemplate": "/dominio/SituacaoPlanoTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/SituacaoPlanoTrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoPlanoTrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -90,7 +90,7 @@
     {
       "UpstreamPathTemplate": "/dominio/SituacaoPactoTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/SituacaoPactoTrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoPactoTrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -111,7 +111,7 @@
     {
       "UpstreamPathTemplate": "/dominio/SituacaoAtividadePactoTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/SituacaoAtividadePactoTrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoAtividadePactoTrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -132,7 +132,7 @@
     {
       "UpstreamPathTemplate": "/dominio/CriterioPerfilAtividadePlano",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/CriterioPerfilAtividadePlano",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/CriterioPerfilAtividadePlano",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -153,7 +153,7 @@
     {
       "UpstreamPathTemplate": "/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -176,7 +176,7 @@
     {
       "UpstreamPathTemplate": "/catalogo",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -193,7 +193,7 @@
     {
       "UpstreamPathTemplate": "/catalogo/{unidadeId}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo/{unidadeId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{unidadeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -210,7 +210,7 @@
     {
       "UpstreamPathTemplate": "/catalogo/{unidadeId}/itens",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo/{unidadeId}/itens",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{unidadeId}/itens",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -227,7 +227,7 @@
     {
       "UpstreamPathTemplate": "/catalogo",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -244,7 +244,7 @@
     {
       "UpstreamPathTemplate": "/catalogo/{Catalogoid}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo/{Catalogoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{Catalogoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -261,7 +261,7 @@
     {
       "UpstreamPathTemplate": "/catalogo/{Catalogoid}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo/{Catalogoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{Catalogoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -278,7 +278,7 @@
     {
       "UpstreamPathTemplate": "/catalogo/{catalogoid}/item",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo/{catalogoid}/item",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{catalogoid}/item",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -295,7 +295,7 @@
     {
       "UpstreamPathTemplate": "/catalogo/{catalogoid}/item/{itemCatalogoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/catalogo/{catalogoid}/item/{itemCatalogoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/catalogo/{catalogoid}/item/{itemCatalogoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -314,7 +314,7 @@
     {
       "UpstreamPathTemplate": "/itemcatalogo",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/itemcatalogo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -331,7 +331,7 @@
     {
       "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/itemcatalogo/{itemCatalogoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo/{itemCatalogoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -348,7 +348,7 @@
     {
       "UpstreamPathTemplate": "/itemcatalogo",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/itemcatalogo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -365,7 +365,7 @@
     {
       "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/itemcatalogo/{itemCatalogoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo/{itemCatalogoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -382,7 +382,7 @@
     {
       "UpstreamPathTemplate": "/itemcatalogo/{itemCatalogoid}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/itemcatalogo/{itemCatalogoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/itemcatalogo/{itemCatalogoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -401,7 +401,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -418,7 +418,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/atual",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/atual",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/atual",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -435,7 +435,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -452,7 +452,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/periodo",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/periodo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/periodo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -469,7 +469,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -486,7 +486,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -503,7 +503,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -520,7 +520,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/historico",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/historico",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/historico",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -537,7 +537,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/enviarParaAceite",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -554,7 +554,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/aceitar",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/aceitar",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/aceitar",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -571,7 +571,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/rejeitar",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/rejeitar",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/rejeitar",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -588,7 +588,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/voltarParaRascunho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -605,7 +605,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/iniciarExecucao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -622,7 +622,24 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/concluirExecucao",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "caminhointernoservicos",
+          "Port": 80
+        }
+      ],
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [ "SISGP.ProgramaGestao" ]
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/reabrir",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/reabrir",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -639,7 +656,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/avaliar",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/avaliar",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/avaliar",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -656,7 +673,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -673,7 +690,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -690,7 +707,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -707,7 +724,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -724,7 +741,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/todo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -741,7 +758,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/doing",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -758,7 +775,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/done",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -775,7 +792,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/andamento",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -792,7 +809,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/atividades/{pactoTrabalhoAtividadeId}/avaliar",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -809,7 +826,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -826,7 +843,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/prazo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -843,7 +860,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/atividade",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -860,7 +877,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/justificarestouroprazo",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -877,7 +894,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/excluiratividade",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/excluiratividade",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/excluiratividade",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -894,7 +911,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/solicitacao/{pactoTrabalhoSolicitacaoId}/responder",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -911,7 +928,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/assuntosParaAssociar",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -930,7 +947,7 @@
     {
       "UpstreamPathTemplate": "/pessoa",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pessoa",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -947,7 +964,7 @@
     {
       "UpstreamPathTemplate": "/pessoa/perfil",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pessoa/perfil",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/perfil",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -964,7 +981,7 @@
     {
       "UpstreamPathTemplate": "/pessoa/{pessoaId}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pessoa/{pessoaId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/{pessoaId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -981,7 +998,7 @@
     {
       "UpstreamPathTemplate": "/pessoa/{pessoaId}/feriados",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pessoa/{pessoaId}/feriados",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/{pessoaId}/feriados",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -998,7 +1015,7 @@
     {
       "UpstreamPathTemplate": "/pessoa/compactotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/pessoa/compactotrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pessoa/compactotrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1017,7 +1034,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1034,7 +1051,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1051,7 +1068,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/atual",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/atual",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/atual",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1068,7 +1085,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/habilitacao",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/habilitacao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/habilitacao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1085,7 +1102,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1102,7 +1119,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1119,7 +1136,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/pactosTrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1136,7 +1153,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/historico",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/historico",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/historico",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1153,7 +1170,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/situacao",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/situacao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/situacao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1170,7 +1187,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1187,7 +1204,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1204,7 +1221,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1221,7 +1238,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1238,7 +1255,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/candidato",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/candidato",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/candidato",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1255,7 +1272,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1272,7 +1289,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1289,7 +1306,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/atividades/{planoTrabalhoAtividadeId}/candidato/{planoTrabalhoAtividadeCandidatoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1306,7 +1323,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/pessoasModalidadesExecucao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1323,7 +1340,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/metas",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1340,7 +1357,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/metas",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1357,7 +1374,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1374,7 +1391,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/metas/{planoTrabalhoMetaId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1391,7 +1408,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1408,7 +1425,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1425,7 +1442,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1442,7 +1459,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/reunioes/{planoTrabalhoReuniaoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1460,7 +1477,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/custos",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1477,7 +1494,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/custos",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1494,7 +1511,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1511,7 +1528,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/custos/{planoTrabalhoCustoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1528,7 +1545,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1545,7 +1562,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetosassociadosounaoatividadepacto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1562,7 +1579,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/objetos/{planoTrabalhoObjetoId}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/objetos/{planoTrabalhoObjetoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/objetos/{planoTrabalhoObjetoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1579,7 +1596,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "UpstreamHttpMethod": [ "DELETE" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1596,7 +1613,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1613,7 +1630,7 @@
     {
       "UpstreamPathTemplate": "/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/planotrabalho/{planoTrabalhoid}/objetos/{planoTrabalhoObjetoId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1632,7 +1649,7 @@
     {
       "UpstreamPathTemplate": "/unidade/ativas",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/ativas",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/ativas",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1649,7 +1666,7 @@
     {
       "UpstreamPathTemplate": "/unidade/complanotrabalho",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/complanotrabalho",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/complanotrabalho",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1666,7 +1683,7 @@
     {
       "UpstreamPathTemplate": "/unidade/semcatalogocadastrado",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/semcatalogocadastrado",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/semcatalogocadastrado",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1683,7 +1700,7 @@
     {
       "UpstreamPathTemplate": "/unidade/comcatalogocadastrado",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/comcatalogocadastrado",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/comcatalogocadastrado",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1700,7 +1717,7 @@
     {
       "UpstreamPathTemplate": "/unidade/{unidadeId}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/{unidadeId}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/{unidadeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1717,7 +1734,7 @@
     {
       "UpstreamPathTemplate": "/unidade/{unidadeId}/modalidadeexecucao",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/{unidadeId}/modalidadeexecucao",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/{unidadeId}/modalidadeexecucao",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1734,7 +1751,7 @@
     {
       "UpstreamPathTemplate": "/unidade/{unidadeId}/pessoas",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/unidade/{unidadeId}/pessoas",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/unidade/{unidadeId}/pessoas",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1752,7 +1769,7 @@
     {
       "UpstreamPathTemplate": "/assunto",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/assunto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1769,7 +1786,7 @@
     {
       "UpstreamPathTemplate": "/assunto",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/assunto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1786,7 +1803,7 @@
     {
       "UpstreamPathTemplate": "/assunto",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/assunto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1803,7 +1820,7 @@
     {
       "UpstreamPathTemplate": "/assunto/{id}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/assunto/{id}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1820,7 +1837,7 @@
     {
       "UpstreamPathTemplate": "/assunto/texto",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/assunto/texto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/assunto/texto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1838,7 +1855,7 @@
     {
       "UpstreamPathTemplate": "/objeto",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/objeto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1855,7 +1872,7 @@
     {
       "UpstreamPathTemplate": "/objeto",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/api/v1/objeto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1872,7 +1889,7 @@
     {
       "UpstreamPathTemplate": "/objeto",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/api/api/v1/objeto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1889,7 +1906,7 @@
     {
       "UpstreamPathTemplate": "/objeto/{id}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/objeto/{id}",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1906,7 +1923,7 @@
     {
       "UpstreamPathTemplate": "/objeto/texto",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/api/v1/objeto/texto",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/objeto/texto",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

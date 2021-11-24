@@ -19,9 +19,11 @@ else
     # Create default database
     /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $SA_PASSWORD -Q "CREATE DATABASE programa_gestao"
 
+    echo "Running migrations:"
     # Run migrations
-    for foo in /scripts/*.sql
-        do /opt/mssql-tools/bin/sqlcmd -d programa_gestao -U sa -P $SA_PASSWORD -l 30 -e -i $foo
+    for foo in /scripts/*.sql; do
+        echo " - $foo"
+        /opt/mssql-tools/bin/sqlcmd -d programa_gestao -U sa -P $SA_PASSWORD -l 30 -e -i $foo
     done
 fi
 
