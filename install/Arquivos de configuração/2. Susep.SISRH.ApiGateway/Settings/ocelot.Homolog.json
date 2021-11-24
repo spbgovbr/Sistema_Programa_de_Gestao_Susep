@@ -639,7 +639,7 @@
     {
       "UpstreamPathTemplate": "/pactotrabalho/{pactoTrabalhoid}/reabrir",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamPathTemplate": "/SISGP/programagestao/api/v1/pactotrabalho/{pactoTrabalhoid}/reabrir",
+      "DownstreamPathTemplate": "/SISGP/api/api/v1/pactotrabalho/{pactoTrabalhoid}/reabrir",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
