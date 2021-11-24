@@ -41,4 +41,10 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-select * from [dbo].[SituacaoPessoa]
+
+
+insert into [dbo].[SituacaoPessoa] values (1 , 'Ativa')
+insert into [dbo].[SituacaoPessoa] values (4 , 'Cedida')
+insert into [dbo].[SituacaoPessoa] values (5 , 'Desligada')
+insert into [dbo].[SituacaoPessoa] values (2 , 'Falecida')
+insert into [dbo].[SituacaoPessoa] values (3 , 'Inativa')
