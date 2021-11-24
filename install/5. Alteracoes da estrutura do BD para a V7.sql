@@ -40,3 +40,5 @@ CREATE TABLE [dbo].[SituacaoPessoa](
 GO
 SET ANSI_PADDING OFF
 GO
+
+select * from [dbo].[SituacaoPessoa]
