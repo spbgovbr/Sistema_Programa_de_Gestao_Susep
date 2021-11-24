@@ -1,6 +1,6 @@
 Para entender os conceitos e principais funcionalidades, assista à apresentação disponível no seguinte link: https://youtu.be/VU_1TTAMg2Y
 
-> Caso esteja interessado na instalação via Docker, acesse a [documentação referente](docker/README.md).
+> Caso esteja interessado na instalação via Docker, acesse a [documentação referente no banch docker, arquivo `docker/README.md`](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/tree/docker/docker/README.md).
 
 # Parceiros
 
