@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Susep.SISRH.Application.Options;
 using Susep.SISRH.Application.Queries.Abstractions;
 using Susep.SISRH.Domain.AggregatesModel.CatalogoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate;
@@ -8,6 +10,7 @@ using Susep.SISRH.Domain.Enums;
 using SUSEP.Framework.Data.Abstractions.UnitOfWorks;
 using SUSEP.Framework.Result.Concrete;
 using SUSEP.Framework.Utils.Abstractions;
+using SUSEP.Framework.Utils.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +28,9 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
         private IPessoaQuery PessoaQuery { get; }
         private IEmailHelper EmailHelper { get; }
         private IUnidadeQuery UnidadeQuery { get; }
+        private IDominioQuery DominioQuery { get; }
+        private IOptions<PadroesOptions> Configuration { get; }
+        private IOptions<EmailOptions> EmailConfiguration { get; }
 
         public ProporPactoTrabalhoAtividadeCommandHandler(
             IItemCatalogoRepository itemCatalogoRepository,
@@ -32,7 +38,10 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
             IUnitOfWork unitOfWork,
             IPessoaQuery pessoaQuery,
             IEmailHelper emailHelper,
-            IUnidadeQuery unidadeQuery)
+            IUnidadeQuery unidadeQuery,
+            IDominioQuery dominioQuery,
+            IOptions<PadroesOptions> configuration,
+            IOptions<EmailOptions> emailConfiguration)
         {
             ItemCatalogoRepository = itemCatalogoRepository;
             PactoTrabalhoRepository = planoTrabalhoRepository;
@@ -40,74 +49,91 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
             PessoaQuery = pessoaQuery;
             EmailHelper = emailHelper;
             UnidadeQuery = unidadeQuery;
+            Configuration = configuration;
+            EmailConfiguration = emailConfiguration;
         }
 
         public async Task<IActionResult> Handle(ProporPactoTrabalhoAtividadeCommand request, CancellationToken cancellationToken)
         {
-            ApplicationResult<bool> result = new ApplicationResult<bool>(request);            
+            ApplicationResult<bool> result = new ApplicationResult<bool>(request);
+            try
+            {
+                //Monta os dados do pacto de trabalho
+                var pacto = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
 
-            //Monta os dados do pacto de trabalho
-            var pacto = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
+                //Serializa a requisição
+                var dados = JsonConvert.SerializeObject(request);
 
-            //Serializa a requisição
-            var dados = JsonConvert.SerializeObject(request);
+                //Cria a solicitação
+                pacto.AdicionarSolicitacao(TipoSolicitacaoPactoTrabalhoEnum.NovaAtividade, request.UsuarioLogadoId.ToString(), dados, request.Descricao);
 
-            //Cria a solicitação
-            pacto.AdicionarSolicitacao(TipoSolicitacaoPactoTrabalhoEnum.NovaAtividade, request.UsuarioLogadoId.ToString(), dados, request.Descricao);
+                //Altera o pacto de trabalho no banco de dados
+                PactoTrabalhoRepository.Atualizar(pacto);
+                UnitOfWork.Commit(false);
 
-            //Altera o pacto de trabalho no banco de dados
-            PactoTrabalhoRepository.Atualizar(pacto);
-            UnitOfWork.Commit(false);
+                //Envia os emails aos envolvidos
+                await EnviarEmail(request.PactoTrabalhoId, pacto.PessoaId, pacto.UnidadeId);
 
-            //Envia os emails aos envolvidos
-            await EnviarEmail(pacto.PessoaId, pacto.UnidadeId);
-
-            result.Result = true;
-            result.SetHttpStatusToOk("Pacto de trabalho alterado com sucesso.");
+                result.Result = true;
+                result.SetHttpStatusToOk("Pacto de trabalho alterado com sucesso.");
+            }
+            catch (SISRH.Domain.Exceptions.SISRHDomainException ex)
+            {
+                result.Validations = new List<string>() { ex.Message };
+                result.Result = false;
+                result.SetHttpStatusToBadRequest();
+            }
             return result;
         }
 
         #region EnviarEmail
 
-        private async Task EnviarEmail(Int64 pessoaId, Int64 unidadeId)
+        private async Task EnviarEmail(Guid pactoTrabalhoId, Int64 pessoaId, Int64 unidadeId)
         {
             try
             {
-                //Obtem os destinatários dos emails
-                var destinatarios = new List<string>();
+                if (Configuration.Value.Notificacoes == null ||
+                    Configuration.Value.Notificacoes.EnviarEmail)
+                {
+                    //Obtem os destinatários dos emails
+                    var destinatarios = new List<string>();
 
-                var servidor = await PessoaQuery.ObterPorChaveAsync(pessoaId);
-                destinatarios.Add(servidor.Result.Email);
+                    var servidor = await PessoaQuery.ObterPorChaveAsync(pessoaId);
+                    destinatarios.Add(servidor.Result.Email);
 
-                var unidade = await UnidadeQuery.ObterPessoasAsync(unidadeId);
-                var chefes = unidade.Result.Where(u => u.UnidadeId == unidadeId && u.TipoFuncaoId.HasValue);
-                foreach (var chefe in chefes)
-                    if (!string.IsNullOrEmpty(chefe.Email))
-                        destinatarios.Add(chefe.Email);
+                    var unidade = await UnidadeQuery.ObterPessoasAsync(unidadeId);
+                    var chefes = unidade.Result.Where(u => u.UnidadeId == unidadeId && u.TipoFuncaoId.HasValue);
+                    foreach (var chefe in chefes)
+                        if (!string.IsNullOrEmpty(chefe.Email))
+                            destinatarios.Add(chefe.Email);
 
-                //Envia os emails
-                EnviarEmail(destinatarios.ToArray());
+                    //Envia os emails
+                    EnviarEmail(pactoTrabalhoId, Configuration.Value.Notificacoes.EmailPactoSolicitacaoNovaAtividade, destinatarios.ToArray());
+                }
             }
             catch { }
         }
 
-        private void EnviarEmail(string[] destinatarios)
+        private void EnviarEmail(Guid pactoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
+                var enderecoAcesso = Configuration.Value.EnderecoPublicacaoFront.TrimEnd('/') + "/programagestao/pactotrabalho/detalhar/" + pactoTrabalhoId.ToString();
 
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                         .AppendLine("Uma adição de atividade em um plano de trabalho em que você está envolvido foi solicitada.").AppendLine("")
-                         .AppendLine("Acompanhe o andamento por meio do sistema.");
+                var mensagem = new StringBuilder();
+                mensagem.Append(opcaoEmail.Mensagem)
+                    .AppendLine().AppendLine().Append("<a href =\"").Append(enderecoAcesso).Append("\">Clique aqui</a> para acessar o plano no sistema.").AppendLine().AppendLine()
+                    .AppendLine("Caso o link não funcione, copie o endereço abaixo e abra no navegador da sua preferência:")
+                    .AppendLine(enderecoAcesso);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Proposta de nova atividade",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(), 
+                    true);
             }
         }
 

@@ -36,34 +36,43 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
         {
             ApplicationResult<bool> result = new ApplicationResult<bool>(request);
 
-            //Monta o objeto com os dados do catalogo
-            var item = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
-
-            //Obtém os dias não úteis da pessoa
-            var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(item.PessoaId, item.DataInicio, item.DataFim);
-            item.DiasNaoUteis = diasNaoUteis.Result.ToList();
-
-            //Verifica se a pessoa tem outros pactos cadastrados para o período
-            var dadosPessoa = await PessoaRepository.ObterAsync(item.PessoaId);
-
-            if (dadosPessoa.PactosTrabalho.Any(p => 
-                    p.PactoTrabalhoId != item.PactoTrabalhoId && 
-                    p.DataFim >= request.DataInicio && 
-                    p.DataInicio <= request.DataFim))
+            try
             {
-                result.Validations = new List<string> { "A pessoa já tem um plano de trabalho cadastrado para o período" };
-                return result;
+                //Monta o objeto com os dados do catalogo
+                var item = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
+
+                //Obtém os dias não úteis da pessoa
+                var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(item.PessoaId, item.DataInicio, item.DataFim);
+                item.DiasNaoUteis = diasNaoUteis.Result.ToList();
+
+                //Verifica se a pessoa tem outros pactos cadastrados para o período
+                var dadosPessoa = await PessoaRepository.ObterAsync(item.PessoaId);
+
+                if (dadosPessoa.PactosTrabalho.Any(p =>
+                        p.PactoTrabalhoId != item.PactoTrabalhoId &&
+                        p.DataFim.Date >= request.DataInicio.Date &&
+                        p.DataInicio.Date <= request.DataFim.Date))
+                {
+                    result.Validations = new List<string> { "A pessoa já tem um plano de trabalho cadastrado para o período" };
+                    return result;
+                }
+
+                //Altera a situação
+                item.AlterarPeriodo(request.DataInicio.Date, request.DataFim.Date);
+
+                //Altera o item de catalogo no banco de dados
+                PactoTrabalhoRepository.Atualizar(item);
+                UnitOfWork.Commit(false);
+
+                result.Result = true;
+                result.SetHttpStatusToOk("Plano de trabalho alterado com sucesso.");
             }
-
-            //Altera a situação
-            item.AlterarPeriodo(request.DataInicio, request.DataFim);
-
-            //Altera o item de catalogo no banco de dados
-            PactoTrabalhoRepository.Atualizar(item);
-            UnitOfWork.Commit(false);
-
-            result.Result = true;
-            result.SetHttpStatusToOk("Plano de trabalho alterado com sucesso.");
+            catch (SISRH.Domain.Exceptions.SISRHDomainException ex)
+            {
+                result.Validations = new List<string>() { ex.Message };
+                result.Result = false;
+                result.SetHttpStatusToBadRequest();
+            }
             return result;
         }
     }

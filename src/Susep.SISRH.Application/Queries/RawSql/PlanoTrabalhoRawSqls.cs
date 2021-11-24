@@ -8,7 +8,7 @@
             get
             {
                 return @"
-					SELECT  planoTrabalhoId
+                    SELECT  planoTrabalhoId
                             ,p.unidadeId
                             ,u.undSiglaCompleta unidade
                             ,dataInicio
@@ -17,7 +17,11 @@
                             ,tempoFaseHabilitacao
                             ,situacaoId
 							,cd.descricao situacao 
-                            ,totalServidoresSetor                            
+                            ,totalServidoresSetor
+                            ,(SELECT count(1) 
+                                FROM [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] ptac
+                                INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividade] pta ON ptac.planoTrabalhoAtividadeId = pta.planoTrabalhoAtividadeId
+                              WHERE pta.planoTrabalhoId = @planoTrabalhoId AND ptac.situacaoId = 804) totalServidoresAprovados
                     FROM [ProgramaGestao].[PlanoTrabalho] p
 	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId   
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON p.situacaoId = cd.catalogoDominioId 
@@ -241,7 +245,11 @@
                             ,tempoFaseHabilitacao
                             ,situacaoId
 							,cd.descricao situacao 
-                            ,totalServidoresSetor                            
+                            ,totalServidoresSetor 
+                            ,(SELECT count(1) 
+                                FROM [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] ptac
+                                INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividade] pta ON ptac.planoTrabalhoAtividadeId = pta.planoTrabalhoAtividadeId
+                              WHERE pta.planoTrabalhoId = p.planoTrabalhoId AND ptac.situacaoId = 804) totalServidoresAprovados
                     FROM [ProgramaGestao].[PlanoTrabalho] p
 	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId   
 	                    INNER JOIN [dbo].[CatalogoDominio] cd ON p.situacaoId = cd.catalogoDominioId 

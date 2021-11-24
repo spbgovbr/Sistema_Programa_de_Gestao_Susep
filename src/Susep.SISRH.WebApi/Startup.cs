@@ -35,15 +35,9 @@ namespace Susep.SISRH.WebApi
         /// Construtor da classe
         /// </summary>
         /// <param name="env"></param>
-        public Startup(IWebHostEnvironment env)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
-            Builder = new ConfigurationBuilder().SetBasePath(Path.Combine(env.ContentRootPath, "Settings"))
-                                                .AddJsonFile($"connectionstrings.{env.EnvironmentName}.json", true, true)
-                                                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
-                                                .AddJsonFile($"messagebroker.{env.EnvironmentName}.json", true, true)
-                                                .AddEnvironmentVariables();
-
-            Configuration = Builder.Build();
+            Configuration = configuration;
         }
 
         /// <summary>

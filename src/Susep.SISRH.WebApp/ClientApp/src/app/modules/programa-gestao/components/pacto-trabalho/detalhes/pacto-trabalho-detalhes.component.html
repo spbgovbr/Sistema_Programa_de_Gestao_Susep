@@ -90,12 +90,15 @@
         <div class="br-divider mt-4"></div>
         <div class="actions justify-content-start">
           <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor">
-            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 401 && saldoHoras >= 0" (click)="abrirEnvioAceite()">Enviar para aceite</button>
+            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 401 && saldoHoras >= 0" (click)="aceitar()">Enviar para aceite</button>
             <button class="br-button is-primary bg-success border-0 mr-2" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="aceitar()">Aceitar</button>
-            <button class="br-button is-primary mr-2 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="rejeitar()">Rejeitar</button>
+            <button class="br-button is-primary mr-0 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="rejeitar()">Rejeitar</button>
             <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 404" (click)="voltarParaRascunho()">Voltar para rascunho</button>
             <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 403 && periodoExecucao" (click)="iniciarExecucao()">Iniciar execução</button>
-            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelConcluirExecucao()">Encerrar Plano de Trabalho</button>
+            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 405" (click)="abrirTelaConcluirExecucao()">Encerrar Plano de Trabalho</button>
+          </secure-input>
+          <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade" [servidor]="servidor">
+            <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 406 && usuarioPodeReabrir" (click)="abrirTelaReabrirExecucao()">Reabrir Plano de Trabalho</button>
           </secure-input>
           <button class="br-button is-cancel mr-2" type="button" (click)="voltarParaPlano()">Voltar para o programa de gestão</button>
           <button class="br-button is-cancel" type="button" [routerLink]="['/programagestao/pactotrabalho']">Voltar para a lista de planos de trabalho</button>
@@ -123,7 +126,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -159,7 +163,44 @@
         </div>
         <div class="br-modal-footer justify-content-end">
           <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
-          <button class="br-button is-primary is-small" type="button" (click)="enviarParaAceite()">Confirmar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarAceite()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #modalAceiteComTermoAceite let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Aceite os termos de ciência e responsabilidade</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="row">
+            <div class="col-sm-12 pt-5" style="height: 200px; width: 620px;">
+              <span class="text-primary">Termo de ciência e responsabilidade:</span><br />
+              <div class="overflow-auto h-75 border p-2">
+                {{termoAceite}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+
+          <mat-slide-toggle #chaveTermos
+                            class="example-margin mr-10 mt-1"
+                            (change)="toggleSituacao($event)">
+
+            <span class="pt-2">Aceito</span>
+          </mat-slide-toggle>
+
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarAceite()" [disabled]="!aceitouTermos">Confirmar</button>
         </div>
       </div>
     </div>
@@ -215,6 +256,35 @@
         <div class="br-modal-footer justify-content-end">
           <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
           <button class="br-button is-primary is-small" type="button" (click)="concluirExecucao()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalReabrirExecucao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confirme a reabertura da execução do plano de trabalho</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">
+              Tem certeza que deseja reabrir a execução do plano de trabalho?
+            </div>
+            <div class="mt-4 mb-4">
+              <small>Ao confirmar essa operação, o plano de trabalho será reaberto e o servidor poderá alterar a execução das atividades.</small>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="concluirReabertura()">Confirmar</button>
         </div>
       </div>
     </div>

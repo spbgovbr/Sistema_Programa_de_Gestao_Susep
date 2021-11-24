@@ -28,7 +28,8 @@
                 <td>{{item.modalidadeExecucao}}</td>
                 <td class="text-right">{{item.quantidadeColaboradores}}</td>
                 <td>
-                  <ul class="pl-2">
+                  <a href="javascript:return false;" (click)="abrirTelaDetalhesAtividades(item.itensCatalogo)" class="float-right" title="Clique para ver detalhes das atividades"><i class="fa fa-info-circle"></i></a>
+                  <ul class="pl-2 float-left">
                     <li *ngFor="let atividade of item.itensCatalogo">{{atividade.itemCatalogo}}</li>
                   </ul>
                 </td>
@@ -38,19 +39,19 @@
                   </ul>
                 </td>-->
                 <!--<td>{{item.descricao}}</td>-->
-                <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho">                  
+                <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Rascunho">
                   <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
                     <a href="javascript:void(0)" (click)="editar(item.planoTrabalhoAtividadeId)" class="mr-2"><i class="fa fa-edit"></i></a>
                     <a href="javascript:void(0)" (click)="excluir(item.planoTrabalhoAtividadeId)"><i class="fa fa-trash"></i></a>
                   </secure-input>
                 </td>
                 <td *ngIf="dadosPlano.value?.situacaoId === PlanoTrabalhoSituacaoEnum.Habilitacao" class="my-auto">
-                  <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade">
-                    <a href="javascript:void(0)" (click)="candidatar(item.planoTrabalhoAtividadeId)" *ngIf="candidato(item.planoTrabalhoAtividadeId) === -1" title="Candidatar"><i class="fa fa-2x fa-user-plus text-gray-5"></i></a>
+                  <secure-input [perfis]="[PerfilEnum.Servidor]" [unidade]="unidade">
+                    <a href="javascript:void(0)" (click)="candidatar(item.planoTrabalhoAtividadeId)" *ngIf="candidato(item.planoTrabalhoAtividadeId) === -1" title="Candidatar"><i class="fa fa-2x fa-user-plus text-default"></i></a>
                   </secure-input>
                   <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Aprovada" title="Aprovado"><i class="fa fa-2x fa-user-check text-success"></i></span>
                   <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Rejeitada" title="Rejeitado"><i class="fa fa-2x fa-user-times text-danger"></i></span>
-                  <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Solicitada" title="Aguardando aprovação"><i class="fa fa-2x fa-user-clock text-info"></i></span>
+                  <span *ngIf="candidato(item.planoTrabalhoAtividadeId) === PlanoTrabalhoSituacaoCandidatoEnum.Solicitada" title="Aguardando aprovação"><i class="fa fa-2x fa-user-clock text-warning"></i></span>
                 </td>
                 <td *ngIf="dadosPlano.value?.situacaoId >= PlanoTrabalhoSituacaoEnum.ProntoParaExecucao">
                   <ul class="pl-2">
@@ -84,3 +85,54 @@
 <ng-template #modalCandidatos let-modal>
   <plano-lista-atividade-candidato [dadosPlano]="dadosPlano" [candidatos]="candidatos"></plano-lista-atividade-candidato>
 </ng-template>
+
+<ng-template #modalDetalhesAtividades let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-info">Detalhes das atividades</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fecharModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <tbody>
+              <tr *ngFor="let atividade of itensCatalogoDetalhar">
+                <td>
+                  <dl class="row">
+                    <dt class="col">
+                      <span class="text-primary">{{atividade?.titulo}}</span>
+                      <span class="text-primary" title="{{atividade?.definicaoComplexidade}}" *ngIf="atividade?.complexidade"> - {{atividade?.complexidade}}</span>
+                      <small>  ({{atividade?.formaCalculoTempoItemCatalogo}})</small>
+                    </dt>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Tempo execução remoto:</dt>
+                    <dd class="col-sm-3">{{atividade?.tempoExecucaoRemoto}}</dd>
+                    <dt class="col-sm-3">Tempo execução presencial:</dt>
+                    <dd class="col-sm-3">{{atividade?.tempoExecucaoPresencial}}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Entregas esperadas:</dt>
+                    <dd class="col-sm-9">{{atividade?.entregasEsperadas}}</dd>
+                  </dl>
+                  <dl class="row">
+                    <dt class="col-sm-3">Descrição:</dt>
+                    <dd class="col-sm-9">{{atividade?.descricao}}</dd>
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Fechar</button>
+  </div>
+
+</ng-template>
+

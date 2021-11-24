@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Susep.SISRH.Application.Options;
 using Susep.SISRH.Application.Queries.Abstractions;
-using Susep.SISRH.Domain.AggregatesModel.CatalogoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate;
 using SUSEP.Framework.Data.Abstractions.UnitOfWorks;
 using SUSEP.Framework.Result.Concrete;
 using SUSEP.Framework.Utils.Abstractions;
+using SUSEP.Framework.Utils.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,80 +23,101 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
         private IUnitOfWork UnitOfWork { get; }
         private IEmailHelper EmailHelper { get; }
         private IPessoaQuery PessoaQuery { get; }
+        private IOptions<PadroesOptions> Configuration { get; }
+        private IOptions<EmailOptions> EmailConfiguration { get; }
 
         public CandidatarPlanoTrabalhoAtividadeCommandHandler(            
             IPlanoTrabalhoRepository planoTrabalhoRepository, 
             IUnitOfWork unitOfWork,
             IEmailHelper emailHelper,
-            IPessoaQuery pessoaQuery)
+            IPessoaQuery pessoaQuery,
+            IOptions<PadroesOptions> configuration,
+            IOptions<EmailOptions> emailConfiguration)
         {
             PlanoTrabalhoRepository = planoTrabalhoRepository;
             UnitOfWork = unitOfWork;
             EmailHelper = emailHelper;
             PessoaQuery = pessoaQuery;
+            Configuration = configuration;
+            EmailConfiguration = emailConfiguration;
         }
 
         public async Task<IActionResult> Handle(CandidatarPlanoTrabalhoAtividadeCommand request, CancellationToken cancellationToken)
         {
-            ApplicationResult<bool> result = new ApplicationResult<bool>(request);            
+            ApplicationResult<bool> result = new ApplicationResult<bool>(request);
+            try
+            {
+                //Monta o objeto com os dados do catalogo
+                var item = await PlanoTrabalhoRepository.ObterAsync(request.PlanoTrabalhoId);
 
-            //Monta o objeto com os dados do catalogo
-            var item = await PlanoTrabalhoRepository.ObterAsync(request.PlanoTrabalhoId);
+                //Remove a atividade
+                item.RegistrarCandidaturaAtividade(request.PlanoTrabalhoAtividadeId, request.UsuarioLogadoId);
 
-            //Remove a atividade
-            item.RegistrarCandidaturaAtividade(request.PlanoTrabalhoAtividadeId, request.UsuarioLogadoId);
+                //Altera o item de catalogo no banco de dados
+                PlanoTrabalhoRepository.Atualizar(item);
+                UnitOfWork.Commit(false);
 
-            //Altera o item de catalogo no banco de dados
-            PlanoTrabalhoRepository.Atualizar(item);
-            UnitOfWork.Commit(false);
+                //Envia email
+                await EnviarEmail(request.PlanoTrabalhoAtividadeId, request.UsuarioLogadoId);
 
-            //Envia email
-            await EnviarEmail(request.UsuarioLogadoId);
-
-            result.Result = true;
-            result.SetHttpStatusToOk("Candidatura registrada com sucesso.");
+                result.Result = true;
+                result.SetHttpStatusToOk("Candidatura registrada com sucesso.");
+            }
+            catch (SISRH.Domain.Exceptions.SISRHDomainException ex)
+            {
+                result.Validations = new List<string>() { ex.Message };
+                result.Result = false;
+                result.SetHttpStatusToBadRequest();
+            }
             return result;
         }
 
         #region EnviarEmail
 
-        private async Task EnviarEmail(Int64 pessoaId)
+        private async Task EnviarEmail(Guid planoTrabalhoId, Int64 pessoaId)
         {
             try
             {
 
-                //Obtém os dados do usuário logado
-                var dadosPessoa = await PessoaQuery.ObterPorChaveAsync(pessoaId);
-                if (!String.IsNullOrEmpty(dadosPessoa.Result.Email))
+                if (Configuration.Value.Notificacoes == null ||
+                    Configuration.Value.Notificacoes.EnviarEmail)
                 {
-                    //Obtem os destinatários dos emails
-                    var destinatarios = new List<string>();
-                    destinatarios.Add(dadosPessoa.Result.Email);
+                    //Obtém os dados do usuário logado
+                    var dadosPessoa = await PessoaQuery.ObterPorChaveAsync(pessoaId);
+                    if (!String.IsNullOrEmpty(dadosPessoa.Result.Email))
+                    {
+                        //Obtem os destinatários dos emails
+                        var destinatarios = new List<string>();
+                        destinatarios.Add(dadosPessoa.Result.Email);
 
-                    //Envia os emails
-                    EnviarEmail(destinatarios.ToArray());
+                        //Envia os emails
+                        EnviarEmail(planoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoCandidaturaRegistrada, destinatarios.ToArray());
+                    }
                 }
             }
             catch { }
         }
 
-        private void EnviarEmail(string[] destinatarios)
+        private void EnviarEmail(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
-            {
-                var mensagem = new StringBuilder();
+            {                
+                var enderecoAcesso = Configuration.Value.EnderecoPublicacaoFront.TrimEnd('/') + "/programagestao/detalhar/" + planoTrabalhoId.ToString();
 
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                        .AppendLine("Sua candidatura a uma vaga no programa de gestão foi registrada.").AppendLine("")
-                        .AppendLine("Acompanhe o andamento por meio do sistema.");
+                var mensagem = new StringBuilder();
+                mensagem.Append(opcaoEmail.Mensagem)
+                    .AppendLine().AppendLine().Append("<a href =\"").Append(enderecoAcesso).Append("\">Clique aqui</a> para acessar o programa de gestão no sistema.").AppendLine().AppendLine()
+                    .AppendLine("Caso o link não funcione, copie o endereço abaixo e abra no navegador da sua preferência:")
+                    .AppendLine(enderecoAcesso);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Candidatura no programa de gestão registrada",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(),
+                    true);
             }
         }
 

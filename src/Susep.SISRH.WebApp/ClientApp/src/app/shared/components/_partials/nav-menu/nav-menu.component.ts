@@ -96,6 +96,13 @@ export class NavMenuComponent implements OnInit {
           }
         }
 
+        items = items.concat([{
+          text: 'Estrutura hierárquica',
+          subItems: [
+            { text: 'Pessoas', url: '/pessoa' },
+            //{ text: 'Unidades', url: '/unidade' },
+          ]
+        }]);
 
         const gestorUnidade = this.perfilUsuario.perfis.filter(p =>
           p.perfil === PerfilEnum.Gestor ||
@@ -120,7 +127,7 @@ export class NavMenuComponent implements OnInit {
             text: 'Meu trabalho',
             subItems: [
               { text: 'Plano em execução', url: '/programagestao/atividade' },
-              { text: 'Habilitação', url: '/programagestao/atividade/habilitacao' },
+              //{ text: 'Habilitação', url: '/programagestao/atividade/habilitacao' },
               { text: 'Histórico de planos de trabalho', url: '/programagestao/atividade/historico' },
             ]
           }]);

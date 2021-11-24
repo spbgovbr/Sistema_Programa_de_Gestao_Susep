@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Susep.SISRH.Application.Options;
 using Susep.SISRH.Application.Queries.Abstractions;
-using Susep.SISRH.Application.Queries.Concrete;
-using Susep.SISRH.Domain.AggregatesModel.CatalogoAggregate;
-using Susep.SISRH.Domain.AggregatesModel.PessoaAggregate;
 using Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate;
 using Susep.SISRH.Domain.Enums;
 using SUSEP.Framework.Data.Abstractions.UnitOfWorks;
 using SUSEP.Framework.Result.Concrete;
 using SUSEP.Framework.Utils.Abstractions;
+using SUSEP.Framework.Utils.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,23 +24,28 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
         private IUnitOfWork UnitOfWork { get; }
         private IEmailHelper EmailHelper { get; }
         private IUnidadeQuery UnidadeQuery { get; }
+        private IOptions<PadroesOptions> Configuration { get; }
+        private IOptions<EmailOptions> EmailConfiguration { get; }
 
-        public AlterarSituacaoPlanoTrabalhoCommandHandler(            
-            IPlanoTrabalhoRepository planoTrabalhoRepository, 
+        public AlterarSituacaoPlanoTrabalhoCommandHandler(
+            IPlanoTrabalhoRepository planoTrabalhoRepository,
             IUnitOfWork unitOfWork,
             IEmailHelper emailHelper,
-            IUnidadeQuery unidadeQuery
-        )
+            IUnidadeQuery unidadeQuery,
+            IOptions<PadroesOptions> configuration,
+            IOptions<EmailOptions> emailConfiguration)
         {
             PlanoTrabalhoRepository = planoTrabalhoRepository;
             UnitOfWork = unitOfWork;
             EmailHelper = emailHelper;
             UnidadeQuery = unidadeQuery;
+            Configuration = configuration;
+            EmailConfiguration = emailConfiguration;
         }
 
         public async Task<IActionResult> Handle(AlterarSituacaoPlanoTrabalhoCommand request, CancellationToken cancellationToken)
         {
-            ApplicationResult<bool> result = new ApplicationResult<bool>(request);            
+            ApplicationResult<bool> result = new ApplicationResult<bool>(request);
 
             //Monta o objeto com os dados do catalogo
             var item = await PlanoTrabalhoRepository.ObterAsync(request.PlanoTrabalhoId);
@@ -48,7 +53,9 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
             try
             {
                 //Altera a situação do plano
-                if (request.SituacaoId == (int)SituacaoPlanoTrabalhoEnum.EmExecucao)
+                if (request.Deserto)
+                    item.AlterarSituacao((int)SituacaoPlanoTrabalhoEnum.Concluido, request.UsuarioLogadoId.ToString(), request.Observacoes, true);
+                else if (request.SituacaoId == (int)SituacaoPlanoTrabalhoEnum.EmExecucao)
                     item.ConcluirHabilitacao(request.UsuarioLogadoId.ToString(), request.Observacoes, request.Aprovados);
                 else
                     item.AlterarSituacao(request.SituacaoId, request.UsuarioLogadoId.ToString(), request.Observacoes);
@@ -78,56 +85,71 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
         {
             try
             {
-                switch (item.SituacaoId)
+
+                if (Configuration.Value.Notificacoes == null ||
+                    Configuration.Value.Notificacoes.EnviarEmail)
                 {
-                    case (int)SituacaoPlanoTrabalhoEnum.EnviadoAprovacao:
-                        //Obtém o chefe, o CG e o diretor da unidade
-                        var destsAprovacao = await ObterChefesUnidade(item.Unidade.SiglaCompleta);
-                        EnviarEmailPlanoEnviadoAprovacao(destsAprovacao);
-                        break;
 
-                    case (int)SituacaoPlanoTrabalhoEnum.Aprovado:
-                        //Obtém o chefe, o CG e o diretor da unidade
-                        var destsAprovado = await ObterChefesUnidade(item.Unidade.SiglaCompleta);
-                        EnviarEmailPlanoAprovado(destsAprovado);
-                        break;
+                    switch (item.SituacaoId)
+                    {
+                        case (int)SituacaoPlanoTrabalhoEnum.EnviadoAprovacao:
+                            //Obtém o chefe, o CG e o diretor da unidade
+                            var destsAprovacao = await ObterChefesUnidade(item.Unidade.SiglaCompleta);
+                            EnviarEmailPlanoEnviadoAprovacao(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoParaAprovacao, destsAprovacao);
+                            break;
 
-
-                    case (int)SituacaoPlanoTrabalhoEnum.Rejeitado:
-                        //Obtém o chefe, o CG e o diretor da unidade
-                        var destsRejeitado = await ObterChefesUnidade(item.Unidade.SiglaCompleta);
-                        EnviarEmailPlanoRejeitado(destsRejeitado);
-                        break;
-
-                    case (int)SituacaoPlanoTrabalhoEnum.Habilitacao:
-
-                        //Obtém as pessoas da unidade
-                        var pessoasUnidade = await UnidadeQuery.ObterPessoasAsync(item.UnidadeId);
-                        EnviarEmailHabilitacao(pessoasUnidade.Result.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
-                        break;
+                        case (int)SituacaoPlanoTrabalhoEnum.Aprovado:
+                            //Obtém o chefe, o CG e o diretor da unidade
+                            var destsAprovado = await ObterChefesUnidade(item.Unidade.SiglaCompleta);
+                            EnviarEmailPlanoAprovado(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoAprovado, destsAprovado);
+                            break;
 
 
-                    //Conclusão da fase de habilitação
-                    case (int)SituacaoPlanoTrabalhoEnum.ProntoParaExecucao:
+                        case (int)SituacaoPlanoTrabalhoEnum.Rejeitado:
+                            //Obtém o chefe, o CG e o diretor da unidade
+                            var destsRejeitado = await ObterChefesUnidade(item.Unidade.SiglaCompleta);
+                            EnviarEmailPlanoRejeitado(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoRejeitado, destsRejeitado);
+                            break;
 
-                        //Obtém as pessoas que tiveram a candidatura aprovada
-                        var aprovados = from a in item.Atividades
-                                        from c in a.Candidatos
-                                        where c.SituacaoId == (int)SituacaoCandidaturaPlanoTrabalhoEnum.Aprovada
-                                        select c.Pessoa;
+                        case (int)SituacaoPlanoTrabalhoEnum.Habilitacao:
 
-                        //Obtém as pessoas que não foram aprovadas
-                        var rejeitados = from a in item.Atividades
-                                         from c in a.Candidatos
-                                         where c.SituacaoId != (int)SituacaoCandidaturaPlanoTrabalhoEnum.Aprovada
-                                         select c.Pessoa;
-                        rejeitados = rejeitados.Where(r => !aprovados.Any(a => a.PessoaId == r.PessoaId));
+                            //Obtém as pessoas da unidade
+                            var pessoasUnidade = await UnidadeQuery.ObterPessoasAsync(item.UnidadeId);
+                            var pessoasEnviarEmail = pessoasUnidade.Result;
+                            //Se o tipo de notificação não incluir as pessoas da subunidade, 
+                            //  Deve adicionar apenas as pessoas que estão diretamente lotadas na unidade OU 
+                            //  que tem função em unidades inferiores
+                            if (Configuration.Value.Notificacoes == null ||
+                                Configuration.Value.Notificacoes.AberturaFaseHabilitacao != "IncluirSubunidades")
+                            {
+                                pessoasEnviarEmail = pessoasEnviarEmail.Where(p => p.UnidadeId == item.UnidadeId || (p.Chefe.HasValue && p.Chefe.Value)).ToList();
+                            }
+                            EnviarEmailHabilitacao(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoEmHabilitacao, pessoasEnviarEmail.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
+                            break;
 
-                        //Envia email aos aprovados e aos rejeitados
-                        EnviarEmailCandidaturaAprovada(aprovados.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
-                        EnviarEmailCandidaturaRejeitada(rejeitados.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
 
-                        break;
+                        //Conclusão da fase de habilitação
+                        case (int)SituacaoPlanoTrabalhoEnum.ProntoParaExecucao:
+
+                            //Obtém as pessoas que tiveram a candidatura aprovada
+                            var aprovados = from a in item.Atividades
+                                            from c in a.Candidatos
+                                            where c.SituacaoId == (int)SituacaoCandidaturaPlanoTrabalhoEnum.Aprovada
+                                            select c.Pessoa;
+
+                            //Obtém as pessoas que não foram aprovadas
+                            var rejeitados = from a in item.Atividades
+                                             from c in a.Candidatos
+                                             where c.SituacaoId != (int)SituacaoCandidaturaPlanoTrabalhoEnum.Aprovada
+                                             select c.Pessoa;
+                            rejeitados = rejeitados.Where(r => !aprovados.Any(a => a.PessoaId == r.PessoaId));
+
+                            //Envia email aos aprovados e aos rejeitados
+                            EnviarEmailCandidaturaAprovada(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoCandidaturaAprovada, aprovados.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
+                            EnviarEmailCandidaturaRejeitada(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoCandidaturaRejeitada, rejeitados.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
+
+                            break;
+                    }
                 }
             }
             catch { }
@@ -140,124 +162,118 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
             return chefes.Result.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray();
         }
 
-        private void EnviarEmailPlanoEnviadoAprovacao(string[] destinatarios)
+        private void EnviarEmailPlanoEnviadoAprovacao(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
-
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                        .AppendLine("Um programa de gestão em unidade sob sua gestão foi enviado para aprovação.").AppendLine("")
-                        .AppendLine("Acompanhe o andamento por meio do sistema.");
+                var mensagem = FormatarMensagem(planoTrabalhoId, opcaoEmail);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Programa de gestão enviado para aprovação",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(),
+                    true);
             }
         }
 
-        private void EnviarEmailPlanoAprovado(string[] destinatarios)
+        private void EnviarEmailPlanoAprovado(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
-
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                        .AppendLine("Um programa de gestão em unidade sob sua gestão foi aprovado.").AppendLine("")
-                        .AppendLine("Acompanhe o andamento por meio do sistema.");
+                var mensagem = FormatarMensagem(planoTrabalhoId, opcaoEmail);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Programa de gestão aprovado",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(),
+                    true);
             }
         }
 
-        private void EnviarEmailPlanoRejeitado(string[] destinatarios)
+        private void EnviarEmailPlanoRejeitado(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
-
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                         .AppendLine("Um programa de gestão em unidade sob sua gestão foi rejeitado.").AppendLine("")
-                         .AppendLine("Acompanhe o andamento por meio do sistema.");
+                var mensagem = FormatarMensagem(planoTrabalhoId, opcaoEmail);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Programa de gestão rejeitado",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(),
+                    true);
             }
         }
 
-        private void EnviarEmailHabilitacao(string[] destinatarios)
+        private void EnviarEmailHabilitacao(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
-
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                            .AppendLine("Está aberta a fase de habilitação de um programa de gestão na sua unidade.").AppendLine("")
-                            .AppendLine("Acesse o sistema e, se for do seu interesse, candidate-se a uma das vagas.");
+                var mensagem = FormatarMensagem(planoTrabalhoId, opcaoEmail);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Habilitação iniciada",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(),
+                    true);
             }
         }
 
-        private void EnviarEmailCandidaturaAprovada(string[] destinatarios)
+        private void EnviarEmailCandidaturaAprovada(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
-
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                            .AppendLine("Sua candidatura para vaga no programa de gestão foi aprovada.").AppendLine("")
-                            .AppendLine("Aguarde até que a execução do programa de gestão seja iniciada para que possa fazer o apontamento das suas atividades.");
+                var mensagem = FormatarMensagem(planoTrabalhoId, opcaoEmail);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Candidatura aprovada",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem.ToString(),
+                    true);
             }
         }
 
-        private void EnviarEmailCandidaturaRejeitada(string[] destinatarios)
+        private void EnviarEmailCandidaturaRejeitada(Guid planoTrabalhoId, Email opcaoEmail, string[] destinatarios)
         {
             destinatarios = destinatarios.Where(d => !String.IsNullOrEmpty(d)).ToArray();
             if (destinatarios.Any())
             {
-                var mensagem = new StringBuilder();
-
-                mensagem.AppendLine($"Prezado(a), ").AppendLine("")
-                            .AppendLine("Sua candidatura para vaga no programa de gestão não foi aprovada.").AppendLine("")
-                            .AppendLine("Entre em contato com a sua chefia para entender os motivos.");
+                var mensagem = FormatarMensagem(planoTrabalhoId, opcaoEmail);
 
                 EmailHelper.Send(
-                    "naoresponda@susep.gov.br",
-                    "[Programa de gestão] Candidatura rejeitada",
+                    EmailConfiguration.Value.EmailRemetente,
+                    EmailConfiguration.Value.NomeRemetente,
                     destinatarios,
-                    "Sistema de Gestão de Pessoas - Programa de gestão",
-                    mensagem.ToString(), true);
+                    opcaoEmail.Assunto,
+                    mensagem,
+                    true);
             }
+        }
+
+        private string FormatarMensagem(Guid planoTrabalhoId, Email opcaoEmail)
+        {
+            var enderecoAcesso = Configuration.Value.EnderecoPublicacaoFront.TrimEnd('/') + "/programagestao/detalhar/" + planoTrabalhoId.ToString();
+
+            var mensagem = new StringBuilder();
+            mensagem.Append(opcaoEmail.Mensagem)
+                .AppendLine().AppendLine().AppendLine().Append("<a href =\"").Append(enderecoAcesso).Append("\">Clique aqui</a> para acessar o programa de gestão no sistema.").AppendLine().AppendLine()
+                .AppendLine("Caso o link não funcione, copie o endereço abaixo e abra no navegador da sua preferência:")
+                .AppendLine(enderecoAcesso);
+            return mensagem.ToString();
         }
 
         #endregion

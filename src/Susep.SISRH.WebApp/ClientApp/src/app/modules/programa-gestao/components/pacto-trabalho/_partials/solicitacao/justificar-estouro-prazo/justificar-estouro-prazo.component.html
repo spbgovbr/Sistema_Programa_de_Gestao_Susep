@@ -51,7 +51,8 @@
                   <form [formGroup]="form">
                     <div class="field">
                       <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Justificativa">
-                        <textarea id="descricao" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+                        <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+                        <input-chars-cunter [element]="descricao"></input-chars-cunter>
                       </field-validation>
                     </div>
                   </form>

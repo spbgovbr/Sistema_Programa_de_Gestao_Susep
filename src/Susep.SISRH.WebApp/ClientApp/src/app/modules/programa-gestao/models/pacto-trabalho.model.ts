@@ -50,6 +50,7 @@ export interface IPactoTrabalhoAtividade {
   dataFim?: Date;
   situacaoId?: number;
   situacao?: string;
+  execucaoRemota?: boolean;
   descricao?: string;
   consideracoes?: string;
   justificativa?: string;

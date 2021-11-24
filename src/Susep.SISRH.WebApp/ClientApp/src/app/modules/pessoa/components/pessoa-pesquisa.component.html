@@ -8,7 +8,7 @@
       <div class="br-form">
         <fieldset>
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <div class="field">
                 <div class="br-input">
                   <label for="item-1">Nome</label>
@@ -16,7 +16,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <div class="field">
                 <div class="br-select">
                   <label for="simples">Unidade</label>
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
+            <!--<div class="col-sm-4">
               <div class="field">
                 <div class="br-select">
                   <label for="simples">Programa de Gestão</label>
@@ -37,7 +37,7 @@
                   </select>
                 </div>
               </div>
-            </div>
+            </div>-->
             </div>
         </fieldset>
         <div class="actions justify-content-start">
@@ -54,19 +54,23 @@
                 <tr>
                   <th>Nome</th>
                   <th>Unidade</th>
-                  <th>Carga Horária</th>                
-                  <th style="width:60px"></th>
+                  <th>Tipo de vínculo</th>
+                  <th>Situação</th>
+                  <th class="text-right">Carga Horária</th>
+                  <!--<th style="width:60px"></th>-->
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of dadosEncontrados?.registros">
                   <td>{{item.nome}}</td>
                   <td>{{item.unidade}}</td>
-                  <td>{{item.cargaHoraria}}</td>                             
-                  <td><a href="javascript:void(0)" [routerLink]="['/pessoa/editar/' + item.pessoaId]"><i class="fa fa-eye"></i></a></td>
+                  <td>{{item.tipoVinculo}}</td>
+                  <td>{{item.situacaoPessoa}}</td>
+                  <td class="text-right">{{item.cargaHoraria}}</td>
+                  <!--<td><a href="javascript:void(0)" [routerLink]="['/pessoa/editar/' + item.pessoaId]"><i class="fa fa-eye"></i></a></td>-->
                 </tr>
                 <tr>
-                  <td colspan="4" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                  <td colspan="5" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
                 </tr>
               </tbody>
             </table>

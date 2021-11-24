@@ -55,8 +55,14 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 pacto.ModalidadeExecucaoId == (int)ModalidadeExecucaoEnum.Presencial ? item.TempoExecucaoPresencial.Value : item.TempoExecucaoRemoto.Value :
                 request.TempoPrevistoPorItem.Value;
 
+            var modalidaExecucaoId = pacto.ModalidadeExecucaoId;
+            if (pacto.ModalidadeExecucaoId == (int)Domain.Enums.ModalidadeExecucaoEnum.Semipresencial)
+            {
+                modalidaExecucaoId = request.ExecucaoRemota ? (int)Domain.Enums.ModalidadeExecucaoEnum.Teletrabalho : (int)Domain.Enums.ModalidadeExecucaoEnum.Presencial;
+            }
+
             //Cria a atividade
-            pacto.AdicionarAtividade(item, request.Quantidade, tempoPrevisto, request.Descricao, request.AssuntosId, request.ObjetosId);
+            pacto.AdicionarAtividade(item, request.Quantidade, modalidaExecucaoId, tempoPrevisto, request.Descricao, request.AssuntosId, request.ObjetosId);
 
             //Altera o pacto de trabalho no banco de dados
             PactoTrabalhoRepository.Atualizar(pacto);

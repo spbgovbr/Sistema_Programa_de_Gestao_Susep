@@ -79,6 +79,29 @@
             {
                 return @"
                     SELECT  u.[unidadeId]
+                            ,[undSigla]
+                            ,[undDescricao] nome
+                            ,[unidadeIdPai]
+                            ,[tipoUnidadeId]
+                            ,[situacaoUnidadeId]
+                            ,[ufId]
+                            ,[undNivel] Nivel
+                            ,[tipoFuncaoUnidadeId]
+                            ,[undSiglaCompleta] siglaCompleta
+                            ,[Email]
+                    FROM [dbo].[VW_UnidadeSiglaCompleta] u  
+                    WHERE u.[unidadeId] = @unidadeId
+                ";
+            }
+        }
+
+
+        public static string ObterQuantidadeServidoresPorChave
+        {
+            get
+            {
+                return @"
+                    SELECT  upg.[unidadeId]
                         ,[undSigla]
                         ,[undDescricao] nome
                         ,[unidadeIdPai]
@@ -91,13 +114,26 @@
                         ,[Email]
                         ,quantidadeServidores
                     FROM [dbo].[VW_UnidadeSiglaCompleta] vu
-                        INNER JOIN (SELECT
-                                        u.[unidadeId]
-                                        ,count(p.pessoaId) quantidadeServidores
-                                    FROM [dbo].[VW_UnidadeSiglaCompleta] u
-                                        LEFT OUTER JOIN [dbo].[Pessoa] p ON u.unidadeId = p.unidadeId
-                                    WHERE u.[unidadeId] = @unidadeId
-                                    GROUP BY u.[unidadeId]) u ON vu.unidadeId = U.unidadeId
+                            INNER JOIN (
+                                        SELECT up.[unidadeId], count(1) quantidadeServidores
+                                        FROM (SELECT p.pessoaid, p.[unidadeId]
+                                              FROM [dbo].[Pessoa] p
+                                              WHERE p.situacaoPessoaId = 1
+
+                                              UNION 
+
+                                              SELECT p.pessoaid, pat.unidadeId
+                                              FROM PessoaAlocacaoTemporaria pat
+                                                  INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = pat.pessoaId
+                                              WHERE p.situacaoPessoaId = 1 
+                                                  AND (pat.dataInicio <= getdate()) AND (pat.dataFim IS NULL OR pat.dataFim <= getdate())
+                                        ) up 
+                                        WHERE up.unidadeId IN (SELECT unidadeId
+                                                               FROM [dbo].[VW_UnidadeSiglaCompleta]
+                                                               WHERE undSiglaCompleta like (SELECT u.undSiglaCompleta + '%'
+                                                                                            FROM [dbo].[VW_UnidadeSiglaCompleta] u
+                                                                                             WHERE u.[unidadeId] = @unidadeId))
+                                        GROUP BY up.[unidadeId]) upg ON vu.unidadeId = upg.unidadeId
                 ";
             }
         }
@@ -147,7 +183,8 @@
                     FROM [dbo].[Pessoa] p
 			            LEFT OUTER JOIN [dbo].[PessoaAlocacaoTemporaria] a ON a.pessoaId = p.pessoaId AND a.dataFim IS NULL
 	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = COALESCE(a.unidadeId, p.unidadeId)
-                    WHERE (COALESCE(a.unidadeId, p.unidadeId) = @unidadeId) OR (u.unidadeIdPai = @unidadeId and p.tipoFuncaoId IS NOT NULL) 
+                    WHERE ((COALESCE(a.unidadeId, p.unidadeId) = @unidadeId) OR (u.unidadeIdPai = @unidadeId and p.tipoFuncaoId IS NOT NULL))
+                        AND p.situacaoPessoaId = 1 AND p.tipoVinculoId NOT IN (5,6)
                     ORDER BY pesNome
                 ";
             }
@@ -158,12 +195,27 @@
             get
             {
                 return @"
-                    SELECT pessoaId pessoaId, pesNome nome, pesEmail email, p.unidadeId, tipoFuncaoId
-                    FROM [dbo].[Pessoa] p
-	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON p.unidadeId = u.unidadeId
-                    WHERE (u.undSiglaCompleta like (SELECT undSiglaCompleta + '%' FROM [dbo].[VW_UnidadeSiglaCompleta] WHERE unidadeId = @unidadeId))
-                        OR (u.unidadeIdPai = @unidadeId and p.tipoFuncaoId IS NOT NULL) 
-                    ORDER BY pesNome
+                    SELECT *
+                    FROM (SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, p.[unidadeId], IIF(u1.unidadeId IS NOT NULL, 1, 0) chefe
+                            FROM [dbo].[Pessoa] p
+                                LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = p.unidadeId AND (u1.pessoaIdChefe = p.pessoaId OR u1.pessoaIdChefeSubstituto = p.pessoaId)
+                            WHERE p.situacaoPessoaId = 1
+
+                            UNION 
+
+                            SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, pat.unidadeId, IIF(u1.unidadeId IS NOT NULL, 1, 0) chefe
+                            FROM PessoaAlocacaoTemporaria pat
+                                INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = pat.pessoaId
+                                LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = p.unidadeId AND (u1.pessoaIdChefe = p.pessoaId OR u1.pessoaIdChefeSubstituto = p.pessoaId)
+                            WHERE p.situacaoPessoaId = 1 
+                                AND (pat.dataInicio <= getdate()) AND (pat.dataFim IS NULL OR pat.dataFim <= getdate())
+                    ) up 
+                    WHERE up.unidadeId IN (SELECT unidadeId
+                                            FROM [dbo].[VW_UnidadeSiglaCompleta]
+                                            WHERE undSiglaCompleta like (SELECT u.undSiglaCompleta + '%'
+                                                                        FROM [dbo].[VW_UnidadeSiglaCompleta] u
+                                                                        WHERE u.[unidadeId] = @unidadeId))
+                    ORDER BY up.nome
                 ";
             }
         }

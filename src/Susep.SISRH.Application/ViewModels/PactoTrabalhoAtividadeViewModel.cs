@@ -23,7 +23,12 @@ namespace Susep.SISRH.Application.ViewModels
 
         [DataMember(Name = "itemCatalogoComplexidade")]
         public String ItemCatalogoComplexidade { get; set; }
+
+
+        [DataMember(Name = "execucaoRemota")]
+        public Boolean ExecucaoRemota { get; set; }
         
+
 
         [DataMember(Name = "formaCalculoTempoItemCatalogoId")]
         public Int32 FormaCalculoTempoItemCatalogoId { get; set; }        

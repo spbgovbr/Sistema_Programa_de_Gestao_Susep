@@ -52,7 +52,8 @@
           <div class="col-sm-12">
             <div class="field">
               <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Termo de aceite">
-                <textarea id="termoAceite" placeholder="Preencha os termos que devem ser aceitos pelos servidores" name="termoAceite" formControlName="termoAceite"></textarea>
+                <textarea maxlength="5000" id="termoAceite" #termoAceite placeholder="Preencha os termos que devem ser aceitos pelos servidores" name="termoAceite" formControlName="termoAceite"></textarea>
+                <input-chars-cunter [element]="termoAceite"></input-chars-cunter>
               </field-validation>
             </div>
           </div>

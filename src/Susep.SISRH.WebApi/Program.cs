@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.EventLog;
+using Microsoft.Extensions.Configuration;
+using Serilog;
+using System;
+using System.IO;
 
 namespace Susep.SISRH.WebApi
 {
@@ -26,11 +28,14 @@ namespace Susep.SISRH.WebApi
         /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                   .ConfigureLogging(logging =>
-                   {
-                       logging.ClearProviders();
-                       logging.AddEventLog(new EventLogSettings() { Filter = (source, level) => level == LogLevel.Error });
-                   })
+                   .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development")
+                   .ConfigureAppConfiguration((hostingContext, config) =>
+                       config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
+                             .AddJsonFile($"connectionstrings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"messagebroker.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddEnvironmentVariables())
+                   .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))
                    .UseStartup<Startup>();
     }
 }

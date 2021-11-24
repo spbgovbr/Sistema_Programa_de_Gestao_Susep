@@ -206,6 +206,19 @@ namespace Susep.SISRH.WebApi.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [HttpPut("{pactoTrabalhoid}/reabrir"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> Reabrir([FromRoute] AlterarSituacaoPactoTrabalhoCommand command)
+        {
+            command.SituacaoId = (int)SituacaoPactoTrabalhoEnum.EmExecucao;
+            return await Mediator.Send(command);
+        }
+        
+
+        /// <summary>
+        /// Altera a situação do pacto
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("{pactoTrabalhoid}/avaliar"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
         public async Task<IActionResult> Avaliar([FromRoute]AlterarSituacaoPactoTrabalhoCommand command)
         {
