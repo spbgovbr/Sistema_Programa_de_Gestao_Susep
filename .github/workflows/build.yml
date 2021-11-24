@@ -2,7 +2,7 @@ name: Build-deploy-image-docker
 
 on:
   push:
-    branches: main
+    branches: docker
 
 
 jobs:
