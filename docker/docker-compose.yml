@@ -34,11 +34,12 @@ services:
       - pgd
     
   web-api:
-    image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
     volumes:
-      - ./api/Settings:/app/api/Settings:ro
+      - ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
     environment: 
       - ASPNETCORE_ENVIRONMENT=Homolog
@@ -81,12 +82,13 @@ services:
      - traefik.http.services.web-api.loadbalancer.server.port=80
      - traefik.http.services.web-api.loadbalancer.server.scheme=http
      - traefik.http.routers.web-api.middlewares=stripprefix_web_api
-     - traefik.http.middlewares.stripprefix_web_api.stripprefix.prefixes=/api/
+     - traefik.http.middlewares.stripprefix_web_api.stripprefix.prefixes=/SISGP/api/
     networks:
       - pgd
 
   api-gateway:
-    image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
     working_dir: /app/gateway/
     volumes:
@@ -107,7 +109,8 @@ services:
       - pgd
 
   web-app:
-    image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    image: susep
     command: dotnet Susep.SISRH.WebApp.dll
     working_dir: /app/app/
     volumes:
