@@ -63,6 +63,7 @@ import { AssuntosAssociadosComponent } from './components/item-catalogo/cadastro
 import { PactoEmpresasComponent } from './components/pacto-trabalho/_partials/empresas/empresas.component';
 import { PlanoObjetoCadastroComponent } from './components/plano-trabalho/_partials/objetos/cadastro/objeto-cadastro.component';
 import { AtividadeExcluirComponent } from './components/pacto-trabalho/_partials/solicitacao/atividade-excluir/atividade-excluir.component';
+import { AgendamentoPresencialComponent } from './components/agendamento-presencial/agendamento-presencial.component';
 
 registerLocaleData(localePt)
 
@@ -125,6 +126,7 @@ registerLocaleData(localePt)
     PactoDetalhesSolicitacaoComponent,
     PlanoHabilitacaoComponent,
     AssuntosAssociadosComponent,
+    AgendamentoPresencialComponent,
   ],
   exports: [
     DashboardComponent,

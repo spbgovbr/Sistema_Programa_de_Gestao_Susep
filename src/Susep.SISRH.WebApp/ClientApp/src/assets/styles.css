@@ -296,3 +296,23 @@ input, select {
 .cdk-overlay-container {
   z-index: 999999 !important;
 }
+
+
+.fc-sat,
+.fc-sun {
+  background-color: #ededed !important;
+}
+
+
+.fc-mon,
+.fc-tue,
+.fc-wed,
+.fc-thu,
+.fc-fri {
+  cursor: pointer;
+}
+
+.fc-disabled {
+  background-color: #f8f8f8 !important;
+  cursor: default;
+}

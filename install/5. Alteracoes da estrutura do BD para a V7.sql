@@ -48,3 +48,27 @@ insert into [dbo].[SituacaoPessoa] values (4 , 'Cedida')
 insert into [dbo].[SituacaoPessoa] values (5 , 'Desligada')
 insert into [dbo].[SituacaoPessoa] values (2 , 'Falecida')
 insert into [dbo].[SituacaoPessoa] values (3 , 'Inativa')
+
+GO
+
+
+CREATE TABLE [dbo].[TipoVinculo](
+	[tipoVinculoId] [bigint] NOT NULL,
+	[tvnDescricao] [varchar](150) NOT NULL,
+ CONSTRAINT [PK_TipoVinculo] PRIMARY KEY CLUSTERED 
+(
+	[tipoVinculoId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [UQ_TipoVinculo_tvnDescricao] UNIQUE NONCLUSTERED 
+(
+	[tvnDescricao] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+ALTER TABLE [dbo].[Pessoa]
+	ADD 	[situacaoPessoaId] [bigint] NULL,
+		[tipoVinculoId] [bigint] NULL
+GO
