@@ -36,7 +36,7 @@
 
                   <!-- Botões de ação -->
                   <div class="actions justify-content-center">
-                    <button class="button is-primary" name="button" value="login" (click)="logar()">Entrar</button>
+                    <button class="button is-primary" name="button" value="login" [disabled]="!form.valid" (click)="logar()">Entrar</button>
                   </div>
                 </form>
               </section>

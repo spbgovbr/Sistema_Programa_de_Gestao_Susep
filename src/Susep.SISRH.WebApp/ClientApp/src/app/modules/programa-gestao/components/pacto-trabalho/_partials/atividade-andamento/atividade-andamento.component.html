@@ -34,7 +34,7 @@
                   <div *ngIf="item.nota === 0 || item.nota" title="{{item.justificativa}}">{{ item.nota }}</div>
                   <secure-input *ngIf="item.situacaoId === 503" [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor" [unidade]="unidade">
                     <a href="javascript:void(0)" *ngIf="usuarioPodeAvaliar" (click)="avaliar(item.pactoTrabalhoAtividadeId)">Avaliar</a>
-                    <a href="javascript:void(0)" *ngIf="!usuarioPodeAvaliar" (click)="avaliar(item.pactoTrabalhoAtividadeId)">Ver avaliação</a>
+                    <a href="javascript:void(0)" *ngIf="!usuarioPodeAvaliar && item.nota" (click)="avaliar(item.pactoTrabalhoAtividadeId)">Ver avaliação</a>
                   </secure-input>
                 </td>
                 <td class="text-right">{{item.tempoHomologado}}</td>
@@ -140,7 +140,7 @@
         </div>
         <div class="br-modal-footer justify-content-end">
           <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
-          <button class="br-button is-primary is-small" type="button" *ngIf="usuarioPodeAvaliar" (click)="editarAtividade()" [disabled]="!form.valid">Salvar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="editarAtividade()" [disabled]="!form.valid">Salvar</button>
         </div>
       </div>
     </div>
@@ -185,7 +185,7 @@
         </div>
         <div class="br-modal-footer justify-content-end">
           <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
-          <button class="br-button is-primary is-small" type="button" (click)="salvarAvaliacao()" [disabled]="!formAvaliacao.valid">Salvar</button>
+          <button class="br-button is-primary is-small" type="button" *ngIf="usuarioPodeAvaliar" (click)="salvarAvaliacao()" [disabled]="!formAvaliacao.valid">Salvar</button>
         </div>
       </div>
     </div>

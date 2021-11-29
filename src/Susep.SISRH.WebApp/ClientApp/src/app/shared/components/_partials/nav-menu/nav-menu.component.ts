@@ -132,7 +132,7 @@ export class NavMenuComponent implements OnInit {
             ]
           }]);
 
-        //items = items.concat([items]);
+        //items.push({text: 'Agendamento presencial', url: '/agendamento' });
       }
 
     }

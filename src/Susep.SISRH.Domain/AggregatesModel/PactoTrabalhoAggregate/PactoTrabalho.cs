@@ -97,6 +97,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             var atividadesDiarias = this.Atividades.Where(it => it.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia).ToList();
             var quantidadeDias = WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false);
             atividadesDiarias.ForEach(it => it.AtualizarTempoPrevistoTotal(quantidadeDias, it.TempoPrevistoPorItem));
+            
+            this.AtualizarPercentualExecucao();
         }
 
         #region Fluxo de aprovação do pacto
@@ -360,7 +362,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             //Se tiver alguma atividade concluída, usa a quantidade total de dias para calcular
             //  Caso contrário, usa o número de dias já executado
             var diasExecutadosPacto = diasTotaisPacto;
-            if (!this.Atividades.Any(a => a.DataFim.HasValue))
+            if (this.Atividades.Any(a => !a.DataFim.HasValue))
             {//Para esse cálculo desconsidera os feriados
                 diasExecutadosPacto = WorkingDays.DiffDays(this.DataInicio, DateTime.Now.Date > this.DataFim.Date ? this.DataFim.Date : DateTime.Now.Date, null, false);
             }
@@ -521,7 +523,6 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             var atividade = PactoTrabalhoAtividade.Criar(this, itemCatalogo, quantidade, modalidaExecucaoId, tempoPrevistoPorItem, descricao);
             atividade.AlterarAndamento(situacaoId, dataInicio, dataFim, tempoRealizado, ignorarValidacoes: true);
             this.Atividades.Add(atividade);
-            this.AtualizarPercentualExecucao();
 
             if (itemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
                 atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
@@ -531,6 +532,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis, tempoPrevistoPorItem);
                 this.AlterarPeriodo(novaDataFim);
             }
+
+            this.AtualizarPercentualExecucao();
         }
 
         #endregion
