@@ -19,6 +19,13 @@
       <dt class="col-sm-5">Prazo de comparecimento:</dt>
       <dd class="col-sm-7">{{dadosPacto.value?.tempoComparecimento}} dia(s)</dd>
     </dl>
+    <!--<dl class="row" *ngIf="dadosPacto.value?.formaExecucaoId === 102">
+      <dt class="col-sm-5">Frequência presencial:</dt>
+      <dd class="col-sm-7">
+        1 dia a cada quinzena
+        <a href="javascript: void();" *ngIf="dadosPacto.value?.situacaoId === 401" (click)="editarFrequenciaPresencial()"><i class="fa fa-edit ml-3"></i></a>
+      </dd>
+    </dl>-->
   </div>
   <div class="col-sm-6 mb-5">
     <dl class="row">
@@ -62,6 +69,52 @@
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
                       <custom-datepicker formControlName="dataFim" [minDate]="minDataConclusao" placeholder="Selecione uma data"></custom-datepicker>
+                    </field-validation>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="confirmarAlteracaoDatas()" [disabled]="!form.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalFrequenciaPresencial let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Alterar a frequência presencial</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tipo de frequência">
+                      <select id="pessoaId" name="pessoaId" formControlName="dataInicio" placeholder="Selecione uma frequência">
+                        <option value="">Indefinida</option>
+                        <option value="">Semanal</option>
+                        <option value="">Quinzenal</option>
+                        <option value="">Mensal</option>
+                      </select>
+                    </field-validation>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="field">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Quantidade de dias">
+                      <input id="tempoExecucaoPresencial" formControlName="dataInicio" type="text" placeholder="Insira a quantidade de dias" name="tempoExecucaoPresencial" [textMask]="{mask: tempoMask}">
                     </field-validation>
                   </div>
                 </div>

@@ -18,6 +18,7 @@ export class AlteracaoPrazoPactoComponent implements OnInit {
   @Input() dadosPacto: BehaviorSubject<IPactoTrabalho>;
 
   form: FormGroup;
+  minDataFim: any;
 
   constructor(
     private modalService: NgbModal,
@@ -31,6 +32,10 @@ export class AlteracaoPrazoPactoComponent implements OnInit {
     this.form = this.formBuilder.group({
       dataFim: [null, []],
       descricao: [null, []],
+    });
+
+    this.dadosPacto.subscribe(p => {
+      this.minDataFim = this.formatarData(new Date(this.dadosPacto.value.dataInicio));
     });
   }
 
@@ -57,5 +62,13 @@ export class AlteracaoPrazoPactoComponent implements OnInit {
 
   fecharModal() {
     this.modalService.dismissAll();
+  }
+
+  formatarData(data: Date) {
+    return {
+      'year': data.getFullYear(),
+      'month': data.getMonth() + 1,
+      'day': data.getDate()
+    };
   }
 }
