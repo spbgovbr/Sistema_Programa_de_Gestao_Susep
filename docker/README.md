@@ -1,17 +1,20 @@
 # SUSEP - Docker
 
+**Versão atual:** 1.7 (com correções no código fonte)
+
 É possível subir a aplicação por meio do [Docker](https://www.docker.com/). Dentre as vantagens estão:
 1. A ausência da necessidade de uma configuração do IIS;
 1. Uma menor intervenção manual para a realização das configurações;
 1. A ausência da necessidade de possuir licenças para o Windows Server para rodar a aplicação, tendo em vista que as imagens foram configuradas utilizando Microsoft suporta oficialmente;
-1. A ausência da obrigatoriedade de configurar um servidor SQL Server. O docker-compose utiliza o SQL Server 2019 para Linux, oficialmente suportado para a Microsoft, no modo de avaliação. Atente-se que a utilização em produção exige uma licença válida, mas a configuração disponibilizada pemite a realização de testes e da homologação do sistema.
+1. A ausência da obrigatoriedade de configurar um servidor SQL Server para ambiente de homologação. O docker-compose utiliza o SQL Server 2019 para Linux, oficialmente suportado para a Microsoft, no modo de avaliação. Atente-se que a utilização em produção exige uma licença válida, mas a configuração disponibilizada pemite a realização de testes e da homologação do sistema.
+1. A possibilidade de configuração por variáveis de ambiente no docker-compose no lugar de alterar arquivos `.json`.
 
 **Observações:**
 
-* Para possibilitar a execução em ambiente docker (imagens linux/amd64), realizamos uma troca do plugin de logs `Eventlog` para o `Serilog` por este ser multiplataforma;
+* ~~Para possibilitar a execução em ambiente docker (imagens linux/amd64), realizamos uma troca do plugin de logs `Eventlog` para o `Serilog` por este ser multiplataforma;~~ Mudanças incluídas no código oficial.
 * O processo de criação de imagem compila o código disponibilizado. Entretanto, são utilizadas algumas `dlls` previamente compiladas;
 * Deve ser possível utilizar a mesma solução em servidores Windows, caso ele esteja configurado para rodar imagens Linux. Porém, o desempenho possivelmente será ligeiramente inferior do que se configurar diretamente com IIS. Não foi testado;
-  * A microsoft também disponibiliza imagens docker nativas para Windows. Porém, até o momento, não foram geradas imagens nativas.
+  * A Microsoft também disponibiliza imagens docker nativas para Windows. Porém, até o momento, não foram geradas imagens nativas.
 * A aplicação provavelmente deve funcionar em máquinas Mac, mas também não foi testado.
 
 
@@ -40,7 +43,7 @@ E o seguinte comando para subir o banco de dados de homologação
 docker-compose -f docker/docker-compose.sqlserver-homologacao.yml up -d
 ```
 
-Pronto, a aplicação está acessível no endereço http://localhost. Porém você não irá conseguir se logar se não configurar o LDAP (veja abaixo) e se não inserir as pessoas na tabela de pessoas.
+Pronto, a aplicação está acessível no endereço http://localhost. Porém você não irá conseguir se logar se não configurar o LDAP (veja abaixo) se não inserir as pessoas na tabela de pessoas.
 
 ### Configurações
 
@@ -142,12 +145,13 @@ Edite o arquivo `install/4. Inserir dados de teste - Opcional.sql`, conforme des
 
 Caso não seja detectada a existência do banco `programa_gestao`, ele será criado e os scripts `.sql` serão executados, conforme definido em `docker-compose.sqlserver-homologacao.yml`. Os registros do banco são persistidos na pasta `docker/volume` por meio de volume docker ([bind mount](https://docs.docker.com/storage/bind-mounts/)). Caso seja detectado a existência do banco `programa_gestao`, nenhum script será executado, mesmo que você adicione um novo script sql na lista de volumes.
 
-Se por ventura você editar os arquivos `sql`, eles somente serão automaticamente executados caso você exclua os arquivos da pasta `docker/volume`. Entretanto, isto acarretará na perda de todos os dados. Caso você venha de uma versão anterior (a partir da 1.7), e queira manter os dados que existiam anteriormente, execute os eventuais novos scripts em sql manualmente.
+Se por ventura você editar os arquivos `sql`, eles somente serão automaticamente executados caso você exclua a pasta `docker/volume/mssql/`. Entretanto, isto acarretará na perda de todos os dados. Caso você venha de uma versão anterior (a partir da 1.7), e queira manter os dados que existiam anteriormente, execute os eventuais novos scripts em sql manualmente.
 
 ## Trabalhos futuros
 
-1. Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo (criar um docker-compose específico);
-1. Gerar imagens nativas para Windows por Github Actions.
+* [ ] Configurar um servidor LDAP de testes para possibilitar uma homologação do sistema sem precisar configurar manualmente esse passo (criar um docker-compose específico);
+* [ ] Gerar imagens nativas para Windows por Github Actions;
+* [ ] Gerar um build do código para indicar quando um código enviado para o gitlab estiver incompleto.
 
 ## Outras informações
 
@@ -155,4 +159,4 @@ Caso você deseje fazer o build local ao invés de utilizar a imagem preparada:
 ```bash
 docker build -f docker/Dockerfile -t susep .
 ```
-Lembre-se de alterar o docker-compose.yml para utilizar `susep` no lugar da imagem oficial.
+Lembre-se de alterar o `docker-compose.yml` para utilizar `susep` no lugar da imagem oficial.

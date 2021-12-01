@@ -34,12 +34,17 @@ services:
       - pgd
     
   web-api:
+    # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    image: susep
+    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem caso você queira testar na sua máquina
+    #image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
     volumes:
-      - ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
+      - ./api/Settings:/app/api/Settings:ro
+      #- ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
     environment: 
       - ASPNETCORE_ENVIRONMENT=Homolog
@@ -87,8 +92,12 @@ services:
       - pgd
 
   api-gateway:
+    # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    image: susep
+    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem caso você queira testar na sua máquina
+    #image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
     working_dir: /app/gateway/
     volumes:
@@ -109,8 +118,12 @@ services:
       - pgd
 
   web-app:
+    # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    image: susep
+    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem caso você queira testar na sua máquina
+    #image: susep
     command: dotnet Susep.SISRH.WebApp.dll
     working_dir: /app/app/
     volumes:
