@@ -46,6 +46,19 @@ namespace Susep.SISRH.Application.Queries.Concrete
             return result;
         }
 
+        public async Task<IApplicationResult<IEnumerable<DadosComboViewModel>>> ObterAtivasDadosComboAsync()
+        {
+            var result = new ApplicationResult<IEnumerable<DadosComboViewModel>>();
+
+            //Obtém as unidades
+            var dados = await ObterAtivasAsync();
+
+            //Converte de UnidadeViewModel para DadosComboViewModel
+            result.Result = dados.Result.Select(u => new DadosComboViewModel() { Id = u.UnidadeId.ToString(), Descricao = u.SiglaCompleta });
+
+            return result;
+        }
+
         public async Task<IApplicationResult<IEnumerable<UnidadeViewModel>>> ObterComPlanoTrabalhoAsync()
         {
             var result = new ApplicationResult<IEnumerable<UnidadeViewModel>>();
@@ -110,6 +123,26 @@ namespace Susep.SISRH.Application.Queries.Concrete
                 connection.Open();
 
                 var dados = await connection.QueryFirstOrDefaultAsync<UnidadeViewModel>(UnidadeRawSqls.ObterPorChave, parameters);
+                result.Result = dados;
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
+        public async Task<IApplicationResult<UnidadeViewModel>> ObterQuantidadeServidoresPorChaveAsync(Int64 unidadeId)
+        {
+            var result = new ApplicationResult<UnidadeViewModel>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@unidadeId", unidadeId, DbType.Int64, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                var dados = await connection.QueryFirstOrDefaultAsync<UnidadeViewModel>(UnidadeRawSqls.ObterQuantidadeServidoresPorChave, parameters);
                 result.Result = dados;
 
                 connection.Close();

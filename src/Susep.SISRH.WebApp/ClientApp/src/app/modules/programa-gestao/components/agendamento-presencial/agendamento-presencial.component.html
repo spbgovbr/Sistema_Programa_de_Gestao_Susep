@@ -1,0 +1,28 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Agendamento presencial</h1>
+      <p>Selecione os dias em que deseja comparecer para trabalhar presencialmente</p>
+    </header>
+
+    <div class="br-form">
+      <div class="row">
+        <div class="col-sm-4">
+          Clique na data para adicionar um agendamento<br />
+          Clique no seu nome para remover o agendamento<br /><br />
+          Clique no botão salvar para registrar os seus agendamentos
+        </div>
+        <div class="col-sm-8">
+          <full-calendar #calendar
+                         defaultView="dayGridMonth"
+                         eventLimit="true"
+                         [plugins]="calendarPlugins"
+                         [events]="calendarEvents"
+                         (dateClick)="handleDateClick($event)"
+                         (dayRender)="handleDayRender($event)"
+                         (eventClick)="eventClicked($event)"></full-calendar>
+        </div>
+      </div>
+      </div>
+  </div>
+</section>

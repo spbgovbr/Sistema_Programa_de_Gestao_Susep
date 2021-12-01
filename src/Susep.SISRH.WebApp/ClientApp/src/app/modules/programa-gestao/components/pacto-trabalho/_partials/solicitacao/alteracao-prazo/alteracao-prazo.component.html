@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Data de fim">
-                      <custom-datepicker formControlName="dataFim" placeholder="Selecione uma data"></custom-datepicker>
+                      <custom-datepicker formControlName="dataFim" [minDate]="minDataFim" placeholder="Selecione uma data"></custom-datepicker>
                     </field-validation>
                   </div>
                 </div>
@@ -24,7 +24,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>

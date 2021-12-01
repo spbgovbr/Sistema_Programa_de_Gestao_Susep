@@ -36,6 +36,15 @@ namespace Susep.SISRH.WebApi.Controllers
         }
 
         /// <summary>
+        /// Obtém todas as unidades ativas para preenchimento de combos
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("todasativas"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<DadosComboViewModel>>))]
+        public async Task<IActionResult> GetTodasAtivasDadosCombo()
+            => await UnidadeQuery.ObterAtivasDadosComboAsync();
+
+        /// <summary>
         /// Obtém as unidades ativas para preenchimento de combos
         /// </summary>
         /// <param name="request"></param>

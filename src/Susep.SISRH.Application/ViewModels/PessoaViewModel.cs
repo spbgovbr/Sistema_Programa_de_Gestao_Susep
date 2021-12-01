@@ -23,6 +23,9 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "unidade")]
         public String Unidade { get; set; }
 
+        [DataMember(Name = "nivelUnidade")]
+        public Int32 NivelUnidade { get; set; }
+
         [DataMember(Name = "tipoFuncaoUnidadeId")]
         public Int64 TipoFuncaoUnidadeId { get; set; }        
 
@@ -35,7 +38,21 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "chefe")]
         public Boolean? Chefe { get; set; }
 
-        
+
+        [DataMember(Name = "situacaoPessoaId")]
+        public Int64? SituacaoPessoaId { get; set; }
+
+        [DataMember(Name = "situacaoPessoa")]
+        public String SituacaoPessoa { get; set; }
+
+
+
+        [DataMember(Name = "tipoVinculoId")]
+        public Int64? TipoVinculoId { get; set; }
+
+        [DataMember(Name = "tipoVinculo")]
+        public String TipoVinculo { get; set; }
+
 
 
 

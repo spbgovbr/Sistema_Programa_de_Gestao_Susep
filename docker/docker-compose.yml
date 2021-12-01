@@ -3,14 +3,20 @@ version: "3.8"
 services:
   # Proxy reverso
   traefik:
-    image: traefik:2.4
+    hostname: caminhointernoservicos
+    image: traefik:2.5
+    # Entrypoints:
+    #  - web: O que é exposto na rede pela porta 80
+    #  - web-interno: Não exposto na rede - Ponto de entrada na 
+    #                 rede interna do Traefik utilizado para a comunicação do 
+    #                 api-gateway e web-api
     command: >
       --providers.docker=true
       --entrypoints.web.address=:8000
+      --entrypoints.web-interno.address=:80
       --entrypoints.web-secure.address=:8443
-      --log.level="DEBUG"
+      --log.level="INFO"
       --providers.docker.exposedbydefault=false
-      --serversTransport.insecureSkipVerify=true
     restart: unless-stopped
     # --providers.file.directory=/traefik-config
     ports:
@@ -28,24 +34,70 @@ services:
       - pgd
     
   web-api:
+    # Futuro oficial do Governo Federal
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
     image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem caso você queira testar na sua máquina
+    #image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
     volumes:
       - ./api/Settings:/app/api/Settings:ro
+      #- ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
     environment: 
       - ASPNETCORE_ENVIRONMENT=Homolog
+
+      # Configurações de banco de dados
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=programa_gestao;User Id=sa;Password=P1ssw@rd;
+
+      # Configurações de e-mail - Exemplo: Ministério da Economia
+      - emailOptions__EmailRemetente=no-reply@me.gov.br
+      - emailOptions__NomeRemetente=Programa de Gestão - ME
+      - emailOptions__SmtpServer=smtp.me.gov.br
+      - emailOptions__Port=25
+
+      # LDAP
+      # -> URL do Servidor LDAP
+      - ldapOptions__Configurations__0__Url=
+      # -> Porta do Servidor LDAP
+      - ldapOptions__Configurations__0__Port=389
+      # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
+      - ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
+      # -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
+      - ldapOptions__Configurations__0__BindPassword=
+      # -> DC que será utilizado para chegar à base de usuários no LDAP
+      - ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
+      # -> Consulta a ser aplicada no LDAP para encontrar os usuários
+      - ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
+      # -> Campo do LDAP em que será encontrado o CPF do usuário
+      - ldapOptions__Configurations__0__CpfAttributeFilter=
+      # -> Campo do LDAP em que será encontrado o e-mail do usuário
+      - ldapOptions__Configurations__0__EmailAttributeFilter=
+
     # Habilitar somente para debug
     # ports:
     #   - 8082:80
     labels:
-      - traefik.enable=false
+     - traefik.enable=true
+     - traefik.http.routers.web-api.rule=PathPrefix(`/`)
+     - traefik.http.routers.web-api.entrypoints=web-interno
+     - traefik.http.routers.web-api.tls=false
+     - traefik.http.services.web-api.loadbalancer.server.port=80
+     - traefik.http.services.web-api.loadbalancer.server.scheme=http
+     - traefik.http.routers.web-api.middlewares=stripprefix_web_api
+     - traefik.http.middlewares.stripprefix_web_api.stripprefix.prefixes=/SISGP/api/
     networks:
       - pgd
 
   api-gateway:
+    # Futuro oficial do Governo Federal
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
     image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem caso você queira testar na sua máquina
+    #image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
     working_dir: /app/gateway/
     volumes:
@@ -66,7 +118,12 @@ services:
       - pgd
 
   web-app:
+    # Futuro oficial do Governo Federal
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
     image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem caso você queira testar na sua máquina
+    #image: susep
     command: dotnet Susep.SISRH.WebApp.dll
     working_dir: /app/app/
     volumes:
@@ -83,7 +140,7 @@ services:
     networks:
       - pgd
 
-  ## Utilização do Nginx no lugar do aspnet
+  ## FIXME - Utilização do Nginx no lugar do aspnet
   # web-app-nginx:
   #   image: nginx:1.19-alpine
   #   volumes:
@@ -91,24 +148,6 @@ services:
   #     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/usr/share/nginx/html/env.js:ro
   #   ports:
   #     - 8080:80
-  db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "P1ssw@rd"
-      ACCEPT_EULA: "Y"
-    command: /bin/bash /scripts/start-sql-server.sh
-    volumes:
-      - ../install/1. Criação da estrutura do banco de dados - Obrigatorio.sql:/scripts/1.estrutura_dados.sql:ro
-      - ../install/2. Inserir dados de domínio - Obrigatorio.sql:/scripts/2.dados_dominio.sql:ro
-      - ../install/3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql:/scripts/2.pessoa_alocacao_temporaria.sql:ro
-      - ../install/4. Inserir dados de teste - Opcional.sql:/scripts/4.dados_teste.sql:ro
-      - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
-    ports:
-      - 1433:1433
-    labels:
-      - traefik.enable=false
-    networks:
-      - pgd
 
 networks:
   pgd:

@@ -1,3 +1,5 @@
 docker/
+
 install/
+!/install/1. Susep.SISRH.WebApi/SUSEP.Framework.*.dll
 src/Susep.SISRH.WebApp/ClientApp/node_modules/

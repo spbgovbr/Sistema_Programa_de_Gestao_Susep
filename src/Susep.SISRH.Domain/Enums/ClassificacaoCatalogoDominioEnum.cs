@@ -15,7 +15,22 @@ namespace Susep.SISRH.Domain.Enums
         CriterioPerfilAtividadePlano,
         SituacaoCandidaturaPlanoTrabalho,
         GestorSistema,
-        ModoAvancado
+        ModoAvancado,
+
+        EmailPlanoParaAprovacao,
+        EmailPlanoAprovado,
+        EmailPlanoRejeitado,
+        EmailPlanoCandidaturaRegistrada,
+        EmailPlanoEmHabilitacao,
+        EmailPlanoCandidaturaAprovada,
+        EmailPlanoCandidaturaRejeitada,
+        EmailPactoSituacaoAlterada,
+        EmailPactoSolicitacaoAlteracaoPrazo,
+        EmailPactoSolicitacaoNovaAtividade,
+        EmailPactoSolicitacaoExclusaoAtividade,
+        EmailPactoSolicitacaoJustificativaEstouroPrazo,
+        EmailPactoSolicitacaoAnalisada,
+        EmailPactoAtividadeAvaliada,
     }
 }
 

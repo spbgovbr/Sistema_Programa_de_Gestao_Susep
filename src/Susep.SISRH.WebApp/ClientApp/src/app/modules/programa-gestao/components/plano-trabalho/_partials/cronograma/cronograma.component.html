@@ -65,7 +65,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Título">
-                      <input id="titulo" type="text" placeholder="Insira o título" name="titulo" formControlName="titulo">
+                      <input maxlength="250" #titulo id="titulo" type="text" placeholder="Insira o título" name="titulo" formControlName="titulo">
+                      <input-chars-cunter [element]="titulo"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -74,7 +75,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="250" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>

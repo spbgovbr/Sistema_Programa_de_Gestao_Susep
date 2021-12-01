@@ -18,8 +18,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <!-- <PackageReference Include="SUSEP.Framework.Data" Version="3.6.8" />
-    <PackageReference Include="SUSEP.Framework.Utils" Version="3.8.5" /> -->
+    <!--
+    <PackageReference Include="SUSEP.Framework.Data" Version="3.6.8" />
+    <PackageReference Include="SUSEP.Framework.Utils" Version="3.8.5" />
+    -->
   </ItemGroup>
   
   <ItemGroup>

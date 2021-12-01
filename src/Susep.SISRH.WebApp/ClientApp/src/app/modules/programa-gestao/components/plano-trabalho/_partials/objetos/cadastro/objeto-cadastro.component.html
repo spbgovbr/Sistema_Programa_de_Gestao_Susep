@@ -176,7 +176,8 @@
                                 </div>
                                 <div class="col-sm-4 br-input">
                                   <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                                    <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                                    <textarea maxlength="200" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                                    <input-chars-cunter [element]="descricao"></input-chars-cunter>
                                   </field-validation>
                                 </div>
                                 <div class="col-sm-2 mt-2">

@@ -59,6 +59,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
                 TermoAceite = termoAceite
             };
 
+            model.ValidarDatas();
+
             model.AlterarSituacao((int)SituacaoPlanoTrabalhoEnum.Rascunho, usuarioLogado, null);
 
             return model;
@@ -69,6 +71,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
             VerificarPossibilidadeAlteracao();
             DataInicio = dataInicio;
             DataFim = dataFim;
+            this.ValidarDatas();
         }
 
         #region Atividades
@@ -266,10 +269,13 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
 
         #endregion
 
-        public void AlterarSituacao(Int32 situacaoId, String responsavelOperacaoId, String observacoes)
+        public void AlterarSituacao(Int32 situacaoId, String responsavelOperacaoId, String observacoes, Boolean deserto = false)
         {
-            if (!PodeAlteracaoSituacao(situacaoId))
+            if (!PodeAlteracaoSituacao(situacaoId, deserto))
                 throw new SISRHDomainException("A situação atual do programa de gestão não permite mudar para o estado solicitado");
+
+            if (deserto)
+                observacoes = "O Programa de Gestão foi considerado deserto, pois ninguém se candidatou às vagas disponibilizadas";
 
             this.SituacaoId = situacaoId;
             this.Historico.Add(PlanoTrabalhoHistorico.Criar(this.PlanoTrabalhoId, this.SituacaoId, responsavelOperacaoId, observacoes));
@@ -300,7 +306,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
             this.AlterarSituacao((int)SituacaoPlanoTrabalhoEnum.EmExecucao, responsavelOperacaoId, observacoes);
         }
 
-        private Boolean PodeAlteracaoSituacao(Int32 situacaoId)
+        private Boolean PodeAlteracaoSituacao(Int32 situacaoId, Boolean deserto)
         {
             if (situacaoId == (int)SituacaoPlanoTrabalhoEnum.Rascunho)
                 return true;
@@ -323,7 +329,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
                 //case (int)SituacaoPlanoTrabalhoEnum.Aprovado:
                 //    return situacaoId == (int)SituacaoPlanoTrabalhoEnum.Habilitacao;
                 case (int)SituacaoPlanoTrabalhoEnum.Habilitacao:
-                    return situacaoId == (int)SituacaoPlanoTrabalhoEnum.EmExecucao;
+                    return situacaoId == (int)SituacaoPlanoTrabalhoEnum.EmExecucao ||
+                           (deserto && situacaoId == (int)SituacaoPlanoTrabalhoEnum.Concluido);
                 //case (int)SituacaoPlanoTrabalhoEnum.ProntoParaExecucao:
                 //    return situacaoId == (int)SituacaoPlanoTrabalhoEnum.EmExecucao;
                 case (int)SituacaoPlanoTrabalhoEnum.EmExecucao:
@@ -350,6 +357,17 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
             if (SituacaoId == (int)SituacaoPlanoTrabalhoEnum.Executado ||
                 SituacaoId == (int)SituacaoPlanoTrabalhoEnum.Concluido)
                 throw new SISRHDomainException("O programa de gestão só pode ser alterado enquanto estiver na situação rascunho");
+        }
+
+        private void ValidarDatas()
+        {
+
+            if (DataInicio < DateTime.Now.Date)
+                throw new SISRHDomainException("A data de início do programa de gestão deve ser maior ou igual à data atual");
+
+            if (DataFim <= DataInicio)
+                throw new SISRHDomainException("A data de fim do programa de gestão deve ser maior que a data de início");
+
         }
 
     }

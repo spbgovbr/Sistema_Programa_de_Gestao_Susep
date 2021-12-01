@@ -56,7 +56,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Meta">
-                      <input id="meta" type="text" placeholder="Insira a meta" name="meta" formControlName="meta">
+                      <input maxlength="250" #meta id="meta" type="text" placeholder="Insira a meta" name="meta" formControlName="meta">
+                      <input-chars-cunter [element]="meta"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -65,7 +66,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Indicador">
-                      <input id="indicador" type="text" placeholder="Insira o indicador" name="indicador" formControlName="indicador">
+                      <input maxlength="250" #indicador id="indicador" type="text" placeholder="Insira o indicador" name="indicador" formControlName="indicador">
+                      <input-chars-cunter [element]="indicador"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -74,7 +76,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>

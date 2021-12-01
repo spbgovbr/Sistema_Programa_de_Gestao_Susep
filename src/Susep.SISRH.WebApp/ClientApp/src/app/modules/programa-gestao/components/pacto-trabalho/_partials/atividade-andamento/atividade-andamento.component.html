@@ -11,6 +11,7 @@
                 <th class="text-right">Tempo planejado</th>
                 <th class="text-center">Data início</th>
                 <th class="text-center">Data fim</th>
+                <th *ngIf="teletrabalhoParcial">Local de execução</th>
                 <th class="text-right">Tempo despendido</th>
                 <th class="text-center">Avaliação</th>
                 <th class="text-right">Tempo homologado</th>
@@ -24,11 +25,16 @@
                 <td class="text-right">{{item.tempoPrevistoTotal}}</td>
                 <td class="text-center">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</td>
                 <td class="text-center">{{item.dataFim | date: 'dd/MM/yyyy HH:mm'}}</td>
+                <td *ngIf="teletrabalhoParcial">
+                  <span *ngIf="item.execucaoRemota">Remoto</span>
+                  <span *ngIf="!item.execucaoRemota">Presencial</span>
+                </td>
                 <td class="text-right">{{item.tempoRealizado}}</td>
                 <td class="text-center">
                   <div *ngIf="item.nota === 0 || item.nota" title="{{item.justificativa}}">{{ item.nota }}</div>
-                  <secure-input *ngIf="item.situacaoId === 503" [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
-                    <a *ngIf="dentroPrazoAvaliacao" href="javascript:void(0)" (click)="avaliar(item.pactoTrabalhoAtividadeId)">avaliar</a>
+                  <secure-input *ngIf="item.situacaoId === 503" [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor" [unidade]="unidade">
+                    <a href="javascript:void(0)" *ngIf="usuarioPodeAvaliar" (click)="avaliar(item.pactoTrabalhoAtividadeId)">Avaliar</a>
+                    <a href="javascript:void(0)" *ngIf="!usuarioPodeAvaliar && item.nota" (click)="avaliar(item.pactoTrabalhoAtividadeId)">Ver avaliação</a>
                   </secure-input>
                 </td>
                 <td class="text-right">{{item.tempoHomologado}}</td>
@@ -45,6 +51,7 @@
                 <td colspan="2" class="text-right">Totais:</td>
                 <td class="text-right">{{tempoPrevistoTotal}}</td>
                 <td colspan="2" class="text-right"></td>
+                <td *ngIf="teletrabalhoParcial"></td>
                 <td class="text-right">{{tempoRealizado}}</td>
                 <td></td>
                 <td class="text-right">{{tempoHomologado}}</td>
@@ -76,12 +83,12 @@
                   <div class="field">
                     <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Situação">
                       <select id="situacaoId" name="situacaoId" formControlName="situacaoId" (change)="mudarSituacao($event.target.value)">
-                        <option value="">Mostrar tudo</option>
+                        <option value="">Selecione uma opção</option>
                         <option class="select-items" *ngFor="let item of situacoes" [value]="item.id">{{ item.descricao }}</option>
                       </select>
                     </field-validation>
                   </div>
-                </div>
+                </div>                
               </div>
               <div class="row">
                 <div class="col-sm-6" *ngIf="situacaoId >= 502">
@@ -102,7 +109,7 @@
               <div class="row" *ngIf="situacaoId == 503">
                 <div class="col-sm-12">
                   <div class="field">
-                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo gasto para realizar a tarefa (em horas)">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tempo gasto para realizar a atividade (em horas)">
                       <input id="tempoRealizado" type="text" placeholder="Insira um valor" [textMask]="{mask: tempoMask}" name="tempoRealizado" formControlName="tempoRealizado">
                     </field-validation>
                   </div>
@@ -112,7 +119,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                      <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -121,7 +129,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="O tamanho máximo é de 2000 caracteres." label="Descrição da entrega">
-                      <textarea id="consideracoes" placeholder="Insira a descrição da entrega" name="consideracoes" formControlName="consideracoes"></textarea>
+                      <textarea maxlength="2000" #consideracoes id="consideracoes" placeholder="Insira a descrição da entrega" name="consideracoes" formControlName="consideracoes"></textarea>
+                      <input-chars-cunter [element]="consideracoes"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -165,7 +174,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Necessário preencher caso a avaliação dada seja menor que 5." label="Justificativa">
-                      <textarea id="justificativa" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+                      <textarea maxlength="200" #justificativa id="justificativa" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+                      <input-chars-cunter [element]="justificativa"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -175,7 +185,7 @@
         </div>
         <div class="br-modal-footer justify-content-end">
           <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
-          <button class="br-button is-primary is-small" type="button" (click)="salvarAvaliacao()" [disabled]="!formAvaliacao.valid">Salvar</button>
+          <button class="br-button is-primary is-small" type="button" *ngIf="usuarioPodeAvaliar" (click)="salvarAvaliacao()" [disabled]="!formAvaliacao.valid">Salvar</button>
         </div>
       </div>
     </div>
@@ -199,7 +209,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Necessário preencher caso a avaliação dada seja menor que 5." label="Descrição da atividade">
-                      <textarea id="descricao" name="descricao" formControlName="descricao"></textarea>
+                      <textarea maxlength="200" #descricao id="descricao" name="descricao" formControlName="descricao"></textarea>
+                      <input-chars-cunter [element]="descricao"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>
@@ -208,7 +219,8 @@
                 <div class="col-sm-12">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Necessário preencher caso a avaliação dada seja menor que 5." label="Considerações da conclusão">
-                      <textarea id="consideracoes" name="consideracoes" formControlName="consideracoes"></textarea>
+                      <textarea maxlength="200" #consideracoes id="consideracoes" name="consideracoes" formControlName="consideracoes"></textarea>
+                      <input-chars-cunter [element]="consideracoes"></input-chars-cunter>
                     </field-validation>
                   </div>
                 </div>

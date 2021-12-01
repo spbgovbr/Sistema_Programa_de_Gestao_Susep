@@ -33,15 +33,15 @@ export class AtividadeExcluirComponent implements OnInit {
     this.form = this.formBuilder.group({
       justificativa: [null, [Validators.required, Validators.minLength(5)]],
     });
+    this.form.get('justificativa').markAsDirty();
   }
 
   carregarAtividades() {
     if (this.dadosPacto.value.atividades) {
-
       this.dadosPacto.value.atividades.forEach(a => a.adicionadoCalendario = false);
       this.atividades = this.dadosPacto.value.atividades.filter(a => {
 
-        return (a.situacaoId === 501);
+        return (a.situacaoId !== 503);
 
       })
     }

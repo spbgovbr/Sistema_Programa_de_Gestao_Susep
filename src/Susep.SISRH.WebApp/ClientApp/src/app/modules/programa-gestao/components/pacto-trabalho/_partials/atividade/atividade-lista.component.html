@@ -15,6 +15,7 @@
                 <th>Atividade</th>
                 <th>Descrição</th>
                 <th class="text-right">Quantidade</th>
+                <th *ngIf="teletrabalhoParcial">Local de execução</th>
                 <th class="text-right">Tempo por item</th>
                 <th class="text-right">Tempo total</th>
                 <th class="text-center" *ngIf="saldoHoras < 0"></th>
@@ -26,6 +27,10 @@
                 <td>{{item.itemCatalogo}}</td>
                 <td>{{item.descricao}}</td>
                 <td class="text-right">{{item.quantidade}}</td>
+                <td *ngIf="teletrabalhoParcial">
+                  <span *ngIf="item.execucaoRemota">Remoto</span>
+                  <span *ngIf="!item.execucaoRemota">Presencial</span>
+                </td>
                 <td class="text-right">{{item.tempoPrevistoPorItem | number}}</td>
                 <td class="text-right">{{item.tempoPrevistoTotal | number}}</td>
                 <td class="text-center" *ngIf="saldoHoras < 0">
@@ -41,18 +46,21 @@
             </tbody>
             <tfoot>
               <tr>
+                <td *ngIf="teletrabalhoParcial"></td>
                 <td colspan="4" class="text-right">Tempo total em horas:</td>
                 <td class="text-right">{{tempoPrevistoTotal | number}}</td>
                 <td *ngIf="saldoHoras < 0"></td>
                 <td *ngIf="!isReadOnly"></td>
               </tr>
               <tr>
+                <td *ngIf="teletrabalhoParcial"></td>
                 <td colspan="4" class="text-right">Saldo em horas:</td>
                 <td class="text-right">{{saldoHoras | number}}</td>
                 <td *ngIf="saldoHoras < 0"></td>
                 <td *ngIf="!isReadOnly"></td>
               </tr>
               <tr>
+                <td *ngIf="teletrabalhoParcial"></td>
                 <td colspan="5" class="text-right">
                   <span *ngIf="saldoHoras > 0" class="text-warning">O plano prevê menos horas de atividades do que o tempo total disponível</span>
                   <span *ngIf="saldoHoras < 0" class="text-warning">O plano prevê mais horas de atividades do que o tempo total disponível</span>
@@ -79,13 +87,24 @@
     <div class="br-form">
       <form [formGroup]="form">
         <div class="row">
-          <div class="col-sm-12">
+          <div [ngClass]="{'col-sm-12': !teletrabalhoParcial, 'col-sm-6' : teletrabalhoParcial }">
             <div class="field">
               <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Atividade">
                 <select id="itemCatalogoId" name="itemCatalogoId" formControlName="itemCatalogoId" placeholder="Selecione um atividade" (change)="mudarItemCatalogo($event.target.value)">
                   <option value="">Selecione um atividade</option>
                   <option class="select-items" *ngFor="let item of itensCatalogo.value" [value]="item.itemCatalogoId">{{ item.tituloCompleto }}</option>
                 </select><!--[selected]="item.id === atividadeEdicao?.modalidadeExecucaoId"-->
+              </field-validation>
+            </div>
+          </div>
+          <div class="col-sm-6" *ngIf="teletrabalhoParcial">
+            <div class="field">
+              <field-validation [classList]="['br-select', 'is-medium']" errorMessage="Campo obrigatório." label="Local de execução">
+                <select id="execucaoRemota" name="execucaoRemota" formControlName="execucaoRemota">
+                  <option value="">Selecione uma opção</option>
+                  <option class="select-items" [value]="true">Remoto</option>
+                  <option class="select-items" [value]="false">Presencial</option>
+                </select>
               </field-validation>
             </div>
           </div>
@@ -129,7 +148,8 @@
           <div class="col-sm-12">
             <div class="field">
               <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Descrição">
-                <textarea id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                <textarea maxlength="2000" #descricao id="descricao" placeholder="Insira uma descrição" name="descricao" formControlName="descricao"></textarea>
+                <input-chars-cunter [element]="descricao"></input-chars-cunter>
               </field-validation>
             </div>
           </div>

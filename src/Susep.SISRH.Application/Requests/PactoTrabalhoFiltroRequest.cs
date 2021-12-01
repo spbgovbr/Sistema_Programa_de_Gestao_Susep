@@ -27,6 +27,6 @@ namespace Susep.SISRH.Application.Requests
         public DateTime? DataFim { get; set; }
 
 
-        public List<Int64> UnidadesUsuario { get; set; }
+        public Boolean IsGestor { get; set; }
     }
 }

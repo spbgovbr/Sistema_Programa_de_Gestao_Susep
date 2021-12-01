@@ -47,7 +47,8 @@
 <ng-template #modalCadastro let-modal>
   <atividade-pacto-nova [dadosPacto]="dadosPacto" [itensUnidade]="itensUnidade" [situacoesAtividade]="situacoes" *ngIf="tipoSolicitacao === 101"></atividade-pacto-nova>
   <alteracao-prazo-pacto [dadosPacto]="dadosPacto" *ngIf="tipoSolicitacao === 102"></alteracao-prazo-pacto>
-  <pacto-detalhes-solicitacao [dadosPacto]="dadosPacto" [dadosSolicitacao]="solicitacaoEditar" *ngIf="tipoSolicitacao === 199"></pacto-detalhes-solicitacao>
   <justificar-estouro-prazo [dadosPacto]="dadosPacto" [solicitacoes]="solicitacoes" *ngIf="tipoSolicitacao === 103"></justificar-estouro-prazo>
   <atividade-excluir [dadosPacto]="dadosPacto" [solicitacoes]="solicitacoes" *ngIf="tipoSolicitacao === 104"></atividade-excluir>
+
+  <pacto-detalhes-solicitacao [dadosPacto]="dadosPacto" [dadosSolicitacao]="solicitacaoEditar" *ngIf="tipoSolicitacao === 199"></pacto-detalhes-solicitacao>
 </ng-template>

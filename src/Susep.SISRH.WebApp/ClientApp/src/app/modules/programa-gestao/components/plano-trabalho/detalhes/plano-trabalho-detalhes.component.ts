@@ -20,6 +20,7 @@ export class PlanoTrabalhoDetalhesComponent implements OnInit {
 
   @ViewChild('modalInicioHabilitacao', { static: true }) modalInicioHabilitacao;
   @ViewChild('modalConcluirExecucao', { static: true }) modalConcluirExecucao;
+  @ViewChild('modalTermoAceite', { static: true }) modalTermoAceite;  
 
   PerfilEnum = PerfilEnum;
   PlanoTrabalhoSituacaoEnum = PlanoTrabalhoSituacaoEnum;
@@ -31,6 +32,7 @@ export class PlanoTrabalhoDetalhesComponent implements OnInit {
   unidade = new BehaviorSubject<number>(null);
 
   pactoNaoExecutado: boolean;
+  quantidadeCandidatosAprovados: 0;
 
   modo: TipoModo;
 
@@ -80,6 +82,8 @@ export class PlanoTrabalhoDetalhesComponent implements OnInit {
 
         this.alterarAba('atividades');
         this.definirClasseTextoSituacao();
+
+        //this.quantidadeCandidatosAprovados = this.dadosPlano.value.atividades.filter(a => a.)
       }
     );
   }
@@ -210,4 +214,13 @@ export class PlanoTrabalhoDetalhesComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  ExibirTermoAceite() {
+    this.planoTrabalhoDataService.ObterTermoAceite(this.dadosPlano.value.planoTrabalhoId).subscribe(r => {
+      this.dadosPlano.value.termoAceite = r.retorno.termoAceite;
+      this.modalService.open(this.modalTermoAceite, { size: 'sm' });
+
+    });
+    
+
+  }
 }

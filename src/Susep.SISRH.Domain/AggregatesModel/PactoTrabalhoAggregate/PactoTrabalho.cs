@@ -69,6 +69,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 TermoAceite = termoAceite
             };
 
+            model.ValidarDatas(dataInicio, dataFim);
+
             model.DiasNaoUteis = diasNaoUteis;
 
             model.TempoTotalDisponivel = cargaHorariaDiaria * WorkingDays.DiffDays(dataInicio, dataFim, diasNaoUteis, false);
@@ -86,17 +88,43 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         public void AlterarPeriodo(DateTime dataInicio, DateTime dataFim)
         {
+            ValidarDatas(dataInicio, dataFim);
+
             this.DataInicio = dataInicio;
             this.DataFim = dataFim;
             this.TempoTotalDisponivel = this.CargaHorariaDiaria * WorkingDays.DiffDays(dataInicio, dataFim, DiasNaoUteis, false);
+
+            var atividadesDiarias = this.Atividades.Where(it => it.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia).ToList();
+            var quantidadeDias = WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false);
+            atividadesDiarias.ForEach(it => it.AtualizarTempoPrevistoTotal(quantidadeDias, it.TempoPrevistoPorItem));
+            
+            this.AtualizarPercentualExecucao();
         }
 
         #region Fluxo de aprovação do pacto
 
-        public void AlterarSituacao(Int32 situacaoId, String responsavelOperacaoId, String observacoes)
+        public void AlterarSituacao(Int32 situacaoId, String responsavelOperacao, String observacoes)
         {
             if (!PodeAlteracaoSituacao(situacaoId))
                 throw new SISRHDomainException("A situação atual do plano não permite mudar para o estado solicitado");
+
+            //Não deve permitir que a própria pessoa encerre um plano seu sem ter concluído todas as atividades    
+            int responsavelOperacaoId = -1;
+            Int32.TryParse(responsavelOperacao, out responsavelOperacaoId);
+            if (situacaoId == (int)SituacaoPactoTrabalhoEnum.Executado && 
+                this.PessoaId == responsavelOperacaoId &&
+                this.Atividades.Any(a => a.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorTarefa &&
+                                         a.SituacaoId != (int)SituacaoAtividadePactoTrabalhoEnum.Done))
+            {
+                throw new SISRHDomainException("O próprio servidor não pode encerrar um plano de trabalho que ainda tem atividades a serem executadas. Favor solicitar que o chefe faça o encerramento.");
+            }
+
+            if (this.SituacaoId == (int)Domain.Enums.SituacaoPactoTrabalhoEnum.Executado &&
+                situacaoId == (int)Domain.Enums.SituacaoPactoTrabalhoEnum.EmExecucao &&
+                this.PessoaId == responsavelOperacaoId)
+            {
+                throw new SISRHDomainException("O próprio servidor não pode reabrir seu próprio plano de trabalho. Favor solicitar que o chefe faça a reabertura.");
+            }
 
             this.SituacaoId = situacaoId;
 
@@ -118,7 +146,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 this.EncerrarExecucao();
             }
 
-            this.Historico.Add(PactoTrabalhoHistorico.Criar(this.PlanoTrabalhoId, this.SituacaoId, responsavelOperacaoId, observacoes));
+            this.Historico.Add(PactoTrabalhoHistorico.Criar(this.PlanoTrabalhoId, this.SituacaoId, responsavelOperacao, observacoes));
         }
 
         private Boolean PodeAlteracaoSituacao(Int32 situacaoId)
@@ -136,7 +164,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 case (int)SituacaoPactoTrabalhoEnum.EmExecucao:
                     return situacaoId == (int)SituacaoPactoTrabalhoEnum.Executado;
                 case (int)SituacaoPactoTrabalhoEnum.Executado:
-                    return situacaoId == (int)SituacaoPactoTrabalhoEnum.Concluido;
+                    return situacaoId == (int)SituacaoPactoTrabalhoEnum.Concluido ||
+                           situacaoId == (int)SituacaoPactoTrabalhoEnum.EmExecucao;
             }
 
             return true;
@@ -151,7 +180,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         private void EncerrarExecucao()
         {
-            this.DataFim = DateTime.Now.Date;
+            if (this.DataFim > DateTime.Now.Date)
+                this.DataFim = DateTime.Now.Date;
             this.AtualizarAtividadesPorDia(SituacaoAtividadePactoTrabalhoEnum.Done);
         }
 
@@ -164,9 +194,10 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
             foreach (var atividade in atividadesAgrupadas)
             {
+                var modalidaExecucaoId = atividade.ModalidadeExecucaoId.HasValue ? atividade.ModalidadeExecucaoId.Value : this.ModalidadeExecucaoId;
                 for (var index = 1; index < atividade.Quantidade; index++)
-                    this.Atividades.Add(PactoTrabalhoAtividade.Criar(atividade.PactoTrabalhoId, atividade.ItemCatalogoId, 1, atividade.TempoPrevistoPorItem, atividade.Descricao));
-                atividade.Alterar(atividade.ItemCatalogoId, 1, atividade.TempoPrevistoPorItem, atividade.Descricao);
+                    this.Atividades.Add(PactoTrabalhoAtividade.Criar(atividade.PactoTrabalhoId, atividade.ItemCatalogoId, 1, modalidaExecucaoId, atividade.TempoPrevistoPorItem, atividade.Descricao));
+                atividade.Alterar(atividade.ItemCatalogoId, 1, modalidaExecucaoId, atividade.TempoPrevistoPorItem, atividade.Descricao);
             }
         }
 
@@ -177,7 +208,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             {
                 if (situacao == SituacaoAtividadePactoTrabalhoEnum.Done)
                 {
-                    a.DefinirComoConcluida(this.DiasNaoUteis, this.CargaHorariaDiaria);
+                    a.DefinirComoConcluida(this.DataFim, this.DiasNaoUteis, this.CargaHorariaDiaria);
                 }
                 else
                     a.DefinirComoEmExecucao();
@@ -190,10 +221,10 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         #region Criação, edição e exclusão de atividades
 
-        public void AdicionarAtividade(ItemCatalogo itemCatalogo, int quantidade, decimal tempoPrevistoPorItem, string descricao, IEnumerable<Guid> idsAssuntos, IEnumerable<Guid> idsObjetos)
+        public void AdicionarAtividade(ItemCatalogo itemCatalogo, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, string descricao, IEnumerable<Guid> idsAssuntos, IEnumerable<Guid> idsObjetos)
         {
             VerificarPossibilidadeAlteracao();
-            var atividade = PactoTrabalhoAtividade.Criar(this.PactoTrabalhoId, itemCatalogo.ItemCatalogoId, quantidade, tempoPrevistoPorItem, descricao);
+            var atividade = PactoTrabalhoAtividade.Criar(this.PactoTrabalhoId, itemCatalogo.ItemCatalogoId, quantidade, modalidaExecucaoId, tempoPrevistoPorItem, descricao);
             if (idsAssuntos != null)
             {
                 foreach (var idAssunto in idsAssuntos)
@@ -214,11 +245,11 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
         }
 
-        public void AlterarAtividade(Guid pactoTrabalhoAtividadeId, ItemCatalogo itemCatalogo, int quantidade, decimal tempoPrevistoPorItem, string descricao, IEnumerable<Guid> idsAssuntos, IEnumerable<Guid> idsObjetos)
+        public void AlterarAtividade(Guid pactoTrabalhoAtividadeId, ItemCatalogo itemCatalogo, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, string descricao, IEnumerable<Guid> idsAssuntos, IEnumerable<Guid> idsObjetos)
         {
             VerificarPossibilidadeAlteracao();
             var atividade = this.Atividades.FirstOrDefault(r => r.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId);
-            atividade.Alterar(itemCatalogo.ItemCatalogoId, quantidade, tempoPrevistoPorItem, descricao);
+            atividade.Alterar(itemCatalogo.ItemCatalogoId, quantidade, modalidaExecucaoId, tempoPrevistoPorItem, descricao);
             if (idsAssuntos != null)
             {
                 var idsAssuntosARemover = atividade.Assuntos.Select(a => a.AssuntoId).Where(id => !idsAssuntos.Contains(id)).ToList();
@@ -295,7 +326,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                     break;
 
                 case (int)SituacaoAtividadePactoTrabalhoEnum.Done:
-                    atividade.DefinirComoConcluida(this.DiasNaoUteis, this.CargaHorariaDiaria);
+                    atividade.DefinirComoConcluida(DateTime.Now, this.DiasNaoUteis, this.CargaHorariaDiaria);
                     break;
             }
 
@@ -331,7 +362,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             //Se tiver alguma atividade concluída, usa a quantidade total de dias para calcular
             //  Caso contrário, usa o número de dias já executado
             var diasExecutadosPacto = diasTotaisPacto;
-            if (!this.Atividades.Any(a => a.DataFim.HasValue))
+            if (this.Atividades.Any(a => !a.DataFim.HasValue))
             {//Para esse cálculo desconsidera os feriados
                 diasExecutadosPacto = WorkingDays.DiffDays(this.DataInicio, DateTime.Now.Date > this.DataFim.Date ? this.DataFim.Date : DateTime.Now.Date, null, false);
             }
@@ -353,7 +384,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         private void AtualizarTempoAtividadesPorDia()
         {
-            var diasExecutados = WorkingDays.DiffDays(this.DataInicio, DateTime.Now.Date, this.DiasNaoUteis, false);
+            var dataFim = DateTime.Now.Date < this.DataFim ? DateTime.Now.Date : this.DataFim;
+            var diasExecutados = WorkingDays.DiffDays(this.DataInicio, dataFim, this.DiasNaoUteis, false);
             var atividadesPorDia = this.Atividades.Where(a => a.ItemCatalogo != null && a.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia).ToList();
             atividadesPorDia.ForEach(a => a.AlterarTempoRealizado(diasExecutados * a.TempoPrevistoPorItem));
         }
@@ -378,7 +410,24 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             this.Solicitacoes.Add(item);
         }
 
-        public void ResponderSolicitacao(Guid pactoTrabalhoSolicitacaoId, string analista, Boolean aprovado, Boolean atualizarPrazo, string observacoesAnalista)
+        public Boolean ExisteSolicitacaoPendenteExclusaoMesmaAtividade(Guid pactoTrabalhoAtividadeId)
+        {
+            //Obtém solicitações de exclusão pendentes
+            var solicitacoesMesmoTipoPendentes = this.ObterSolicitacoesNaoAtendidasMesmoTipo(TipoSolicitacaoPactoTrabalhoEnum.ExcluirAtividade);
+
+            //Deve rejeitar outras solicitações de exclusão da mesma atividade
+            foreach (var solicitacaoVerificar in solicitacoesMesmoTipoPendentes)
+            {
+                dynamic dadosSolicitacaoVerificar = JsonConvert.DeserializeObject(solicitacaoVerificar.DadosSolicitacao);
+                if (dadosSolicitacaoVerificar.pactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void ResponderSolicitacao(Guid pactoTrabalhoSolicitacaoId, string analista, Boolean aprovado, Boolean atualizarPrazo, string observacoesAnalista, ItemCatalogo itemCatalogo)
         {
             VerificarPossibilidadeAlteracao(SituacaoPactoTrabalhoEnum.EmExecucao);
             var item = this.Solicitacoes.FirstOrDefault(r => r.PactoTrabalhoSolicitacaoId == pactoTrabalhoSolicitacaoId);
@@ -401,7 +450,13 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                         Decimal? tempoRealizado = null;
                         if (dadosSolicitacao.tempoRealizado != null) tempoRealizado = dadosSolicitacao.tempoRealizado;
 
-                        this.AprovarNovaAtividade(itemCatalogoId, quantidade, tempoPrevistoPorItem, situacaoId, dataInicio, dataFim, tempoRealizado, item.ObservacoesSolicitante, atualizarPrazo);
+                        Int32 modalidadeExecucaoId = this.ModalidadeExecucaoId;
+                        if (this.ModalidadeExecucaoId == (int)ModalidadeExecucaoEnum.Semipresencial && dadosSolicitacao.execucaoRemota != null)
+                        {
+                            Boolean execucaoRemota = dadosSolicitacao.execucaoRemota;
+                            modalidadeExecucaoId = execucaoRemota ? (int)ModalidadeExecucaoEnum.Teletrabalho : (int)ModalidadeExecucaoEnum.Presencial;
+                        }
+                        this.AprovarNovaAtividade(itemCatalogo, quantidade, modalidadeExecucaoId, tempoPrevistoPorItem, situacaoId, dataInicio, dataFim, tempoRealizado, item.ObservacoesSolicitante, atualizarPrazo);
 
                         break;
 
@@ -433,7 +488,20 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
                     case (int)TipoSolicitacaoPactoTrabalhoEnum.ExcluirAtividade:
                         Guid pactoTrabalhoAtividadeExcluirId = dadosSolicitacao.pactoTrabalhoAtividadeId;
-                        this.Atividades.RemoveAll(a => a.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeExcluirId);                        
+                        this.Atividades.RemoveAll(a => a.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeExcluirId);
+
+                        //Obtém solicitações de exclusão pendentes
+                        var solicitacoesMesmoTipoPendentes = this.ObterSolicitacoesNaoAtendidasMesmoTipo(TipoSolicitacaoPactoTrabalhoEnum.ExcluirAtividade, pactoTrabalhoSolicitacaoId);
+
+                        //Deve rejeitar outras solicitações de exclusão da mesma atividade
+                        foreach (var solicitacaoVerificar in solicitacoesMesmoTipoPendentes)
+                        {
+                            dynamic dadosSolicitacaoVerificar = JsonConvert.DeserializeObject(solicitacaoVerificar.DadosSolicitacao);
+                            if (dadosSolicitacaoVerificar.pactoTrabalhoAtividadeId == dadosSolicitacao.pactoTrabalhoAtividadeId)
+                            {
+                                solicitacaoVerificar.Responder(analista, false, "Uma outra solicitação de exclusão da mesma atividade foi aprovada");
+                            }
+                        }
                         break;
                 }
             }
@@ -441,18 +509,31 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             item.Responder(analista, aprovado, observacoesAnalista);
         }
 
-        public void AprovarNovaAtividade(Guid itemCatalogoId, int quantidade, decimal tempoPrevistoPorItem, Int32 situacaoId, DateTime? dataInicio, DateTime? dataFim, Decimal? tempoRealizado, string descricao, bool atualizarPrazo)
+        public List<PactoTrabalhoSolicitacao> ObterSolicitacoesNaoAtendidasMesmoTipo(TipoSolicitacaoPactoTrabalhoEnum tipoSolicitacao, Guid? pactoTrabalhoSolicitacaoId = null)
         {
-            var atividade = PactoTrabalhoAtividade.Criar(this, itemCatalogoId, quantidade, tempoPrevistoPorItem, descricao);
+            //Deve rejeitar outras solicitações de exclusão da mesma atividade
+            return this.Solicitacoes.Where(s => !s.Analisado &&
+                                                s.TipoSolicitacaoId == (int)tipoSolicitacao &&
+                                                (!pactoTrabalhoSolicitacaoId.HasValue || s.PactoTrabalhoSolicitacaoId != pactoTrabalhoSolicitacaoId))
+                                    .ToList();
+        }
+
+        public void AprovarNovaAtividade(ItemCatalogo itemCatalogo, int quantidade, int modalidaExecucaoId, decimal tempoPrevistoPorItem, Int32 situacaoId, DateTime? dataInicio, DateTime? dataFim, Decimal? tempoRealizado, string descricao, bool atualizarPrazo)
+        {
+            var atividade = PactoTrabalhoAtividade.Criar(this, itemCatalogo, quantidade, modalidaExecucaoId, tempoPrevistoPorItem, descricao);
             atividade.AlterarAndamento(situacaoId, dataInicio, dataFim, tempoRealizado, ignorarValidacoes: true);
             this.Atividades.Add(atividade);
-            this.AtualizarPercentualExecucao();
+
+            if (itemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
+                atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
 
             if (atualizarPrazo)
             {
-                var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis);
+                var novaDataFim = atividade.CalcularAjusteNoPrazo(this.DataFim, DiasNaoUteis, tempoPrevistoPorItem);
                 this.AlterarPeriodo(novaDataFim);
             }
+
+            this.AtualizarPercentualExecucao();
         }
 
         #endregion
@@ -463,6 +544,19 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 throw new SISRHDomainException("A situação atual do plano não permite realizar esta operação");
         }
 
+        private void ValidarDatas(DateTime dataInicio, DateTime dataFim)
+        {
+
+            if (DataInicio != dataInicio && dataInicio < DateTime.Now.Date)
+                throw new SISRHDomainException("A data de início do plano de trabalho deve ser maior ou igual à data atual");
+
+            if (this.SituacaoId == (int)Enums.SituacaoPactoTrabalhoEnum.Rascunho && dataFim < DateTime.Now.Date)
+                throw new SISRHDomainException("A data de fim do plano de trabalho deve ser maior ou igual à data atual");
+
+            if (dataFim <= dataInicio)
+                throw new SISRHDomainException("A data de fim do plano de trabalho deve ser maior que a data de início");
+
+        }
 
     }
 }

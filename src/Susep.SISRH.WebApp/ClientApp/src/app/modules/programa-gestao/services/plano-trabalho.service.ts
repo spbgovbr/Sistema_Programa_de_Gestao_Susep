@@ -83,11 +83,11 @@ export class PlanoTrabalhoDataService {
     }));
   }
 
-  AlterarFase(planoTrabalhoId: string, situacaoId: number, justificativa?: string, aprovados?: string[]): Observable<ApplicationResult<boolean>> {
+  AlterarFase(planoTrabalhoId: string, situacaoId: number, justificativa?: string, aprovados?: string[], deserto = false): Observable<ApplicationResult<boolean>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}planotrabalho/${planoTrabalhoId}/situacao`;
 
-    return this.service.put(url, { situacaoId: situacaoId, observacoes: justificativa, aprovados: aprovados }).pipe(map((response: any) => {
+    return this.service.put(url, { situacaoId: situacaoId, observacoes: justificativa, aprovados: aprovados, deserto: deserto }).pipe(map((response: any) => {
       return response;
     }));
   }

@@ -58,7 +58,8 @@
         <form [formGroup]="form">
           <div class="field">
             <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Justificativa">
-              <textarea id="justificativa" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+              <textarea maxlength="2000" #justificativa id="justificativa" placeholder="Insira uma justificativa" name="justificativa" formControlName="justificativa"></textarea>
+              <input-chars-cunter [element]="justificativa"></input-chars-cunter>
             </field-validation>
           </div>
         </form>
@@ -75,7 +76,8 @@
     <div class="modal-footer justify-content-end">
       <button class="br-button is-cancel mr-2" type="button" (click)="fecharModal()">Cancelar</button>
       <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="dadosPlano.value?.unidadeId">
-        <button class="br-button is-primary" type="button" (click)="salvar()" [disabled]="!podeSalvar()">Salvar seleção e concluir fase de habilitação</button>
+        <button class="br-button is-primary" type="button" (click)="salvar()" *ngIf="!deserto()" [disabled]="!podeSalvar()">Salvar seleção e concluir fase de habilitação</button>
+        <button class="br-button is-primary" type="button" (click)="salvarDeserto()" *ngIf="deserto()">Concluir fase de habilitação e salvar o programa de gestão como deserto</button>
       </secure-input>
     </div>
   </div>
