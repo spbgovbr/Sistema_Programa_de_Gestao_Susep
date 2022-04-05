@@ -135,10 +135,10 @@ ldapOptions__Configurations__0__EmailAttributeFilter=
 #### Configurar Acesso ao Banco de Dados
 
 Caso você queira utilizar um servidor de banco de dados SQL Server com a devida licença, será necessário alterar a configuração do banco.
-Acesse o arquivo ``docker/docker-compose.yml` e edite as seguintes linhas:
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas:
 ```yaml
-      # Configurações de banco de dados
-      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
+# Configurações de banco de dados
+ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
 ```
 
 #### Configurar Script de inserção de dados no Banco de Dados
