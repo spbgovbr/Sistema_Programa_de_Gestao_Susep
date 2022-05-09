@@ -116,9 +116,9 @@ INSERT INTO [tb_perfil] (ds_perfil, ds_detalhe, st_registro)
 VALUES ('ROLE_USUARIO_AVANCADO', 'Usuário Avançado do Sistema', 'ATIVO')
 
 INSERT INTO [tb_usuario] (id_pessoa, ds_email, co_senha, st_registro) 
-VALUES (1, 'usapipg@economia.gov.br', NULL, 'ATIVO')
+VALUES (1, 'usapipg@cade.gov.br', NULL, 'ATIVO')
 INSERT INTO [tb_usuario] (id_pessoa, ds_email, co_senha, st_registro) 
-VALUES (2, 'henrique.alves@economia.gov.br', NULL, 'ATIVO')
+VALUES (2, 'user@gov.br', '$2a$10$bVH7/Gxnux5yKLvkUjuHheV32HqIzRRgkSG0rFkczuQa/h1NpMH6a', 'ATIVO') /* @t3st3# */
 
 INSERT INTO [rl_usuario_perfil] (id_usuario, id_perfil) VALUES (1, 2)
 INSERT INTO [rl_usuario_perfil] (id_usuario, id_perfil) VALUES (2, 1)
