@@ -44,7 +44,7 @@ select [pactoTrabalhoId] as id_pacto,
 	pa.dataInicio as data_inicio, pa.dataFim as data_fim,
 	pa.tempoTotalDisponivel as carga_horaria_total,
 	NULL as data_interrupcao, 
-	NULL as entregue_no_prazo,
+	'true' as entregue_no_prazo,
 	vw.HorasHomologadas as horas_homologadas
 from [ProgramaGestao].[PactoTrabalho] as pa 
 	inner join dbo.Pessoa as pe on pe.pessoaId = pa.pessoaId
