@@ -104,7 +104,7 @@ CREATE TABLE [tb_parametro]
 GO
 
 INSERT INTO [tb_pessoa] (ds_nome, nr_cpf, st_registro) 
-VALUES ('Usuário de Sistema - API PG.Cade', '000.000.000-00', 'ATIVO')
+VALUES ('Usuário de Sistema - API PGD SUSEP', '000.000.000-00', 'ATIVO')
 INSERT INTO [tb_pessoa] (ds_nome, nr_cpf, st_registro) 
 VALUES ('Henrique Alves', '111.111.111-11', 'ATIVO')
 
