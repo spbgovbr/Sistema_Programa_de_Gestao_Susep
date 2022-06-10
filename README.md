@@ -68,7 +68,7 @@ O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com 
 
 ## Sequência de passos (SQL Server)
 
->1. Criar banco de dados DBSISGP.
+>1. Criar banco de dados **programa_gestao**.
 >2. Executar o script “[1. Criação da estrutura do banco de dados - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados%20-%20Obrigatorio.sql)”.
 >3. Executar o script “[2. Inserir dados de domínio - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio%20-%20Obrigatorio.sql)”.
 >4. Executar o script “[3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/3.%20Cria%C3%A7%C3%A3o%20da%20tabela%20pessoa%20alocacao%20temporaria%20-%20Obrigatorio.sql)”.
