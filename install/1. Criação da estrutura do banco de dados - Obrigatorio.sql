@@ -124,8 +124,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Unidade](
 	[unidadeId] [bigint] IDENTITY(1,1) NOT NULL,
-	[undSigla] [varchar](50) NOT NULL,
-	[undDescricao] [varchar](150) NOT NULL,
+	[undSiglaSIORG] [varchar](50) NOT NULL,
+	[undDescricaoSIORG] [varchar](150) NOT NULL,
 	[unidadeIdPai] [bigint] NULL,
 	[tipoUnidadeId] [bigint] NOT NULL,
 	[situacaoUnidadeId] [bigint] NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[Unidade](
 	[undNivel] [smallint] NULL,
 	[tipoFuncaoUnidadeId] [bigint] NULL,
 	[Email] [varchar](150) NULL,
-	[undCodigoSIORG] [int] NULL,
+	[undCodigoSIORG] [int] NOT NULL,
  CONSTRAINT [PK_Unidade] PRIMARY KEY CLUSTERED 
 (
 	[unidadeId] ASC
