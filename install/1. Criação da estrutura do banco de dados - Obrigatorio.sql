@@ -124,8 +124,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Unidade](
 	[unidadeId] [bigint] IDENTITY(1,1) NOT NULL,
-	[undSiglaSIORG] [varchar](50) NOT NULL,
-	[undDescricaoSIORG] [varchar](150) NOT NULL,
+	[undSigla] [varchar](50) NOT NULL,
+	[undDescricao] [varchar](150) NOT NULL,
 	[unidadeIdPai] [bigint] NULL,
 	[tipoUnidadeId] [bigint] NOT NULL,
 	[situacaoUnidadeId] [bigint] NOT NULL,
