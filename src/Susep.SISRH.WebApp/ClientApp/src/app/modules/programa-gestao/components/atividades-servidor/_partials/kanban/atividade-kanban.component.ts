@@ -3,11 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 import { IPactoTrabalho, IPactoTrabalhoAtividade } from '../../../../models/pacto-trabalho.model';
 import { PactoTrabalhoDataService } from '../../../../services/pacto-trabalho.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'atividade-pacto-kanban',
   templateUrl: './atividade-kanban.component.html',
-  styleUrls: ['./atividade-kanban.component.css'],  
+  styleUrls: ['./atividade-kanban.component.css'],
 })
 export class AtividadesPactoKanbanComponent implements OnInit {
 
@@ -18,7 +19,8 @@ export class AtividadesPactoKanbanComponent implements OnInit {
   @Input() dadosPacto: BehaviorSubject<IPactoTrabalho>;
 
   constructor(
-    private pactoTrabalhoDataService: PactoTrabalhoDataService, ) { }
+    private toastr: ToastrService,
+    private pactoTrabalhoDataService: PactoTrabalhoDataService,) { }
 
   ngOnInit() {
 
@@ -45,8 +47,18 @@ export class AtividadesPactoKanbanComponent implements OnInit {
     } else {
 
       //Evita que mova direto de TODO para DONE
-      if (event.previousContainer.id === "todoList" && event.container.id === "doneList")
+      if (event.previousContainer.id === "todoList" && event.container.id === "doneList") {
+        this.toastr.warning("Não é possível passar diretamente de pendente para concluído.");
         return;
+      }
+
+      //Evita que muda para concluído sem informar a descrição da entrega
+      const atividade = this.dadosPacto.value.atividades.filter(at => at.pactoTrabalhoAtividadeId === event.item.data.pactoTrabalhoAtividadeId)[0];
+      const descricaoAtividadePreenchida = atividade.consideracoes;
+      if (event.container.id === "doneList" && !descricaoAtividadePreenchida) {
+        this.toastr.warning("É obrigatório informar a descrição da atividade antes de concluir sua execução");
+        return;
+      }
 
       transferArrayItem(event.previousContainer.data,
         event.container.data,

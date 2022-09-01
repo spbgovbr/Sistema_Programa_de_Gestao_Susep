@@ -47,5 +47,10 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "termoAceite")]
         public string TermoAceite { get; set; }
 
+        [DataMember(Name = "aprovados")]
+        public List<PlanoTrabalhoPessoaAprovadaViewModel> Aprovados { get; set; }
+
+        
+
     }
 }

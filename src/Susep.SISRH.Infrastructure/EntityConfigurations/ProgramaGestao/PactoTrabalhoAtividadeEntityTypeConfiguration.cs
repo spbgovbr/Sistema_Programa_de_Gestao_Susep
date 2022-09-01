@@ -36,6 +36,8 @@ namespace Susep.SISRH.Infrastructure.EntityConfigurations.ProgramaGestao
             builder.Property(p => p.ConsideracoesConclusao).HasColumnName("consideracoesConclusao");
             builder.Property(p => p.Nota).HasColumnName("nota");
             builder.Property(p => p.Justificativa).HasColumnName("justificativa");
+            builder.Property(p => p.Avaliador).HasColumnName("responsavelAvaliacao");
+            builder.Property(p => p.DataAvaliacao).HasColumnName("dataAvaliacao");
 
             builder.HasOne(p => p.PactoTrabalho)
                    .WithMany(p => p.Atividades)

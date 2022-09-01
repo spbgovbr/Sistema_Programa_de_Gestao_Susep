@@ -9,6 +9,7 @@ using Susep.SISRH.Domain.AggregatesModel.AssuntoAggregate;
 using Susep.SISRH.Infrastructure.EntityConfigurations;
 using Susep.SISRH.Infrastructure.EntityConfigurations.ProgramaGestao;
 using Susep.SISRH.Domain.AggregatesModel.ObjetoAggregate;
+using Susep.SISRH.Domain.AggregatesModel.AgendamentoAggregate;
 
 namespace Susep.SISRH.Infrastructure.Contexts
 {
@@ -27,7 +28,9 @@ namespace Susep.SISRH.Infrastructure.Contexts
         public DbSet<PactoTrabalhoSolicitacao> PactoTrabalhoSolicitacao { get; set; }
         public DbSet<PactoTrabalhoHistorico> PactoTrabalhoHistorico { get; set; }
         public DbSet<PactoAtividadePlanoObjeto> PactoAtividadePlanoObjeto { get; set; }
-
+        public DbSet<PactoTrabalhoDeclaracao> PactoTrabalhoDeclaracao { get; set; }
+        public DbSet<PactoTrabalhoInformacao> PactoTrabalhoInformacao { get; set; }
+        
         public DbSet<PlanoTrabalho> PlanoTrabalho { get; set; }
         public DbSet<PlanoTrabalhoAtividade> PlanoTrabalhoAtividade { get; set; }
         public DbSet<PlanoTrabalhoAtividadeItem> PlanoTrabalhoAtividadeItem { get; set; }
@@ -40,6 +43,8 @@ namespace Susep.SISRH.Infrastructure.Contexts
         public DbSet<PlanoTrabalhoHistorico> PlanoTrabalhoHistorico { get; set; }
         public DbSet<PlanoTrabalhoObjeto> PlanoTrabalhoObjeto { get; set; }
         public DbSet<PlanoTrabalhoObjetoAssunto> PlanoTrabalhoObjetoAssunto { get; set; }
+
+        public DbSet<Agendamento> Agendamento { get; set; }
 
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<Unidade> Unidade { get; set; }
@@ -77,7 +82,9 @@ namespace Susep.SISRH.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new PactoTrabalhoHistoricoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PactoTrabalhoAtividadeAssuntoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PactoAtividadePlanoObjetoEntityTypeConfiguration());
-
+            modelBuilder.ApplyConfiguration(new PactoTrabalhoDeclaracaoEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PactoTrabalhoInformacaoEntityTypeConfiguration());
+            
             modelBuilder.ApplyConfiguration(new PlanoTrabalhoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PlanoTrabalhoHistoricoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PlanoTrabalhoAtividadeEntityTypeConfiguration());
@@ -91,6 +98,8 @@ namespace Susep.SISRH.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new PlanoTrabalhoCustoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PlanoTrabalhoObjetoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PlanoTrabalhoObjetoAssuntoEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new AgendamentoEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new PessoaModalidadeExecucaoEntityTypeConfiguration());
             

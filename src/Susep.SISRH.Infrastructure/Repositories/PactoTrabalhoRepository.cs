@@ -30,6 +30,8 @@ namespace Susep.SISRH.Infrastructure.Repositories
                 .Include(p => p.Solicitacoes)
                 .Include(p => p.Historico)
                 .Include(p => p.Pessoa)
+                .Include(p => p.Declaracoes)
+                .Include(p => p.Informacoes)
                 .FirstOrDefaultAsync(p => p.PactoTrabalhoId == id);
         }
 

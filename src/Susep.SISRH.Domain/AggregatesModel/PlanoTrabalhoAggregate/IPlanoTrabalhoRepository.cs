@@ -11,5 +11,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate
         Task<PlanoTrabalho> AdicionarAsync(PlanoTrabalho item);
 
         void Atualizar(PlanoTrabalho item);
+
+        void Excluir(PlanoTrabalho item);
     }
 }

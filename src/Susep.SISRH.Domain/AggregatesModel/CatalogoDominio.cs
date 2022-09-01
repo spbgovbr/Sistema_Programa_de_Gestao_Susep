@@ -31,6 +31,7 @@ namespace Susep.SISRH.Domain.AggregatesModel
         public IList<PlanoTrabalhoAtividadeCandidato> PlanoTrabalhoAtividadeCandidatos { get; private set; }
         public IList<PlanoTrabalhoAtividadeCandidatoHistorico> PlanoTrabalhoAtividadeCandidatoHistoricos { get; private set; }
         public IList<PlanoTrabalhoAtividadeCriterio> CriteriosAtividadesPlanos { get; private set; }
+        public IList<PactoTrabalhoDeclaracao> Declaracoes { get; private set; }
 
     }
 }

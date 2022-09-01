@@ -107,6 +107,19 @@ namespace Susep.SISRH.WebApi.Controllers
         /// Altera os dados de um pacto de trabalho do corretor logado
         /// </summary>
         /// <param name="pactoTrabalhoid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut("{pactoTrabalhoid}/frequenciaTeletrabalhoParcial"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> PutPactoTrabalhoFrequenciaTeletrabalhoParcial([FromRoute] Guid pactoTrabalhoid, [FromBody] AlterarFrequenciaTeletrabalhoParcialPactoTrabalhoCommand command)
+        {
+            command.PactoTrabalhoId = pactoTrabalhoid;
+            return await Mediator.Send(command);
+        }
+
+        /// <summary>
+        /// Altera os dados de um pacto de trabalho do corretor logado
+        /// </summary>
+        /// <param name="pactoTrabalhoid"></param>
         /// <returns></returns>
         [HttpDelete("{pactoTrabalhoid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
         public async Task<IActionResult> DeletePactoTrabalho([FromRoute] Guid pactoTrabalhoid)
@@ -360,7 +373,7 @@ namespace Susep.SISRH.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("{pactoTrabalhoid}/solicitacao"), Produces("application/json", Type = typeof(IApplicationResult<PactoTrabalhoSolicitacaoViewModel>))]
         public async Task<IActionResult> GetSolicitacoesById([FromRoute]Guid pactoTrabalhoid)
-            => await PactoTrabalhoQuery.ObteSolicitacoesPactoAsync(pactoTrabalhoid);
+            => await PactoTrabalhoQuery.ObterSolicitacoesPactoAsync(pactoTrabalhoid);
 
 
         /// <summary>
@@ -434,6 +447,33 @@ namespace Susep.SISRH.WebApi.Controllers
 
         #endregion
 
+        #region Informações
+
+        /// <summary>
+        /// Obtém as informações de um pacto de trabalho
+        /// </summary>
+        /// <param name="pactoTrabalhoid"></param>
+        /// <returns></returns>
+        [HttpGet("{pactoTrabalhoid}/informacao"), Produces("application/json", Type = typeof(IApplicationResult<PactoTrabalhoInformacaoViewModel>))]
+        public async Task<IActionResult> GetInformacoesById([FromRoute] Guid pactoTrabalhoid)
+            => await PactoTrabalhoQuery.ObterInformacoesPactoAsync(pactoTrabalhoid);
+
+
+        /// <summary>
+        /// Adiciona uma informação no pacto de trabalho
+        /// </summary>
+        /// <param name="pactoTrabalhoid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("{pactoTrabalhoid}/informacao"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> PostAdicionarInformacaoPacto([FromRoute] Guid pactoTrabalhoid, [FromBody] CadastrarPactoTrabalhoInformacaoCommand command)
+        {
+            command.PactoTrabalhoId = pactoTrabalhoid;
+            return await Mediator.Send(command);
+        }
+
+        #endregion
+
         #region Assuntos
 
         /// <summary>
@@ -445,6 +485,55 @@ namespace Susep.SISRH.WebApi.Controllers
         public async Task<IActionResult> GetAssuntosParaAssociar([FromRoute] Guid pactoTrabalhoid)
             => await PactoTrabalhoQuery.ObterAssuntosParaAssociarAsync(pactoTrabalhoid);
 
+
+        #endregion
+
+        #region Declarações
+
+        /// <summary>
+        /// Obtém as declarações a serem feitas pelos servidores no pacto de trabalho, mas ainda não realizada nesse pacto
+        /// </summary>
+        /// <param name="pactoTrabalhoId"></param>
+        /// <returns></returns>
+        [HttpGet("{pactoTrabalhoId}/declaracao"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<DominioViewModel>>))]
+        public async Task<IActionResult> GetDeclaracoesNaoRealizadasAsync([FromRoute] Guid pactoTrabalhoId)
+            => await PactoTrabalhoQuery.ObterDeclaracoesNaoRealizadasAsync(pactoTrabalhoId);
+
+
+        /// <summary>
+        /// Informa que a declaração foi visualizada pelo servidor
+        /// </summary>
+        /// <param name="pactoTrabalhoId"></param>
+        /// <param name="declaracaoId"></param>
+        /// <returns></returns>
+        [HttpPost("{pactoTrabalhoId}/declaracao/{declaracaoId}/visualizada"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> PostDeclaracaoExibidaAsync([FromRoute] Guid pactoTrabalhoId, [FromRoute] Int32 declaracaoId)
+        {
+            var command = new RegistrarVisualizacaoDeclaracaoPactoTrabalhoCommand()
+            {
+                PactoTrabalhoId = pactoTrabalhoId,
+                DeclaracaoId = declaracaoId
+            };
+            return await Mediator.Send(command);
+        }
+
+
+        /// <summary>
+        /// Informa que a declaração foi realizada pelo servidor
+        /// </summary>
+        /// <param name="pactoTrabalhoId"></param>
+        /// <param name="declaracaoId"></param>
+        /// <returns></returns>
+        [HttpPut("{pactoTrabalhoId}/declaracao/{declaracaoId}/realizada"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> PutDeclaracaoRealizadaAsync([FromRoute] Guid pactoTrabalhoId, [FromRoute] Int32 declaracaoId)
+        {
+            var command = new RegistrarRealizacaoDeclaracaoPactoTrabalhoCommand()
+            {
+                PactoTrabalhoId = pactoTrabalhoId,
+                DeclaracaoId = declaracaoId
+            };
+            return await Mediator.Send(command);
+        }
 
         #endregion
 

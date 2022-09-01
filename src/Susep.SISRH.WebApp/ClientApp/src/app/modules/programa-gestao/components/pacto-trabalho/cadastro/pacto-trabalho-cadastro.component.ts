@@ -10,6 +10,7 @@ import { PlanoTrabalhoDataService } from '../../../services/plano-trabalho.servi
 import { IPlanoTrabalhoPessoaModalidade, IPlanoTrabalho } from '../../../models/plano-trabalho.model';
 import { ApplicationStateService } from '../../../../../shared/services/application.state.service';
 import { IUsuario } from '../../../../../shared/models/perfil-usuario.model';
+import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 
 @Component({
   selector: 'pacto-trabalho-cadastro',
@@ -43,6 +44,7 @@ export class PactoTrabalhoCadastroComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private unidadeDataService: UnidadeDataService,
+    private configurationService: ConfigurationService,
     private planoTrabalhoDataService: PlanoTrabalhoDataService,
     private pactoTrabalhoDataService: PactoTrabalhoDataService,
     private applicationState: ApplicationStateService) {
@@ -80,6 +82,7 @@ export class PactoTrabalhoCadastroComponent implements OnInit {
     this.planoTrabalhoDataService.ObterPessoasModalidades(this.dadosPacto.planoTrabalhoId).subscribe(
       appResult => {
         this.modalidades = appResult.retorno;
+        this.ajustarPessoas();
       }
     );
 
@@ -99,6 +102,14 @@ export class PactoTrabalhoCadastroComponent implements OnInit {
   ajustarPessoas() {
     if (!this.gestorUnidade) {
       this.pessoas = this.pessoas.filter(p => p.id === this.perfilUsuario.pessoaId.toString());
+    }
+
+    if (this.pessoas) {
+      const formaParticipacaoPlanoTrabalho = this.configurationService.getFormaParticipacaoPlanoTrabalho();
+      if (formaParticipacaoPlanoTrabalho && formaParticipacaoPlanoTrabalho === 'SomenteSelecionados') {
+        this.pessoas = this.pessoas.filter(pit => { return this.modalidades.filter(pmod => pmod.pessoaId.toString() === pit.id).length > 0 })
+
+      }
     }
   }
 

@@ -27,5 +27,7 @@ namespace Susep.SISRH.Application.Queries.Abstractions
         Task<IApplicationResult<DadosPaginadosViewModel<PactoTrabalhoViewModel>>> ObterPactoTrabalhoPorFiltroAsync(PactoTrabalhoFiltroRequest request);
         Task<IApplicationResult<PactoTrabalhoViewModel>> ObterPactoTrabalhoPorChaveAsync(PactoTrabalhoRequest request);
 
+        Task<IApplicationResult<IEnumerable<AgendamentoPresencialViewModel>>> ObterAgendamentosAsync(AgendamentoFiltroRequest request);
+
     }
 }

@@ -109,11 +109,16 @@ export class AtividadesPactoAtualComponent implements OnInit {
   }
 
   verificarSeUsuarioPodeAceitar() {
-    this.usuarioPodeAceitar =
-      (this.perfilUsuario.pessoaId === this.dadosPacto.value.pessoaId &&
-        this.perfilUsuario.pessoaId.toString() !== this.dadosPacto.value.responsavelEnvioAceite.toString()) ||
-      (this.perfilUsuario.pessoaId !== this.dadosPacto.value.pessoaId &&
-        this.dadosPacto.value.pessoaId.toString() === this.dadosPacto.value.responsavelEnvioAceite.toString());
+    if (this.perfilUsuario.pessoaId && this.dadosPacto.value.responsavelEnvioAceite) {
+      //O usuário pode aceitar o plano se o plano é dele, mas não foi ele que enviou para aceite
+      //                              ou se o plano não é dele, mas quem enviou para aceite foi a pessoa do plano
+
+      this.usuarioPodeAceitar =
+        (this.perfilUsuario.pessoaId === this.dadosPacto.value.pessoaId &&
+          this.perfilUsuario.pessoaId.toString() !== this.dadosPacto.value.responsavelEnvioAceite.toString()) ||
+        (this.perfilUsuario.pessoaId !== this.dadosPacto.value.pessoaId &&
+          this.dadosPacto.value.pessoaId.toString() === this.dadosPacto.value.responsavelEnvioAceite.toString());
+    }
   }
 
   preencherPlano(dados: IPactoTrabalho) {

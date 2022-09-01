@@ -84,12 +84,14 @@
                   <th>Data início</th>
                   <th>Data fim</th>
                   <th>Situação</th>
-                  <th style="width:120px"></th>
+                  <th style="width:150px"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of dadosEncontrados?.registros">
-                  <td>{{item.unidade}}</td>
+                  <td>
+                    {{item.unidade}} 
+                  </td>
                   <td>{{item.pessoa}}</td>
                   <td>{{item.formaExecucao}}</td>
                   <td>{{item.dataInicio | date: 'dd/MM/yyyy'}}</td>
@@ -104,6 +106,7 @@
                     <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade">
                       <a href="javascript:void(0)" (click)="excluirPactoTrabalho(item.pactoTrabalhoId)" *ngIf="item.situacaoId < 405" class="mr-2" title="Excluir"><i class="fa fa-trash"></i></a>
                     </secure-input>
+                    <a href="javascript:void(0)" [routerLink]="['/programagestao/detalhar/' + item.planoTrabalhoId]" title="Ir para o Programa de Gestão"><i class="fa fa-level-up-alt"></i></a>
                   </td>
                 </tr>
                 <tr>

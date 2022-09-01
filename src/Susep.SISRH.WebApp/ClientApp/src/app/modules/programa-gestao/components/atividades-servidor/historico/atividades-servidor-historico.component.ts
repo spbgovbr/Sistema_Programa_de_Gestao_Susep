@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IDadosPaginados } from '../../../../../shared/models/pagination.model';
 import { IPactoTrabalho } from '../../../models/pacto-trabalho.model';
@@ -15,12 +15,16 @@ import { ApplicationStateService } from '../../../../../shared/services/applicat
 import { IUsuario } from '../../../../../shared/models/perfil-usuario.model';
 import { PlanoTrabalhoDataService } from '../../../services/plano-trabalho.service';
 import { IPlanoTrabalho } from '../../../models/plano-trabalho.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PerfilEnum } from '../../../enums/perfil.enum';
 
 @Component({
   selector: 'atividades-servidor-historico',
   templateUrl: './atividades-servidor-historico.component.html',  
 })
 export class AtividadesServidorHistoricoComponent implements OnInit {
+
+  PerfilEnum = PerfilEnum;
 
   form: FormGroup;
   dadosUltimaPesquisa: IPactoTrabalhoPesquisa = {};
@@ -34,9 +38,14 @@ export class AtividadesServidorHistoricoComponent implements OnInit {
 
   paginacao = new BehaviorSubject<IDadosPaginados<IPactoTrabalho>>(null);
 
+  pactoExcluir: IPactoTrabalho;
+
+  @ViewChild('modalConfirmacaoExclusao', { static: true }) modalConfirmacaoExclusao;
+
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
+    private modalService: NgbModal,
     private pactoTrabalhoDataService: PactoTrabalhoDataService,
     private planoTrabalhoDataService: PlanoTrabalhoDataService,
     private unidadeDataService: UnidadeDataService,
@@ -115,6 +124,21 @@ export class AtividadesServidorHistoricoComponent implements OnInit {
 
   onSubmit() {
     this.pesquisar(1);
+  }
+
+
+  excluirPactoTrabalho(pactoTrabalhoId: string) {
+    this.pactoExcluir = this.dadosEncontrados.registros.filter(p => p.pactoTrabalhoId === pactoTrabalhoId)[0];
+    this.modalService.open(this.modalConfirmacaoExclusao, { size: 'sm' });
+  }
+
+  confirmarExclusaoPlano() {
+    this.pactoTrabalhoDataService.ExcluirPacto(this.pactoExcluir.pactoTrabalhoId)
+      .subscribe(r => { this.pesquisar(1); } );
+  }
+
+  fecharModal() {
+    this.modalService.dismissAll();
   }
 
 }

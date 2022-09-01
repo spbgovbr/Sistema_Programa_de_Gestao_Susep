@@ -180,6 +180,21 @@
                             AND (@dataInicio IS NULL OR p.dataFim >= @dataInicio)
                             AND (@dataFim IS NULL OR p.dataInicio <= @dataFim)
                             #UNIDADES#
+
+                    SELECT pta.planoTrabalhoId, pe.pesNome Nome
+                    FROM ProgramaGestao.PlanoTrabalhoAtividadeCandidato ptac
+                        INNER JOIN ProgramaGestao.PlanoTrabalhoAtividade pta ON ptac.planoTrabalhoAtividadeId = pta.planoTrabalhoAtividadeId
+                        INNER JOIN Pessoa pe ON pe.pessoaId = ptac.pessoaId
+                    WHERE ptac.situacaoId = 804
+                        AND pta.planoTrabalhoId IN (SELECT  planoTrabalhoId                            
+                                                    FROM [ProgramaGestao].[PlanoTrabalho] p
+	                                                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId    
+	                                                    INNER JOIN [dbo].[CatalogoDominio] cd ON p.situacaoId = cd.catalogoDominioId 
+                                                    WHERE   (@situacaoId IS NULL OR p.situacaoId = @situacaoId)
+                                                            AND (@dataInicio IS NULL OR p.dataFim >= @dataInicio)
+                                                            AND (@dataFim IS NULL OR p.dataInicio <= @dataFim)
+                                                            #UNIDADES#
+                                                    )
                 ";
             }
         }
@@ -259,6 +274,37 @@
 	                                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = COALESCE(a.unidadeId, p1.unidadeId) 
 						                 WHERE p1.pessoaId = @pessoaId)
                         AND situacaoId = @situacao
+                ";
+            }
+        }
+
+
+        public static string ObterEmExecucaoPessoaAprovada
+        {
+            get
+            {
+                return @"
+					SELECT  p.planoTrabalhoId
+                            ,p.unidadeId
+                            ,u.undSiglaCompleta unidade
+                            ,dataInicio
+                            ,dataFim
+                            ,tempoComparecimento
+                            ,tempoFaseHabilitacao
+                            ,p.situacaoId
+							,cd.descricao situacao 
+                            ,totalServidoresSetor 
+                            ,(SELECT count(1) 
+                                FROM [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] ptac
+                                INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividade] pta ON ptac.planoTrabalhoAtividadeId = pta.planoTrabalhoAtividadeId
+                              WHERE pta.planoTrabalhoId = p.planoTrabalhoId AND ptac.situacaoId = 804) totalServidoresAprovados
+                    FROM [ProgramaGestao].[PlanoTrabalho] p
+                        INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividade] pta ON p.planoTrabalhoId = pta.planoTrabalhoId
+                        INNER JOIN [ProgramaGestao].[PlanoTrabalhoAtividadeCandidato] ptac ON ptac.planoTrabalhoAtividadeId = pta.planoTrabalhoAtividadeId
+	                    INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = p.unidadeId   
+	                    INNER JOIN [dbo].[CatalogoDominio] cd ON p.situacaoId = cd.catalogoDominioId 
+                    WHERE p.situacaoId = @situacao AND ptac.pessoaId = @pessoaId AND ptac.situacaoId = 804
+                    ORDER BY dataInicio DESC
                 ";
             }
         }

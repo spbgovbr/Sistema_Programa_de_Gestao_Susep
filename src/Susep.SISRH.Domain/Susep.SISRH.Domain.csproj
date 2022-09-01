@@ -4,15 +4,19 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Events\**" />
+    <Compile Remove="Mappers\**" />
+    <EmbeddedResource Remove="Events\**" />
+    <EmbeddedResource Remove="Mappers\**" />
+    <None Remove="Events\**" />
+    <None Remove="Mappers\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="SUSEP.Framework.Result" Version="3.3.2" />
     <PackageReference Include="SUSEP.Framework.SeedWorks" Version="3.7.3" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Mappers\" />
   </ItemGroup>
 
 </Project>
