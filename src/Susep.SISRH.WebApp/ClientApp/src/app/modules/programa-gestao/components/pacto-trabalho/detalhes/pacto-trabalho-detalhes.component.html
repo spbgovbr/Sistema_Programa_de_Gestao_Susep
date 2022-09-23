@@ -89,7 +89,7 @@
         </div>
         <div class="br-divider mt-4"></div>
         <div class="actions justify-content-start">
-          <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade, PerfilEnum.Servidor]" [unidade]="unidade" [servidor]="servidor">
+          <secure-input [perfis]="[PerfilEnum.Diretor, PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]" [unidade]="unidade" [servidor]="servidor">
             <button class="br-button is-primary" type="button" *ngIf="dadosPacto.value?.situacaoId === 401 && saldoHoras >= 0" (click)="aceitar()">Enviar para aceite</button>
             <button class="br-button is-primary bg-success border-0 mr-2" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="aceitar()">Aceitar</button>
             <button class="br-button is-primary mr-0 bg-danger border-0" type="button" *ngIf="dadosPacto.value?.situacaoId === 402 && usuarioPodeAceitar" (click)="rejeitar()">Rejeitar</button>
