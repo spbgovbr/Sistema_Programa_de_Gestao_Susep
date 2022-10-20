@@ -1,4 +1,7 @@
-Para entender os conceitos e principais funcionalidades, assista à apresentação disponível no seguinte link: https://youtu.be/VU_1TTAMg2Y
+Para acompanhar sessões gravadas de instalação e configuração do sistema, assista os vídeos nos seguintes links:
+https://youtu.be/BOaHQiZSd4E
+https://youtu.be/KRwEF0-p590
+https://youtu.be/RD883q3dYA0
 
 # PARCEIROS!
 
@@ -68,12 +71,14 @@ O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com 
 
 ## Sequência de passos (SQL Server)
 
->1. Criar banco de dados **programa_gestao**.
->2. Executar o script “[1. Criação da estrutura do banco de dados - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados%20-%20Obrigatorio.sql)”.
->3. Executar o script “[2. Inserir dados de domínio - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio%20-%20Obrigatorio.sql)”.
->4. Executar o script “[3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/3.%20Cria%C3%A7%C3%A3o%20da%20tabela%20pessoa%20alocacao%20temporaria%20-%20Obrigatorio.sql)”.
+>1. Criar banco de dados DBSISGP.
+>2. Executar o script “[1. Criação da estrutura do banco de dados.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados.sql "1. Criação da estrutura do banco de dados.sql")”.
+>3. Executar o script “[2. Inserir dados de domínio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio.sql "2. Inserir dados de domínio.sql")”.
+>4. Executar o script “3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql”.
 >5. Se for ambiente de desenvolvimento/homologação,executar o script “[4. Inserir dados de teste - Opcional.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/4.%20Inserir%20dados%20de%20teste%20-%20Opcional.sql)”.
->5. Criar um usuário de aplicação com permissões de leitura e escrita.
+>6. Se estiver atualizando de versões anteriores da V7, executar o script “[5. Alteracoes da estrutura do BD para a V7.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/5.%20Alteracoes%20da%20estrutura%20do%20BD%20para%20a%20V7.sql)".
+>7. Se estiver atualizando da V7, executar o script “[6. Alteracoes da estrutura do BD para a V8.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/homologacao/install/6.%20Alteracoes%20da%20estrutura%20do%20BD%20para%20a%20V8.sql)" (Homologação).
+>8. Criar um usuário de aplicação com permissões de leitura e escrita.
 
 ### Importação de usuários (desenvolvimento/homologação/produção)
 
@@ -118,10 +123,11 @@ API: https://**servidorInterno**/sisgp/api
 
 ## Sequência de passos (.NET)
 
->1. Criar um Pool de Aplicativos chamado “sisgp”.
->2. Criar um novo site vinculado ao pool “sisgp” e apontando para o caminho físico da pasta “api”.
->3. Criar um novo site vinculado ao pool “sisgp” e apontando para o caminho físico da pasta “gateway”.
->4. Criar um novo site vinculado ao pool “sisgp” e apontando para o caminho físico da pasta “app”.
+>1. Criar um site com o Pool de Aplicativos chamado “sisgp” apontando para o caminho físico da pasta "Sistema_Programa_de_Gestao_Susep/Install.
+>2. Dentro do site "sisgp"
+>2.1. Converter o site “api” em aplicativo apontando para o caminho físico da pasta “api”.
+>2.2. Converter o site “gateway” apontando para o caminho físico da pasta “gateway”.
+>2.3. Converter o site “app” apontando para o caminho físico da pasta “app”.
 
 # BACK-END!
 
