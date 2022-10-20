@@ -1,4 +1,9 @@
-Para entender os conceitos e principais funcionalidades, assista à apresentação disponível no seguinte link: https://youtu.be/VU_1TTAMg2Y
+Para acompanhar sessões gravadas de instalação e configuração do sistema, assista os vídeos nos seguintes links:
+https://youtu.be/BOaHQiZSd4E
+
+https://youtu.be/KRwEF0-p590
+
+https://youtu.be/RD883q3dYA0
 
 # PARCEIROS!
 
