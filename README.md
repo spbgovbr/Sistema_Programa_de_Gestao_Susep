@@ -73,8 +73,8 @@ O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com 
 ## Sequência de passos (SQL Server)
 
 >1. Criar banco de dados DBSISGP.
->2. Executar o script “[1. Criação da estrutura do banco de dados.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados.sql "1. Criação da estrutura do banco de dados.sql")”.
->3. Executar o script “[2. Inserir dados de domínio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio.sql "2. Inserir dados de domínio.sql")”.
+>2. Executar o script “[1. Criação da estrutura do banco de dados.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados.sql)”.
+>3. Executar o script “[2. Inserir dados de domínio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio.sql)”.
 >4. Executar o script “[3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/3.%20Cria%C3%A7%C3%A3o%20da%20tabela%20pessoa%20alocacao%20temporaria%20-%20Obrigatorio.sql)”.
 >5. Se for ambiente de desenvolvimento/homologação,executar o script “[4. Inserir dados de teste - Opcional.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/4.%20Inserir%20dados%20de%20teste%20-%20Opcional.sql)”.
 >6. Se estiver atualizando de versões anteriores da V7, executar o script “[5. Alteracoes da estrutura do BD para a V7.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/5.%20Alteracoes%20da%20estrutura%20do%20BD%20para%20a%20V7.sql)".
