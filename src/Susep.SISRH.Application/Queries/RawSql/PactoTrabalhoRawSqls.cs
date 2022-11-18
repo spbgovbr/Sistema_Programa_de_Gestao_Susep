@@ -157,6 +157,7 @@
                             AND (@formaExecucaoId IS NULL OR p.formaExecucaoId = @formaExecucaoId)
                             AND (@dataInicio IS NULL OR p.dataFim >= @dataInicio)
                             AND (@dataFim IS NULL OR p.dataInicio <= @dataFim)
+                            AND (@unidadeId IS NULL OR p.unidadeId = @unidadeId)
 
                     ORDER BY dataInicio DESC, dataFim DESC, u.undSiglaCompleta
 
@@ -174,8 +175,10 @@
                             #CONTROLE#
                         WHERE   (@pessoaId IS NULL OR p.pessoaId = @pessoaId)
                                 AND (@situacaoId IS NULL OR p.situacaoId = @situacaoId)
+                                AND (@formaExecucaoId IS NULL OR p.formaExecucaoId = @formaExecucaoId)
                                 AND (@dataInicio IS NULL OR p.dataFim >= @dataInicio)
                                 AND (@dataFim IS NULL OR p.dataInicio <= @dataFim)
+                                AND (@unidadeId IS NULL OR p.unidadeId = @unidadeId)
                     ) contador
                 ";
             }
