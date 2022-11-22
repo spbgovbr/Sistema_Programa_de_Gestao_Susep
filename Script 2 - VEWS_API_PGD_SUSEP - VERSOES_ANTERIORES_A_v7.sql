@@ -1,6 +1,6 @@
 /**************************************************************************************/
 
-/* VEWS API SUSEP - VERSÕES ANTERIORES A v7 */
+/* VEWS API SUSEP - VERSÃ•ES ANTERIORES A v7 */
 
 /**************************************************************************************/
 
@@ -75,15 +75,15 @@ SELECT ROW_NUMBER() OVER (ORDER BY pta.pactoTrabalhoAtividadeId ASC) AS id
     ,CASE WHEN pt.formaExecucaoId = 101 --OR (pt.formaExecucaoId = 102  AND pta.modalidadeExecucaoId = 101) 
         THEN pta.tempoPrevistoPorItem ELSE 0 END tempo_presencial_estimado
     ,CASE WHEN pt.formaExecucaoId = 101 --OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 101)
-        THEN pta.tempoRealizado ELSE 0 END tempo_presencial_programado
+        THEN pta.tempoRealizado ELSE 0 END tempo_presencial_executado
     ,CASE WHEN pt.formaExecucaoId = 101 --OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 101)
-        THEN pta.tempoHomologado ELSE 0 END tempo_presencial_executado
+        THEN pta.tempoHomologado ELSE 0 END tempo_presencial_homologado
     ,CASE WHEN pt.formaExecucaoId = 103 --OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 103)
         THEN pta.tempoPrevistoPorItem ELSE 0 END tempo_teletrabalho_estimado
     ,CASE WHEN pt.formaExecucaoId = 103 --OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 103)
-        THEN pta.tempoRealizado ELSE 0 END tempo_teletrabalho_programado
+        THEN pta.tempoRealizado ELSE 0 END tempo_teletrabalho_executado
     ,CASE WHEN pt.formaExecucaoId = 103 --OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 103)
-        THEN pta.tempoHomologado ELSE 0 END tempo_teletrabalho_executado
+        THEN pta.tempoHomologado ELSE 0 END tempo_teletrabalho_homologado
     ,ic.entregasEsperadas entrega_esperada
     ,1 qtde_entregas
     ,NULL qtde_entregas_efetivas
