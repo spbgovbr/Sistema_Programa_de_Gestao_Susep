@@ -1,8 +1,12 @@
 Para acompanhar sessões gravadas de instalação e configuração do sistema, assista os vídeos nos seguintes links:
+
+>Instalação de teste e configurações iniciais - 19/05/2021 - Meeting Recording
 https://youtu.be/BOaHQiZSd4E
 
+>AD/LDAP orientações e carga inicial de dados  - 26/05/2021 - Meeting Recording
 https://youtu.be/KRwEF0-p590
 
+>Instalação, configuração e utilização da API de envios - 12/05/2022 - Meeting Recording 
 https://youtu.be/RD883q3dYA0
 
 # PARCEIROS!
