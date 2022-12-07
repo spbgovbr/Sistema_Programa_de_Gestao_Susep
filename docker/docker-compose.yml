@@ -4,7 +4,7 @@ services:
   # Proxy reverso
   traefik:
     hostname: caminhointernoservicos
-    image: traefik:2.5
+    image: traefik:2.9
     # Entrypoints:
     #  - web: O que é exposto na rede pela porta 80
     #  - web-interno: Não exposto na rede - Ponto de entrada na 
@@ -37,9 +37,9 @@ services:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
-    #image: susep
+    image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
     volumes:
@@ -95,9 +95,9 @@ services:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
-    #image: susep
+    image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
     working_dir: /app/gateway/
     volumes:
@@ -121,9 +121,9 @@ services:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
-    #image: susep
+    image: susep
     command: dotnet Susep.SISRH.WebApp.dll
     working_dir: /app/app/
     volumes:
