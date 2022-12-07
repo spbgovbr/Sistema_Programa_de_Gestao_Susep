@@ -5,6 +5,7 @@ export interface IConfiguration {
   modo: TipoModo,
   valorPadraoTempoComparecimento: number,
   valorPadraoTermosUso: string,
+  formaParticipacaoPlanoTrabalho: string,
   clientId: string,
   clientSecret: string,
   userAuthScope: string,

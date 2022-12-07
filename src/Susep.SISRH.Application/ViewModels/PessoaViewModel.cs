@@ -23,6 +23,10 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "unidade")]
         public String Unidade { get; set; }
 
+        [DataMember(Name = "unidadeIdOriginal")]
+        public Int64 UnidadeIdOriginal { get; set; }
+        
+
         [DataMember(Name = "nivelUnidade")]
         public Int32 NivelUnidade { get; set; }
 

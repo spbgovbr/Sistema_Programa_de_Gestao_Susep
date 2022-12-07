@@ -94,7 +94,18 @@ namespace Susep.SISRH.WebApi.Controllers
             => await DominioQuery.ObterDominioPorSituacaoCandidaturaPlanoTrabalhoAsync(Domain.Enums.SituacaoCandidaturaPlanoTrabalhoEnum.Solicitada);
 
 
+
+        /// <summary>
+        /// Obtém os tipos de frequencia no teletrabalho parcial
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("TipoFrequenciaTeletrabalhoParcial"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<DominioViewModel>>))]
+        public async Task<IActionResult> GetTipoFrequenciaTeletrabalhoParcial()
+            => await DominioQuery.ObterDominioPorClassificacaoAsync(Domain.Enums.ClassificacaoCatalogoDominioEnum.TipoFrequenciaTeletrabalhoParcial);
+        
+
     }
 
 
 }
+

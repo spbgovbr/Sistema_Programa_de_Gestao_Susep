@@ -34,6 +34,7 @@ export class ConfigurationService {
       modo: this.environment.modo,
       valorPadraoTempoComparecimento: this.environment.valorPadraoTempoComparecimento,
       valorPadraoTermosUso: this.environment.valorPadraoTermosUso,
+      formaParticipacaoPlanoTrabalho: this.environment.formaParticipacaoPlanoTrabalho,
       clientId: this.environment.client.id,
       clientSecret: this.environment.client.secret,
       clientAuthScope: this.environment.client.scope,
@@ -53,6 +54,11 @@ export class ConfigurationService {
     if (this.serverSettings.valorPadraoTermosUso)
       this.storageService.store('termosUso', this.serverSettings.valorPadraoTermosUso);
     else this.storageService.store('termosUso', null);
+
+
+    if (this.serverSettings.formaParticipacaoPlanoTrabalho)
+      this.storageService.store('formaParticipacaoPlanoTrabalho', this.serverSettings.formaParticipacaoPlanoTrabalho);
+    else this.storageService.store('formaParticipacaoPlanoTrabalho', null);
 
     // Para permitir exibir o modo avançado durante a homologação
     this.applicationStateService.perfilUsuario.subscribe(usuario => {
@@ -118,6 +124,12 @@ export class ConfigurationService {
   getTermosUso(): string {
     const termosUso = this.storageService.retrieve('termosUso');
     return termosUso;
+  }
+
+  //Retorna o prazo padrão para comparecimento
+  getFormaParticipacaoPlanoTrabalho(): string {
+    const formaParticipacaoPlanoTrabalho = this.storageService.retrieve('formaParticipacaoPlanoTrabalho');
+    return formaParticipacaoPlanoTrabalho;
   }
 
   //Retorna o client id da aplicação

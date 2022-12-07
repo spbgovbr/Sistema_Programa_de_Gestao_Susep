@@ -11,6 +11,7 @@ using SUSEP.Framework.Result.Abstractions;
 using SUSEP.Framework.Result.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -92,27 +93,29 @@ namespace Susep.SISRH.Application.Queries.Concrete
 
             #region Perfis pelo servidor
 
+
+            var unidadesChefia = await UnidadeQuery.ObterPorChefeAsync(request.UsuarioLogadoId);
+
             //Se a pessoa for chefe, tem que dar um tratamento diferenciado
-            if (dadosPessoa.Result.Chefe.HasValue && dadosPessoa.Result.Chefe.Value)
+            foreach (var unidadeChefe in unidadesChefia.Result)
             {
                 //Se for chefe na unidade dele, tem perfil servidor na unidade acima
-                var unidadeChefe = await UnidadeQuery.ObterPorChaveAsync(dadosPessoa.Result.UnidadeId);
-                if (unidadeChefe.Result.UnidadeIdPai.HasValue)
-                    result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Servidor, Unidades = new List<long>() { unidadeChefe.Result.UnidadeIdPai.Value } });
+                if (unidadeChefe.UnidadeIdPai.HasValue)
+                    result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Servidor, Unidades = new List<long>() { unidadeChefe.UnidadeIdPai.Value } });
 
                 //Obtém as unidades subordinadas à que a pessoa é chefe
-                var unidadesSubordinadas = await UnidadeQuery.ObterSubordinadasAsync(dadosPessoa.Result.UnidadeId);
+                var unidadesSubordinadas = await UnidadeQuery.ObterSubordinadasAsync(unidadeChefe.UnidadeId);
                 var idsUnidades = unidadesSubordinadas.Result.Select(u => Int64.Parse(u.Id)).ToList();
 
                 //Adiciona os perfis de chefia
                 result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.ChefeUnidade, Unidades = idsUnidades });
 
                 //Se a unidade tiver nível 1 ou 2, é superintendente, diretor ou equiparado
-                if (dadosPessoa.Result.NivelUnidade <= 2)
+                if (unidadeChefe.NivelUnidade <= 2)
                 {
                     result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.Diretor, Unidades = idsUnidades });
                 }//Se tiver nível 3, é CG ou equiparado
-                else if (dadosPessoa.Result.NivelUnidade == 3)
+                else if (unidadeChefe.NivelUnidade == 3)
                 {
                     result.Result.Perfis.Add(new PessoaPerfilAcessoViewModel() { Perfil = (int)PerfilUsuarioEnum.CoordenadorGeral, Unidades = idsUnidades });
                 }
@@ -211,6 +214,17 @@ namespace Susep.SISRH.Application.Queries.Concrete
             //Se não for gestor do sistema, deve filtrar
             if (!perfisUsuario.Result.Perfis.Any(p => p.Perfil == (int)PerfilUsuarioEnum.Gestor))
             {
+                //Obtém as unidades em que o usuário é servidor normal
+                var unidadesServidor = (from perfil in perfisUsuario.Result.Perfis
+                                        where perfil.Perfil == (int)PerfilUsuarioEnum.Servidor
+                                        from unidade in perfil.Unidades
+                                        select unidade).Distinct().ToList();
+
+                //Filtra pelas unidades em que é servidor normal
+                retorno = items.Where(p => unidadesServidor.Any(uu => uu == p.UnidadeId) || p.UnidadeId == perfisUsuario.Result.UnidadeId).ToList();
+
+
+
                 //Obtém as unidades em que o usuário é chefe
                 var unidadesChefia = (from perfil in perfisUsuario.Result.Perfis
                                       where perfil.Perfil == (int)PerfilUsuarioEnum.ChefeUnidade ||
@@ -220,8 +234,8 @@ namespace Susep.SISRH.Application.Queries.Concrete
                                       select unidade).Distinct().ToList();
 
 
-                //Filtra pelas unidades em que é chefe ou o plano é dele
-                retorno = items.Where(p => unidadesChefia.Any(uu => uu == p.UnidadeId) || p.UnidadeId == perfisUsuario.Result.UnidadeId).ToList();
+                //Filtra pelas unidades em que é chefe 
+                retorno.AddRange(items.Where(p => unidadesChefia.Any(uu => uu == p.UnidadeId) || p.UnidadeId == perfisUsuario.Result.UnidadeId).ToList());
 
                 //Se for para incluir a unidade pai se o usuário for chefe, encontra a unidade e adiciona
                 if (incluirUnidadePaiSeChefe && unidadesChefia.Any())
@@ -235,7 +249,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
                     }
                 }
             }
-            return retorno;
+            return retorno.Distinct().ToList();
         }
 
         #endregion
@@ -393,16 +407,33 @@ namespace Susep.SISRH.Application.Queries.Concrete
                                       from unidade in perfil.Unidades
                                       select unidade).Distinct().ToList();
 
-                //Obtém as pessoas da unidade
-                var pessoasQueEhChefe = await UnidadeQuery.ObterPessoasAsync(perfisUsuario.Result.UnidadeId);
+                IEnumerable<PessoaViewModel> pessoasQueEhChefe = new List<PessoaViewModel>();
+                if (unidadesChefia.Any())
+                {
+                    //Obtém as pessoas da unidade
+                    var consultaChefiados = await UnidadeQuery.ObterPessoasAsync(perfisUsuario.Result.UnidadeId);
+                    pessoasQueEhChefe = consultaChefiados.Result;
+                }
 
                 //Filtra pelas unidades em que é chefe ou o plano é dele
                 items = items.Where(p => unidadesChefia.Any(uu => uu == p.UnidadeId) ||
                                         p.PessoaId == perfisUsuario.Result.PessoaId ||
-                                        pessoasQueEhChefe.Result.Any(pc => p.PessoaId == pc.PessoaId));
+                                        pessoasQueEhChefe.Any(pc => p.PessoaId == pc.PessoaId));
             }
 
             return items;
+        }
+
+        #endregion
+
+        #region Agendamentos
+
+        public async Task<IApplicationResult<IEnumerable<AgendamentoPresencialViewModel>>> ObterAgendamentosAsync(AgendamentoFiltroRequest request)
+        {
+            var perfil = await ObterPerfilPessoaAsync(request);
+            var isGestor = perfil.Result.Perfis.Any(p => p.Perfil == (int)Domain.Enums.PerfilUsuarioEnum.Gestor);
+
+            return await PessoaQuery.ObterAgendamentosAsync(request, isGestor);
         }
 
         #endregion

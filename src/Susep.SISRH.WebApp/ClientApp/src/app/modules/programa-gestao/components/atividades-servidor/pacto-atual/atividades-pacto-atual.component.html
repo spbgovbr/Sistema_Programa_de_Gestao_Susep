@@ -35,6 +35,11 @@
                     <span class="name">Solicitações</span>
                   </a>
                 </li>
+                <li class="item" [ngClass]="{'is-active': abaVisivel === 'observacao'}">
+                  <a href="javascript:void(0)" (click)="alterarAba('observacao')">
+                    <span class="name">Informações</span>
+                  </a>
+                </li>
                 <li class="item" [ngClass]="{'is-active': abaVisivel === 'avaliacao'}" *ngIf="dadosPacto.value?.situacaoId >= 406">
                   <a href="javascript:void(0)" (click)="alterarAba('avaliacao')">
                     <span class="name">Avaliação de resultados</span>
@@ -60,6 +65,13 @@
               <div class="row">
                 <div class="col-sm-12 mb-5">
                   <pacto-lista-solicitacao *ngIf="dadosPacto.value" [dadosPacto]="dadosPacto"></pacto-lista-solicitacao>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="abaVisivel === 'observacao'">
+              <div class="row">
+                <div class="col-sm-12 mb-5">
+                  <pacto-lista-observacao *ngIf="dadosPacto.value" [dadosPacto]="dadosPacto"></pacto-lista-observacao>
                 </div>
               </div>
             </div>

@@ -312,6 +312,10 @@ input, select {
   cursor: pointer;
 }
 
+.fc-event {
+  cursor: pointer !important;
+}
+
 .fc-disabled {
   background-color: #f8f8f8 !important;
   cursor: default;

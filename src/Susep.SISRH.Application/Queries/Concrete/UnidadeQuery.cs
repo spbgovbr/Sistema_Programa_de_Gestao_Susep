@@ -131,9 +131,9 @@ namespace Susep.SISRH.Application.Queries.Concrete
             return result;
         }
 
-        public async Task<IApplicationResult<UnidadeViewModel>> ObterQuantidadeServidoresPorChaveAsync(Int64 unidadeId)
+        public async Task<IApplicationResult<IEnumerable<PessoaViewModel>>> ObterServidoresDisponiveisPGDPorChaveAsync(Int64 unidadeId)
         {
-            var result = new ApplicationResult<UnidadeViewModel>();
+            var result = new ApplicationResult<IEnumerable<PessoaViewModel>>();
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@unidadeId", unidadeId, DbType.Int64, ParameterDirection.Input);
@@ -142,7 +142,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
             {
                 connection.Open();
 
-                var dados = await connection.QueryFirstOrDefaultAsync<UnidadeViewModel>(UnidadeRawSqls.ObterQuantidadeServidoresPorChave, parameters);
+                var dados = await connection.QueryAsync<PessoaViewModel>(UnidadeRawSqls.ObterPessoasDiretamenteAlocadasPorUnidade, parameters);
                 result.Result = dados;
 
                 connection.Close();
@@ -204,8 +204,8 @@ namespace Susep.SISRH.Application.Queries.Concrete
             {
                 connection.Open();
 
-                var dados = await connection.QueryAsync<DadosComboViewModel>(UnidadeRawSqls.ObterPessoasDadosComboPorUnidade, parameters);
-                result.Result = dados;
+                var dados = await connection.QueryAsync<PessoaViewModel>(UnidadeRawSqls.ObterPessoasDiretamenteAlocadasPorUnidade, parameters);
+                result.Result = dados.Select(it => new DadosComboViewModel() { Id = it.PessoaId.ToString(), Descricao = it.Nome });
 
                 connection.Close();
             }
@@ -278,8 +278,24 @@ namespace Susep.SISRH.Application.Queries.Concrete
             return result;
         }
 
+        public async Task<IApplicationResult<IEnumerable<UnidadeViewModel>>> ObterPorChefeAsync(long pessoaId)
+        {
+            var result = new ApplicationResult<IEnumerable<UnidadeViewModel>>();
 
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pessoaId", pessoaId, DbType.Int64, ParameterDirection.Input);
 
-        
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                var dados = await connection.QueryAsync<UnidadeViewModel>(UnidadeRawSqls.ObterPorChefe, parameters);
+                result.Result = dados;
+
+                connection.Close();
+            }
+
+            return result;
+        }
     }
 }

@@ -13,7 +13,8 @@ namespace Susep.SISRH.Infrastructure.Repositories
     {
         private readonly SISRHDbContext _context;
 
-        public PlanoTrabalhoRepository(SISRHDbContext context) : base(context) {
+        public PlanoTrabalhoRepository(SISRHDbContext context) : base(context)
+        {
             _context = context;
         }
 
@@ -29,7 +30,7 @@ namespace Susep.SISRH.Infrastructure.Repositories
                         .ThenInclude(a => a.Historico)
                 .Include(p => p.Atividades)
                     .ThenInclude(a => a.Candidatos)
-                        .ThenInclude(c => c.Pessoa)  
+                        .ThenInclude(c => c.Pessoa)
                 .Include(p => p.Atividades)
                     .ThenInclude(a => a.Assuntos)
                 .Include(p => p.PactosTrabalho)
@@ -59,5 +60,9 @@ namespace Susep.SISRH.Infrastructure.Repositories
             _context.Entry(item).State = EntityState.Modified;
         }
 
+        public void Excluir(PlanoTrabalho item)
+        {
+            _context.Entry(item).State = EntityState.Deleted;
+        }
     }
 }

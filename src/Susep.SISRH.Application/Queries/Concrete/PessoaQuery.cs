@@ -28,12 +28,9 @@ namespace Susep.SISRH.Application.Queries.Concrete
             UnidadeQuery = unidadeQuery;
         }
 
-        public async Task<IApplicationResult<DashboardViewModel>> ObterDashboardAsync(UsuarioLogadoRequest request)
+        public async Task<IApplicationResult<IEnumerable<PlanoTrabalhoViewModel>>> ObterDashboardPlanosAsync(UsuarioLogadoRequest request)
         {
-            var result = new ApplicationResult<DashboardViewModel>()
-            {
-                Result = new DashboardViewModel()
-            };
+            var result = new ApplicationResult<IEnumerable<PlanoTrabalhoViewModel>>();
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@pessoaId", request.UsuarioLogadoId, DbType.Int32, ParameterDirection.Input);
@@ -42,17 +39,52 @@ namespace Susep.SISRH.Application.Queries.Concrete
             {
                 connection.Open();
 
-                var dashboardData = await connection.QueryMultipleAsync(PessoaRawSqls.ObterDashboard, parameters);
-
-                result.Result.PlanosTrabalho = dashboardData.Read<PlanoTrabalhoViewModel>().ToList();
-                result.Result.PactosTrabalho = dashboardData.Read<PactoTrabalhoViewModel>().ToList();
-                result.Result.Solicitacoes = dashboardData.Read<PactoTrabalhoSolicitacaoViewModel>().ToList();
+                result.Result = await connection.QueryAsync<PlanoTrabalhoViewModel>(PessoaRawSqls.ObterDashboardPlanos, parameters);
 
                 connection.Close();
             }
 
             return result;
         }
+
+        public async Task<IApplicationResult<IEnumerable<PactoTrabalhoViewModel>>> ObterDashboardPactosAsync(UsuarioLogadoRequest request)
+        {
+            var result = new ApplicationResult<IEnumerable<PactoTrabalhoViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pessoaId", request.UsuarioLogadoId, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                result.Result = await connection.QueryAsync<PactoTrabalhoViewModel>(PessoaRawSqls.ObterDashboardPactos, parameters);
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
+        public async Task<IApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>> ObterDashboardPendenciasAsync(UsuarioLogadoRequest request)
+        {
+            var result = new ApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pessoaId", request.UsuarioLogadoId, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                result.Result = await connection.QueryAsync<PactoTrabalhoSolicitacaoViewModel>(PessoaRawSqls.ObterDashboardPendencias, parameters);
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
 
         public async Task<IApplicationResult<DadosPaginadosViewModel<PessoaViewModel>>> ObterPorFiltroAsync(PessoaFiltroRequest request)
         {
@@ -114,7 +146,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
             var dadosPessoa = await this.ObterPorChaveAsync(pessoaId);
 
             //Obtém os feriados pela unidade da pessoa
-            var feriados = await UnidadeQuery.ObterFeriadosPorUnidadeAsync(dadosPessoa.Result.UnidadeId, dataInicio, dataFim);
+            var feriados = await UnidadeQuery.ObterFeriadosPorUnidadeAsync(dadosPessoa.Result.UnidadeIdOriginal, dataInicio, dataFim);
 
             result.Result = feriados.Result.Select(f => f.Date);
 
@@ -176,5 +208,48 @@ namespace Susep.SISRH.Application.Queries.Concrete
             return result;
         }
 
+        public async Task<IApplicationResult<IEnumerable<AgendamentoPresencialViewModel>>> ObterAgendamentosAsync(AgendamentoFiltroRequest request, Boolean isGestor)
+        {
+            var result = new ApplicationResult<IEnumerable<AgendamentoPresencialViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pessoaLogadaId", request.UsuarioLogadoId, DbType.Int64, ParameterDirection.Input);
+            parameters.Add("@pessoaId", request.PessoaId, DbType.Int64, ParameterDirection.Input);
+            parameters.Add("@dataInicio", request.DataInicio, DbType.Date, ParameterDirection.Input);
+            parameters.Add("@dataFim", request.DataFim, DbType.Date, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                var query = PessoaRawSqls.ObterAgendamentos.Replace("#FILTROPESSOALOGADA#", isGestor ? "" : PessoaRawSqls.FiltroPessoaLogada);
+
+                var dados = await connection.QueryAsync<AgendamentoPresencialViewModel>(query, parameters);
+                result.Result = dados;
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
+        public async Task<IApplicationResult<IEnumerable<PactoTrabalhoViewModel>>> ObterPactosTrabalhoEmExecucaoAsync(Int64 pessoaId)
+        {
+            var result = new ApplicationResult<IEnumerable<PactoTrabalhoViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pessoaId", pessoaId, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                result.Result = await connection.QueryAsync<PactoTrabalhoViewModel>(PessoaRawSqls.ObterPactosTrabalhoEmExecucao, parameters);
+
+                connection.Close();
+            }
+
+            return result;
+        }
     }
 }

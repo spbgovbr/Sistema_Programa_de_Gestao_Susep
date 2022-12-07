@@ -5,18 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DomainEventHandlers\**" />
+    <Compile Remove="IntegrationEventHandlers\**" />
+    <Compile Remove="Mappers\**" />
+    <Compile Remove="Middlewares\**" />
+    <EmbeddedResource Remove="DomainEventHandlers\**" />
+    <EmbeddedResource Remove="IntegrationEventHandlers\**" />
+    <EmbeddedResource Remove="Mappers\**" />
+    <EmbeddedResource Remove="Middlewares\**" />
+    <None Remove="DomainEventHandlers\**" />
+    <None Remove="IntegrationEventHandlers\**" />
+    <None Remove="Mappers\**" />
+    <None Remove="Middlewares\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Commands\Catalogo\AlterarCatalogoItemCatalogoCommand.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Queries\RawSql\PessoaRawSqls.cs~RF173d0cc9.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DomainEventHandlers\" />
-    <Folder Include="IntegrationEventHandlers\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Middlewares\" />
   </ItemGroup>
 
 

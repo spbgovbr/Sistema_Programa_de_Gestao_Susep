@@ -36,6 +36,9 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         public Decimal? RelacaoPrevistoRealizado { get; private set; }
         public Int32 TempoTotalDisponivel { get; private set; }
 
+        public Int32? TipoFrequenciaTeletrabalhoParcialId { get; private set; }
+        public Int32? QuantidadeDiasFrequenciaTeletrabalhoParcial { get; private set; }
+
 
         public PlanoTrabalho PlanoTrabalho { get; private set; }
         public Pessoa Pessoa { get; private set; }
@@ -45,6 +48,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         public List<PactoTrabalhoAtividade> Atividades { get; private set; }
         public List<PactoTrabalhoSolicitacao> Solicitacoes { get; private set; }
         public List<PactoTrabalhoHistorico> Historico { get; private set; }
+        public List<PactoTrabalhoDeclaracao> Declaracoes { get; private set; }
+        public List<PactoTrabalhoInformacao> Informacoes { get; private set; }
 
         [NotMapped]
         public List<DateTime> DiasNaoUteis { get; set; }
@@ -101,12 +106,25 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             this.AtualizarPercentualExecucao();
         }
 
+        public void AlterarFrequenciaTeletrabalhoParcial(Int32 tipoFrequenciaTeletrabalhoParcialId, Int32 quantidadeDiasFrequenciaTeletrabalhoParcial)
+        {
+            TipoFrequenciaTeletrabalhoParcialId = tipoFrequenciaTeletrabalhoParcialId;
+            QuantidadeDiasFrequenciaTeletrabalhoParcial = quantidadeDiasFrequenciaTeletrabalhoParcial;
+        }
+
         #region Fluxo de aprovação do pacto
 
         public void AlterarSituacao(Int32 situacaoId, String responsavelOperacao, String observacoes)
         {
             if (!PodeAlteracaoSituacao(situacaoId))
                 throw new SISRHDomainException("A situação atual do plano não permite mudar para o estado solicitado");
+
+            if (situacaoId == (int)SituacaoPactoTrabalhoEnum.EnviadoAceite && 
+                this.ModalidadeExecucaoId == (int)ModalidadeExecucaoEnum.Semipresencial &&
+                (!this.QuantidadeDiasFrequenciaTeletrabalhoParcial.HasValue || !this.TipoFrequenciaTeletrabalhoParcialId.HasValue))
+            {
+                throw new SISRHDomainException("Na modalidade de teletrabalho parcial, é obrigatório informar o tipo de frequência e a quantidade de dias.");
+            }
 
             //Não deve permitir que a própria pessoa encerre um plano seu sem ter concluído todas as atividades    
             int responsavelOperacaoId = -1;
@@ -292,10 +310,6 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             VerificarPossibilidadeAlteracao(SituacaoPactoTrabalhoEnum.EmExecucao);
             var atividade = this.Atividades.FirstOrDefault(r => r.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId);
 
-            //atividades por dia não podem ser controladas manualmente pelo servidor
-            if (atividade.ItemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
-                return;
-
             atividade.AlterarAndamento(situacaoId, dataInicio, dataFim, tempoRealizado, consideracoes: consideracoes);
 
             this.AtualizarPercentualExecucao();
@@ -392,10 +406,10 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         #endregion
 
-        public void AvaliarAtividade(Guid pactoTrabalhoAtividadeId, int nota, string justificativa)
+        public void AvaliarAtividade(Guid pactoTrabalhoAtividadeId, int nota, string justificativa, string responsavel)
         {
             var atividade = this.Atividades.FirstOrDefault(r => r.PactoTrabalhoAtividadeId == pactoTrabalhoAtividadeId);
-            atividade.Avaliar(nota, justificativa);
+            atividade.Avaliar(nota, justificativa, responsavel);
             this.AtualizarPercentualExecucao();
         }
 
@@ -524,8 +538,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             atividade.AlterarAndamento(situacaoId, dataInicio, dataFim, tempoRealizado, ignorarValidacoes: true);
             this.Atividades.Add(atividade);
 
-            if (itemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
-                atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
+            //if (itemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
+            atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
 
             if (atualizarPrazo)
             {
@@ -557,6 +571,29 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
                 throw new SISRHDomainException("A data de fim do plano de trabalho deve ser maior que a data de início");
 
         }
+
+        public void RegistrarVisualizacaoDeclaracao(int declaracaoId, string responsavelRegistro)
+        {
+            if (!this.Declaracoes.Any(it => it.DeclaracaoId == declaracaoId))
+            {
+                var declaracao = PactoTrabalhoDeclaracao.Criar(declaracaoId, responsavelRegistro);
+                this.Declaracoes.Add(declaracao);
+            }
+        }
+
+        public void RegistrarRealizacaoDeclaracao(int declaracaoId, string responsavelRegistro)
+        {
+            var declaracao = this.Declaracoes.FirstOrDefault(it => it.DeclaracaoId == declaracaoId);
+            declaracao.RegistrarAceite(responsavelRegistro);
+        }
+
+        public PactoTrabalhoInformacao RegistrarInformacao(string texto, string responsavelRegistro)
+        {
+            var informacao = PactoTrabalhoInformacao.Criar(texto, responsavelRegistro);
+            this.Informacoes.Add(informacao);
+            return informacao;
+        }
+
 
     }
 }
