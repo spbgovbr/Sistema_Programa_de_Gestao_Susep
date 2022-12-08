@@ -35,9 +35,9 @@ services:
     
   web-api:
     # Futuro oficial do Governo Federal
-    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:v1.8
     # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:v1.8
     # Imagem caso você queira testar na sua máquina
     #image: susep
     working_dir: /app/api/
@@ -93,9 +93,9 @@ services:
 
   api-gateway:
     # Futuro oficial do Governo Federal
-    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:v1.8
     # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:v1.8
     # Imagem caso você queira testar na sua máquina
     #image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
@@ -119,9 +119,9 @@ services:
 
   web-app:
     # Futuro oficial do Governo Federal
-    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
+    #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:v1.8
     # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:v1.8
     # Imagem caso você queira testar na sua máquina
     #image: susep
     command: dotnet Susep.SISRH.WebApp.dll
