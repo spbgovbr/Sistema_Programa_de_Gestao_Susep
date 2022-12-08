@@ -84,7 +84,7 @@ namespace Susep.SISRH.Application.Auth
                                     catch
                                     {
                                         context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Não foi possível pesquisar no LDAP. A autenticação do usuário de serviço falhou", null);
-                                        return null;
+                                        return Task.FromResult<Pessoa>(null);
                                     }
 
                                     List<string> attibutes = new List<string>();
@@ -119,14 +119,27 @@ namespace Susep.SISRH.Application.Auth
                                         string email = GetAttributeValue(entity, configuration.EmailAttributeFilter);
                                         string cpf = GetAttributeValue(entity, configuration.CpfAttributeFilter);
 
+                                        if (String.IsNullOrEmpty(cpf) && String.IsNullOrEmpty(email))
+                                        {
+                                            context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "As informações da pessoa no AD não foram encontradas", null);
+                                            return Task.FromResult<Pessoa>(null);
+                                        }
+
                                         var dadosPessoa = this.PessoaRepository.ObterPorCriteriosAsync(email, cpf);
-                                        if (dadosPessoa != null)
+                                        if (dadosPessoa.Result != null)
+                                        {
                                             return dadosPessoa;
+                                        }
+                                        else
+                                        {
+                                            context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Não foi possível encontrar pessoa cadastrada na base de dados com as informações do AD", null);
+                                            return Task.FromResult<Pessoa>(null);
+                                        }
                                     }
                                 }
                             }
 
-                            return null;
+                            return Task.FromResult<Pessoa>(null);
                         });
                     }
                 }

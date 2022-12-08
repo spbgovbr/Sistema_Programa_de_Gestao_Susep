@@ -4,7 +4,7 @@ services:
   # Proxy reverso
   traefik:
     hostname: caminhointernoservicos
-    image: traefik:2.5
+    image: traefik:2.9
     # Entrypoints:
     #  - web: O que é exposto na rede pela porta 80
     #  - web-interno: Não exposto na rede - Ponto de entrada na 
@@ -36,7 +36,7 @@ services:
   web-api:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
+    # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
     image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
     #image: susep
@@ -94,7 +94,7 @@ services:
   api-gateway:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
+    # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
     image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
     #image: susep
@@ -120,7 +120,7 @@ services:
   web-app:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
+    # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
     image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
     #image: susep

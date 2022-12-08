@@ -11,6 +11,8 @@ import { IPessoaPesquisa } from '../models/pessoa.pesquisa.model';
 import { IUsuario } from '../../../shared/models/perfil-usuario.model';
 import { IDadosCombo } from '../../../shared/models/dados-combo.model';
 import { IDashboard } from '../../dashboard/models/dashboard.model';
+import { IPactoTrabalho, IPactoTrabalhoSolicitacao } from '../../programa-gestao/models/pacto-trabalho.model';
+import { IPlanoTrabalho } from '../../programa-gestao/models/plano-trabalho.model';
 
 @Injectable()
 export class PessoaDataService {
@@ -25,19 +27,38 @@ export class PessoaDataService {
     const params = this.service.toQueryParams(dadosBusca);
     const url = `${baseURI}pessoa?${params}`;
 
-    return this.service.get(url).pipe(map((response: any) => {
+    return this.service.get(url, null, null, true).pipe(map((response: any) => {
       return response;
     }));
   }
 
-  ObterDashboard(): Observable<ApplicationResult<IDashboard>> {
+  ObterDashboardPlanos(): Observable<ApplicationResult<IPlanoTrabalho[]>> {
     const baseURI = this.configuration.getApiGatewayUrl();
-    const url = `${baseURI}pessoa/dashboard`;
+    const url = `${baseURI}pessoa/dashboardPlanos`;
+
+    return this.service.get(url, null, null, true).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  ObterDashboardPactos(): Observable<ApplicationResult<IPactoTrabalho[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pessoa/dashboardPactos`;
+
+    return this.service.get(url, null, null, true).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  ObterDashboardPendencias(): Observable<ApplicationResult<IPactoTrabalhoSolicitacao[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pessoa/dashboardPendencias`;
 
     return this.service.get(url).pipe(map((response: any) => {
       return response;
     }));
   }
+
 
   ObterPessoa(pessoaId: string): Observable<ApplicationResult<IPessoa>> {
     const baseURI = this.configuration.getApiGatewayUrl();

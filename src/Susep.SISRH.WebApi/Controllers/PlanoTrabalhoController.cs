@@ -112,6 +112,20 @@ namespace Susep.SISRH.WebApi.Controllers
             return await Mediator.Send(command);
         }
 
+        /// <summary>
+        /// Exclui os dados de um plano de trabalho 
+        /// </summary>
+        /// <param name="planoTrabalhoid"></param>
+        /// <returns></returns>
+        [HttpDelete("{planoTrabalhoid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> DeletePlanoTrabalho([FromRoute] Guid planoTrabalhoid)
+        {
+            var command = new ExcluirPlanoTrabalhoCommand(){
+                PlanoTrabalhoId = planoTrabalhoid
+            };
+            return await Mediator.Send(command);
+        }
+
 
         /// <summary>
         /// Obtém os pactos de trabalho de um plano de trabalho

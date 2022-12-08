@@ -77,8 +77,14 @@ namespace Susep.SISRH.Application.Queries.Concrete
             {
                 connection.Open();
 
-                var dados = await connection.QueryFirstOrDefaultAsync<PlanoTrabalhoViewModel>(PlanoTrabalhoRawSqls.ObterPorSituacao, parameters);
-                result.Result = dados;
+                var planoEmExecucaoPessoa = await connection.QueryFirstOrDefaultAsync<PlanoTrabalhoViewModel>(PlanoTrabalhoRawSqls.ObterEmExecucaoPessoaAprovada, parameters);
+                if (planoEmExecucaoPessoa != null)
+                    result.Result = planoEmExecucaoPessoa;
+                else
+                {
+                    var dados = await connection.QueryFirstOrDefaultAsync<PlanoTrabalhoViewModel>(PlanoTrabalhoRawSqls.ObterPorSituacao, parameters);
+                    result.Result = dados;
+                }
 
                 connection.Close();
             }
@@ -256,6 +262,12 @@ namespace Susep.SISRH.Application.Queries.Concrete
                 {
                     dadosPaginados.Registros = multi.Read<PlanoTrabalhoViewModel>().ToList();
                     dadosPaginados.Controle.TotalRegistros = multi.ReadFirst<int>();
+
+                    var aprovados = multi.Read<PlanoTrabalhoPessoaAprovadaViewModel>().ToList();
+
+                    foreach (var planoTrabalho in dadosPaginados.Registros)
+                        planoTrabalho.Aprovados = aprovados.Where(it => it.PlanoTrabalhoId == planoTrabalho.PlanoTrabalhoId).ToList();
+
                     result.Result = dadosPaginados;
                 }
 

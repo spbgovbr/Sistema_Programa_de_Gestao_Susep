@@ -35,6 +35,7 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
 
   atividadeEdicao: IPactoTrabalhoAtividade = { quantidade: 1 };
   situacoes: IDominio[];
+  situacoesAux: IDominio[];
 
   atividadeAvaliacao: IPactoTrabalhoAtividade;
 
@@ -105,6 +106,7 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
     this.dominioDataService.ObterSituacaoAtividadePactoTrabalho().subscribe(
       appResult => {
         this.situacoes = appResult.retorno;
+        this.situacoesAux = appResult.retorno;
       }
     );
   }
@@ -157,6 +159,12 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
   editar(pactoTrabalhoAtividadeId: string) {
     this.atividadeEdicao = this.dadosPacto.value.atividades.filter(a => a.pactoTrabalhoAtividadeId === pactoTrabalhoAtividadeId)[0];
     this.abrirTelaCadastro();
+
+    if (this.atividadeEdicao.formaCalculoTempoItemCatalogoId === 201)
+      this.situacoes = this.situacoes.filter(it => it.id === 502);
+    else
+      this.situacoes = this.situacoesAux;
+
     this.mudarSituacao(this.atividadeEdicao.situacaoId);
     this.fillForm();
   }

@@ -101,5 +101,16 @@
     <Build Include="ProgramaGestao\Tables\PlanoTrabalhoObjetoAssunto.sql" />
     <Build Include="ProgramaGestao\Tables\PlanoTrabalhoObjeto.sql" />
     <Build Include="ProgramaGestao\Tables\PactoAtividadePlanoObjeto.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoInformacoes.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoHistorico_1.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoInformacao.sql" />
+    <Build Include="ProgramaGestao\Tables\PactoTrabalhoDeclaracao.sql" />
+    <Build Include="ProgramaGestao\Tables\AgendamentoPresencial.sql" />
+    <Build Include="dbo\Tables\TipoVinculo.sql" />
+    <Build Include="dbo\Tables\TipoUnidade.sql" />
+    <Build Include="dbo\Tables\TipoFuncaoUnidade.sql" />
+    <Build Include="dbo\Tables\SituacaoUnidade.sql" />
+    <Build Include="dbo\Tables\SituacaoPessoa.sql" />
+    <Build Include="dbo\Tables\PessoaAlocacaoTemporaria.sql" />
   </ItemGroup>
 </Project>

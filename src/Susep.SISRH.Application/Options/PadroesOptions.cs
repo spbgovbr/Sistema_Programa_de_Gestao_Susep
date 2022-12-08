@@ -9,6 +9,7 @@ namespace Susep.SISRH.Application.Options
 
         public int TempoComparecimento { get; set; }
         public string TermoAceite { get; set; }
+        public Boolean FrequenciaPresencialObrigatoria { get; set; }
 
         public string EnderecoPublicacaoFront { get; set; }
 

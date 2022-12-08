@@ -11,6 +11,8 @@ export class EnvironmentService implements OnInit {
   public modo = '';
   public valorPadraoTempoComparecimento = null;
   public valorPadraoTermosUso = null;
+  public formaParticipacaoPlanoTrabalho = null;
+  public frequenciaPresencialObrigatoria = null;
   public client: IClientConfiguration = {};
 
   constructor() {}
@@ -22,6 +24,8 @@ export class EnvironmentService implements OnInit {
     this.modo = environment.modo;
     this.valorPadraoTempoComparecimento = environment.valorPadraoTempoComparecimento;
     this.valorPadraoTermosUso = environment.valorPadraoTermosUso;
+    this.formaParticipacaoPlanoTrabalho = environment.formaParticipacaoPlanoTrabalho;
+    this.frequenciaPresencialObrigatoria = environment.frequenciaPresencialObrigatoria;
     this.client = environment.client;
   }
 

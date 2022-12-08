@@ -4,9 +4,10 @@
     [assuntoPaiId] UNIQUEIDENTIFIER NULL,
     [ativo]        BIT              NOT NULL,
     CONSTRAINT [PK_Assunto] PRIMARY KEY CLUSTERED ([assuntoId] ASC),
-    CONSTRAINT [FK_Assunto_AssuntoPai] FOREIGN KEY ([assuntoPaiId]) REFERENCES [ProgramaGestao].[Assunto] ([assuntoId]),
-    CONSTRAINT [UQ_Valor] UNIQUE NONCLUSTERED ([valor] ASC)
+    CONSTRAINT [FK_Assunto_AssuntoPai] FOREIGN KEY ([assuntoPaiId]) REFERENCES [ProgramaGestao].[Assunto] ([assuntoId])
 );
+
+
 
 
 GO

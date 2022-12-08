@@ -54,12 +54,23 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 //Monta o objeto com os dados do catalogo
                 var item = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
 
+                if (request.SituacaoId == (int)Domain.Enums.SituacaoPactoTrabalhoEnum.EmExecucao)
+                {
+                    var outrosPactosEmExecucao = await PessoaQuery.ObterPactosTrabalhoEmExecucaoAsync(item.PessoaId);
+
+                    if (outrosPactosEmExecucao.Result.Any())
+                        throw new SISRH.Domain.Exceptions.SISRHDomainException("Não é possível iniciar a execução de um plano enquanto ainda houver outro plano nesta mesma situação");
+                }
+
                 //Obtém os dias não úteis da pessoa
                 var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(item.PessoaId, item.DataInicio, item.DataFim);
                 item.DiasNaoUteis = diasNaoUteis.Result.ToList();
 
+                //Verifica na configuração se a frequencia presencial no teletrabalho parcial é obrigatória;
+                var frequenciaPresencialObrigatoria = Configuration.Value.FrequenciaPresencialObrigatoria;
+
                 //Alterar a situação do plano de trabalho
-                item.AlterarSituacao(request.SituacaoId, request.UsuarioLogadoId.ToString(), request.Observacoes);
+                item.AlterarSituacao(request.SituacaoId, request.UsuarioLogadoId.ToString(), request.Observacoes, frequenciaPresencialObrigatoria);
 
                 //Altera o plano de trabalho no banco de dados
                 PactoTrabalhoRepository.Atualizar(item);
@@ -76,6 +87,10 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 result.Validations = new List<string>() { ex.Message };
                 result.Result = false;
                 result.SetHttpStatusToBadRequest();
+            }
+            catch (System.Exception ex)
+            {
+
             }
             return result;
         }

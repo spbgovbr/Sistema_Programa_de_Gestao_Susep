@@ -1,0 +1,35 @@
+<div class="row mt-5" *ngIf="!isReadOnly">
+  <div class="col-sm-12 text-right">
+    <button class="br-button is-secondary" type="button" (click)="abrirTelaCadastroObservacao()">Cadastrar informação</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 mt-5 ">
+    <div class="table-responsive">
+      <div class="br-table">
+        <div class="table">
+          <table class="full-width-table table-striped table-style mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Texto</th>
+                <th>Responsável</th>
+                <th class="text-center">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of informacoes">
+                <td>{{item.informacao}}</td>
+                <td>{{item.responsavelRegistro}}</td>
+                <td class="text-center">{{item.dataRegistro | date: 'dd/MM/yyyy HH:mm'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCadastro let-modal>
+  <observacao-pacto-nova [dadosPacto]="dadosPacto" *ngIf="tipoSolicitacao === 101"></observacao-pacto-nova>
+</ng-template>

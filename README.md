@@ -1,4 +1,11 @@
-Para entender os conceitos e principais funcionalidades, assista à apresentação disponível no seguinte link: https://youtu.be/VU_1TTAMg2Y
+
+# Material de apoio 
+
+Para acompanhar sessões gravadas de instalação e configuração do sistema, assista os vídeos nos seguintes links:
+
+* [Instalação de teste e configurações iniciais - 19/05/2021 - Meeting Recording](https://youtu.be/BOaHQiZSd4E)
+* [AD/LDAP orientações e carga inicial de dados  - 26/05/2021 - Meeting Recording](https://youtu.be/KRwEF0-p590)
+* [Instalação, configuração e utilização da API de envios - 12/05/2022 - Meeting Recording](https://youtu.be/RD883q3dYA0)
 
 > Caso esteja interessado na instalação via Docker, acesse a [documentação referente no banch docker, arquivo `docker/README.md`](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/tree/docker/docker/README.md).
 
@@ -69,8 +76,14 @@ O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com 
     1. Obrigatório: `install/2. Inserir dados de domínio - Obrigatorio.sql`;
     1. Obrigatório: `install/Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql`;
     1. Se for ambiente de desenvolvimento/homologação:  `install/4. Inserir dados de teste - Opcional.sql`;
-    1. Obrigatório: `5. Alteracoes da estrutura do BD para a V7.sql`
-1. Criar um usuário de aplicação com permissões de leitura e escrita.
+    1. Se estiver atualizando de versões anteriores da V7: `5. Alteracoes da estrutura do BD para a V7.sql`;
+    1. Se estiver atualizando da V7 para a V8: `6. Alteracoes da estrutura do BD para a V8.sql`.
+
+>1. Criar banco de dados DBSISGP.
+>2. Executar o script “[1. Criação da estrutura do banco de dados.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados.sql "1. Criação da estrutura do banco de dados.sql")”.
+>3. Executar o script “[2. Inserir dados de domínio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio.sql "2. Inserir dados de domínio.sql")”.
+>4. Se for ambiente de desenvolvimento/homologação,executar o script “[3. Inserir dados de teste.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/3.%20Inserir%20dados%20de%20teste.sql "3. Inserir dados de teste.sql")”.
+>5. Criar um usuário de aplicação com permissões de leitura e escrita.
 
 ##### Importação de usuários (desenvolvimento/homologação/produção)
 
@@ -115,12 +128,12 @@ Para facilitar o entendimento do roteiro, considera-se que os seguintes caminhos
 
 #### Sequência de passos (.NET)
 
-1. Criar um Pool de Aplicativos chamado `sisgp`.
-2. Criar um novo site vinculado ao pool `sisgp` e apontando para o caminho físico da pasta `api`.
-3. Criar um novo site vinculado ao pool `sisgp` e apontando para o caminho físico da pasta `gateway`.
-4. Criar um novo site vinculado ao pool `sisgp` e apontando para o caminho físico da pasta `app`.
+>1. Criar um Pool de Aplicativos chamado “sisgp”.
+>2. Criar um novo site vinculado ao pool “sisgp” e apontando para o caminho físico da pasta “api”.
+>3. Criar um novo site vinculado ao pool “sisgp” e apontando para o caminho físico da pasta “gateway”.
+>4. Criar um novo site vinculado ao pool “sisgp” e apontando para o caminho físico da pasta “app”.
 
-### Back-end
+# BACK-END!
 
 O back-end concentra as regras de negócio e a interação da aplicação com o banco de dados e é composto por dois pacotes, API e Gateway. 
 

@@ -13,6 +13,7 @@ services:
       - ../install/2. Inserir dados de domínio - Obrigatorio.sql:/scripts/2.dados_dominio.sql:ro
       - ../install/3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql:/scripts/3.pessoa_alocacao_temporaria.sql:ro
       - ../install/4. Alteracoes da estrutura do BD para a V7.sql:/scripts/4.atualizacao_versao_1_7.sql:ro
+      - ../install/6. Alteracoes da estrutura do BD para a V8.sql:/scripts/6.atualizacao_versao_1_8.sql:ro
       - ../install/5. Inserir dados de teste - Opcional.sql:/scripts/5.dados_teste.sql:ro
       - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
       - ./volume/mssql:/var/opt/mssql:rw

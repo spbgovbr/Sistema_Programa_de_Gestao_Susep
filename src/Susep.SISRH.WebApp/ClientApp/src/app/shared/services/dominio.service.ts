@@ -61,7 +61,7 @@ export class DominioDataService {
 
   ObterCriterioPerfilAtividadePlano(): Observable<ApplicationResult<IDominio[]>> {
     const baseURI = this.configuration.getApiGatewayUrl();
-    const url = `${baseURI}dominio/CriterioPerfilAtividadePlano`;
+    const url = `${baseURI}dominio/criterioPerfilAtividadePlano`;
 
     return this.service.get(url).pipe(map((response: any) => {
       return response;
@@ -70,7 +70,16 @@ export class DominioDataService {
 
   ObterSituacaoCandidaturaPlanoTrabalhoSolicitada(): Observable<ApplicationResult<IDominio[]>> {
     const baseURI = this.configuration.getApiGatewayUrl();
-    const url = `${baseURI}dominio/SituacaoCandidaturaPlanoTrabalho/Solicitada`;
+    const url = `${baseURI}dominio/situacaoCandidaturaPlanoTrabalho/Solicitada`;
+
+    return this.service.get(url).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  ObterTipoFrequenciaTeletrabalhoParcial(): Observable<ApplicationResult<IDominio[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}dominio/tipoFrequenciaTeletrabalhoParcial`;
 
     return this.service.get(url).pipe(map((response: any) => {
       return response;

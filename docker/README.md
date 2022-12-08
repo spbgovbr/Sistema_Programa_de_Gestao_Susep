@@ -1,6 +1,7 @@
 # SUSEP - Docker
 
-**Versão atual:** 1.7 (com correções no código fonte)
+* **Versão atual:** 1.8
+* Versão 1.7: https://github.com/SrMouraSilva/Sistema_Programa_de_Gestao_Susep/tree/v1.7
 
 É possível subir a aplicação por meio do [Docker](https://www.docker.com/). Dentre as vantagens estão:
 1. A ausência da necessidade de uma configuração do IIS;
@@ -35,12 +36,12 @@ cd Sistema_Programa_de_Gestao_Susep
 
 Por fim, execute o seguinte comando para subir a aplicação
 ```bash
-docker-compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml up -d
 ```
 E o seguinte comando para subir o banco de dados de homologação
 ```bash
 # Obs: Execute DEPOIS do docker/docker-compose.yml
-docker-compose -f docker/docker-compose.sqlserver-homologacao.yml up -d
+docker compose -f docker/docker-compose.sqlserver-homologacao.yml up -d
 ```
 
 Pronto, a aplicação está acessível no endereço http://localhost. Porém você não irá conseguir se logar se não configurar o LDAP (veja abaixo) se não inserir as pessoas na tabela de pessoas.
@@ -49,15 +50,15 @@ Pronto, a aplicação está acessível no endereço http://localhost. Porém voc
 
 Após alterar uma configuração, execute
 ```bash
-docker-compose -f docker/docker-compose.yml down
-docker-compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml down
+docker compose -f docker/docker-compose.yml up -d
 ```
 
 #### Verificando se deu certo
 
 Execute o seguinte comando
 ```bash
-docker-compose -f docker/docker-compose.yml ps -a
+docker compose -f docker/docker-compose.yml ps -a
 ```
 Os 4 containers devem estar ativos.
 ```

@@ -2,3 +2,7 @@
 .fc-sun {
   background-color: red !important;
 }
+
+.fc-event {
+  cursor: pointer !important;
+}
