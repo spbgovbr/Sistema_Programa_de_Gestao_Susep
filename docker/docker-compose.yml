@@ -36,10 +36,10 @@ services:
   web-api:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
-    #image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
-    image: susep
+    #image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
     volumes:
@@ -94,10 +94,10 @@ services:
   api-gateway:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
-    #image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
-    image: susep
+    #image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
     working_dir: /app/gateway/
     volumes:
@@ -120,10 +120,10 @@ services:
   web-app:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
-    # Imagem do SrMouraSilva enquanto o ME não corrige o repositório...
-    #image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    # Imagem do SrMouraSilva enquanto o ME não incorpora a solução
+    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
     # Imagem caso você queira testar na sua máquina
-    image: susep
+    #image: susep
     command: dotnet Susep.SISRH.WebApp.dll
     working_dir: /app/app/
     volumes:

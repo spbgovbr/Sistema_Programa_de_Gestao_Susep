@@ -1,6 +1,7 @@
 # SUSEP - Docker
 
-**Versão atual:** 1.8 (com correções no código fonte)
+* **Versão atual:** 1.8
+* Versão 1.7: https://github.com/SrMouraSilva/Sistema_Programa_de_Gestao_Susep/tree/v1.7
 
 É possível subir a aplicação por meio do [Docker](https://www.docker.com/). Dentre as vantagens estão:
 1. A ausência da necessidade de uma configuração do IIS;
