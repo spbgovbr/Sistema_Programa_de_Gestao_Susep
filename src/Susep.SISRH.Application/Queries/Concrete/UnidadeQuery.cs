@@ -297,5 +297,33 @@ namespace Susep.SISRH.Application.Queries.Concrete
 
             return result;
         }
+
+        public async Task<IApplicationResult<IEnumerable<UnidadeViewModel>>> ObterEstruturaAtualAsync()
+        {
+            var result = new ApplicationResult<IEnumerable<UnidadeViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@situacaoUnidadeAtiva", (int)SituacaoUnidadeEnum.Ativa, DbType.Int64, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                
+                using (var multi = await connection.QueryMultipleAsync(UnidadeRawSqls.EstruturaAtual, parameters))
+                {
+                    var unidades = multi.Read<UnidadeViewModel>().ToList();
+                    var pessoas = multi.Read<PessoaViewModel>().ToList();
+
+                    foreach (var unidade in unidades)
+                        unidade.Pessoas = pessoas.Where(it => it.UnidadeId == unidade.UnidadeId);
+
+                    result.Result = unidades;
+                }
+                
+                connection.Close();
+            }
+
+            return result;
+        }
     }
 }

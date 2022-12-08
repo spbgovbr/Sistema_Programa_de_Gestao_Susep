@@ -258,7 +258,7 @@
                                             INNER JOIN [VW_UnidadeSiglaCompleta] vud ON uc.unidadeId = vud.unidadeId
                                         WHERE (uc.pessoaIdChefe = @pessoaLogadaId OR uc.pessoaIdChefeSubstituto = @pessoaLogadaId)
                                     ) uchefia ON upat.undSiglaCompleta like uchefia.undSiglaCompleta + '%'
-                            ) unidadesPessoa ON unidadesPessoa.pessoaId = pt.pessoaId AND unidadesPessoa.unidadeId = pt.unidadeId
+                            ) unidadesPessoa ON (pt.pessoaId = @pessoaLogadaId) OR (unidadesPessoa.pessoaId = pt.pessoaId AND unidadesPessoa.unidadeId = pt.unidadeId)
                         ";
             }
         }

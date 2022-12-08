@@ -10,6 +10,7 @@ import { DominioDataService } from '../../../../../../shared/services/dominio.se
 import { IDominio } from '../../../../../../shared/models/dominio.model';
 import { ApplicationStateService } from '../../../../../../shared/services/application.state.service';
 import { IUsuario } from '../../../../../../shared/models/perfil-usuario.model';
+import { ConfigurationService } from '../../../../../../shared/services/configuration.service';
 
 @Component({
   selector: 'pacto-cabecalho',
@@ -42,6 +43,7 @@ export class PactoCabecalhoComponent implements OnInit {
 
   tipoFrequenciaTeletrabalhoParcial: IDominio[];
   formTipoFrequenciaTeletrabalhoParcial: FormGroup;
+  frequenciaPresencialObrigatoria: boolean;
 
   constructor(
     private modalService: NgbModal,
@@ -49,6 +51,7 @@ export class PactoCabecalhoComponent implements OnInit {
     private dominioDataService: DominioDataService,
     private decimalValuesHelper: DecimalValuesHelper,
     private applicationState: ApplicationStateService,
+    private configurationService: ConfigurationService,
     private pactoTrabalhoDataService: PactoTrabalhoDataService,) { }
 
   ngOnInit() {
@@ -75,6 +78,8 @@ export class PactoCabecalhoComponent implements OnInit {
 
       this.verificarDeclaracoes();
     });
+
+    this.frequenciaPresencialObrigatoria = this.configurationService.getFrequenciaPresencialObrigatoria();
   }
 
   editarPeriodo() {

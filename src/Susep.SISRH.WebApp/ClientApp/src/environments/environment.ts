@@ -6,6 +6,7 @@ export const environment = {
   valorPadraoTempoComparecimento: null,
   valorPadraoTermosUso: null,
   formaParticipacaoPlanoTrabalho: null,
+  frequenciaPresencialObrigatoria: true,
   apiKeyGoogleVisio: "",
   client: {
     id: "SISRH.Web",

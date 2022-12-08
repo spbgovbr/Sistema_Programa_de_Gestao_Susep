@@ -25,7 +25,7 @@
       <dt class="col-sm-5">Prazo de comparecimento:</dt>
       <dd class="col-sm-7">{{dadosPacto.value?.tempoComparecimento}} dia(s)</dd>
     </dl>
-    <dl class="row" *ngIf="dadosPacto.value?.formaExecucaoId === 102">
+    <dl class="row" *ngIf="frequenciaPresencialObrigatoria && dadosPacto.value?.formaExecucaoId === 102">
       <dt class="col-sm-5">Frequência presencial:</dt>
       <dd class="col-sm-7">
         {{dadosPacto.value?.quantidadeDiasFrequenciaTeletrabalhoParcial}} dia(s) {{obterDescricaoTipoFrequenciaTeletrabalhoParcial()}}

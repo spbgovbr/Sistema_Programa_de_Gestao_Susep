@@ -12,6 +12,7 @@ namespace Susep.SISRH.Application.Queries.Abstractions
     public interface IUnidadeQuery
     {
         Task<IApplicationResult<IEnumerable<UnidadeViewModel>>> ObterAtivasAsync();
+        Task<IApplicationResult<IEnumerable<UnidadeViewModel>>> ObterEstruturaAtualAsync();
         Task<IApplicationResult<IEnumerable<DadosComboViewModel>>> ObterAtivasDadosComboAsync();
         Task<IApplicationResult<IEnumerable<UnidadeViewModel>>> ObterComPlanoTrabalhoAsync();
         Task<IApplicationResult<UnidadeViewModel>> ObterPorChaveAsync(Int64 unidadeId);

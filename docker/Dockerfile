@@ -20,6 +20,7 @@ COPY ${diretorio}/SUSEP.Framework.Utils.dll Susep.libs/SUSEP.Framework.Utils.dll
 
 #RUN dotnet build --configuration Release
 RUN dotnet publish --configuration Release
+#  --verbosity diag
 
 ######################
 # Deploy

@@ -67,7 +67,7 @@
                                     ,u.unidadeIdPai        
                     FROM [dbo].[VW_UnidadeSiglaCompleta] u
                         LEFT OUTER JOIN [ProgramaGestao].[Catalogo] c ON u.unidadeId = c.unidadeId  
-                    WHERE c.unidadeId IS NOT NULL
+                    WHERE c.unidadeId IS NOT NULL AND u.situacaoUnidadeId = 1
                     ORDER BY u.undSiglaCompleta
                 ";
             }
@@ -307,6 +307,44 @@
                 ";
             }
         }
+
+
+
+        public static string EstruturaAtual
+        {
+            get
+            {
+                return @"
+                    SELECT DISTINCT u.unidadeId as Id
+	                                ,u.undSiglaCompleta as Descricao   
+                                    ,u.unidadeId
+	                                ,u.undSiglaCompleta siglaCompleta
+                                    ,u.unidadeIdPai     
+                    FROM [dbo].[VW_UnidadeSiglaCompleta] u
+                    WHERE situacaoUnidadeId = @situacaoUnidadeAtiva
+                    ORDER BY u.undSiglaCompleta
+
+                    SELECT DISTINCT 
+                           p.pessoaId
+                          ,UPPER(RTRIM(LTRIM(p.pesNome))) nome
+                          ,p.unidadeId
+                          ,u.undSiglaCompleta unidade
+                          ,sp.situacaoPessoaId
+                          ,sp.spsDescricao situacaoPessoa
+                          ,tv.tipoVinculoId
+                          ,tv.tvnDescricao tipoVinculo
+                          ,p.CargaHoraria
+                    FROM [dbo].[Pessoa] p
+                        LEFT OUTER JOIN [dbo].[PessoaAlocacaoTemporaria] pat ON p.pessoaId = pat.pessoaId AND (dataFim IS NULL OR dataFim > GETDATE())
+                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = ISNULL(pat.unidadeId, p.unidadeId)   
+					    INNER JOIN [dbo].[situacaoPessoa] sp ON sp.situacaoPessoaId = p.situacaoPessoaId
+					    INNER JOIN [dbo].[TipoVinculo] tv ON tv.tipoVinculoId = p.tipoVinculoId
+                    WHERE   p.situacaoPessoaId = 1
+                    ORDER BY nome ASC, unidadeId DESC, CargaHoraria ASC
+                ";
+            }
+        }
+        
 
     }
 }
