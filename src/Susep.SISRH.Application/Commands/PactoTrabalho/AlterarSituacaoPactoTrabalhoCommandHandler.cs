@@ -66,8 +66,11 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 var diasNaoUteis = await PessoaQuery.ObterDiasNaoUteisAsync(item.PessoaId, item.DataInicio, item.DataFim);
                 item.DiasNaoUteis = diasNaoUteis.Result.ToList();
 
+                //Verifica na configuração se a frequencia presencial no teletrabalho parcial é obrigatória;
+                var frequenciaPresencialObrigatoria = Configuration.Value.FrequenciaPresencialObrigatoria;
+
                 //Alterar a situação do plano de trabalho
-                item.AlterarSituacao(request.SituacaoId, request.UsuarioLogadoId.ToString(), request.Observacoes);
+                item.AlterarSituacao(request.SituacaoId, request.UsuarioLogadoId.ToString(), request.Observacoes, frequenciaPresencialObrigatoria);
 
                 //Altera o plano de trabalho no banco de dados
                 PactoTrabalhoRepository.Atualizar(item);

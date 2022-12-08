@@ -108,5 +108,14 @@ namespace Susep.SISRH.WebApi.Controllers
         [HttpGet("{unidadeId}/pessoas"), Produces("application/json", Type = typeof(IApplicationResult<DadosComboViewModel>))]
         public async Task<IActionResult> GetPessoasById([FromRoute]Int64 unidadeId)
             => await UnidadeQuery.ObterPessoasDadosComboAsync(unidadeId);
+
+        /// <summary>
+        /// Obtém todas as unidades ativas para preenchimento de combos
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("estruturaatual"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<UnidadeViewModel>>))]
+        public async Task<IActionResult> GetEstruturaAtual()
+            => await UnidadeQuery.ObterEstruturaAtualAsync();
     }
 }

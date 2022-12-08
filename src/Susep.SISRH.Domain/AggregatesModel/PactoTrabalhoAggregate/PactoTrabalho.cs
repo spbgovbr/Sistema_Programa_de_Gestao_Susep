@@ -114,12 +114,13 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
         #region Fluxo de aprovação do pacto
 
-        public void AlterarSituacao(Int32 situacaoId, String responsavelOperacao, String observacoes)
+        public void AlterarSituacao(Int32 situacaoId, String responsavelOperacao, String observacoes, Boolean frequenciaPresencialObrigatoria = false)
         {
             if (!PodeAlteracaoSituacao(situacaoId))
                 throw new SISRHDomainException("A situação atual do plano não permite mudar para o estado solicitado");
 
-            if (situacaoId == (int)SituacaoPactoTrabalhoEnum.EnviadoAceite && 
+            if (frequenciaPresencialObrigatoria &&
+                situacaoId == (int)SituacaoPactoTrabalhoEnum.EnviadoAceite && 
                 this.ModalidadeExecucaoId == (int)ModalidadeExecucaoEnum.Semipresencial &&
                 (!this.QuantidadeDiasFrequenciaTeletrabalhoParcial.HasValue || !this.TipoFrequenciaTeletrabalhoParcialId.HasValue))
             {
@@ -538,8 +539,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             atividade.AlterarAndamento(situacaoId, dataInicio, dataFim, tempoRealizado, ignorarValidacoes: true);
             this.Atividades.Add(atividade);
 
-            //if (itemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
-            atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
+            if (itemCatalogo.FormaCalculoTempoItemCatalogoId == (int)FormaCalculoTempoItemCatalogoEnum.PredefinidoPorDia)
+                atividade.AtualizarTempoPrevistoTotal(WorkingDays.DiffDays(this.DataInicio, this.DataFim, this.DiasNaoUteis, false));
 
             if (atualizarPrazo)
             {

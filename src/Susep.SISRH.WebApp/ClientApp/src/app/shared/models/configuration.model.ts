@@ -6,6 +6,7 @@ export interface IConfiguration {
   valorPadraoTempoComparecimento: number,
   valorPadraoTermosUso: string,
   formaParticipacaoPlanoTrabalho: string,
+  frequenciaPresencialObrigatoria: boolean,
   clientId: string,
   clientSecret: string,
   userAuthScope: string,

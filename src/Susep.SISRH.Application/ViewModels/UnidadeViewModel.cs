@@ -44,5 +44,8 @@ namespace Susep.SISRH.Application.ViewModels
 
         [DataMember(Name = "quantidadeServidores")]
         public Int32 QuantidadeServidores { get; set; }
+
+        [DataMember(Name = "pessoas")]
+        public IEnumerable<PessoaViewModel> Pessoas { get; set; }
     }
 }
