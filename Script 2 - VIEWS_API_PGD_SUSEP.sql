@@ -120,7 +120,7 @@ GO
 
 CREATE OR ALTER VIEW VW_UNIDADE
 AS
-SELECT        unidadeId AS id_unidade, undDescricao, undSiglaCompleta, undCodigoSIORG
+SELECT        unidadeId AS id_unidade, undDescricao as nome, undSiglaCompleta as sigla, undCodigoSIORG as codigo
 FROM            dbo.VW_UnidadeSiglaCompleta
 WHERE        (situacaoUnidadeId = 1)
 GO
