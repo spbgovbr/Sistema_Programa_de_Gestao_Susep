@@ -1,5 +1,8 @@
 Para acompanhar sessões gravadas de instalação e configuração do sistema, assista os vídeos nos seguintes links:
 
+>Instalação de teste e configurações iniciais v1.8 Docker - 22/12/2022 - Meeting Recording
+https://www.youtube.com/watch?v=wqT-Ylxu0Pw
+
 >Instalação de teste e configurações iniciais - 19/05/2021 - Meeting Recording
 https://youtu.be/BOaHQiZSd4E
 
