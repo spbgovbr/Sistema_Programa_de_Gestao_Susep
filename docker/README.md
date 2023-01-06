@@ -86,38 +86,42 @@ web-app:
 ```
 Atente-se que o yml é sensível a identação e que foi utilizado espaço como identação.
 
+### Variáveis de ambiente
+
+As variáveis de ambiente podem ser alteradas nos arquivos `docker/api-gateway.env` e `docker/web-api.env` para refletir as configurações específicas de cada orgão.
+
 #### Configurar Servidor de email
 
-Acesse o arquivo `docker/docker-compose.yml` e edite as seguintes linhas conforme sua necessidade
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas conforme sua necessidade:
 ```yaml
-      # Configurações de e-mail - Exemplo: Ministério da Economia
-      - emailOptions__EmailRemetente=no-reply@me.gov.br
-      - emailOptions__NomeRemetente=Programa de Gestão - ME
-      - emailOptions__SmtpServer=smtp.me.gov.br
-      - emailOptions__Port=25
+# Configurações de e-mail - Exemplo: Ministério da Economia
+emailOptions__EmailRemetente=no-reply@me.gov.br
+emailOptions__NomeRemetente=Programa de Gestão - ME
+emailOptions__SmtpServer=smtp.me.gov.br
+emailOptions__Port=25
 ```
 
 #### Configurar Servidor ldap
 
-Acesse o arquivo `docker/docker-compose.yml` e edite as seguintes linhas
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas conforme sua necessidade:
 ```yml
-      # LDAP
-      # -> URL do Servidor LDAP
-      - ldapOptions__Configurations__0__Url=
-      # -> Porta do Servidor LDAP
-      - ldapOptions__Configurations__0__Port=389
-      # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
-      - ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
-      # -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
-      - ldapOptions__Configurations__0__BindPassword=
-      # -> DC que será utilizado para chegar à base de usuários no LDAP
-      - ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
-      # -> Consulta a ser aplicada no LDAP para encontrar os usuários
-      - ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
-      # -> Campo do LDAP em que será encontrado o CPF do usuário
-      - ldapOptions__Configurations__0__CpfAttributeFilter=
-      # -> Campo do LDAP em que será encontrado o e-mail do usuário
-      - ldapOptions__Configurations__0__EmailAttributeFilter=
+# LDAP
+# -> URL do Servidor LDAP
+ldapOptions__Configurations__0__Url=
+# -> Porta do Servidor LDAP
+ldapOptions__Configurations__0__Port=389
+# -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
+ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
+# -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
+ldapOptions__Configurations__0__BindPassword=
+# -> DC que será utilizado para chegar à base de usuários no LDAP
+ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
+# -> Consulta a ser aplicada no LDAP para encontrar os usuários
+ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
+# -> Campo do LDAP em que será encontrado o CPF do usuário
+ldapOptions__Configurations__0__CpfAttributeFilter=
+# -> Campo do LDAP em que será encontrado o e-mail do usuário
+ldapOptions__Configurations__0__EmailAttributeFilter=
 ```
 
 **Obs:** Note que é possível definir mais de uma configuração. Basta copiar as linhas e trocar `__n__` por `__n+1__` nas linhas novas (ex: `__0__` -> `__1__`).
@@ -132,10 +136,10 @@ Acesse o arquivo `docker/docker-compose.yml` e edite as seguintes linhas
 #### Configurar Acesso ao Banco de Dados
 
 Caso você queira utilizar um servidor de banco de dados SQL Server com a devida licença, será necessário alterar a configuração do banco.
-Acesse o arquivo ``docker/docker-compose.yml` e edite as seguintes linhas:
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas:
 ```yaml
-      # Configurações de banco de dados
-      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
+# Configurações de banco de dados
+ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
 ```
 
 #### Configurar Script de inserção de dados no Banco de Dados

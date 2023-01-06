@@ -46,36 +46,8 @@ services:
       - ./api/Settings:/app/api/Settings:ro
       #- ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
-    environment: 
-      - ASPNETCORE_ENVIRONMENT=Homolog
-
-      # Configurações de banco de dados
-      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=programa_gestao;User Id=sa;Password=P1ssw@rd;
-
-      # Configurações de e-mail - Exemplo: Ministério da Economia
-      - emailOptions__EmailRemetente=no-reply@me.gov.br
-      - emailOptions__NomeRemetente=Programa de Gestão - ME
-      - emailOptions__SmtpServer=smtp.me.gov.br
-      - emailOptions__Port=25
-
-      # LDAP
-      # -> URL do Servidor LDAP
-      - ldapOptions__Configurations__0__Url=
-      # -> Porta do Servidor LDAP
-      - ldapOptions__Configurations__0__Port=389
-      # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
-      - ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
-      # -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
-      - ldapOptions__Configurations__0__BindPassword=
-      # -> DC que será utilizado para chegar à base de usuários no LDAP
-      - ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
-      # -> Consulta a ser aplicada no LDAP para encontrar os usuários
-      - ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
-      # -> Campo do LDAP em que será encontrado o CPF do usuário
-      - ldapOptions__Configurations__0__CpfAttributeFilter=
-      # -> Campo do LDAP em que será encontrado o e-mail do usuário
-      - ldapOptions__Configurations__0__EmailAttributeFilter=
-
+    env_file:
+      - ./web-api.env
     # Habilitar somente para debug
     # ports:
     #   - 8082:80
@@ -103,8 +75,8 @@ services:
     volumes:
       - ./gateway/Settings:/app/gateway/Settings:ro
       - ../log/gateway:/app/gateway/Logs:rw
-    environment: 
-      - ASPNETCORE_ENVIRONMENT=Homolog
+    env_file:
+      - ./api-gateway.env
     labels:
      - traefik.enable=true
      - traefik.http.routers.gateway.rule=PathPrefix(`/gateway`)
