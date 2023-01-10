@@ -1,11 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Susep.SISRH.Application.Requests;
-using Susep.SISRH.Application.ViewModels;
-using SUSEP.Framework.Messages.Concrete.Request;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Susep.SISRH.Application.Commands.PactoTrabalho

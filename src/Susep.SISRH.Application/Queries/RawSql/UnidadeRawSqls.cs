@@ -67,7 +67,7 @@
                                     ,u.unidadeIdPai        
                     FROM [dbo].[VW_UnidadeSiglaCompleta] u
                         LEFT OUTER JOIN [ProgramaGestao].[Catalogo] c ON u.unidadeId = c.unidadeId  
-                    WHERE c.unidadeId IS NOT NULL
+                    WHERE c.unidadeId IS NOT NULL AND u.situacaoUnidadeId = 1
                     ORDER BY u.undSiglaCompleta
                 ";
             }
@@ -96,7 +96,7 @@
         }
 
 
-        public static string ObterQuantidadeServidoresPorChave
+        public static string ObterQuantidadeServidoresIncluirSubunidadesPorChave
         {
             get
             {
@@ -118,14 +118,14 @@
                                         SELECT up.[unidadeId], count(1) quantidadeServidores
                                         FROM (SELECT p.pessoaid, p.[unidadeId]
                                               FROM [dbo].[Pessoa] p
-                                              WHERE p.situacaoPessoaId = 1
+                                              WHERE p.situacaoPessoaId = 1 AND p.tipoVinculoId not in (5, 6) 
 
                                               UNION 
 
                                               SELECT p.pessoaid, pat.unidadeId
                                               FROM PessoaAlocacaoTemporaria pat
                                                   INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = pat.pessoaId
-                                              WHERE p.situacaoPessoaId = 1 
+                                              WHERE p.situacaoPessoaId = 1 AND p.tipoVinculoId not in (5, 6) 
                                                   AND (pat.dataInicio <= getdate()) AND (pat.dataFim IS NULL OR pat.dataFim <= getdate())
                                         ) up 
                                         WHERE up.unidadeId IN (SELECT unidadeId
@@ -136,7 +136,7 @@
                                         GROUP BY up.[unidadeId]) upg ON vu.unidadeId = upg.unidadeId
                 ";
             }
-        }
+        }        
 
         public static string ObterFeriados
         {
@@ -199,7 +199,7 @@
                     FROM (SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, p.[unidadeId], IIF(u1.unidadeId IS NOT NULL, 1, 0) chefe
                             FROM [dbo].[Pessoa] p
                                 LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = p.unidadeId AND (u1.pessoaIdChefe = p.pessoaId OR u1.pessoaIdChefeSubstituto = p.pessoaId)
-                            WHERE p.situacaoPessoaId = 1
+                            WHERE p.situacaoPessoaId = 1 AND p.tipoVinculoId not in (5, 6) 
 
                             UNION 
 
@@ -207,7 +207,7 @@
                             FROM PessoaAlocacaoTemporaria pat
                                 INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = pat.pessoaId
                                 LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = p.unidadeId AND (u1.pessoaIdChefe = p.pessoaId OR u1.pessoaIdChefeSubstituto = p.pessoaId)
-                            WHERE p.situacaoPessoaId = 1 
+                            WHERE p.situacaoPessoaId = 1 AND p.tipoVinculoId not in (5, 6)  
                                 AND (pat.dataInicio <= getdate()) AND (pat.dataFim IS NULL OR pat.dataFim <= getdate())
                     ) up 
                     WHERE up.unidadeId IN (SELECT unidadeId
@@ -219,6 +219,49 @@
                 ";
             }
         }
+
+        public static string ObterPessoasDiretamenteAlocadasPorUnidade
+        {
+            get
+            {
+                return @"
+                    SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, p.[unidadeId], CASE WHEN (u1.pessoaIdChefe = p.pessoaId OR u1.pessoaIdChefeSubstituto = p.pessoaId) THEN 1 ELSE 0 END chefe
+                    FROM [dbo].[Pessoa] p
+                        LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = p.unidadeId 
+                    WHERE p.situacaoPessoaId = 1 AND p.tipoVinculoId not in (5, 6)
+                        AND u1.unidadeId = @unidadeId
+
+                    UNION 
+
+                    SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, pat.unidadeId, IIF(u1.unidadeId IS NOT NULL, 1, 0) chefe
+                    FROM PessoaAlocacaoTemporaria pat
+                        INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = pat.pessoaId
+                        LEFT OUTER JOIN [dbo].[Unidade] u1 ON u1.unidadeId = p.unidadeId AND (u1.pessoaIdChefe = p.pessoaId OR u1.pessoaIdChefeSubstituto = p.pessoaId)
+                    WHERE p.situacaoPessoaId = 1 AND p.tipoVinculoId not in (5, 6)
+                        AND (pat.dataInicio <= getdate()) AND (pat.dataFim IS NULL OR pat.dataFim <= getdate())
+                        AND pat.unidadeId = @unidadeId
+              
+                    UNION 
+
+                    SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, upai.unidadeId, 0 chefe
+                    FROM [dbo].[Unidade] upai
+                    INNER JOIN [dbo].[Unidade] ufilha ON upai.unidadeId = ufilha.unidadeIdPai
+                    INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = ufilha.pessoaIdChefe
+                    WHERE p.situacaoPessoaId = 1 AND ufilha.situacaoUnidadeId = 1 AND p.tipoVinculoId not in (5, 6)
+                        AND upai.unidadeId = @unidadeId
+                                                
+                    UNION 
+
+                    SELECT p.pessoaid, pesNome nome, pesEmail email, tipoFuncaoId, upai.unidadeId, 0 chefe
+                    FROM [dbo].[Unidade] upai
+                    INNER JOIN [dbo].[Unidade] ufilha ON upai.unidadeId = ufilha.unidadeIdPai
+                    INNER JOIN [dbo].[Pessoa] p ON p.pessoaId = ufilha.pessoaIdChefeSubstituto
+                    WHERE p.situacaoPessoaId = 1 AND ufilha.situacaoUnidadeId = 1 AND p.tipoVinculoId not in (5, 6) 
+                        AND upai.unidadeId = @unidadeId
+                ";
+            }
+        }
+
         public static string ObterChefesPorUnidade
         {
             get
@@ -246,6 +289,62 @@
                 ";
             }
         }
+
+        public static string ObterPorChefe
+        {
+            get
+            {
+                return @"
+                    SELECT u.unidadeId
+                           ,usc.undSiglaCompleta unidade
+                           ,u.undNivel nivelUnidade
+                           ,u.tipoFuncaoUnidadeId
+                           ,u.UnidadeIdPai
+                    FROM [dbo].[Unidade] u
+						INNER JOIN VW_UnidadeSiglaCompleta usc ON u.unidadeId = usc.unidadeId
+                        WHERE (u.pessoaIdChefe = @pessoaId OR u.pessoaIdChefeSubstituto = @pessoaId)
+                    ORDER BY undSiglaCompleta
+                ";
+            }
+        }
+
+
+
+        public static string EstruturaAtual
+        {
+            get
+            {
+                return @"
+                    SELECT DISTINCT u.unidadeId as Id
+	                                ,u.undSiglaCompleta as Descricao   
+                                    ,u.unidadeId
+	                                ,u.undSiglaCompleta siglaCompleta
+                                    ,u.unidadeIdPai     
+                    FROM [dbo].[VW_UnidadeSiglaCompleta] u
+                    WHERE situacaoUnidadeId = @situacaoUnidadeAtiva
+                    ORDER BY u.undSiglaCompleta
+
+                    SELECT DISTINCT 
+                           p.pessoaId
+                          ,UPPER(RTRIM(LTRIM(p.pesNome))) nome
+                          ,p.unidadeId
+                          ,u.undSiglaCompleta unidade
+                          ,sp.situacaoPessoaId
+                          ,sp.spsDescricao situacaoPessoa
+                          ,tv.tipoVinculoId
+                          ,tv.tvnDescricao tipoVinculo
+                          ,p.CargaHoraria
+                    FROM [dbo].[Pessoa] p
+                        LEFT OUTER JOIN [dbo].[PessoaAlocacaoTemporaria] pat ON p.pessoaId = pat.pessoaId AND (dataFim IS NULL OR dataFim > GETDATE())
+                        INNER JOIN [dbo].[VW_UnidadeSiglaCompleta] u ON u.unidadeId = ISNULL(pat.unidadeId, p.unidadeId)   
+					    INNER JOIN [dbo].[situacaoPessoa] sp ON sp.situacaoPessoaId = p.situacaoPessoaId
+					    INNER JOIN [dbo].[TipoVinculo] tv ON tv.tipoVinculoId = p.tipoVinculoId
+                    WHERE   p.situacaoPessoaId = 1
+                    ORDER BY nome ASC, unidadeId DESC, CargaHoraria ASC
+                ";
+            }
+        }
+        
 
     }
 }

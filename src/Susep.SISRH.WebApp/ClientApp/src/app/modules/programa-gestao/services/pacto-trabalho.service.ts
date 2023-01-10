@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DataService } from '../../../shared/services/data.service';
-import { ConfigurationService } from '../../../shared/services/configuration.service';
-import { ApplicationResult } from '../../../shared/models/application-result.model';
-import { IDadosPaginados } from '../../../shared/models/pagination.model';
-import { IPactoTrabalho, IPactoTrabalhoAtividade, IPactoTrabalhoHistorico, IPactoTrabalhoSolicitacao, IAvaliacaoAtividade, IJustificarEstouroPrazoAtividade, IPactoTrabalhoAtividadeAssunto, IPactoTrabalhoAssuntosParaAssociar, IPactoTrabalhoEmpresa } from '../models/pacto-trabalho.model';
-import { IPactoTrabalhoPesquisa } from '../models/pacto-trabalho.pesquisa.model';
 import { Guid } from 'src/app/shared/helpers/guid.helper';
+import { ApplicationResult } from '../../../shared/models/application-result.model';
+import { IDominio } from '../../../shared/models/dominio.model';
+import { IDadosPaginados } from '../../../shared/models/pagination.model';
+import { ConfigurationService } from '../../../shared/services/configuration.service';
+import { DataService } from '../../../shared/services/data.service';
+import { IAvaliacaoAtividade, IJustificarEstouroPrazoAtividade, IPactoTrabalho, IPactoTrabalhoAssuntosParaAssociar, IPactoTrabalhoAtividade, IPactoTrabalhoEmpresa, IPactoTrabalhoHistorico, IPactoTrabalhoInformacao, IPactoTrabalhoSolicitacao } from '../models/pacto-trabalho.model';
+import { IPactoTrabalhoPesquisa } from '../models/pacto-trabalho.pesquisa.model';
+
 
 @Injectable()
 export class PactoTrabalhoDataService {
@@ -75,6 +76,15 @@ export class PactoTrabalhoDataService {
   AlterarPeriodo(dados: IPactoTrabalho): Observable<ApplicationResult<string>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}pactotrabalho/${dados.pactoTrabalhoId}/periodo`;
+
+    return this.service.put(url, dados).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  AlterarFrequenciaTeletrabalhoParcial(dados: IPactoTrabalho): Observable<ApplicationResult<string>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${dados.pactoTrabalhoId}/frequenciaTeletrabalhoParcial`;
 
     return this.service.put(url, dados).pipe(map((response: any) => {
       return response;
@@ -332,6 +342,52 @@ export class PactoTrabalhoDataService {
     return of({
       retorno: this.empresas.find(e => e.pactoTrabalhoEmpresaId === id)
     });
+  }
+
+  ObterDeclaracoesNaoRealizadas(pactoTrabalhoId: string): Observable<ApplicationResult<IDominio[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${pactoTrabalhoId}/declaracao`;
+
+    return this.service.get(url).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  RegistrarVisualizacaoDeclaracao(pactoTrabalhoId: string, declaracaoId: number): Observable<ApplicationResult<IPactoTrabalhoAtividade[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${pactoTrabalhoId}/declaracao/${declaracaoId}/visualizada`;
+
+    return this.service.post(url, {}).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  RegistrarRealizacaoDeclaracao(pactoTrabalhoId: string, declaracaoId: number): Observable<ApplicationResult<IPactoTrabalhoAtividade[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${pactoTrabalhoId}/declaracao/${declaracaoId}/realizada`;
+
+    return this.service.put(url, {}).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+
+  ObterInformacoes(pactoTrabalhoId: string): Observable<ApplicationResult<IPactoTrabalhoInformacao[]>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${pactoTrabalhoId}/informacao`;
+
+    return this.service.get(url).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  RegistrarInformacao(pactoTrabalhoId: string, dados: IPactoTrabalhoInformacao): Observable<ApplicationResult<IPactoTrabalhoInformacao>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}pactotrabalho/${pactoTrabalhoId}/informacao`;
+
+    return this.service.post(url, dados).pipe(map((response: any) => {
+      return response;
+    }));
   }
 
 }

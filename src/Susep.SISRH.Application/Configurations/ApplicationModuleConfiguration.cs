@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Susep.SISRH.Application.Queries.Abstractions;
 using Susep.SISRH.Application.Queries.Concrete;
+using Susep.SISRH.Domain.AggregatesModel.AgendamentoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.AssuntoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.CatalogoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.ObjetoAggregate;
@@ -66,6 +67,7 @@ namespace Susep.SISRH.Application.Configurations
             builder.RegisterType<PlanoTrabalhoRepository>().As<IPlanoTrabalhoRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AssuntoRepository>().As<IAssuntoRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ObjetoRepository>().As<IObjetoRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<AgendamentoRepository>().As<IAgendamentoRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<EmailHelper>().As<IEmailHelper>().InstancePerLifetimeScope();
 

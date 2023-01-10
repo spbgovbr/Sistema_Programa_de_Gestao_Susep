@@ -1,6 +1,5 @@
 ﻿using Susep.SISRH.Application.Requests;
 using Susep.SISRH.Application.ViewModels;
-using SUSEP.Framework.Messages.Concrete.Request;
 using SUSEP.Framework.Result.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -16,8 +15,10 @@ namespace Susep.SISRH.Application.Queries.Abstractions
         Task<IApplicationResult<IEnumerable<PactoTrabalhoViewModel>>> ObterPorPlanoAsync(Guid pactoTrabalhoId);
         Task<IApplicationResult<IEnumerable<PactoTrabalhoHistoricoViewModel>>> ObterHistoricoPorPactoAsync(Guid pactoTrabalhoId);
         Task<IApplicationResult<IEnumerable<PactoTrabalhoAtividadeViewModel>>> ObterAtividadesPactoAsync(Guid pactoTrabalhoId);
-        Task<IApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>> ObteSolicitacoesPactoAsync(Guid pactoTrabalhoId);
+        Task<IApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>> ObterSolicitacoesPactoAsync(Guid pactoTrabalhoId);
+        Task<IApplicationResult<IEnumerable<PactoTrabalhoInformacaoViewModel>>> ObterInformacoesPactoAsync(Guid pactoTrabalhoId);
         Task<IApplicationResult<PactoTrabalhoAssuntosParaAssociarViewModel>> ObterAssuntosParaAssociarAsync(Guid pactoTrabalhoId);
-        
+        Task<IApplicationResult<IEnumerable<DominioViewModel>>> ObterDeclaracoesNaoRealizadasAsync(Guid pactoTrabalhoId);
+
     }
 }

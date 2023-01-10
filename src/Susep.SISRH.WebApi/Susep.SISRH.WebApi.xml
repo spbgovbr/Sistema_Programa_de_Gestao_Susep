@@ -181,6 +181,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.DominioController.GetTipoFrequenciaTeletrabalhoParcial">
+            <summary>
+            Obtém os tipos de frequencia no teletrabalho parcial
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Susep.SISRH.WebApi.Controllers.ItemCatalogoController">
             <summary>
             Operações com os itens de catálogo
@@ -344,6 +350,14 @@
             <returns></returns>
         </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutPactoTrabalhoDatas(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarPeriodoPactoTrabalhoCommand)">
+            <summary>
+            Altera os dados de um pacto de trabalho do corretor logado
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutPactoTrabalhoFrequenciaTeletrabalhoParcial(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.AlterarFrequenciaTeletrabalhoParcialPactoTrabalhoCommand)">
             <summary>
             Altera os dados de um pacto de trabalho do corretor logado
             </summary>
@@ -540,11 +554,49 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetInformacoesById(System.Guid)">
+            <summary>
+            Obtém as informações de um pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostAdicionarInformacaoPacto(System.Guid,Susep.SISRH.Application.Commands.PactoTrabalho.CadastrarPactoTrabalhoInformacaoCommand)">
+            <summary>
+            Adiciona uma informação no pacto de trabalho
+            </summary>
+            <param name="pactoTrabalhoid"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetAssuntosParaAssociar(System.Guid)">
             <summary>
             Obtém os assuntos para associar às atividades de um PactoTrabalho
             </summary>
             <param name="pactoTrabalhoid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.GetDeclaracoesNaoRealizadasAsync(System.Guid)">
+            <summary>
+            Obtém as declarações a serem feitas pelos servidores no pacto de trabalho, mas ainda não realizada nesse pacto
+            </summary>
+            <param name="pactoTrabalhoId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PostDeclaracaoExibidaAsync(System.Guid,System.Int32)">
+            <summary>
+            Informa que a declaração foi visualizada pelo servidor
+            </summary>
+            <param name="pactoTrabalhoId"></param>
+            <param name="declaracaoId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PactoTrabalhoController.PutDeclaracaoRealizadaAsync(System.Guid,System.Int32)">
+            <summary>
+            Informa que a declaração foi realizada pelo servidor
+            </summary>
+            <param name="pactoTrabalhoId"></param>
+            <param name="declaracaoId"></param>
             <returns></returns>
         </member>
         <member name="T:Susep.SISRH.WebApi.Controllers.PessoaController">
@@ -560,9 +612,23 @@
             <param name="pessoaQuery"></param>    
             <param name="estruturaOrganizacionalQuery"></param>     
         </member>
-        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetDashboard(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetDashboardPlanos(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
             <summary>
-            Obtém o dashboad de acordo com a pessoa
+            Obtém os planos de trabalho para o dashboard da pessoa
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetDashboardPactos(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém os pactos de trabalho para o dashboard da pessoa
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetDashboardPendencias(Susep.SISRH.Application.Requests.UsuarioLogadoRequest)">
+            <summary>
+            Obtém as pendências para o dashboard da pessoa
             </summary>
             <param name="request"></param>
             <returns></returns>
@@ -601,6 +667,27 @@
             Obtém as pessoas que possuem pelo menos um pacto de trabalho cadastrado para preenchimento de combos
             </summary>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.GetAgendamentosAsync(Susep.SISRH.Application.ViewModels.AgendamentoFiltroRequest)">
+            <summary>
+            Obtém os agendamentos das pessoas no período informado
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.PostAgendamento(Susep.SISRH.Application.Commands.Agendamento.CadastrarAgendamentoCommand)">
+            <summary>
+            Cadastra um agendamento presencial
+            </summary>
+            <param name="command">Dados do item de catálogo a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PessoaController.DeleteItemCatalogo(System.Guid)">
+            <summary>
+            Exclui um item de catálogo do corretor logado
+            </summary>
+            <param name="agendamentoId"></param>
             <returns></returns>
         </member>
         <member name="T:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController">
@@ -662,6 +749,13 @@
             </summary>
             <param name="planoTrabalhoid"></param>
             <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.DeletePlanoTrabalho(System.Guid)">
+            <summary>
+            Exclui os dados de um plano de trabalho 
+            </summary>
+            <param name="planoTrabalhoid"></param>
             <returns></returns>
         </member>
         <member name="M:Susep.SISRH.WebApi.Controllers.PlanoTrabalhoController.GetPactosById(System.Guid,Susep.SISRH.Application.Requests.PlanoTrabalhoRequest)">
@@ -960,6 +1054,13 @@
             Obtém as pessoas de uma unidade
             </summary>
             <param name="unidadeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Susep.SISRH.WebApi.Controllers.UnidadeController.GetEstruturaAtual">
+            <summary>
+            Obtém todas as unidades ativas para preenchimento de combos
+            </summary>
+            <param name="request"></param>
             <returns></returns>
         </member>
         <member name="T:Susep.SISRH.WebApi.Program">

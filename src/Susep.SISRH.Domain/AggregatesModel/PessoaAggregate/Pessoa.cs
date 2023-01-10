@@ -1,4 +1,5 @@
-﻿using Susep.SISRH.Domain.AggregatesModel.FeriadoAggregate;
+﻿using Susep.SISRH.Domain.AggregatesModel.AgendamentoAggregate;
+using Susep.SISRH.Domain.AggregatesModel.FeriadoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.PlanoTrabalhoAggregate;
 using Susep.SISRH.Domain.AggregatesModel.UnidadeAggregate;
@@ -36,6 +37,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PessoaAggregate
         public IEnumerable<PessoaModalidadeExecucao> ModalidadesExecucao { get; private set; }
         public IEnumerable<PactoTrabalho> PactosTrabalho { get; private set; }
         public List<PlanoTrabalhoAtividadeCandidato> Candidaturas { get; private set; }
+        public List<Agendamento> Agendamentos { get; private set; }
 
     }
 }

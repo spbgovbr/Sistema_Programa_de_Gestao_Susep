@@ -55,7 +55,7 @@ namespace Susep.SISRH.Application.Commands.PactoTrabalho
                 var pacto = await PactoTrabalhoRepository.ObterAsync(request.PactoTrabalhoId);
 
                 //Altera a atividade
-                pacto.AvaliarAtividade(request.PactoTrabalhoAtividadeId, request.Nota, request.Justificativa);
+                pacto.AvaliarAtividade(request.PactoTrabalhoAtividadeId, request.Nota, request.Justificativa, request.UsuarioLogadoId.ToString());
 
                 //Altera o pacto de trabalho no banco de dados
                 PactoTrabalhoRepository.Atualizar(pacto);

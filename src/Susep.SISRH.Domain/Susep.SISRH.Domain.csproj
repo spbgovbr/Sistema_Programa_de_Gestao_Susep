@@ -4,9 +4,19 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Events\**" />
+    <Compile Remove="Mappers\**" />
+    <EmbeddedResource Remove="Events\**" />
+    <EmbeddedResource Remove="Mappers\**" />
+    <None Remove="Events\**" />
+    <None Remove="Mappers\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <!--
     <PackageReference Include="SUSEP.Framework.Result" Version="3.3.2" />
     <PackageReference Include="SUSEP.Framework.SeedWorks" Version="3.7.3" />

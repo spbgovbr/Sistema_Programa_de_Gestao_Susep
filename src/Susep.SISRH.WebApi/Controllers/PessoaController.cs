@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Susep.SISRH.Application.Commands.Agendamento;
+using Susep.SISRH.Application.Commands.ItemCatalogo;
 using Susep.SISRH.Application.Queries.Abstractions;
 using Susep.SISRH.Application.Queries.Concrete;
 using Susep.SISRH.Application.Requests;
@@ -43,13 +45,31 @@ namespace Susep.SISRH.WebApi.Controllers
 
 
         /// <summary>
-        /// Obtém o dashboad de acordo com a pessoa
+        /// Obtém os planos de trabalho para o dashboard da pessoa
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("dashboard"), Produces("application/json", Type = typeof(IApplicationResult<DashboardViewModel>))]
-        public async Task<IActionResult> GetDashboard([FromQuery] UsuarioLogadoRequest request)
-            => await PessoaQuery.ObterDashboardAsync(request);
+        [HttpGet("dashboardPlanos"), Produces("application/json", Type = typeof(IApplicationResult<DashboardViewModel>))]
+        public async Task<IActionResult> GetDashboardPlanos([FromQuery] UsuarioLogadoRequest request)
+            => await PessoaQuery.ObterDashboardPlanosAsync(request);
+
+        /// <summary>
+        /// Obtém os pactos de trabalho para o dashboard da pessoa
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("dashboardPactos"), Produces("application/json", Type = typeof(IApplicationResult<DashboardViewModel>))]
+        public async Task<IActionResult> GetDashboardPactos([FromQuery] UsuarioLogadoRequest request)
+            => await PessoaQuery.ObterDashboardPactosAsync(request);
+
+        /// <summary>
+        /// Obtém as pendências para o dashboard da pessoa
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("dashboardPendencias"), Produces("application/json", Type = typeof(IApplicationResult<DashboardViewModel>))]
+        public async Task<IActionResult> GetDashboardPendencias([FromQuery] UsuarioLogadoRequest request)
+            => await PessoaQuery.ObterDashboardPendenciasAsync(request);
 
         /// <summary>
         /// Obtém as pessoas cadastradas
@@ -98,5 +118,46 @@ namespace Susep.SISRH.WebApi.Controllers
         [HttpGet("compactotrabalho"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<DadosComboViewModel>>))]
         public async Task<IActionResult> GetComPlanoTrabalhoDadosCombo([FromRoute]UsuarioLogadoRequest request)
             => await EstruturaOrganizacionalQuery.ObterPessoasComPactoTrabalhoDadosComboAsync(request);
+
+
+
+        #region Agendamentos
+
+        /// <summary>
+        /// Obtém os agendamentos das pessoas no período informado
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("agendamentos"), Produces("application/json", Type = typeof(IApplicationResult<IEnumerable<AgendamentoPresencialViewModel>>))]
+        public async Task<IActionResult> GetAgendamentosAsync([FromQuery] AgendamentoFiltroRequest request)
+            => await EstruturaOrganizacionalQuery.ObterAgendamentosAsync(request);
+
+        /// <summary>
+        /// Cadastra um agendamento presencial
+        /// </summary>
+        /// <param name="command">Dados do item de catálogo a ser cadastrado</param>
+        /// <returns></returns>
+        [HttpPost("agendamentos"), Produces("application/json", Type = typeof(IApplicationResult<Guid>))]
+        public async Task<IActionResult> PostAgendamento([FromBody] CadastrarAgendamentoCommand command)
+            => await Mediator.Send(command);
+
+
+        /// <summary>
+        /// Exclui um item de catálogo do corretor logado
+        /// </summary>
+        /// <param name="agendamentoId"></param>
+        /// <returns></returns>
+        [HttpDelete("agendamentos/{agendamentoId}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
+        public async Task<IActionResult> DeleteItemCatalogo([FromRoute] Guid agendamentoId)
+        {
+            var command = new ExcluirAgendamentoCommand()
+            {
+                AgendamentoId = agendamentoId
+            };
+            return await Mediator.Send(command);
+        }
+
+        #endregion
+
     }
 }

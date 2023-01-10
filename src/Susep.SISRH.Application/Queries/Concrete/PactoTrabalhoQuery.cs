@@ -1,23 +1,18 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using SUSEP.Framework.Messages.Concrete.Request;
+using Susep.SISRH.Application.Queries.Abstractions;
+using Susep.SISRH.Application.Queries.RawSql;
+using Susep.SISRH.Application.Requests;
+using Susep.SISRH.Application.ViewModels;
+using Susep.SISRH.Domain.Enums;
 using SUSEP.Framework.Result.Abstractions;
 using SUSEP.Framework.Result.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Data.SqlTypes;
-using System.Transactions;
-using Susep.SISRH.Application.Queries.Abstractions;
-using Susep.SISRH.Application.ViewModels;
-using Susep.SISRH.Application.Queries.RawSql;
-using Susep.SISRH.Application.Requests;
-using Susep.SISRH.Domain.Enums;
 
 namespace Susep.SISRH.Application.Queries.Concrete
 {
@@ -66,8 +61,16 @@ namespace Susep.SISRH.Application.Queries.Concrete
             {
                 connection.Open();
 
-                var dados = await connection.QueryFirstOrDefaultAsync<PactoTrabalhoViewModel>(PactoTrabalhoRawSqls.ObterAtual, parameters);
-                result.Result = dados;
+                var dados = await connection.QueryAsync<PactoTrabalhoViewModel>(PactoTrabalhoRawSqls.ObterAtual, parameters);
+                result.Result = dados.FirstOrDefault();
+
+                //Ajuste para trazer o mais recente em execução
+                if (dados.Count() >= 1)
+                {
+                    var emExecucao = dados.Where(p => p.SituacaoId == (int)SituacaoPactoTrabalhoEnum.EmExecucao);
+                    if (emExecucao.Any())
+                        result.Result = emExecucao.First();
+                }
 
                 connection.Close();
             }
@@ -128,6 +131,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
             parameters.Add("@situacaoId", request.SituacaoId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@dataInicio", request.DataInicio, DbType.Date, ParameterDirection.Input);
             parameters.Add("@dataFim", request.DataFim, DbType.Date, ParameterDirection.Input);
+            parameters.Add("@unidadeId", request.UnidadeId, DbType.Int64, ParameterDirection.Input);
 
             parameters.Add("@offset", (request.Page - 1) * request.PageSize, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@pageSize", request.PageSize, DbType.Int32, ParameterDirection.Input);            
@@ -177,7 +181,7 @@ namespace Susep.SISRH.Application.Queries.Concrete
             return result;
         }
 
-        public async Task<IApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>> ObteSolicitacoesPactoAsync(Guid pactoTrabalhoId)
+        public async Task<IApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>> ObterSolicitacoesPactoAsync(Guid pactoTrabalhoId)
         {
             var result = new ApplicationResult<IEnumerable<PactoTrabalhoSolicitacaoViewModel>>();
 
@@ -221,5 +225,44 @@ namespace Susep.SISRH.Application.Queries.Concrete
             return result;
         }
 
+        public async Task<IApplicationResult<IEnumerable<DominioViewModel>>> ObterDeclaracoesNaoRealizadasAsync(Guid pactoTrabalhoId)
+        {
+            var result = new ApplicationResult<IEnumerable<DominioViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pactoTrabalhoId", pactoTrabalhoId, DbType.Guid, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                var dados = await connection.QueryAsync<DominioViewModel>(PactoTrabalhoRawSqls.ObterDeclaracoes, parameters);
+                result.Result = dados;
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
+        public async Task<IApplicationResult<IEnumerable<PactoTrabalhoInformacaoViewModel>>> ObterInformacoesPactoAsync(Guid pactoTrabalhoId)
+        {
+            var result = new ApplicationResult<IEnumerable<PactoTrabalhoInformacaoViewModel>>();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@pactoTrabalhoId", pactoTrabalhoId, DbType.Guid, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                var dados = await connection.QueryAsync<PactoTrabalhoInformacaoViewModel>(PactoTrabalhoRawSqls.ObterInformacoes, parameters);
+                result.Result = dados;
+
+                connection.Close();
+            }
+
+            return result;
+        }
     }
 }

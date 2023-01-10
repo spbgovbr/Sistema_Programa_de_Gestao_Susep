@@ -1,6 +1,7 @@
 # SUSEP - Docker
 
-**Versão atual:** 1.7 (com correções no código fonte)
+* **Versão atual:** 1.8
+* Versão 1.7: https://github.com/SrMouraSilva/Sistema_Programa_de_Gestao_Susep/tree/v1.7
 
 É possível subir a aplicação por meio do [Docker](https://www.docker.com/). Dentre as vantagens estão:
 1. A ausência da necessidade de uma configuração do IIS;
@@ -35,12 +36,12 @@ cd Sistema_Programa_de_Gestao_Susep
 
 Por fim, execute o seguinte comando para subir a aplicação
 ```bash
-docker-compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml up -d
 ```
 E o seguinte comando para subir o banco de dados de homologação
 ```bash
 # Obs: Execute DEPOIS do docker/docker-compose.yml
-docker-compose -f docker/docker-compose.sqlserver-homologacao.yml up -d
+docker compose -f docker/docker-compose.sqlserver-homologacao.yml up -d
 ```
 
 Pronto, a aplicação está acessível no endereço http://localhost. Porém você não irá conseguir se logar se não configurar o LDAP (veja abaixo) se não inserir as pessoas na tabela de pessoas.
@@ -49,15 +50,15 @@ Pronto, a aplicação está acessível no endereço http://localhost. Porém voc
 
 Após alterar uma configuração, execute
 ```bash
-docker-compose -f docker/docker-compose.yml down
-docker-compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml down
+docker compose -f docker/docker-compose.yml up -d
 ```
 
 #### Verificando se deu certo
 
 Execute o seguinte comando
 ```bash
-docker-compose -f docker/docker-compose.yml ps -a
+docker compose -f docker/docker-compose.yml ps -a
 ```
 Os 4 containers devem estar ativos.
 ```
@@ -72,51 +73,55 @@ docker_web-app_1       dotnet Susep.SISRH.WebApp.dll    Up
 Caso nenhum dos três relacionados ao dotnet subirem (`web-app`, `web-api`, `gateway`), provavelmente o usuário **dos containers** não tem permissão o suficiente para subir o processo e utilizar a porta 80. Esse erro foi detectado no CentOs, mas não ocorre no Debian e nem no Ubuntu. A forma que sabemos até o momento de "contornar" esse problema é dizer que o usuário root que irá rodar esse processo. Altere o docker-compose adicionando o seguinte:
 ```diff
 web-api:
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:v1.8
 +    user: 0:0
 ...
 api-gateway:
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:v1.8
 +    user: 0:0
 ...
 web-app:
-    image: ghcr.io/srmourasilva/sistema_programa_de_gestao_susep/sgd:latest
+    image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:v1.8
 +    user: 0:0
 ```
 Atente-se que o yml é sensível a identação e que foi utilizado espaço como identação.
 
+### Variáveis de ambiente
+
+As variáveis de ambiente podem ser alteradas nos arquivos `docker/api-gateway.env` e `docker/web-api.env` para refletir as configurações específicas de cada orgão.
+
 #### Configurar Servidor de email
 
-Acesse o arquivo `docker/docker-compose.yml` e edite as seguintes linhas conforme sua necessidade
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas conforme sua necessidade:
 ```yaml
-      # Configurações de e-mail - Exemplo: Ministério da Economia
-      - emailOptions__EmailRemetente=no-reply@me.gov.br
-      - emailOptions__NomeRemetente=Programa de Gestão - ME
-      - emailOptions__SmtpServer=smtp.me.gov.br
-      - emailOptions__Port=25
+# Configurações de e-mail - Exemplo: Ministério da Economia
+emailOptions__EmailRemetente=no-reply@me.gov.br
+emailOptions__NomeRemetente=Programa de Gestão - ME
+emailOptions__SmtpServer=smtp.me.gov.br
+emailOptions__Port=25
 ```
 
 #### Configurar Servidor ldap
 
-Acesse o arquivo `docker/docker-compose.yml` e edite as seguintes linhas
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas conforme sua necessidade:
 ```yml
-      # LDAP
-      # -> URL do Servidor LDAP
-      - ldapOptions__Configurations__0__Url=
-      # -> Porta do Servidor LDAP
-      - ldapOptions__Configurations__0__Port=389
-      # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
-      - ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
-      # -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
-      - ldapOptions__Configurations__0__BindPassword=
-      # -> DC que será utilizado para chegar à base de usuários no LDAP
-      - ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
-      # -> Consulta a ser aplicada no LDAP para encontrar os usuários
-      - ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
-      # -> Campo do LDAP em que será encontrado o CPF do usuário
-      - ldapOptions__Configurations__0__CpfAttributeFilter=
-      # -> Campo do LDAP em que será encontrado o e-mail do usuário
-      - ldapOptions__Configurations__0__EmailAttributeFilter=
+# LDAP
+# -> URL do Servidor LDAP
+ldapOptions__Configurations__0__Url=
+# -> Porta do Servidor LDAP
+ldapOptions__Configurations__0__Port=389
+# -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
+ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
+# -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
+ldapOptions__Configurations__0__BindPassword=
+# -> DC que será utilizado para chegar à base de usuários no LDAP
+ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
+# -> Consulta a ser aplicada no LDAP para encontrar os usuários
+ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
+# -> Campo do LDAP em que será encontrado o CPF do usuário
+ldapOptions__Configurations__0__CpfAttributeFilter=
+# -> Campo do LDAP em que será encontrado o e-mail do usuário
+ldapOptions__Configurations__0__EmailAttributeFilter=
 ```
 
 **Obs:** Note que é possível definir mais de uma configuração. Basta copiar as linhas e trocar `__n__` por `__n+1__` nas linhas novas (ex: `__0__` -> `__1__`).
@@ -131,10 +136,10 @@ Acesse o arquivo `docker/docker-compose.yml` e edite as seguintes linhas
 #### Configurar Acesso ao Banco de Dados
 
 Caso você queira utilizar um servidor de banco de dados SQL Server com a devida licença, será necessário alterar a configuração do banco.
-Acesse o arquivo ``docker/docker-compose.yml` e edite as seguintes linhas:
+Acesse o arquivo `docker/web-api.env` e edite as seguintes linhas:
 ```yaml
-      # Configurações de banco de dados
-      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
+# Configurações de banco de dados
+ConnectionStrings__DefaultConnection=Server=db,1433;Database=master;User Id=sa;Password=P1ssw@rd;
 ```
 
 #### Configurar Script de inserção de dados no Banco de Dados

@@ -11,7 +11,7 @@ import { ApplicationStateService } from '../../../shared/services/application.st
 })
 export class DashboardComponent implements OnInit {
 
-  dashboard: IDashboard;
+  dashboard: IDashboard = {};
   PerfilEnum = PerfilEnum;
   PlanoTrabalhoSituacaoEnum = PlanoTrabalhoSituacaoEnum;
 
@@ -24,9 +24,21 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pessoaDataService.ObterDashboard().subscribe(
+    this.pessoaDataService.ObterDashboardPlanos().subscribe(
       appResult => {
-        this.dashboard = appResult.retorno;
+        this.dashboard.planosTrabalho = appResult.retorno;
+      }
+    );
+
+    this.pessoaDataService.ObterDashboardPactos().subscribe(
+      appResult => {
+        this.dashboard.pactosTrabalho = appResult.retorno;
+      }
+    );
+
+    this.pessoaDataService.ObterDashboardPendencias().subscribe(
+      appResult => {
+        this.dashboard.solicitacoes = appResult.retorno;
       }
     );
 

@@ -20,6 +20,7 @@ import { PessoaDataService } from '../../../../pessoa/services/pessoa.service';
 import { DataService } from '../../../../../shared/services/data.service';
 import { PlanoTrabalhoDataService } from '../../../services/plano-trabalho.service';
 import { IPlanoTrabalhoObjeto } from '../../../models/plano-trabalho.model';
+import { IDominio } from '../../../../../shared/models/dominio.model';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
   @ViewChild('modalAceiteComTermoAceite', { static: true }) modalAceiteComTermoAceite;
   @ViewChild('modalFluxo', { static: true }) modalFluxo;
   @ViewChild('modalConcluirExecucao', { static: true }) modalConcluirExecucao;
-  @ViewChild('modalReabrirExecucao', { static: true }) modalReabrirExecucao;  
+  @ViewChild('modalReabrirExecucao', { static: true }) modalReabrirExecucao;
 
   horaInicio = 0;
   horaFim = 8;
@@ -51,7 +52,7 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
   unidade = new BehaviorSubject<number>(null);
   servidor = new BehaviorSubject<number>(null);
 
-  atividades = new BehaviorSubject<IPactoTrabalhoAtividade[]>(null);  
+  atividades = new BehaviorSubject<IPactoTrabalhoAtividade[]>(null);
   itensCatalogo = new BehaviorSubject<IItemCatalogo[]>(null);
 
   atividadesNaoAdicionadas = false;
@@ -130,14 +131,14 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
         this.servidor.next(this.dadosPacto.value.pessoaId);
 
         this.periodoExecucao = this.dataService.formatAsDate(new Date()) >= this.dataService.formatAsDate(this.dadosPacto.value.dataInicio);
-        
-        this.carregarItensCatalogo();        
+
+        this.carregarItensCatalogo();
 
         this.pessoaDataService.ObterFeriados(this.dadosPacto.value.pessoaId, this.dadosPacto.value.dataInicio, this.dadosPacto.value.dataFim).subscribe(
           result => {
             this.feriados = result.retorno;
             this.carregarEventos();
-          });        
+          });
 
         this.alterarAba('atividades');
         this.definirClasseTextoSituacao();
@@ -153,9 +154,9 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
 
       this.usuarioPodeAceitar =
         (this.perfilUsuario.pessoaId === this.dadosPacto.value.pessoaId &&
-         this.perfilUsuario.pessoaId.toString() !== this.dadosPacto.value.responsavelEnvioAceite.toString()) ||
+          this.perfilUsuario.pessoaId.toString() !== this.dadosPacto.value.responsavelEnvioAceite.toString()) ||
         (this.perfilUsuario.pessoaId !== this.dadosPacto.value.pessoaId &&
-         this.dadosPacto.value.pessoaId.toString() === this.dadosPacto.value.responsavelEnvioAceite.toString());
+          this.dadosPacto.value.pessoaId.toString() === this.dadosPacto.value.responsavelEnvioAceite.toString());
     }
 
     this.usuarioPodeReabrir = this.dadosPacto.value.pessoaId !== this.perfilUsuario.pessoaId;
@@ -177,8 +178,8 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
   }
 
   carregarEventos() {
-    if (this.atividades.value && this.feriados) {      
-      
+    if (this.atividades.value && this.feriados) {
+
       this.tempoPrevistoTotal = this.atividades.value.reduce((a, b) => a + b.tempoPrevistoTotal, 0);
       this.saldoHoras = this.dadosPacto.value.tempoTotalDisponivel - this.tempoPrevistoTotal;
 
@@ -190,7 +191,7 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
 
       //Cria os eventos 
       this.criarEventosPorDia(datas);
-      this.criarEventosPorTarefa(datas);      
+      this.criarEventosPorTarefa(datas);
 
       //Adiciona os eventos ao calendário
       const calendarApi = this.calendarComponent.getApi();
@@ -215,11 +216,11 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
       datas.forEach(d => {
         this.criarEvento(d, e.itemCatalogo, new Date(d.date), d.ultimoHorarioOcupado, new Date(d.date), d.ultimoHorarioOcupado + e.tempoPrevistoPorItem, cor);
         e.adicionadoCalendario = true;
-        d.ultimoHorarioOcupado += e.tempoPrevistoPorItem;        
-      })  
+        d.ultimoHorarioOcupado += e.tempoPrevistoPorItem;
+      })
     });
 
-    this.verificarNaoAdicionados(eventosPorDia);    
+    this.verificarNaoAdicionados(eventosPorDia);
   }
 
   criarEventosPorTarefa(datas: IPactoTrabalhoDataCalendario[]) {
@@ -229,7 +230,7 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
 
   criarEventosPorDiaPorTipo(datas: IPactoTrabalhoDataCalendario[], tipo: number) {
     //Prepara os eventos por tarefa pós definida
-    const eventosPorTarefa = this.obterEventosPorTipo(tipo);    
+    const eventosPorTarefa = this.obterEventosPorTipo(tipo);
     eventosPorTarefa.forEach(e => {
       let tempoAlocar = e.tempoPrevistoPorItem;
 
@@ -241,7 +242,7 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
         const tempoDisponivelDia = this.horaFim - d.ultimoHorarioOcupado;
         if (tempoDisponivelDia > 0) {
           const tempoAlocado = tempoAlocar > tempoDisponivelDia ? tempoDisponivelDia : tempoAlocar;
-          
+
           this.criarEvento(d, e.itemCatalogo, new Date(d.date), d.ultimoHorarioOcupado, new Date(d.date), d.ultimoHorarioOcupado + tempoAlocado, cor);
           e.adicionadoCalendario = true;
           d.ultimoHorarioOcupado += tempoAlocado;
@@ -259,12 +260,12 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
       this.atividades.value.filter(a => a.pactoTrabalhoAtividadeId === na.pactoTrabalhoAtividadeId)
         .forEach(ana => ana.adicionadoCalendario = false)
     })
-    
+
   }
 
   indexCor = 0;
   obterCor(): string {
-    const cores = ['#CCD4BF', '#E7CBA9', '#EEBAB2', '#F5F3E7', '#F5E2E4', '#B8A390', '#E6D1D2', '#DAD5D6', '#B2B5B9', '#8FA2A6', '#CAE7E3', '#B2B2B2', '#EEB8C5', '#DCDBD9', '#FEC7BC', '#C2D9E1', '#D29F8C', '#D9D3D2', '#81B1CC','#FFD9CF'];
+    const cores = ['#CCD4BF', '#E7CBA9', '#EEBAB2', '#F5F3E7', '#F5E2E4', '#B8A390', '#E6D1D2', '#DAD5D6', '#B2B5B9', '#8FA2A6', '#CAE7E3', '#B2B2B2', '#EEB8C5', '#DCDBD9', '#FEC7BC', '#C2D9E1', '#D29F8C', '#D9D3D2', '#81B1CC', '#FFD9CF'];
 
     this.indexCor++;
     if (this.indexCor > cores.length) {
@@ -298,14 +299,14 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
   getWorkingDays(startDate: any, endDate: any) {
     const days: IPactoTrabalhoDataCalendario[] = [];
     const curDate = new Date(startDate);
-    
+
     while (curDate <= new Date(endDate)) {
       const dayOfWeek = curDate.getDay();
       const feriado = this.feriados.filter(f => curDate.getTime() === new Date(f).getTime()).length > 0;
       const fimSemana = (dayOfWeek === 6) || (dayOfWeek === 0);
-      
+
       if (!feriado && !fimSemana)
-        days.push({ date: new Date(curDate), ultimoHorarioOcupado: this.horaInicio, events: []});
+        days.push({ date: new Date(curDate), ultimoHorarioOcupado: this.horaInicio, events: [] });
       curDate.setDate(curDate.getDate() + 1);
     }
     return days;
@@ -443,8 +444,6 @@ export class PactoTrabalhoDetalhesComponent implements OnInit {
       }
     );
   }
-
-  
 
   fecharModal() {
     this.modalService.dismissAll();

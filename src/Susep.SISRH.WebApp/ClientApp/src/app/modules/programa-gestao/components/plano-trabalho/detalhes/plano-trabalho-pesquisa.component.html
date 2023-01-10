@@ -1,0 +1,92 @@
+<section>
+  <div class="container">
+    <header class="content-header pb-5 pb-sm-8 pt-3">
+      <h1 class="content-title">Programa de gestão</h1>
+      <p>Preencha os campos do formulário para filtrar os programas de gestão</p>
+    </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <fieldset>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <field-validation [classList]="['br-select', 'is-medium']" label="Unidade">
+                  <select id="unidadeId" name="unidadeId" formControlName="unidadeId" placeholder="Mostrar tudo">
+                    <option value="null">Selecione uma unidade</option>
+                    <option class="select-items" *ngFor="let item of unidades" [value]="item.id">{{ item.descricao }}</option>
+                  </select>
+                </field-validation>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <field-validation [classList]="['br-select', 'is-medium']" label="Situação">
+                  <select id="situacaoId" name="situacaoId" formControlName="situacaoId" placeholder="Mostrar tudo">
+                    <option value="null">Selecione uma situação</option>
+                    <option class="select-items" *ngFor="let item of situacoes" [value]="item.id">{{ item.descricao }}</option>
+                  </select>
+                </field-validation>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <field-validation [classList]="['br-input']" label="Data de início">
+                  <custom-datepicker formControlName="dataInicio" placeholder="Selecione uma data"></custom-datepicker>
+                </field-validation>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <field-validation [classList]="['br-input']" label="Data de fim">
+                  <custom-datepicker formControlName="dataFim" placeholder="Selecione uma data"></custom-datepicker>
+                </field-validation>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="actions justify-content-start">
+          <button class="br-button is-primary ml-2" type="submit"><i class="fa fa-search"></i> Filtrar</button>
+          <secure-input [perfis]="[PerfilEnum.CoordenadorGeral, PerfilEnum.ChefeUnidade]">
+            <button class="br-button is-secondary" type="button" [routerLink]="['/programagestao/cadastro']">Cadastrar programa de gestão</button>
+          </secure-input>
+        </div>
+      </div>
+    </form>
+    <div>
+      <div class="table-responsive">
+        <div class="br-table">
+          <div class="table">
+            <table class="full-width-table table-striped table-style mat-elevation-z8">
+              <thead>
+                <tr>
+                  <th>Unidade</th>
+                  <th>Data início</th>
+                  <th>Data fim</th>
+                  <th>Situação</th>
+                  <th style="width:60px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dadosEncontrados?.registros">
+                  <td>{{item.unidade}}</td>
+                  <td>{{item.dataInicio | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{item.dataFim | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{item.situacao}}</td>
+                  <td>
+                    <a href="javascript:void(0)" [routerLink]="['/programagestao/detalhar/' + item.planoTrabalhoId]"><i class="fa fa-eye"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" *ngIf="dadosEncontrados?.controle.totalRegistros === 0" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+            <app-pagination [controlePaginacao]="dadosEncontrados?.controle" (changePage)="pesquisar($event)"></app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -83,6 +83,15 @@ export class PlanoTrabalhoDataService {
     }));
   }
 
+  Excluir(planoTrabalhoId: string): Observable<ApplicationResult<string>> {
+    const baseURI = this.configuration.getApiGatewayUrl();
+    const url = `${baseURI}planotrabalho/${planoTrabalhoId}`;
+
+    return this.service.delete(url, null).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
   AlterarFase(planoTrabalhoId: string, situacaoId: number, justificativa?: string, aprovados?: string[], deserto = false): Observable<ApplicationResult<boolean>> {
     const baseURI = this.configuration.getApiGatewayUrl();
     const url = `${baseURI}planotrabalho/${planoTrabalhoId}/situacao`;

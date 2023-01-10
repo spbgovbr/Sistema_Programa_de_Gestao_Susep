@@ -64,6 +64,9 @@ import { PactoEmpresasComponent } from './components/pacto-trabalho/_partials/em
 import { PlanoObjetoCadastroComponent } from './components/plano-trabalho/_partials/objetos/cadastro/objeto-cadastro.component';
 import { AtividadeExcluirComponent } from './components/pacto-trabalho/_partials/solicitacao/atividade-excluir/atividade-excluir.component';
 import { AgendamentoPresencialComponent } from './components/agendamento-presencial/agendamento-presencial.component';
+import { PactoListObservacaoComponent } from './components/pacto-trabalho/_partials/observacao/observacao-lista.component';
+import { ObservacoesPactoNovaComponent } from './components/pacto-trabalho/_partials/observacao/observacao-nova/observacao-nova.component';
+import { AgendamentoDataService } from './services/agendamento.service';
 
 registerLocaleData(localePt)
 
@@ -112,6 +115,8 @@ registerLocaleData(localePt)
     PlanoEmpresasComponent,
     PactoListaAtividadeComponent,
     PactoListaAtividadeAndamentoComponent,
+    PactoListObservacaoComponent,
+    ObservacoesPactoNovaComponent,
     PactoAvaliacaoResultadoComponent,
     PactoHistoricoComponent,
     PactoCabecalhoComponent,
@@ -152,7 +157,8 @@ registerLocaleData(localePt)
     CatalogoDataService,
     ItemCatalogoDataService,
     PlanoTrabalhoDataService,
-    PactoTrabalhoDataService
+    PactoTrabalhoDataService,
+    AgendamentoDataService
   ]
 })
 export class ProgramaGestaoModule { }

@@ -3,8 +3,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:3.1-bullseye as builder
 
 RUN apt-get update \
- && apt-get install -y nodejs npm --no-install-recommends \
- && npm i npm@latest -g
+ && apt-get install -y nodejs npm --no-install-recommends
 
 COPY src/ src/
 WORKDIR src/
@@ -21,6 +20,7 @@ COPY ${diretorio}/SUSEP.Framework.Utils.dll Susep.libs/SUSEP.Framework.Utils.dll
 
 #RUN dotnet build --configuration Release
 RUN dotnet publish --configuration Release
+#  --verbosity diag
 
 ######################
 # Deploy

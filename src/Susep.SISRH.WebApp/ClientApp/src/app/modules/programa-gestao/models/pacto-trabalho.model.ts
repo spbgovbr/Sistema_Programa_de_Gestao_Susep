@@ -4,6 +4,8 @@ import { IPlanoTrabalhoObjetoAssunto } from "./plano-trabalho.model";
 export interface IPactoTrabalho
 {
   pactoTrabalhoId?: string;
+  planoTrabalhoDataInicio?: Date;
+  planoTrabalhoDataFim?: Date;
   planoTrabalhoId?: string;
   unidadeId?: number;
   unidade?: string;
@@ -24,10 +26,14 @@ export interface IPactoTrabalho
   consideracoes?: string;
   responsavelEnvioAceite?: number;
 
+  tipoFrequenciaTeletrabalhoParcialId?: number;
+  quantidadeDiasFrequenciaTeletrabalhoParcial?: number;
+
   atividades?: IPactoTrabalhoAtividade[];
   solicitacoes?: IPactoTrabalhoSolicitacao[];
   historico?: IPactoTrabalhoHistorico[];
   empresas?: IPactoTrabalhoEmpresa[];
+  informacoes?: IPactoTrabalhoInformacao[];
 
   minDataInicio?: Date;
   maxDataFim?: Date;
@@ -62,6 +68,15 @@ export interface IPactoTrabalhoAtividade {
   assuntosId?: Guid[];
   objetosId?: Guid[];
 
+}
+
+export interface IPactoTrabalhoInformacao {
+  pactoTrabalhoInformacaoId?: string;
+  pactoTrabalhoId?: string;
+
+  dataRegistro?: Date;
+  responsavelRegistro?: string;
+  informacao: string;
 }
 
 export interface IPactoTrabalhoAssuntosParaAssociar {
