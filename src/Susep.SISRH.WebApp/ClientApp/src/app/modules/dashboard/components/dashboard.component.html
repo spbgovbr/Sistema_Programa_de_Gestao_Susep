@@ -73,14 +73,17 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of dashboard?.pactosTrabalho">
-                        <td>{{item.unidade}}</td>
+                        <td>
+                          {{item.unidade}}
+                        </td>
                         <td *ngIf="chefe">{{item.pessoa}}</td>
                         <td>{{item.dataInicio | date: 'dd/MM/yyyy'}}</td>
                         <td>{{item.dataFim | date: 'dd/MM/yyyy'}}</td>
                         <td>{{item.situacao}}</td>
                         <td>
-                          <a href="javascript:void(0)" *ngIf="item.situacaoId === 401" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                          <a href="javascript:void(0)" *ngIf="item.situacaoId !== 401" [routerLink]="['/programagestao/atividade/atual/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" *ngIf="item.situacaoId === 401 || item.situacaoId === 404" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" *ngIf="item.situacaoId !== 401 && item.situacaoId !== 404" [routerLink]="['/programagestao/atividade/atual/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" [routerLink]="['/programagestao/detalhar/' + item.planoTrabalhoId]" class="text-center" title="Ir para o Programa de Gestão"><i class="fa fa-level-up-alt"></i></a>
                           <!--<a href="javascript:void(0)" *ngIf="item.situacaoId === 405 && item.pessoaId === usuarioLogadoId" [routerLink]="['/programagestao/atividade']" title="Ver detalhes"><i class="fa fa-eye"></i></a>-->
                         </td>
                       </tr>
@@ -104,45 +107,51 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-5 col-md-12">
-        <h5 class="mt-1 mb-4"><i class="fa fa-exclamation-circle"></i> Solicitações pendentes</h5>
-        <p>Veja abaixo suas solicitações pendentes</p>
-        <div class="table-responsive">
-          <div class="br-table">
-            <div class="table full-width-table table-striped table-style">
-              <table class="bg-white">
-                <thead>
-                  <tr style="">
-                    <th scope="col" *ngIf="chefe">Pessoa</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Data</th>
-                    <th style="width:50px;"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of dashboard?.solicitacoes">
-                    <td *ngIf="chefe">{{item.solicitante}}</td>
-                    <td>{{item.tipoSolicitacao}}</td>
-                    <td>{{item.dataSolicitacao | date: 'dd/MM/yyyy'}}</td>
-                    
-                    <td>
-                      <a href="javascript:void(0)" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                    </td>
-                  </tr>
-                  <tr *ngIf="dashboard?.solicitacoes == null || dashboard?.solicitacoes.length == 0">
-                    <td colspan="4" class="text-center">Nenhuma solicitação disponível</td>
-                  </tr>
-                </tbody>
-                <tfoot *ngIf="chefe">
-                  <tr>
-                    <td colspan="4" class="col text-center bg-gray-1">
-                      <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao/pactotrabalho">
-                        Ir para planos de trabalho
-                      </button>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+      <div class="col-lg-5 col-md-12">        
+        <div class="row">
+          <div class="col-lg-12 mb-4">
+            <h5 class="mt-1 mb-4"><i class="fa fa-exclamation-circle"></i> Pendências</h5>
+            <p>Veja abaixo suas pendências</p>
+            <div class="table-responsive">
+              <div class="br-table">
+                <div class="table full-width-table table-striped table-style">
+                  <table class="bg-white">
+                    <thead>
+                      <tr style="">
+                        <th scope="col" *ngIf="chefe">Pessoa</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Data</th>
+                        <th style="width:50px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dashboard?.solicitacoes">
+                        <td *ngIf="chefe">{{item.solicitante}}</td>
+                        <td>{{item.tipoSolicitacao}}</td>
+                        <td>{{item.dataSolicitacao | date: 'dd/MM/yyyy'}}</td>
+
+                        <td>
+                          <a href="javascript:void(0)" *ngIf="item.tipoSolicitacaoId !== 4" [routerLink]="['/programagestao/pactotrabalho/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          <a href="javascript:void(0)" *ngIf="item.tipoSolicitacaoId === 4" [routerLink]="['/programagestao/detalhar/' + item.pactoTrabalhoId]" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                          
+                        </td>
+                      </tr>
+                      <tr *ngIf="dashboard?.solicitacoes == null || dashboard?.solicitacoes.length == 0">
+                        <td colspan="4" class="text-center">Nenhuma solicitação disponível</td>
+                      </tr>
+                    </tbody>
+                    <tfoot *ngIf="chefe">
+                      <tr>
+                        <td colspan="4" class="col text-center bg-gray-1">
+                          <button class="br-button is-tertiary" type="button" tabindex="0" routerLink="/programagestao/pactotrabalho">
+                            Ir para planos de trabalho
+                          </button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>

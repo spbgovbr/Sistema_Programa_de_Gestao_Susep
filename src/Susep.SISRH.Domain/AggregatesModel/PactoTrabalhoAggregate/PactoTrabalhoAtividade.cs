@@ -47,6 +47,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
         public List<PactoAtividadePlanoObjeto> Objetos { get; set; }
 
         public decimal? Nota { get; private set; }
+        public string Avaliador { get; private set; }
+        public DateTime DataAvaliacao { get; private set; }
 
         public string Justificativa { get; private set; }
 
@@ -279,7 +281,7 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
             this.TempoRealizado = tempoRealizado;
         }
 
-        public void Avaliar(int nota, string justificativa)
+        public void Avaliar(int nota, string justificativa, string responsavel)
         {
             if (nota < 5)
             {
@@ -302,7 +304,8 @@ namespace Susep.SISRH.Domain.AggregatesModel.PactoTrabalhoAggregate
 
             this.Nota = nota;
             this.Justificativa = justificativa;
-
+            this.Avaliador = responsavel;
+            this.DataAvaliacao = DateTime.Now;
         }
 
         public void AdicionarAssunto(Guid assuntoId)

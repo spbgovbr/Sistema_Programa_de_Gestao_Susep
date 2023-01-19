@@ -16,6 +16,7 @@ namespace Susep.SISRH.Domain.Enums
         SituacaoCandidaturaPlanoTrabalho,
         GestorSistema,
         ModoAvancado,
+        TipoFrequenciaTeletrabalhoParcial,
 
         EmailPlanoParaAprovacao,
         EmailPlanoAprovado,

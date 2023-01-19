@@ -4,25 +4,156 @@
       <h1 class="content-title">Agendamento presencial</h1>
       <p>Selecione os dias em que deseja comparecer para trabalhar presencialmente</p>
     </header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="br-form">
+        <div class="row">
+          <div class="col-sm-4 mt-10">
+            <div class="row">
+              <div class="col">
+                <div class="field">
+                  <field-validation [classList]="['br-select', 'is-medium']" label="Filtrar por Pessoa">
+                    <select id="pessoaId" name="pessoaId" formControlName="pessoaId" placeholder="Selecione uma pessoa">
+                      <option value="null">Mostrar todos</option>
+                      <option class="select-items" *ngFor="let item of pessoas" [ngValue]="item.id">{{ item.descricao }}</option>
+                    </select>
+                  </field-validation>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="field">
+                  <field-validation [classList]="['br-input']" label="Data de início">
+                    <custom-datepicker formControlName="dataInicio" placeholder="Selecione uma data"></custom-datepicker>
+                  </field-validation>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="field">
+                  <field-validation [classList]="['br-input']" label="Data de fim">
+                    <custom-datepicker formControlName="dataFim" placeholder="Selecione uma data"></custom-datepicker>
+                  </field-validation>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-10">
+                <div class="actions justify-content-start">
+                  <button class="br-button is-primary" type="submit">Ver agendamentos</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                Clique na data para adicionar um agendamento<br />
+                Clique no seu agendamento para removê-lo
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col" *ngIf="abaVisivel">
+                <nav>
+                  <ul class="br-tabs">
+                    <li class="item" [ngClass]="{'is-active': abaVisivel === 'calendario'}">
+                      <a href="javascript:void(0)" (click)="alterarAba('calendario')">
+                        <span class="name">Ver calendário</span>
+                      </a>
+                    </li>
+                    <li class="item" [ngClass]="{'is-active': abaVisivel === 'lista'}">
+                      <a href="javascript:void(0)" (click)="alterarAba('lista')">
+                        <span class="name">Ver lista</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div [ngClass]="{'d-none': abaVisivel !== 'calendario'}">
+                  <div class="row">
+                    <div class="col-sm-12 mb-5 mt-5">
+                      <full-calendar #calendar
+                                     defaultView="dayGridMonth"
+                                     eventLimit="true"
+                                     [plugins]="calendarPlugins"
+                                     [events]="calendarEvents"
+                                     (dateClick)="handleDateClick($event)"
+                                     (dayRender)="handleDayRender($event)"
+                                     (eventClick)="eventClicked($event)"></full-calendar>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="abaVisivel === 'lista'">
+                  <div class="row">
+                    <div class="col-sm-12 mb-5 mt-5">
+                      <div class="table-responsive">
+                        <div class="br-table">
+                          <div class="table">
+                            <table class="full-width-table table-striped table-style mat-elevation-z8">
+                              <thead>
+                                <tr>
+                                  <th>Pessoa</th>
+                                  <th>Data agendada</th>
+                                  <th style="width:60px"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of agendamentos">
+                                  <td>{{item.pessoa}}</td>
+                                  <td>{{item.dataAgendada | date: 'dd/MM/yyyy'}}</td>
+                                  <td>
+                                    <a href="javascript:void(0)" (click)="abrirModalAgendamento(item)" *ngIf="podeExcluirItem(item)"><i class="fa fa-trash"></i></a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" *ngIf="agendamentos.length === 0" class="text-center">Nenhum item encontrado</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-    <div class="br-form">
-      <div class="row">
-        <div class="col-sm-4">
-          Clique na data para adicionar um agendamento<br />
-          Clique no seu nome para remover o agendamento<br /><br />
-          Clique no botão salvar para registrar os seus agendamentos
-        </div>
-        <div class="col-sm-8">
-          <full-calendar #calendar
-                         defaultView="dayGridMonth"
-                         eventLimit="true"
-                         [plugins]="calendarPlugins"
-                         [events]="calendarEvents"
-                         (dateClick)="handleDateClick($event)"
-                         (dayRender)="handleDayRender($event)"
-                         (eventClick)="eventClicked($event)"></full-calendar>
+          </div>
         </div>
       </div>
-      </div>
+    </form>
   </div>
 </section>
+
+
+<ng-template #modalConfirmacaoAgendamento let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Confirme o agendamento</h2>
+          <button type="button" class="close" data-dismiss="br-modal" aria-label="Close" (click)="fecharModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-form">
+            <div class="text-danger text-center mt-4 mb-4">
+              {{mensagemConfirmacao}}
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
+          <button class="br-button is-primary is-small" type="button" *ngIf="tipoMensagemConfirmacao === 1" (click)="concluirAgendamento()">Confirmar Agendamento</button>
+          <button class="br-button is-primary is-small" type="button" *ngIf="tipoMensagemConfirmacao === 2" (click)="removerAgendamento()">Remover agendamento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

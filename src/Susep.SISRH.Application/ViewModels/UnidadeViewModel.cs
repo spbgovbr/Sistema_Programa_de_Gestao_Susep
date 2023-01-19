@@ -30,8 +30,8 @@ namespace Susep.SISRH.Application.ViewModels
         [DataMember(Name = "ufId")]
         public String UfId { get; set; }
 
-        [DataMember(Name = "nivel")]
-        public Int64 Nivel { get; set; }
+        [DataMember(Name = "nivelUnidade")]
+        public Int32 NivelUnidade { get; set; }
 
         [DataMember(Name = "tipoFuncaoUnidadeId")]
         public Int64 TipoFuncaoUnidadeId { get; set; }
@@ -44,5 +44,8 @@ namespace Susep.SISRH.Application.ViewModels
 
         [DataMember(Name = "quantidadeServidores")]
         public Int32 QuantidadeServidores { get; set; }
+
+        [DataMember(Name = "pessoas")]
+        public IEnumerable<PessoaViewModel> Pessoas { get; set; }
     }
 }

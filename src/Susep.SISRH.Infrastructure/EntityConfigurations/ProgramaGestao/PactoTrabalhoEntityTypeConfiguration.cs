@@ -31,7 +31,10 @@ namespace Susep.SISRH.Infrastructure.EntityConfigurations.ProgramaGestao
             builder.Property(p => p.CargaHorariaDiaria).HasColumnName("cargaHorariaDiaria");
             builder.Property(p => p.PercentualExecucao).HasColumnName("percentualExecucao");
             builder.Property(p => p.RelacaoPrevistoRealizado).HasColumnName("relacaoPrevistoRealizado");
-            builder.Property(p => p.TempoTotalDisponivel).HasColumnName("tempoTotalDisponivel");            
+            builder.Property(p => p.TempoTotalDisponivel).HasColumnName("tempoTotalDisponivel");
+
+            builder.Property(p => p.TipoFrequenciaTeletrabalhoParcialId).HasColumnName("tipoFrequenciaTeletrabalhoParcialId");
+            builder.Property(p => p.QuantidadeDiasFrequenciaTeletrabalhoParcial).HasColumnName("quantidadeDiasFrequenciaTeletrabalhoParcial");
 
             builder.HasOne(p => p.Unidade)
                    .WithMany(p => p.PactosTrabalho)

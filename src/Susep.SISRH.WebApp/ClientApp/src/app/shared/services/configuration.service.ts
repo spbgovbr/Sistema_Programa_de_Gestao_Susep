@@ -34,6 +34,8 @@ export class ConfigurationService {
       modo: this.environment.modo,
       valorPadraoTempoComparecimento: this.environment.valorPadraoTempoComparecimento,
       valorPadraoTermosUso: this.environment.valorPadraoTermosUso,
+      formaParticipacaoPlanoTrabalho: this.environment.formaParticipacaoPlanoTrabalho,
+      frequenciaPresencialObrigatoria: this.environment.frequenciaPresencialObrigatoria,
       clientId: this.environment.client.id,
       clientSecret: this.environment.client.secret,
       clientAuthScope: this.environment.client.scope,
@@ -54,6 +56,16 @@ export class ConfigurationService {
       this.storageService.store('termosUso', this.serverSettings.valorPadraoTermosUso);
     else this.storageService.store('termosUso', null);
 
+
+    if (this.serverSettings.formaParticipacaoPlanoTrabalho)
+      this.storageService.store('formaParticipacaoPlanoTrabalho', this.serverSettings.formaParticipacaoPlanoTrabalho);
+    else this.storageService.store('formaParticipacaoPlanoTrabalho', null);
+
+
+    if (this.serverSettings.frequenciaPresencialObrigatoria)
+      this.storageService.store('frequenciaPresencialObrigatoria', this.serverSettings.frequenciaPresencialObrigatoria);
+    else this.storageService.store('frequenciaPresencialObrigatoria', null);
+    
     // Para permitir exibir o modo avançado durante a homologação
     this.applicationStateService.perfilUsuario.subscribe(usuario => {
       if (usuario && usuario.perfis.find(p => p.perfil === 1009)) {
@@ -120,6 +132,17 @@ export class ConfigurationService {
     return termosUso;
   }
 
+  //Retorna o prazo padrão para comparecimento
+  getFormaParticipacaoPlanoTrabalho(): string {
+    const formaParticipacaoPlanoTrabalho = this.storageService.retrieve('formaParticipacaoPlanoTrabalho');
+    return formaParticipacaoPlanoTrabalho;
+  }
+  getFrequenciaPresencialObrigatoria(): boolean {
+    const frequenciaPresencialObrigatoria = this.storageService.retrieve('frequenciaPresencialObrigatoria');
+    return frequenciaPresencialObrigatoria;
+  }
+
+  
   //Retorna o client id da aplicação
   getClientId(): string {
     return this.storageService.retrieve('clientId');

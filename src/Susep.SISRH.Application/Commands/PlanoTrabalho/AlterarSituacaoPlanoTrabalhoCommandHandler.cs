@@ -114,7 +114,7 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
                         case (int)SituacaoPlanoTrabalhoEnum.Habilitacao:
 
                             //Obtém as pessoas da unidade
-                            var pessoasUnidade = await UnidadeQuery.ObterPessoasAsync(item.UnidadeId);
+                            var pessoasUnidade = await UnidadeQuery.ObterServidoresDisponiveisPGDPorChaveAsync(item.UnidadeId);
                             var pessoasEnviarEmail = pessoasUnidade.Result;
                             //Se o tipo de notificação não incluir as pessoas da subunidade, 
                             //  Deve adicionar apenas as pessoas que estão diretamente lotadas na unidade OU 
@@ -122,7 +122,8 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
                             if (Configuration.Value.Notificacoes == null ||
                                 Configuration.Value.Notificacoes.AberturaFaseHabilitacao != "IncluirSubunidades")
                             {
-                                pessoasEnviarEmail = pessoasEnviarEmail.Where(p => p.UnidadeId == item.UnidadeId || (p.Chefe.HasValue && p.Chefe.Value)).ToList();
+                                //TODO: Alterar para obter pessoas da subunidade
+                                ////pessoasEnviarEmail = pessoasEnviarEmail.Where(p => p.UnidadeId == item.UnidadeId || (p.Chefe.HasValue && p.Chefe.Value)).ToList();
                             }
                             EnviarEmailHabilitacao(item.PlanoTrabalhoId, Configuration.Value.Notificacoes.EmailPlanoEmHabilitacao, pessoasEnviarEmail.Where(p => !String.IsNullOrEmpty(p.Email)).Select(p => p.Email).ToArray());
                             break;

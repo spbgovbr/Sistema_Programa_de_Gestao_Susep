@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DominioDataService } from '../../../../shared/services/dominio.service';
 import { UnidadeDataService } from '../../../unidade/services/unidade.service';
 import { PerfilEnum } from '../../enums/perfil.enum';
+import { PlanoTrabalhoSituacaoEnum } from '../../enums/plano-trabalho-situacao.enum';
 
 @Component({
   selector: 'plano-trabalho-pesquisa',
@@ -19,6 +20,7 @@ import { PerfilEnum } from '../../enums/perfil.enum';
 export class PlanoTrabalhoPesquisaComponent implements OnInit {
 
   PerfilEnum = PerfilEnum;
+  PlanoTrabalhoSituacaoEnum = PlanoTrabalhoSituacaoEnum;
 
   form: FormGroup;
   dadosUltimaPesquisa: IPlanoTrabalhoPesquisa = {};
@@ -75,6 +77,15 @@ export class PlanoTrabalhoPesquisaComponent implements OnInit {
 
   onSubmit() {
     this.pesquisar(1);
+  }
+
+  excluir(planoTrabalhoId: string) {
+    this.planoTrabalhoDataService.Excluir(planoTrabalhoId)
+      .subscribe(
+        resultado => {
+          this.pesquisar(1);
+        }
+      );
   }
 
 }

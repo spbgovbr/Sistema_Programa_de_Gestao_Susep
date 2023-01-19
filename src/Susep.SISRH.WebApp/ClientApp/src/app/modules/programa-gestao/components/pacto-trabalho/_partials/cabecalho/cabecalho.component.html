@@ -8,6 +8,12 @@
   </div>
   <div class="col-sm-6 mb-5">
     <dl class="row">
+      <dt class="col-sm-5">Programa de gestão:</dt>
+      <dd class="col-sm-7">
+        <button class="br-button is-cancel" type="button" [routerLink]="['/programagestao/detalhar/' + dadosPacto?.value?.planoTrabalhoId]">De {{dadosPacto.value?.planoTrabalhoDataInicio | date: 'dd/MM/yyyy'}} a {{dadosPacto.value?.planoTrabalhoDataFim | date: 'dd/MM/yyyy'}}</button>
+      </dd>
+    </dl>
+    <dl class="row">
       <dt class="col-sm-5">Carga horária:</dt>
       <dd class="col-sm-7">{{dadosPacto.value?.cargaHorariaDiaria}} horas / dia</dd>
     </dl>
@@ -19,13 +25,13 @@
       <dt class="col-sm-5">Prazo de comparecimento:</dt>
       <dd class="col-sm-7">{{dadosPacto.value?.tempoComparecimento}} dia(s)</dd>
     </dl>
-    <!--<dl class="row" *ngIf="dadosPacto.value?.formaExecucaoId === 102">
+    <dl class="row" *ngIf="frequenciaPresencialObrigatoria && dadosPacto.value?.formaExecucaoId === 102">
       <dt class="col-sm-5">Frequência presencial:</dt>
       <dd class="col-sm-7">
-        1 dia a cada quinzena
+        {{dadosPacto.value?.quantidadeDiasFrequenciaTeletrabalhoParcial}} dia(s) {{obterDescricaoTipoFrequenciaTeletrabalhoParcial()}}
         <a href="javascript: void();" *ngIf="dadosPacto.value?.situacaoId === 401" (click)="editarFrequenciaPresencial()"><i class="fa fa-edit ml-3"></i></a>
       </dd>
-    </dl>-->
+    </dl>
   </div>
   <div class="col-sm-6 mb-5">
     <dl class="row">
@@ -42,7 +48,6 @@
     </dl>
   </div>
 </div>
-
 
 <ng-template #modalDatas let-modal>
   <div class="br-modal is-large">
@@ -97,16 +102,14 @@
         </div>
         <div class="br-modal-body">
           <div class="br-form">
-            <form [formGroup]="form">
+            <form [formGroup]="formTipoFrequenciaTeletrabalhoParcial">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Tipo de frequência">
-                      <select id="pessoaId" name="pessoaId" formControlName="dataInicio" placeholder="Selecione uma frequência">
-                        <option value="">Indefinida</option>
-                        <option value="">Semanal</option>
-                        <option value="">Quinzenal</option>
-                        <option value="">Mensal</option>
+                      <select id="pessoaId" name="pessoaId" formControlName="tipoFrequenciaTeletrabalhoParcialId" placeholder="Selecione uma frequência">
+                        <option value="">Selecione uma frequência</option>
+                        <option class="select-items" *ngFor="let item of tipoFrequenciaTeletrabalhoParcial" [value]="item.id">{{ item.descricao }}</option>
                       </select>
                     </field-validation>
                   </div>
@@ -114,7 +117,7 @@
                 <div class="col-sm-6">
                   <div class="field">
                     <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Quantidade de dias">
-                      <input id="tempoExecucaoPresencial" formControlName="dataInicio" type="text" placeholder="Insira a quantidade de dias" name="tempoExecucaoPresencial" [textMask]="{mask: tempoMask}">
+                      <input id="tempoExecucaoPresencial" formControlName="quantidadeDiasFrequenciaTeletrabalhoParcial" type="text" placeholder="Insira a quantidade de dias" name="tempoExecucaoPresencial" [textMask]="{mask: tempoMask}">
                     </field-validation>
                   </div>
                 </div>
@@ -124,7 +127,32 @@
         </div>
         <div class="br-modal-footer justify-content-end">
           <button class="br-button is-tertiary is-small" type="button" (click)="fecharModal()">Cancelar</button>
-          <button class="br-button is-primary is-small" type="button" (click)="confirmarAlteracaoDatas()" [disabled]="!form.valid">Salvar</button>
+          <button class="br-button is-primary is-small" type="button" (click)="salvarFrequenciaTeletrabalhoParcial()" [disabled]="!formTipoFrequenciaTeletrabalhoParcial.valid">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalDeclaracao let-modal>
+  <div class="br-modal is-large">
+    <div class="br-modal-dialog">
+      <div class="br-modal-content">
+        <div class="br-modal-header">
+          <h2 class="br-modal-title">Declaração</h2>
+          <div class="br-modal-body mt-5 mb-5">
+            <div class="row">
+              <div class="col-12">
+                {{declaracao?.descricao}}
+              </div>
+            </div>
+          </div>
+          <div class="br-modal-footer justify-content-end">
+            <button class="br-button is-tertiary mt-2 btn-outline-danger is-small float-right" type="button" (click)="realizarDeclaracao(declaracao.id)">
+              <i class="fa fa-check"></i>
+              Confirmar
+            </button>
+          </div>
         </div>
       </div>
     </div>

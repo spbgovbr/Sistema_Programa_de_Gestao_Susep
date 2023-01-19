@@ -14,7 +14,13 @@ namespace Susep.SISRH.Application.ViewModels
         public Guid PactoTrabalhoId { get; set; }
 
         [DataMember(Name = "planoTrabalhoId")]
-        public Guid PlanoTrabalhoId { get; set; }        
+        public Guid PlanoTrabalhoId { get; set; }
+
+        [DataMember(Name = "planoTrabalhoDataInicio")]
+        public DateTime PlanoTrabalhoDataInicio { get; set; }
+
+        [DataMember(Name = "planoTrabalhoDataFim")]
+        public DateTime PlanoTrabalhoDataFim { get; set; }
 
         [DataMember(Name = "unidadeId")]
         public Int64 UnidadeId { get; set; }
@@ -63,6 +69,15 @@ namespace Susep.SISRH.Application.ViewModels
 
         [DataMember(Name = "responsavelEnvioAceite")]
         public String ResponsavelEnvioAceite { get; set; }
-        
+
+        [DataMember(Name = "tipoFrequenciaTeletrabalhoParcialId")]
+        public Int32 TipoFrequenciaTeletrabalhoParcialId { get; set; }
+
+        [DataMember(Name = "tipoFrequenciaTeletrabalhoParcial")]
+        public String TipoFrequenciaTeletrabalhoParcial { get; set; }
+
+        [DataMember(Name = "quantidadeDiasFrequenciaTeletrabalhoParcial")]
+        public Int32 QuantidadeDiasFrequenciaTeletrabalhoParcial { get; set; }
+
     }
 }

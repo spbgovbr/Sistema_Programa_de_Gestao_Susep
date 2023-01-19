@@ -12,3 +12,9 @@
 
 
 
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'Termo de aceite assinado pelo servidor ao se candidatar a vaga', @level0type = N'SCHEMA', @level0name = N'ProgramaGestao', @level1type = N'TABLE', @level1name = N'PlanoTrabalhoAtividadeCandidato', @level2type = N'COLUMN', @level2name = N'termoAceite';
+

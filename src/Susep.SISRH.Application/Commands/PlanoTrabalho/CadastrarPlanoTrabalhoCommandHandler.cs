@@ -11,6 +11,7 @@ using SUSEP.Framework.Data.Abstractions.UnitOfWorks;
 using SUSEP.Framework.Result.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,7 +42,9 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
 
             try
             {
-                var unidade = await UnidadeQuery.ObterQuantidadeServidoresPorChaveAsync(request.UnidadeId);
+                var pessoas = await UnidadeQuery.ObterServidoresDisponiveisPGDPorChaveAsync(request.UnidadeId);
+
+                var quantidadeServidores = pessoas.Result.Select(p => p.PessoaId).Distinct().Count();
 
                 var tempoComparecimento = request.TempoComparecimento;
                 var termosAceite = request.TermoAceite;
@@ -60,7 +63,7 @@ namespace Susep.SISRH.Application.Commands.PlanoTrabalho
                         request.DataFim,
                         tempoComparecimento,
                         request.TempoFaseHabilitacao,
-                        unidade.Result.QuantidadeServidores,
+                        quantidadeServidores,
                         request.UsuarioLogadoId.ToString(),
                         termosAceite);
 
