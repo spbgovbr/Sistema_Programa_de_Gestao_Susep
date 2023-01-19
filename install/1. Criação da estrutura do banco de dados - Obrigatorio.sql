@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[Unidade](
 	[undNivel] [smallint] NULL,
 	[tipoFuncaoUnidadeId] [bigint] NULL,
 	[Email] [varchar](150) NULL,
-	[undCodigoSIORG] [int] NULL,
+	[undCodigoSIORG] [int] NOT NULL,
  CONSTRAINT [PK_Unidade] PRIMARY KEY CLUSTERED 
 (
 	[unidadeId] ASC
