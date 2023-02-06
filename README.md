@@ -1,5 +1,5 @@
 # Recomendação
-* [Recomendamos que utilize nossa versão Docker para instalação](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/tree/docker-codigo-fonte)
+* [Recomendamos que utilize nossa versão Docker para instalação](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/tree/docker-codigo-fonte/docker)
 
 # Material de apoio 
 
