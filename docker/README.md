@@ -14,7 +14,7 @@
 * Caso ainda não tenha configurado o banco de dados para o sistema recomendamos que siga os passos 1 e 2 contidos no link a seguir: 
 [Criação e carga inicial do BD do sistema](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep#base-de-dados)
 
-* *Caso queira subir um banco em docker préconfigurado ao invés de utilizar um SQL já existente, siga os passos contidos no título: [Utilizar e configurar banco de dados docker(Opcional)](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/docker-codigo-fonte/docker/README.md#utilizar-e-configurar-banco-de-dados-dockeropcional)*
+* *Caso queira subir um banco em docker préconfigurado ao invés de utilizar um SQL já existente, siga os passos contidos no título: [Utilizar e configurar banco de dados docker(Opcional)](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/docker-codigo-fonte/docker/README.md#utilizar-e-configurar-banco-de-dados-dockeropcional)*
 
 ## Configurando a aplicação - Passo a passo
 
