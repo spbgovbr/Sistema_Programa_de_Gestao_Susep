@@ -5,7 +5,7 @@
 É possível subir a aplicação por meio do [Docker](https://www.docker.com/). Dentre as vantagens estão:
 1. A ausência da necessidade de uma configuração do IIS;
 1. Uma menor intervenção manual para a realização das configurações;
-1. A ausência da necessidade de possuir licenças para o Windows Server para rodar a aplicação, tendo em vista que as imagens foram configuradas utilizando Microsoft suporta oficialmente;
+1. A ausência da necessidade de possuir licenças para o Windows Server para rodar a aplicação;
 1. A ausência da obrigatoriedade de configurar um servidor SQL Server para ambiente de homologação. O docker-compose utiliza o SQL Server 2019 para Linux, oficialmente suportado para a Microsoft, no modo de avaliação. Atente-se que a utilização em produção exige uma licença válida, mas a configuração disponibilizada pemite a realização de testes e da homologação do sistema.
 1. A possibilidade de configuração por variáveis de ambiente no docker-compose no lugar de alterar arquivos `.json`.
 
