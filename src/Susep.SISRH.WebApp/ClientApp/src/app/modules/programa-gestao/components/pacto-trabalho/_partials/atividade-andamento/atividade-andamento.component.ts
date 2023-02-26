@@ -21,6 +21,7 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
 
   @Input() dadosPacto: BehaviorSubject<IPactoTrabalho>;
   servidor = new BehaviorSubject<number>(null);
+  unidade = new BehaviorSubject<number>(null);
 
   @Input() readOnly: Boolean;
   @Input() isReadOnly = new BehaviorSubject<Boolean>(true);
@@ -138,6 +139,7 @@ export class PactoListaAtividadeAndamentoComponent implements OnInit {
     this.teletrabalhoParcial = this.dadosPacto.value.formaExecucaoId === 102;
 
     this.servidor.next(this.dadosPacto.value.pessoaId);
+    this.unidade.next(this.dadosPacto.value.unidadeId);    
     this.isReadOnly.next(this.readOnly || this.dadosPacto.value.situacaoId !== 405);
     this.pactoTrabalhoDataService.ObterAtividades(this.dadosPacto.value.pactoTrabalhoId).subscribe(
       resultado => {

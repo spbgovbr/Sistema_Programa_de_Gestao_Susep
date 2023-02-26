@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpParameterCodec } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -12,6 +12,14 @@ import { ApplicationStateService } from './application.state.service';
 import { ConfigurationService } from './configuration.service';
 import { DataService } from './data.service';
 import { StorageService } from './storage.service';
+
+
+export class HttpUrlEncodingCodec implements HttpParameterCodec {
+  encodeKey(k: string): string { return encodeURIComponent(k); }
+  encodeValue(v: string): string { return encodeURIComponent(v); }
+  decodeKey(k: string): string { return decodeURIComponent(k); }
+  decodeValue(v: string) { return decodeURIComponent(v); }
+}
 
 /*
  * Serviço que faz o controle de autenticação das aplicações
@@ -114,7 +122,7 @@ export class SecurityService implements OnInit {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    let params = new HttpParams()
+    let params = new HttpParams({ encoder: new HttpUrlEncodingCodec() })
       .set('grant_type', 'password')
       .set('client_id', clientId)
       .set('scope', scope)

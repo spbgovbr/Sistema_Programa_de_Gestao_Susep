@@ -67,7 +67,7 @@
                 return @"
                     SELECT  i.itemCatalogoId 
 							,i.titulo         
-                            ,i.titulo + IIF(i.complexidade IS NULL OR i.complexidade = '', '', ' - ' + i.complexidade) + '  (pres.:' + cast(i.tempoPresencial as varchar(5)) + 'h / rem.:' + cast(i.tempoRemoto as varchar(5)) + 'h)' as tituloCompleto
+                            ,i.titulo + IIF(i.complexidade IS NULL OR i.complexidade = '', '', ' - ' + i.complexidade) + '  (pres.:' + cast(i.tempoPresencial as varchar(5)) + 'h / rem.:' + cast(coalesce(i.tempoRemoto,0) as varchar(5)) + 'h)' as tituloCompleto
                             ,i.complexidade 
 							,i.calculoTempoId formaCalculoTempoItemCatalogoId
 							,cd.descricao formaCalculoTempoItemCatalogo 

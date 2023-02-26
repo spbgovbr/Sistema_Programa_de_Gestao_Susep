@@ -182,8 +182,10 @@
                             #CONTROLE#
                         WHERE   (@pessoaId IS NULL OR pt.pessoaId = @pessoaId)
                                 AND (@situacaoId IS NULL OR pt.situacaoId = @situacaoId)
+                                AND (@formaExecucaoId IS NULL OR pt.formaExecucaoId = @formaExecucaoId)
                                 AND (@dataInicio IS NULL OR pt.dataFim >= @dataInicio)
                                 AND (@dataFim IS NULL OR pt.dataInicio <= @dataFim)
+                                AND (@unidadeId IS NULL OR pt.unidadeId = @unidadeId)
                     ) contador
                 ";
             }

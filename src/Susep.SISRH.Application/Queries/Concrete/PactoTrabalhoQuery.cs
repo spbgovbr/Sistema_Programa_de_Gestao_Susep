@@ -136,6 +136,8 @@ namespace Susep.SISRH.Application.Queries.Concrete
             parameters.Add("@offset", (request.Page - 1) * request.PageSize, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@pageSize", request.PageSize, DbType.Int32, ParameterDirection.Input);            
 
+            parameters.Add("@unidadeId", request.UnidadeId, DbType.Int64, ParameterDirection.Input);
+            
             if (!request.IsGestor)
                 query = query.Replace("#CONTROLE#", PactoTrabalhoRawSqls.ControleAcesso);
             else
