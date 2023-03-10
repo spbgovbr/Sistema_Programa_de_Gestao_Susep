@@ -5,7 +5,7 @@
 
 Para acompanhar sessões gravadas de instalação e configuração do sistema, assista os vídeos nos seguintes links:
 
-* [Instalação de teste e configurações iniciais v1.8 Docker - 22/12/2022 - Meeting Recording](https://youtu.be/wqT-Ylxu0Pw)
+* [Instalação de teste e configurações iniciais v1.8 Docker - 16/02/2023 - Meeting Recording](https://youtu.be/MtKvWSo2kcE)
 * [Instalação de teste e configurações iniciais - 19/05/2021 - Meeting Recording](https://youtu.be/BOaHQiZSd4E)
 * [AD/LDAP orientações e carga inicial de dados  - 26/05/2021 - Meeting Recording](https://youtu.be/KRwEF0-p590)
 * [Instalação, configuração e utilização da API de envios - 12/05/2022 - Meeting Recording](https://youtu.be/RD883q3dYA0)
