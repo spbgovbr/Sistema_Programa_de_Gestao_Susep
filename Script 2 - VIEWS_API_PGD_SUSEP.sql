@@ -71,15 +71,15 @@ SELECT ROW_NUMBER() OVER (ORDER BY pta.pactoTrabalhoAtividadeId ASC) AS id
 	,CASE WHEN pt.formaExecucaoId = 101 OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 101) 
 		THEN pta.tempoPrevistoPorItem ELSE 0 END tempo_presencial_estimado
 	,CASE WHEN pt.formaExecucaoId = 101 OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 101)
-		THEN pta.tempoRealizado ELSE 0 END tempo_presencial_executado
+		THEN pta.tempoRealizado ELSE 0 END tempo_presencial_programado
 	,CASE WHEN pt.formaExecucaoId = 101 OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 101)
-		THEN pta.tempoHomologado ELSE 0 END tempo_presencial_homologado
+		THEN pta.tempoHomologado ELSE 0 END tempo_presencial_executado
 	,CASE WHEN pt.formaExecucaoId = 103 OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 103)
 		THEN pta.tempoPrevistoPorItem ELSE 0 END tempo_teletrabalho_estimado
 	,CASE WHEN pt.formaExecucaoId = 103 OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 103)
-		THEN pta.tempoRealizado ELSE 0 END tempo_teletrabalho_executado
+		THEN pta.tempoRealizado ELSE 0 END tempo_teletrabalho_programado
 	,CASE WHEN pt.formaExecucaoId = 103 OR (pt.formaExecucaoId = 102 AND pta.modalidadeExecucaoId = 103)
-		THEN pta.tempoHomologado ELSE 0 END tempo_teletrabalho_homologado
+		THEN pta.tempoHomologado ELSE 0 END tempo_teletrabalho_executado
 	,ic.entregasEsperadas entrega_esperada
 	,1 qtde_entregas
 	,NULL qtde_entregas_efetivas
