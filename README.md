@@ -74,15 +74,15 @@ O sistema foi desenvolvido utilizando o banco de dados Microsoft SQL Server com 
 1. Executar os scripts que se encontram na pasta `install/` na seguinte ordem:
     1. Obrigatório: `install/1. Criação da estrutura do banco de dados - Obrigatorio.sql`;
     1. Obrigatório: `install/2. Inserir dados de domínio - Obrigatorio.sql`;
-    1. Obrigatório: `install/Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql`;
-    1. Se for ambiente de desenvolvimento/homologação:  `install/4. Inserir dados de teste - Opcional.sql`;
-    1. Se estiver atualizando de versões anteriores da V7: `5. Alteracoes da estrutura do BD para a V7.sql`;
+    1. Obrigatório: `install/3. Criação da tabela pessoa alocacao temporaria - Obrigatorio.sql`;
+    1. Se for ambiente de desenvolvimento/homologação:  `install/5. Inserir dados de teste - Opcional.sql`;
+    1. Se estiver atualizando de versões anteriores da V7: `4. Alteracoes da estrutura do BD para a V7.sql`;
     1. Se estiver atualizando da V7 para a V8: `6. Alteracoes da estrutura do BD para a V8.sql`.
 
 >1. Criar banco de dados DBSISGP.
 >2. Executar o script “[1. Criação da estrutura do banco de dados.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/1.%20Cria%C3%A7%C3%A3o%20da%20estrutura%20do%20banco%20de%20dados.sql "1. Criação da estrutura do banco de dados.sql")”.
 >3. Executar o script “[2. Inserir dados de domínio.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/2.%20Inserir%20dados%20de%20dom%C3%ADnio.sql "2. Inserir dados de domínio.sql")”.
->4. Se for ambiente de desenvolvimento/homologação,executar o script “[3. Inserir dados de teste.sql](https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/main/install/3.%20Inserir%20dados%20de%20teste.sql "3. Inserir dados de teste.sql")”.
+>4. Se for ambiente de desenvolvimento/homologação,executar o script “[5. Inserir dados de teste - Opcional.sql]( https://github.com/spbgovbr/Sistema_Programa_de_Gestao_Susep/blob/docker-codigo-fonte/install/5.%20Inserir%20dados%20de%20teste%20-%20Opcional.sql "5. Inserir dados de teste - Opcional.sql")”.
 >5. Criar um usuário de aplicação com permissões de leitura e escrita.
 
 ##### Importação de usuários (desenvolvimento/homologação/produção)
