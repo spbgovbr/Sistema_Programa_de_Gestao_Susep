@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --build-optimizer=false --base-href /safe/sisgp/programagestao/app/",
+    "build": "ng build --prod --build-optimizer=false --base-href /",
     "build:ssr": "ng run Susep.SISRH.WebApp:server:dev",
     "test": "ng test",
     "lint": "ng lint",
