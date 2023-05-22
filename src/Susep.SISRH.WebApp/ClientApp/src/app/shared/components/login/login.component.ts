@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
-    }, { updateOn: 'blur' });
+    }, { updateOn: 'change' });
   }
 
   toggleMostrarPassword() {
@@ -50,5 +50,9 @@ export class LoginComponent implements OnInit {
   keyup() {
     this.form.get('username').updateValueAndValidity();
     this.form.get('password').updateValueAndValidity();
+  }
+  
+  onPressEnter() {
+    this.form.markAllAsTouched();
   }
 }

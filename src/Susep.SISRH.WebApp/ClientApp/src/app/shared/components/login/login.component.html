@@ -12,7 +12,7 @@
             <div class="col-12">
               <!-- Área de preenchimento do usuário -->
               <section class="br-form">
-                <form [formGroup]="form">
+                <form [formGroup]="form" (ngSubmit)="logar()">
 
                   <!-- Informar login -->
                   <div class="field">
@@ -24,7 +24,7 @@
                   <!-- Informar a senha -->
                   <div class="field">
                     <field-validation [classList]="['br-input', 'is-action']" errorMessage="Campo obrigatório." label="Senha">
-                      <input id="password" type={{passwordType}} #password placeholder="Digite sua senha" name="password" formControlName="password">
+                      <input id="password" type={{passwordType}} #password placeholder="Digite sua senha" name="password" formControlName="password" (keydown.enter)="onPressEnter()">
                       <a class="action" id="showPassword" href="javascript:void(0);" (click)="toggleMostrarPassword()">
                         <span class="sr-only">Mostrar senha</span>
                         <i class="fas fa-eye"></i>
@@ -36,7 +36,7 @@
 
                   <!-- Botões de ação -->
                   <div class="actions justify-content-center">
-                    <button class="button is-primary" name="button" value="login" [disabled]="!form.valid" (click)="logar()">Entrar</button>
+                    <button class="button is-primary" name="button" value="login" [disabled]="!form.valid">Entrar</button>
                   </div>
                 </form>
               </section>
