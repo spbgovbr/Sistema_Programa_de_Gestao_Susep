@@ -1,6 +1,6 @@
 <section>
   <div class="container">
-    <div class="row">      
+    <div class="row">
       <div class="col-md-4 offset-lg-4 col-sm-12 bg-white">
         <!-- Conteúdo principal -->
         <main id="content" class="page-content">
@@ -16,15 +16,15 @@
 
                   <!-- Informar login -->
                   <div class="field">
-                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="Usuário">
-                      <input id="username" type="text" placeholder="Digite seu usuário" name="username" formControlName="username">
+                    <field-validation [classList]="['br-input']" errorMessage="Campo obrigatório." label="CPF">
+                      <input id="username" type="text" placeholder="CPF (sem traços ou espaços)" name="username" formControlName="username">
                     </field-validation>
                   </div>
 
                   <!-- Informar a senha -->
                   <div class="field">
                     <field-validation [classList]="['br-input', 'is-action']" errorMessage="Campo obrigatório." label="Senha">
-                      <input id="password" type={{passwordType}} #password placeholder="Digite sua senha" name="password" formControlName="password">
+                      <input id="password" type={{passwordType}} #password placeholder="Digite sua senha única UFES" name="password" formControlName="password">
                       <a class="action" id="showPassword" href="javascript:void(0);" (click)="toggleMostrarPassword()">
                         <span class="sr-only">Mostrar senha</span>
                         <i class="fas fa-eye"></i>
