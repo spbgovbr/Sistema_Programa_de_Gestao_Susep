@@ -38,9 +38,9 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [                
+              "fileReplacements": [
               ],
-              "baseHref": "/safe/sisgp/programagestao/app/",
+              "baseHref": "/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -54,7 +54,7 @@
             "development": {
               "fileReplacements": [
               ],
-              "baseHref": "/safe/sisgp/programagestao/app/",
+              "baseHref": "/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -69,7 +69,7 @@
           "homolog": {
             "fileReplacements": [
             ],
-            "baseHref": "/safe/sisgp/programagestao/app/",
+            "baseHref": "/",
             "optimization": true,
             "outputHashing": "all",
             "sourceMap": false,
