@@ -5,7 +5,7 @@ import { SecurityService } from '../../services/security.service';
 
 @Component({
   selector: 'login',
-  templateUrl: './login.component.html',  
+  templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
-    }, { updateOn: 'blur' });
+    }, { updateOn: 'change' });
   }
 
   toggleMostrarPassword() {
