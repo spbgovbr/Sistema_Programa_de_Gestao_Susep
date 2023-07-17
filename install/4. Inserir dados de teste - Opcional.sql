@@ -62,7 +62,8 @@ update [dbo].[Unidade] set pessoaIdChefe = @@IDENTITY where unidadeid = @DETIC
 DELETE FROM [dbo].[CatalogoDominio] WHERE classificacao = 'GestorSistema'
 INSERT INTO [dbo].[CatalogoDominio] VALUES(10001, 'GestorSistema', @USUARIOGESTOR, 1)
 
-
+/**** ATENÇÃO: Verifique o padrão de datas do seu ambiente e corrija para o caso concreto: AAAA-DD-MM ou AAAA-MM-DD   ****/
+   
 INSERT INTO [dbo].[Feriado] VALUES ('2020-1-1', 1,'Confraternização universal', NULL)
 INSERT INTO [dbo].[Feriado] VALUES ('2020-1-20', 1,'São Sebastião', 'RJ')
 INSERT INTO [dbo].[Feriado] VALUES ('2020-4-21', 1,'Tiradentes', NULL)
