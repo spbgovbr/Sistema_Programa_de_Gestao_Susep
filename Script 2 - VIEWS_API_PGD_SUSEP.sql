@@ -89,6 +89,7 @@ SELECT ROW_NUMBER() OVER (ORDER BY pta.pactoTrabalhoAtividadeId ASC) AS id
 FROM ProgramaGestao.PactoTrabalhoAtividade pta
 	INNER JOIN ProgramaGestao.PactoTrabalho pt ON pta.pactoTrabalhoId = pt.pactoTrabalhoId
 	INNER JOIN ProgramaGestao.ItemCatalogo ic ON pta.itemCatalogoId = ic.itemCatalogoId
+WHERE pta.nota is not null
 GO
 
 /**************************************************************************************/
