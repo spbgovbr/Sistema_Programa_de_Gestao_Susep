@@ -8,7 +8,7 @@
              [cdkDropListData]="todo"
              class="drop-list"
              (cdkDropListDropped)="drop($event)">
-          <div class="drop-box" *ngFor="let item of todo" [cdkDragData]="item" cdkDrag>{{item.itemCatalogo}}</div>
+          <div class="drop-box" *ngFor="let item of todo" [cdkDragData]="item" cdkDrag>{{item.itemCatalogo}} - ({{item.execucaoRemota ? "Remoto" : "Presencial"}})</div>
         </div>
       </div>
     </div>
@@ -23,7 +23,9 @@
              (cdkDropListDropped)="drop($event)">
           <div class="drop-box" *ngFor="let item of doing" [cdkDragData]="item" [cdkDragDisabled]="item.formaCalculoTempoItemCatalogoId === 201" cdkDrag>
             <div>
-              {{item.itemCatalogo}}<br />
+              {{item.itemCatalogo}} - 
+              ({{item.execucaoRemota ? "Remoto" : "Presencial"}})<br />
+              
               <smaLl class="ml-4 text-gray-4" *ngIf="item.dataInicio">Início <span class="text-gray-7">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl>
             </div>
           </div>
@@ -41,7 +43,7 @@
              (cdkDropListDropped)="drop($event)">
           <div class="drop-box" *ngFor="let item of done" [cdkDragData]="item" [cdkDragDisabled]="item.nota" cdkDrag>
             <div>
-              {{item.itemCatalogo}}<br />
+              {{item.itemCatalogo}} - ({{item.execucaoRemota ? "Remoto" : "Presencial"}})<br />
               <smaLl class="ml-4 text-gray-4" *ngIf="item.dataInicio">Início <span class="text-gray-7">{{item.dataInicio | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl><br />
               <smaLl class="ml-4 text-gray-4" *ngIf="item.dataFim">Fim <span class="text-gray-7">{{item.dataFim | date: 'dd/MM/yyyy HH:mm'}}</span></smaLl><br />
               <smaLl class="ml-4 text-gray-4" *ngIf="item.tempoRealizado">Tempo realizado <span class="text-gray-7">{{item.tempoRealizado}}</span></smaLl>
